@@ -6,7 +6,7 @@ Game::Game(): _window(sf::VideoMode(1920, 1080),"Survive.io"), //CLASSE RENDERWI
 _player(),_isMovingUp(false), _isMovingDown(false), _isMovingLeft(false), _isMovingRight(false)
 {
 	//_textures.load(Textures::Background, "C:/Users/Federico/Desktop/Project/SurvivalGame/SurvivalGame/Sources/BACKGROUND_IMAGE.png");
-	_textures.load(Textures::Personaggio, "C:/Users/Federico/source/Repos/SurviveGame/SurviveGame/Sources/Sprite_laila_run2.png");
+	_textures.load(Textures::Personaggio, "C:/Users/pandi/source/repos/LucaPando/SurviveGame/SurviveGame/Sources/Sprite_laila_run2.png");
 	_player.setTexture(_textures.get(Textures::Personaggio));
 	_player.setPosition(100.f, 100.f);
 	_player.setTextureRect(sf::IntRect(0, 0, 32, 48));
