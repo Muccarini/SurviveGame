@@ -4,7 +4,7 @@ class GameCharacter :
 	public Entity
 {
 public:
-	enum Type {Eagle, Raptor};
+	enum Type {Warrior, Ranger, Mage};
 public:
 	explicit GameCharacter(Type type);
 

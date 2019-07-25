@@ -4,7 +4,7 @@
 
 namespace Textures
 {
-	enum ID { Background, Personaggio, Bullet };
+	enum ID { Background, Personaggio, Attack };
 }
 
 
