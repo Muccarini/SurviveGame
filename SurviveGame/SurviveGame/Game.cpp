@@ -6,7 +6,7 @@
 Game::Game(): _window(sf::VideoMode(1920, 1080),"Survive.io"), //CLASSE RENDERWINDOW *VEDERE MANUALE COSTRUTTORI
 _player(),_isMovingUp(false), _isMovingDown(false), _isMovingLeft(false), _isMovingRight(false)
 {
-	_textures.load(Textures::Background,"PATH/TO/THE/BACKGROUND_IMAGE");
+	//_textures.load(Textures::Background,"PATH/TO/THE/BACKGROUND_IMAGE");
 	_textures.load(Textures::Personaggio, "C:/Users/pandi/source/repos/SurvivalGame/Debug/textures/pg.png");
 	_player.setTexture(_textures.get(Textures::Personaggio));
 	_player.setPosition(100.f, 100.f);
