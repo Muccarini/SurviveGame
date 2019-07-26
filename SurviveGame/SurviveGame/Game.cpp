@@ -6,7 +6,7 @@ Game::Game(): _window(sf::VideoMode(1920, 1080),"Survive.io"), //CLASSE RENDERWI
 _player(),_isMovingUp(false), _isMovingDown(false), _isMovingLeft(false), _isMovingRight(false)
 {
 	//_textures.load(Textures::Background,"PATH/TO/THE/BACKGROUND_IMAGE");
-	_textures.load(Textures::Personaggio, "$(SolutionDir)/Sprite_laila_run2.png");
+	_textures.load(Textures::Personaggio, "Sources/Sprite_laila_run2.png");
 	_player.setTexture(_textures.get(Textures::Personaggio));
 	_player.setPosition(100.f, 100.f);
 	_player.setTextureRect(sf::IntRect(0, 0, 32, 48));
@@ -57,7 +57,6 @@ void Game::processEvents()
 
 void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
 {
-	
 	if (key == sf::Keyboard::S)
 	{
 		_isMovingDown = isPressed;
