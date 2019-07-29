@@ -2,11 +2,7 @@
 #include "TextureHolder.h"
 
 
-Game::Game(): _window(sf::VideoMode(1920, 1080),"Survive.io"), //CLASSE RENDERWINDOW *VEDERE MANUALE COSTRUTTORI
-_hero(),_isMovingUp(false), _isMovingDown(false), _isMovingLeft(false), _isMovingRight(false)
-{
-
-}
+Game::Game() : _window(sf::VideoMode(1920, 1080), "Survive.io"), _hero() {} //CLASSE RENDERWINDOW *VEDERE MANUALE COSTRUTTORI
 
 void Game::run()
 {
@@ -52,65 +48,19 @@ void Game::processEvents()
 
 void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
 {
-	if (key == sf::Keyboard::S)
+	if (key == sf::Keyboard::S || key == sf::Keyboard::W || key == sf::Keyboard::D || key == sf::Keyboard::A) 
 	{
-		_isMovingDown = isPressed;
+		_hero.isMoving = true;
 	}
-	else if (key == sf::Keyboard::W)
-	{
-		_isMovingUp = isPressed;
-	}
-	else if (key == sf::Keyboard::D)
-	{
-		_isMovingRight = isPressed;
-	}
-	else if (key == sf::Keyboard::A)
-	{
-		_isMovingLeft = isPressed;
-	}
+	// if(key == WASD) _hero.isMove =true
 }
 
 void Game::update(sf::Time deltaTime, int framePlayer)
-{  // QUI CI SARA' LA LOGICA DEL GIOCO CHE FAREMO PIU IN LA'
-
-	const float PlayerSpeed = 150.f;
-
-	framePlayer = 0;
-    sf::Vector2f movement(0.f, 0.f);
-	if (framePlayer == 5)
-		framePlayer = 0;
-
-	if (_isMovingUp) //VELOCITA' DEL GIOCATORE
-	{
-		//movement.y = 0;
-		movement.y -= PlayerSpeed;
-		//_player.setTextureRect(sf::IntRect(framePlayer * 32, 48, 32, 48));
-		//_player.setScale(sf::Vector2f(1.5f, 1.5f));
-	}
-	if (_isMovingDown)
-	{
-		//movement.y = 0;
-		movement.y += PlayerSpeed;
-		//_player.setTextureRect(sf::IntRect(framePlayer * 32, 0, 32, 48));
-		//_player.setScale(sf::Vector2f(1.5f, 1.5f));
-	}
-	if (_isMovingLeft)
-	{
-		//movement.x = 0;
-		movement.x -= PlayerSpeed;
-		//_player.setTextureRect(sf::IntRect(framePlayer * 32, 48 * 2, 32, 48));
-		//_player.setScale(sf::Vector2f(1.5f, 1.5f));
-	}
-	if (_isMovingRight)
-	{
-		//movement.x = 0;
-		movement.x += PlayerSpeed;
-		//_player.setTextureRect(sf::IntRect(framePlayer * 32, 48 * 3, 32, 48));
-		//_player.setScale(sf::Vector2f(1.5f, 1.5f));
-	}
-
-	_hero.Move(); // VELOCITA DEL GIOCATORE * TEMPO = DISTANZA   
-	framePlayer++;
+{
+	if (_hero.isMoving) _hero.move();
+	sf::Vector2f movement;
+	movement=_hero.move(); 
+	_hero._sprite.move(movement * deltaTime.asSeconds());
 }
 
 void Game::render()

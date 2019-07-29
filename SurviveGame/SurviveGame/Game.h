@@ -23,9 +23,4 @@ private:
 	TextureHolder _textures;  //CON TextureHolder POSSIAMO GESTIRE PIU TEXTURE ALLA VOLTA (LOAD AND GET)
 	GameCharacter _hero;
 
-	bool _isMovingUp = false;
-	bool _isMovingDown = false;
-	bool _isMovingLeft = false;
-	bool _isMovingRight = false;
-
 };
