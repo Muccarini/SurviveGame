@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "TextureHolder.h"
+#include "GameCharacter.h"
 
 class Game
 {
@@ -27,7 +28,3 @@ private:
 	bool _isMovingRight = false;
 
 };
-
-
-
-

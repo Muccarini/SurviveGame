@@ -89,39 +89,39 @@ void Game::update(sf::Time deltaTime, int framePlayer)
 	{
 		//movement.y = 0;
 		movement.y -= PlayerSpeed;
-		_player.setTextureRect(sf::IntRect(framePlayer * 32, 48, 32, 48));
+		//_player.setTextureRect(sf::IntRect(framePlayer * 32, 48, 32, 48));
 		//_player.setScale(sf::Vector2f(1.5f, 1.5f));
 	}
 	if (_isMovingDown)
 	{
 		//movement.y = 0;
 		movement.y += PlayerSpeed;
-		_player.setTextureRect(sf::IntRect(framePlayer * 32, 0, 32, 48));
+		//_player.setTextureRect(sf::IntRect(framePlayer * 32, 0, 32, 48));
 		//_player.setScale(sf::Vector2f(1.5f, 1.5f));
 	}
 	if (_isMovingLeft)
 	{
 		//movement.x = 0;
 		movement.x -= PlayerSpeed;
-		_player.setTextureRect(sf::IntRect(framePlayer * 32, 48 * 2, 32, 48));
+		//_player.setTextureRect(sf::IntRect(framePlayer * 32, 48 * 2, 32, 48));
 		//_player.setScale(sf::Vector2f(1.5f, 1.5f));
 	}
 	if (_isMovingRight)
 	{
 		//movement.x = 0;
 		movement.x += PlayerSpeed;
-		_player.setTextureRect(sf::IntRect(framePlayer * 32, 48 * 3, 32, 48));
+		//_player.setTextureRect(sf::IntRect(framePlayer * 32, 48 * 3, 32, 48));
 		//_player.setScale(sf::Vector2f(1.5f, 1.5f));
 	}
 
-	_player.move(movement * deltaTime.asSeconds()); // VELOCITA DEL GIOCATORE * TEMPO = DISTANZA   
+	_hero.Move(); // VELOCITA DEL GIOCATORE * TEMPO = DISTANZA   
 	framePlayer++;
 }
 
 void Game::render()
 {
 	_window.clear(); //SERVE PER PULIRE IL FRAME SOLITAMENTE FA UN SCHERMATA NERA
-	_window.draw(_player); //RENDERIZZIAMO IL GIOCATORE PER IL NUOVO FRAME
+	_window.draw(_hero); //RENDERIZZIAMO IL GIOCATORE PER IL NUOVO FRAME
 	_window.display();   // LO FACCIAMO VEDERE A SCHERMO ALL'UTENTE
 }
 
