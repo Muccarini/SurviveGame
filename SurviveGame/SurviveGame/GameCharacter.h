@@ -11,7 +11,8 @@ public:
 	
 public:
 	explicit GameCharacter();
-	sf::Vector2f move();
+	sf::Vector2f & move();
+
 	bool isMoving = false;
 	sf::Sprite _sprite; // SPRITE NE GESTICE LA POSIZIONE E L'ORIENTAMENTO
 

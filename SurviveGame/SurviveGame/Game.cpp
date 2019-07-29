@@ -52,7 +52,6 @@ void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
 	{
 		_hero.isMoving = true;
 	}
-	// if(key == WASD) _hero.isMove =true
 }
 
 void Game::update(sf::Time deltaTime, int framePlayer)

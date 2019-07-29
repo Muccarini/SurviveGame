@@ -6,7 +6,6 @@ public:
 
 	virtual ~StrategyMove();
 
-	sf::Vector2f MoveS(sf::Vector2f & movement, sf::Sprite _character);
-	sf::Sprite _character;
+	sf::Vector2f& MoveS(const sf::Vector2f &position, sf::Sprite _character);
 };
 

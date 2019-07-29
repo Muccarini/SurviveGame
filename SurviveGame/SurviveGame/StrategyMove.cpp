@@ -4,19 +4,20 @@ StrategyMove::~StrategyMove()
 {
 }
 
-sf::Vector2f StrategyMove::MoveS(sf::Vector2f* movement, sf::Sprite _character)
+sf::Vector2f& StrategyMove::MoveS(const sf::Vector2f &position, sf::Sprite _character)
 {
 	const float PlayerSpeed = 150.f;
+	sf::Vector2f offset = position;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		movement->y -= PlayerSpeed;
+		offset.y -= PlayerSpeed;
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		movement->x -= PlayerSpeed;
+		offset.x -= PlayerSpeed;
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		movement->y += PlayerSpeed;
+		offset.y += PlayerSpeed;
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		movement->x += PlayerSpeed;
-	_character.move(movement);
+		offset.x += PlayerSpeed;
+	return offset;
 	
 }
 
