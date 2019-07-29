@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "TextureHolder.h"
+#include "Entity.h"
+
 
 class Game
 {
@@ -20,11 +22,7 @@ private:
 
 	sf::RenderWindow _window;
 	TextureHolder _textures;  //CON TextureHolder POSSIAMO GESTIRE PIU TEXTURE ALLA VOLTA (LOAD AND GET)
-	sf::Sprite _player;   // SPRITE NE GESTICE LA POSIZIONE E L'ORIENTAMENTO
-	bool _isMovingUp = false;
-	bool _isMovingDown = false;
-	bool _isMovingLeft = false;
-	bool _isMovingRight = false;
+	Entity _player;   // SPRITE NE GESTICE LA POSIZIONE E L'ORIENTAMENTO
 
 };
 

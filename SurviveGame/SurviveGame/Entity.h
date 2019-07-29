@@ -4,11 +4,11 @@
 class Entity
 {
 public:
-	void         setVelocity(sf::Vector2f velocity);
-	void         setVelocity(float vx, float vy); //OVERLOAD
-	sf::Vector2f getVelocity()const;
+	Entity();
 
-private:
-	sf::Vector2f _velocity;
+	virtual void move() = 0;
+
+	virtual void update()=0;
+	virtual void render()=0;
 };
 
