@@ -19,14 +19,14 @@ void GameCharacter::update(sf::Time deltaTime)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		move(deltaTime, 0.f, -1.f);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		move(deltaTime, 0.f, +1.f);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		move(deltaTime, -1.f, 0.f);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		move(deltaTime, 0.f, 1.f);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		move(deltaTime, +1.f, 0.f);
+		move(deltaTime, 1.f, 0.f);
 }
 
-void GameCharacter::render(sf::RenderTarget* target)
+void GameCharacter::render(sf::RenderWindow* target)
 {
 	target->draw(_sprite);
 }
