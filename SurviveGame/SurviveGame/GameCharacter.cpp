@@ -1,7 +1,7 @@
 #include "GameCharacter.h"
 
 
-GameCharacter::GameCharacter() : isMoving(false)
+GameCharacter::GameCharacter() : _moving(false)
 {
 	_textures.load(Textures::Personaggio, "Sources/Sprite_laila_run2.png");
 	_sprite.setTexture(_textures.get(Textures::Personaggio));
@@ -41,4 +41,15 @@ void GameCharacter::update(sf::Time deltaTime)
 void GameCharacter::render(sf::RenderWindow* target)
 {
 	target->draw(_sprite);
+}
+
+bool GameCharacter::isMoving() 
+{
+	return
+		this->_moving;
+}
+
+void GameCharacter::setMoving(bool moving)
+{
+	this->_moving = moving;
 }

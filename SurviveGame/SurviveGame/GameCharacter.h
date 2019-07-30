@@ -14,6 +14,9 @@ public:
 	void update(sf::Time deltaTime) ;
 	void render(sf::RenderWindow* target) ;
 
+	bool isMoving();
+	void setMoving(bool moving);
+
 
 private:
 	Type _type;
@@ -21,7 +24,7 @@ private:
 	sf::Sprite _sprite;
 	TextureHolder _textures;
 
-	bool isMoving;
+	bool _moving;
 
 	float _movementSpeed = 200.f;
 };

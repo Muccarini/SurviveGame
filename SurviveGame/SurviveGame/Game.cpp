@@ -18,7 +18,7 @@ void Game::run()
 		{
 			timeSinceLastUpdate -= TimePerFrame;
 			processEvents();
-			update(TimePerFrame);5
+			update(TimePerFrame);
 		}
 		render();
 	}
@@ -34,6 +34,7 @@ void Game::processEvents()
 		case sf::Event::KeyPressed:
 			if (event.key.code == sf::Keyboard::Escape)
 				_window.close();
+			handlePlayerInput(event.key.code);
 			break;
 		case sf::Event::Closed:
 			_window.close();
@@ -42,11 +43,18 @@ void Game::processEvents()
     }
 }
 
+void Game::handlePlayerInput(sf::Keyboard::Key key)
+{
+	if (key == sf::Keyboard::W || key == sf::Keyboard::A || sf::Keyboard::S || sf::Keyboard::D)
+		_player.setMoving(true);
+}
+
 
 
 void Game::update(sf::Time deltaTime)
 {
-	_player.update(deltaTime);
+	if(_player.isMoving())
+		_player.update(deltaTime);
 }
 
 

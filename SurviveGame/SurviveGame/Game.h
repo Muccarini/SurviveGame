@@ -14,6 +14,7 @@ public:
 
 private:
 	void processEvents(); //GESTISCE TUTTI GLI EVENTI DELL'UTENTE
+	void handlePlayerInput(sf::Keyboard::Key key);
 
 	void update(sf::Time deltaTime); // AGGIORNA LO STATO DELL'INTERO GIOCO
 	void render();// GESTISCE TUTTI I RENDERING DEL GIOCO
