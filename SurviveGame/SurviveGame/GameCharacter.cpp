@@ -1,7 +1,7 @@
 #include "GameCharacter.h"
 
 
-GameCharacter::GameCharacter()
+GameCharacter::GameCharacter() : isMoving(false)
 {
 	_textures.load(Textures::Personaggio, "Sources/Sprite_laila_run2.png");
 	_sprite.setTexture(_textures.get(Textures::Personaggio));

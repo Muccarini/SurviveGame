@@ -21,6 +21,8 @@ private:
 	sf::Sprite _sprite;
 	TextureHolder _textures;
 
+	bool isMoving;
+
 	float _movementSpeed = 200.f;
 };
 

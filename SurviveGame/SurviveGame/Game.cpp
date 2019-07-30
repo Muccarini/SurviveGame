@@ -18,7 +18,7 @@ void Game::run()
 		{
 			timeSinceLastUpdate -= TimePerFrame;
 			processEvents();
-			update(TimePerFrame);
+			update(TimePerFrame);5
 		}
 		render();
 	}
