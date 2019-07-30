@@ -18,7 +18,7 @@ void Game::run()
 		{
 			timeSinceLastUpdate -= TimePerFrame;
 			processEvents();
-			update(TimePerFrame);
+			update(TimePerFrame, _player);
 		}
 		render();
 	}
@@ -44,9 +44,9 @@ void Game::processEvents()
 
 
 
-void Game::update(sf::Time deltaTime)
+void Game::update(sf::Time deltaTime, GameCharacter player)
 {
-	_player.update(deltaTime);
+	_player.update(deltaTime, _player._sprite);
 }
 
 
