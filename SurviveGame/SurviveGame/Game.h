@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "TextureHolder.h"
-#include "GameCharacter.h"
+#include "Player.h"
 
 
 
@@ -22,6 +22,6 @@ private:
 
 
 	sf::RenderWindow _window; //CON TextureHolder POSSIAMO GESTIRE PIU TEXTURE ALLA VOLTA (LOAD AND GET)
-	GameCharacter _player;   // SPRITE NE GESTICE LA POSIZIONE E L'ORIENTAMENTO
+	Player _player;   // SPRITE NE GESTICE LA POSIZIONE E L'ORIENTAMENTO
 
 };
