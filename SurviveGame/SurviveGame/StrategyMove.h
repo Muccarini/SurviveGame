@@ -6,6 +6,6 @@ public:
 
 	virtual ~StrategyMove();
 
-	void MoveS(sf::Time deltatime, sf::Sprite& _sprite, const float mov_speed);
+	virtual void move(sf::Time deltatime, sf::Sprite& _sprite, const float mov_speed);
 };
 

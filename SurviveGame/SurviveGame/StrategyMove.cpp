@@ -5,7 +5,7 @@ StrategyMove::~StrategyMove()
 {
 }
 
-void StrategyMove::MoveS(sf::Time deltatime, sf::Sprite& _sprite, const float mov_speed)
+void StrategyMove::move(sf::Time deltatime, sf::Sprite& _sprite, const float mov_speed)
 {
 	sf::Vector2f vector(0.f, 0.f);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
