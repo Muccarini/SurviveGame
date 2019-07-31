@@ -1,8 +1,6 @@
 #pragma once
 #include "Entity.h"
-#include "TextureHolder.h"
-#include "StrategyMove.h"
-#include "SFML/Graphics.hpp"
+
 class GameCharacter :
 	public Entity , public sf::Sprite
 {
@@ -11,14 +9,24 @@ public:
 	
 public:
 	explicit GameCharacter();
-	sf::Vector2f & move();
+	
+	void move(sf::Time deltaTime, const float dir_x, const float dir_y) ;
 
-	bool isMoving = false;
-	sf::Sprite _sprite; // SPRITE NE GESTICE LA POSIZIONE E L'ORIENTAMENTO
+	void update(sf::Time deltaTime) ;
+	void render(sf::RenderWindow* target) ;
+
+	bool isMoving();
+	void setMoving(bool moving);
+
 
 private:
 	Type _type;
-	TextureHolder _textures;  //CON TextureHolder POSSIAMO GESTIRE PIU TEXTURE ALLA VOLTA (LOAD AND GET)
-	StrategyMove _move;
+
+	sf::Sprite _sprite;
+	TextureHolder _textures;
+
+	bool _moving;
+
+	float _movementSpeed = 200.f;
 };
 

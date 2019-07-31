@@ -1,14 +1,12 @@
 #pragma once
 #include<SFML/Graphics.hpp>
+#include "TextureHolder.h"
 
 class Entity
 {
 public:
-	void         setVelocity(sf::Vector2f velocity);
-	void         setVelocity(float vx, float vy); //OVERLOAD
-	sf::Vector2f getVelocity()const;
+	Entity();
 
-private:
-	sf::Vector2f _velocity;
+
 };
 

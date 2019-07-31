@@ -3,6 +3,8 @@
 #include "TextureHolder.h"
 #include "GameCharacter.h"
 
+
+
 class Game
 {
 public:
@@ -12,15 +14,14 @@ public:
 
 private:
 	void processEvents(); //GESTISCE TUTTI GLI EVENTI DELL'UTENTE
-	void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
+	void handlePlayerInput(sf::Keyboard::Key key);
 
-	void update(sf::Time deltaTime, int framePlayer); // AGGIORNA LO STATO DELL'INTERO GIOCO
+	void update(sf::Time deltaTime); // AGGIORNA LO STATO DELL'INTERO GIOCO
 	void render();// GESTISCE TUTTI I RENDERING DEL GIOCO
 
 
 
-	sf::RenderWindow _window;
-	TextureHolder _textures;  //CON TextureHolder POSSIAMO GESTIRE PIU TEXTURE ALLA VOLTA (LOAD AND GET)
-	GameCharacter _hero;
+	sf::RenderWindow _window; //CON TextureHolder POSSIAMO GESTIRE PIU TEXTURE ALLA VOLTA (LOAD AND GET)
+	GameCharacter _player;   // SPRITE NE GESTICE LA POSIZIONE E L'ORIENTAMENTO
 
 };
