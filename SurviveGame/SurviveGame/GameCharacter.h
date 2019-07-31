@@ -11,14 +11,10 @@ public:
 public:
 	explicit GameCharacter();
 	
-	void move(sf::Time deltaTime) ;
+	void move(sf::Time deltaTime);
 
-	void update(sf::Time deltaTime) ;
-	void render(sf::RenderWindow* target) ;
-
-	bool isMoving();
-	void setMoving(bool moving);
-
+	void update(sf::Time deltaTime);
+	void render(sf::RenderWindow* target);
 
 private:
 	Type _type;
@@ -26,7 +22,6 @@ private:
 	sf::Sprite _sprite;
 	TextureHolder _textures;
 	StrategyMove _m;
-	bool _moving;
 
 	float _movementSpeed = 200.f;
 };
