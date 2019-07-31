@@ -22,6 +22,6 @@ private:
 
 
 	sf::RenderWindow _window; //CON TextureHolder POSSIAMO GESTIRE PIU TEXTURE ALLA VOLTA (LOAD AND GET)
-	Entity* _player;   // SPRITE NE GESTICE LA POSIZIONE E L'ORIENTAMENTO
+	GameCharacter _player;   // SPRITE NE GESTICE LA POSIZIONE E L'ORIENTAMENTO
 
 };
