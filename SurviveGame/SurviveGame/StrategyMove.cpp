@@ -1,23 +1,37 @@
 #include "StrategyMove.h"
+#include "Game.h"
 
 StrategyMove::~StrategyMove()
 {
 }
 
-sf::Vector2f& StrategyMove::MoveS(const sf::Vector2f &position, sf::Sprite _character)
+void StrategyMove::MoveS(sf::Time deltatime, sf::Sprite* _sprite, const float mov_speed)
 {
-	const float PlayerSpeed = 150.f;
-	sf::Vector2f offset = position;
-
+	sf::Vector2f vector(0.f, 0.f);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		offset.y -= PlayerSpeed;
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		offset.x -= PlayerSpeed;
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		offset.y += PlayerSpeed;
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		offset.x += PlayerSpeed;
-	return offset;
+	{
+		vector.y = -mov_speed;
+		(*_sprite).move( vector* deltatime.asSeconds());
+		(*_sprite).setTextureRect(sf::IntRect(0 * 32, 48, 32, 48));
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	{
+		vector.x = -mov_speed;
+		(*_sprite).move(vector * deltatime.asSeconds());
+		(*_sprite).setTextureRect(sf::IntRect(0 * 32, 48 * 2, 32, 48));
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	{
+		vector.y = mov_speed;
+		(*_sprite).move(vector * deltatime.asSeconds());
+		(*_sprite).setTextureRect(sf::IntRect(0 * 32, 0, 32, 48));
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	{
+		vector.x = mov_speed;
+		(*_sprite).move(vector * deltatime.asSeconds());
+		(*_sprite).setTextureRect(sf::IntRect(0 * 32, 48 * 3, 32, 48));
+	}
 	
 }
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Entity.h"
+#include "StrategyMove.h"
 
 class GameCharacter :
 	public Entity , public sf::Sprite
@@ -10,7 +11,7 @@ public:
 public:
 	explicit GameCharacter();
 	
-	void move(sf::Time deltaTime, const float dir_x, const float dir_y) ;
+	void move(sf::Time deltaTime) ;
 
 	void update(sf::Time deltaTime) ;
 	void render(sf::RenderWindow* target) ;
@@ -24,7 +25,7 @@ private:
 
 	sf::Sprite _sprite;
 	TextureHolder _textures;
-
+	StrategyMove _m;
 	bool _moving;
 
 	float _movementSpeed = 200.f;

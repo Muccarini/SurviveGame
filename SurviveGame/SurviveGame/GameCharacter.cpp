@@ -9,14 +9,18 @@ GameCharacter::GameCharacter() : _moving(false)
 	_sprite.setTextureRect(sf::IntRect(0, 0, 32, 48));
 }
 
-void GameCharacter::move(sf::Time deltaTime,const float dir_x,const float dir_y)
+void GameCharacter::move(sf::Time deltaTime)
 {
-	_sprite.move(dir_x * deltaTime.asSeconds() * _movementSpeed, dir_y * deltaTime.asSeconds() *_movementSpeed);
+	//_sprite.move(dir_x * deltaTime.asSeconds() * _movementSpeed, dir_y * deltaTime.asSeconds() *_movementSpeed);
+	this->_m.MoveS(deltaTime, &_sprite, _movementSpeed);
 }
 
 void GameCharacter::update(sf::Time deltaTime) 
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	if (_moving)
+		move(deltaTime);
+		
+	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
 		move(deltaTime, 0.f, -1.f);
 		_sprite.setTextureRect(sf::IntRect(0 * 32, 48, 32, 48));
@@ -35,7 +39,7 @@ void GameCharacter::update(sf::Time deltaTime)
 	{
 		move(deltaTime, 1.f, 0.f);
 		_sprite.setTextureRect(sf::IntRect(0 * 32, 48 * 3, 32, 48));
-	}
+	}*/
 }
 
 void GameCharacter::render(sf::RenderWindow* target)

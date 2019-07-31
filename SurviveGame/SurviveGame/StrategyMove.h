@@ -6,6 +6,6 @@ public:
 
 	virtual ~StrategyMove();
 
-	sf::Vector2f& MoveS(const sf::Vector2f &position, sf::Sprite _character);
+	void MoveS(sf::Time deltatime, sf::Sprite* _sprite, const float mov_speed);
 };
 
