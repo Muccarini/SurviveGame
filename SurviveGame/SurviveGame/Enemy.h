@@ -1,24 +1,24 @@
 #pragma once
 #include "GameCharacter.h"
-#include "PlayerStrategyMove.h"
+#include "EnemyStrategyMove.h"
 
-class Player :
+
+class Enemy :
 	public GameCharacter
 {
 public:
-	enum Type {Warrior, Ranger, Mage};
-	
+	enum Type {Ranged, Melee, Boss};
+
 public:
-	explicit Player();
-	virtual ~Player();
-	
+	explicit Enemy();
+	virtual ~Enemy();
+
 	virtual void move(sf::Time deltaTime);
 
 	virtual void update(sf::Time deltaTime);
 
 private:
 
-	Type _type;
-	PlayerStrategyMove _m;
+	EnemyStrategyMove _m;
 };
 

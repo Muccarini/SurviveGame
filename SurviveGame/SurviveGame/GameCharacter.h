@@ -7,6 +7,8 @@ class GameCharacter
 public:
 	GameCharacter();
 	virtual ~GameCharacter();
+
+	void render(sf::RenderWindow* target);
 	
 
 

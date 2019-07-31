@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Player.h"
+#include "Enemy.h"
+#include <vector>
 
 
 
@@ -20,7 +22,9 @@ private:
 
 
 
-	sf::RenderWindow _window; //CON TextureHolder POSSIAMO GESTIRE PIU TEXTURE ALLA VOLTA (LOAD AND GET)
-	Player _player;   // SPRITE NE GESTICE LA POSIZIONE E L'ORIENTAMENTO
+	sf::RenderWindow _window;
+	Player _player;
+	Enemy _enemy;
+
 
 };

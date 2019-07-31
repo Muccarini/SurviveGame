@@ -57,6 +57,7 @@ void Game::render()
 {
 	_window.clear(); //SERVE PER PULIRE IL FRAME SOLITAMENTE FA UN SCHERMATA NERA
 	_player.render(&_window); //RENDERIZZIAMO IL GIOCATORE PER IL NUOVO FRAME
+	_enemy.render(&_window);
 	_window.display();   // LO FACCIAMO VEDERE A SCHERMO ALL'UTENTE
 }
 

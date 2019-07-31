@@ -5,7 +5,7 @@ class EnemyStrategyMove :
 {
 public:
 	virtual ~EnemyStrategyMove();
-	void move(sf::Time deltatime, sf::Sprite& _sprite,
-		const float mov_speed) override;
+
+	void move(sf::Time deltatime, sf::Sprite& _sprite,const float mov_speed) override;
 };
 

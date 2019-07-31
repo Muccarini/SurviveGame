@@ -44,8 +44,3 @@ void Player::update(sf::Time deltaTime)
 		_sprite.setTextureRect(sf::IntRect(0 * 32, 48 * 3, 32, 48));
 	}*/
 }
-
-void Player::render(sf::RenderWindow* target)
-{
-	target->draw(_sprite);
-}
