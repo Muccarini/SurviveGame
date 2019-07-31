@@ -1,8 +1,8 @@
 #pragma once
-#include "Entity.h"
+#include "TextureHolder.h"
+#include "StrategyMove.h"
 
-class GameCharacter :
-	public Entity
+class GameCharacter
 {
 public:
 	enum Type {Warrior, Ranger, Mage};
@@ -20,8 +20,9 @@ private:
 
 	sf::Sprite _sprite;
 	TextureHolder _textures;
-	StrategyMove _m;
 
-	float _movementSpeed = 200.f;
+    float _movementSpeed = 200.f;
+
+	StrategyMove _m;
 };
 
