@@ -1,5 +1,4 @@
 #include "Game.h"
-#include "TextureHolder.h"
 
 
 Game::Game() : _window(sf::VideoMode(1920, 1080), "Survive.io") {}

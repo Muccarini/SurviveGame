@@ -16,7 +16,7 @@ Player::~Player()
 void Player::move(sf::Time deltaTime)
 {
 	//_sprite.move(dir_x * deltaTime.asSeconds() * _movementSpeed, dir_y * deltaTime.asSeconds() *_movementSpeed);
-	this->_m.MoveS(deltaTime, _sprite, _movementSpeed);
+	this->_m.move(deltaTime, _sprite, _movementSpeed);
 }
 
 void Player::update(sf::Time deltaTime)
