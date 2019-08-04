@@ -37,6 +37,7 @@ void Game::processEvents()
 		case sf::Event::Closed:
 			_window.close();
 			break;
+
 		}
     }
 }
@@ -50,6 +51,7 @@ void Game::handlePlayerInput(sf::Keyboard::Key key)
 void Game::update(sf::Time deltaTime)
 {
 		_player.update(deltaTime);
+		_enemy.update(deltaTime,&_player);
 }
 
 

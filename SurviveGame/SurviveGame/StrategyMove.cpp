@@ -3,6 +3,3 @@
 StrategyMove::~StrategyMove()
 {
 }
-
-
-

@@ -9,7 +9,7 @@
 class Game
 {
 public:
-	Game();
+	explicit Game();
 	
 	void run();
 

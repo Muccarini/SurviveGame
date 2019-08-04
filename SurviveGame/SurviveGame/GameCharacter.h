@@ -17,7 +17,7 @@ protected:
 	sf::Sprite _sprite;
 	TextureHolder _textures;
 
-	float _movementSpeed = 200.f;
+	float _movementSpeed;
 
 
 };

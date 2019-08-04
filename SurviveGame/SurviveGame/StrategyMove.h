@@ -9,4 +9,3 @@ public:
 
 	virtual void move(sf::Time deltatime, sf::Sprite& _sprite, const float mov_speed)=0;
 };
-

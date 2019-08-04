@@ -12,13 +12,18 @@ public:
 	explicit Player();
 	virtual ~Player();
 	
-	virtual void move(sf::Time deltaTime);
+	 void move(sf::Time deltaTime);
 
-	virtual void update(sf::Time deltaTime);
+	 void update(sf::Time deltaTime);
+
+	sf::Vector2f getPosition();
+
 
 private:
 
 	Type _type;
 	PlayerStrategyMove _m;
+
+	float _sens =10;
 };
 
