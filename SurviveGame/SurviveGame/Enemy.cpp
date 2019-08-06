@@ -7,10 +7,10 @@ Enemy::Enemy()
 {
 	_movementSpeed = 0.8;
 
-	_textures.load(Textures::Enemy, "Sources/Sprite_laila_run2.png");
+	_textures.load(Textures::Enemy, "Sources/zombie.png");
 	_sprite.setTexture(_textures.get(Textures::Enemy));
 	_sprite.setPosition(200.f, 200.f);
-	//_sprite.setTextureRect(sf::IntRect(0, 0, 32, 48));
+	_sprite.setTextureRect(sf::IntRect(0, 0, 32, 48));
 }
 
 
