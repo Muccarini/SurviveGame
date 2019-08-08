@@ -34,8 +34,13 @@ void Enemy::update(sf::Time deltaTime, Player* target)
 	float lenght = sqrt(pow(dX, 2) + pow(dY, 2));
 
 	sf::Vector2f normVect(dX / lenght, dY / lenght);
-	
-	this->_sprite.move(normVect * this->_movementSpeed * deltaTime.asSeconds());
+
+	if (normVect.x && normVect.y)
+	{
+		this->_sprite.move(normVect * this->_movementSpeed * deltaTime.asSeconds());
+
+		this->_a.animate(this->_sprite,deltaTime, 0.3);
+	}
 
 	            //ROTATION//
 	const float PI = 3.14159265f;

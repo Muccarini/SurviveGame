@@ -1,6 +1,7 @@
 #pragma once
 #include "GameCharacter.h"
 #include "PlayerStrategyMove.h"
+#include "Animation.h"
 
 class Player :
 	public GameCharacter
