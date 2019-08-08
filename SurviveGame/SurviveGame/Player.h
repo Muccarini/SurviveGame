@@ -23,7 +23,5 @@ private:
 
 	Type _type;
 	PlayerStrategyMove _m;
-
-	float _sens =10;
 };
 

@@ -5,12 +5,13 @@
 
 Enemy::Enemy()
 {
-	_movementSpeed = 0.8;
+	_movementSpeed = 150;
 
-	_textures.load(Textures::Enemy, "Sources/zombie.png");
+	_textures.load(Textures::Enemy, "Sources/zombie1.png");
 	_sprite.setTexture(_textures.get(Textures::Enemy));
 	_sprite.setPosition(200.f, 200.f);
-	_sprite.setTextureRect(sf::IntRect(0, 0, 32, 48));
+	_sprite.setOrigin(+34, +34);
+	_sprite.setTextureRect(sf::IntRect(0, 0, 68, 68));
 }
 
 
@@ -23,39 +24,22 @@ void Enemy::move(sf::Time deltaTime)
 	this->_m.move(deltaTime, this->_sprite, this->_movementSpeed);
 }
 
+
 void Enemy::update(sf::Time deltaTime, Player* target)
-{
-	sf::Vector2f targetPos = target->getPosition();
-	sf::Vector2f enemyPos = this->_sprite.getPosition();
+{   
+	            //MOVEMENT//
+	float dX = target->getPosition().x - this->_sprite.getPosition().x;
+	float dY = target->getPosition().y - this->_sprite.getPosition().y;
 
-	sf::Vector2f movementVector = (targetPos - enemyPos);
+	float lenght = sqrt(pow(dX, 2) + pow(dY, 2));
 
-	this->_sprite.move(movementVector * deltaTime.asSeconds()* this->_movementSpeed);
-
-	          // D //
-	if (movementVector.x > 0)
-		if ((fabs(movementVector.y) / movementVector.x) < 1)
-			_sprite.setTextureRect(sf::IntRect(0 * 32, 48 * 3, 32, 48));;
-
-		
-	          // A //
-	if (movementVector.x < 0)
-		if((fabs(movementVector.y) / fabs(movementVector.x)) < 1 )
-			_sprite.setTextureRect(sf::IntRect(0 * 32, 48 * 2, 32, 48));
-		
-	          // S //
-	if(movementVector.y > 0)
-		_sprite.setTextureRect(sf::IntRect(0 * 32, 0, 32, 48));
-
-	          // W //
-	if(movementVector.y < 0)
-		_sprite.setTextureRect(sf::IntRect(0 * 32, 48, 32, 48));
-
+	sf::Vector2f normVect(dX / lenght, dY / lenght);
 	
+	this->_sprite.move(normVect * this->_movementSpeed * deltaTime.asSeconds());
 
+	            //ROTATION//
+	const float PI = 3.14159265f;
+	float deg = atan2(dY, dX) * 180.f / PI;
 
-     //TODO//
-	// il personaggio verra' cambiato frame provvisori
-	//il movimento e' fluido perche' il vettore varia sempre
-	//avendo mS a moltiplicare non abbiamo un movimento costante 
+	this->_sprite.setRotation(deg + 90.f);
 }
