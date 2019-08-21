@@ -2,7 +2,6 @@
 #include <math.h>
 
 
-
 Enemy::Enemy()
 {
 	_movementSpeed = 150;
@@ -35,10 +34,8 @@ void Enemy::update(sf::Time deltaTime, Player* target)
 
 	sf::Vector2f normVect(dX / lenght, dY / lenght);
 
-	if (normVect.x && normVect.y)
-	{
-		this->_sprite.move(normVect * this->_movementSpeed * deltaTime.asSeconds());
-	}
+	this->_sprite.move(normVect * this->_movementSpeed * deltaTime.asSeconds());
+
 
 	            //ROTATION//
 	const float PI = 3.14159265f;
