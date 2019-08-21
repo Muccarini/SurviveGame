@@ -38,8 +38,6 @@ void Enemy::update(sf::Time deltaTime, Player* target)
 	if (normVect.x && normVect.y)
 	{
 		this->_sprite.move(normVect * this->_movementSpeed * deltaTime.asSeconds());
-
-		this->_a.animate(this->_sprite,deltaTime, 0.3);
 	}
 
 	            //ROTATION//

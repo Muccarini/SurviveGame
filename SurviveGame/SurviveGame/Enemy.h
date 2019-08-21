@@ -19,6 +19,5 @@ public:
 
 private:
 	EnemyStrategyMove _m;
-	Animation _a;
 };
 
