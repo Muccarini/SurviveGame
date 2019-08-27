@@ -9,6 +9,7 @@ Enemy::Enemy()
 	_textures.load(Textures::Enemy, "Sources/zombie1.png");
 	_sprite.setTexture(_textures.get(Textures::Enemy));
 	_sprite.setPosition(200.f, 200.f);
+	_sprite.setScale(0.4, 0.4);
 	_sprite.setOrigin(+34, +34);
 	_sprite.setTextureRect(sf::IntRect(0, 0, 68, 68));
 }

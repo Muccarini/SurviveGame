@@ -6,7 +6,7 @@ Player::Player()
 	_movementSpeed = 250;
 	_textures.load(Textures::Personaggio, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
 	_sprite.setTexture(_textures.get(Textures::Personaggio));
-	_sprite.setScale(0.4, 0.4);
+	_sprite.setScale(0.2, 0.2);
 	_sprite.setPosition(100.f, 100.f);
 	       // IL PUNTO DI ROTAZIONE NON E' CENTRATO //
 		   // non so se e' 5, 5
