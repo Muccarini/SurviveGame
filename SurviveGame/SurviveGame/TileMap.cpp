@@ -36,6 +36,18 @@ bool TileMap::load(const std::string & tileset, sf::Vector2u tileSize,
 			quad[1].texCoords = sf::Vector2f((tu + 1) * tileSize.x, tv * tileSize.y);
 			quad[2].texCoords = sf::Vector2f((tu + 1) * tileSize.x, (tv + 1) * tileSize.y);
 			quad[3].texCoords = sf::Vector2f(tu * tileSize.x, (tv + 1) * tileSize.y);
+
+			//STO CERCANDO DI CAPIRE COME SETTARE LA COLLISIONE DEI TILE 1
+
+			if (tileNumber == 1)
+			{
+				collision.setSize(static_cast<sf::Vector2f>(tileSize));
+				collision.setFillColor(sf::Color::Transparent);
+				collision.setOutlineColor(sf::Color::Magenta);
+				collision.setOutlineThickness(1.f);
+				collision.setPosition(sf::Vector2f(i * tileSize.x, j * tileSize.y));
+				solidTiles.push_back(collision);
+			}
 		}
 	}
 
@@ -52,4 +64,11 @@ void TileMap::draw(sf::RenderTarget & target, sf::RenderStates states) const
 
 	// disegna l'array di vertex
 	target.draw(t_vertex, states);
+	int pos = 0;
+	for (auto i = solidTiles.begin(); i < solidTiles.end(); i++)
+	{
+		target.draw(solidTiles[pos], states);
+		pos++;
+	}
+		
 }

@@ -8,11 +8,13 @@ public:
 		unsigned int width, unsigned int height);
 
 	//Functions
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 private:
 	//Attriburtes
 
 	sf::VertexArray t_vertex;
 	sf::Texture t_tileset;
+	std::vector<sf::RectangleShape> solidTiles;
+	sf::RectangleShape collision;
 };
 

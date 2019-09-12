@@ -14,7 +14,7 @@ public:
 	
 	 void move(sf::Time deltaTime);
 
-	 void update(sf::Time deltaTime);
+	 void update(sf::Time deltaTime, sf::Vector2f mousePosView);
 
 	sf::Vector2f getPosition();
 

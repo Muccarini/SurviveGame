@@ -28,14 +28,19 @@ private:
 	Player _player;
 	Enemy _enemy;
 	Map _map;
-	sf::View _view;
 
 
 	//init game 
 	float gridSizeF = 100.f;
 	unsigned gridSizeU = static_cast<unsigned>(gridSizeF);
-
+	sf::Vector2i mousePosScreen;
+	sf::Vector2i mousePosWindow;
+	sf::Vector2f mousePosView;
+	sf::Vector2u mousePosGrid;
 
 	//init game elemts
-	sf::RectangleShape shape;
+	std::vector<sf::RectangleShape> walls;
+
+	sf::RectangleShape player;
+	sf::RectangleShape _wall ;
 };

@@ -4,7 +4,7 @@
 
 Enemy::Enemy()
 {
-	_movementSpeed = 150;
+	_movementSpeed = 130;
 
 	_textures.load(Textures::Enemy, "Sources/zombie1.png");
 	_sprite.setTexture(_textures.get(Textures::Enemy));

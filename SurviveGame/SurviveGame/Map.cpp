@@ -1,7 +1,14 @@
 #include "Map.h"
 
-void Map::draw(sf::RenderWindow * target)
+Map::Map() : _view(sf::Vector2f(0.f, 0.f), sf::Vector2f(600.f, 500.f))
 {
+
+	//init view
+	//_view.setSize(320.f, 180.f);
+	//_view.setCenter(320 / 2.f, 180 / 2.f);
+	//_view.setCenter(player->getPosition());
+
+
 	const int level[] =
 	{
 		0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -37,10 +44,57 @@ void Map::draw(sf::RenderWindow * target)
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	};
 
-	_tiles.load("C:/Users/Federico/source/Repos/SurviveGame/SurviveGame/SurviveGame/Sources/graphics-vertex-array-tilemap-tileset.png",
-		sf::Vector2u(32, 32), level, 60, 33);
+	_tiles.load("Sources/graphics-vertex-array-tilemap-tileset.png",
+		sf::Vector2u(32, 32), level, 60, 34);
 
-	_tiles.draw(*target, sf::RenderStates::Default);
-}
+	//Titolo test per la view
+	_font.loadFromFile("Sources/Dosis-Light.ttf");
+	_text.setCharacterSize(30);
+	_text.setFillColor(sf::Color::Black);
+	_text.setFont(_font);
+	_text.setPosition(20.f, 20.f);
+	_text.setString("TEST");
+
+};
+
+
+Map::~Map()
+{
+};
+
+
+void Map::draw()
+{
+};
+
+
+void Map::update(sf::Time dt, sf::RenderWindow& target, Player* player)
+{
+	//update della posizione del mouse
+
+	//_player->render(&target);
+	mousePosScreen = sf::Mouse::getPosition();
+	mousePosWindow = sf::Mouse::getPosition(target);
+	target.setView(_view);
+	mousePosView = target.mapPixelToCoords(mousePosWindow);
+	if (mousePosView.x >= 0.f)
+		mousePosGrid.x = mousePosView.x / gridSizeU;
+	if (mousePosView.y >= 0.f)
+		mousePosGrid.y = mousePosView.y / gridSizeU;
+	target.setView(target.getDefaultView());
+	
+	//player->update(dt, mousePosView);
+
+	//_view.setCenter(player->getPosition());
+
+	std::stringstream ss;
+	ss << "Screen: " << mousePosScreen.x << " " << mousePosScreen.y << "\n"
+		<< "Window: " << mousePosWindow.x << " " << mousePosWindow.y << "\n"
+		<< "View: " << mousePosView.x << " " << mousePosView.y << "\n"
+		<< "Grid: " << mousePosGrid.x << " " << mousePosGrid.y << "\n";
+
+	_text.setString(ss.str());
+};

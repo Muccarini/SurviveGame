@@ -3,7 +3,7 @@
 
 Player::Player()
 {
-	_movementSpeed = 250;
+	_movementSpeed = 190;
 	_textures.load(Textures::Personaggio, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
 	_sprite.setTexture(_textures.get(Textures::Personaggio));
 	_sprite.setScale(0.2, 0.2);
@@ -23,17 +23,18 @@ void Player::move(sf::Time deltaTime)
 	this->_m.move(deltaTime, _sprite, _movementSpeed);
 }
 
-void Player::update(sf::Time deltaTime)
+void Player::update(sf::Time deltaTime, sf::Vector2f mousePosView)
 {
 		move(deltaTime);
 		
-		float dX = sf::Mouse::getPosition().x - this->_sprite.getPosition().x;
-		float dY = sf::Mouse::getPosition().y - this->_sprite.getPosition().y;
+		float dX = sf::Mouse::getPosition().x - this->_sprite.getPosition().x; //mousePosView.x;
+		float dY = sf::Mouse::getPosition().y - this->_sprite.getPosition().y; //mousePosView.y;
 
 		const float PI = 3.14159265f;
 		float deg = atan2(dY, dX) * 180.f / PI;
 
 		this->_sprite.setRotation(deg + 360.f);
+
 }
 
 sf::Vector2f Player::getPosition()

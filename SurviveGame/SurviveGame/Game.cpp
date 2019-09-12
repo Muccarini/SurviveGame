@@ -1,18 +1,9 @@
 #include "Game.h"
 
 
-Game::Game() : _window(sf::VideoMode(1920, 1080), "Survive.io"), _view(sf::Vector2f(0.f, 0.f), sf::Vector2f(600.f, 500.f))
+Game::Game() : _window(sf::VideoMode(1920, 1080), "Survive.io")
 {
-	//init game 
-	float gridSizeF = 100.f;
-	unsigned gridSizeU = static_cast<unsigned>(gridSizeF);
-
-	//init view
-	_view.setSize(1920.f, 1080.f);
-	_view.setCenter(_window.getSize().x / 2.f, _window.getSize().y / 2.f);
-
-	//init game elemts
-	sf::RectangleShape shape(sf::Vector2f(gridSizeF, gridSizeF));
+	//_wall.setFillColor(sf::Color::Red);
 }
 
 void Game::run()
@@ -62,25 +53,58 @@ void Game::handlePlayerInput(sf::Keyboard::Key key)
 
 void Game::update(sf::Time deltaTime)
 {
-	_player.update(deltaTime);
+	_player.update(deltaTime, mousePosView);
+	_map.update(deltaTime, _window, &_player);
 	_enemy.update(deltaTime,&_player);
+	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	{
+		_view.move(-viewSpeed * deltaTime.asSeconds(), 0.f);
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	{
+		_view.move(viewSpeed * deltaTime.asSeconds(), 0.f);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	{
+		_view.move(0.f, -viewSpeed * deltaTime.asSeconds());
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	{
+		_view.move(0.f, viewSpeed * deltaTime.asSeconds());
+	}*/
+	
+	/*//update della posizione del mouse
+	mousePosScreen = sf::Mouse::getPosition();
+	mousePosWindow = sf::Mouse::getPosition(_window);
+	_window.setView(_view);
+	mousePosView = _window.mapPixelToCoords(mousePosWindow);
+	if (mousePosView.x >= 0.f)
+		mousePosGrid.x = mousePosView.x / gridSizeU;
+	if (mousePosView.y >= 0.f)
+		mousePosGrid.y = mousePosView.y / gridSizeU;
+	_window.setView(_window.getDefaultView());
+	_view.setCenter(_player.getPosition());
+	*/
+
 }
 
 
 void Game::render()
 {
 	_window.clear(); //SERVE PER PULIRE IL FRAME SOLITAMENTE FA UN SCHERMATA NERA
-
-	_map.draw(&_window);
 	
-	_window.setView(_view);
+	_window.draw(_map._tiles);
 
-	_window.draw(shape);
+	_window.draw(_wall);
+
+	//_window.draw(*(_map.player));
+	_player.render(&_window); //RENDERIZZIAMO IL GIOCATORE PER IL NUOVO FRAME
+	_enemy.render(&_window);
 
 	_window.setView(_window.getDefaultView());
 
-	_player.render(&_window); //RENDERIZZIAMO IL GIOCATORE PER IL NUOVO FRAME
-	_enemy.render(&_window);
+	_window.draw(_map._text);
+
 	_window.display();   // LO FACCIAMO VEDERE A SCHERMO ALL'UTENTE
 }
 
