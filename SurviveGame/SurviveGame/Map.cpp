@@ -1,6 +1,7 @@
 #include "Map.h"
 
-Map::Map() : _view(sf::Vector2f(0.f, 0.f), sf::Vector2f(600.f, 500.f))
+Map::Map(Player* p, Enemy* e) : _view(sf::Vector2f(0.f, 0.f), sf::Vector2f(600.f, 500.f)),
+						_player(p), _enemy(e), _tiles(NULL)
 {
 
 	//init view
@@ -47,16 +48,10 @@ Map::Map() : _view(sf::Vector2f(0.f, 0.f), sf::Vector2f(600.f, 500.f))
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	};
 
+	_tiles._level = level;
+
 	_tiles.load("Sources/graphics-vertex-array-tilemap-tileset.png",
 		sf::Vector2u(32, 32), level, 60, 34);
-
-	//Titolo test per la view
-	_font.loadFromFile("Sources/Dosis-Light.ttf");
-	_text.setCharacterSize(30);
-	_text.setFillColor(sf::Color::Black);
-	_text.setFont(_font);
-	_text.setPosition(20.f, 20.f);
-	_text.setString("TEST");
 
 };
 
@@ -71,30 +66,41 @@ void Map::draw()
 };
 
 
-void Map::update(sf::Time dt, sf::RenderWindow& target, Player* player)
+void Map::update(sf::RenderWindow& target)
 {
-	//update della posizione del mouse
+	//if (!_player->_colBox.intersects(_tiles.))
+	//{
+	//	/*la mappa deve cambiare le coordinate di player
+	//	dopo che lui le ha detto che le vuole cambiare attraverso il metodo notify()*/
+	//	this->x = _player->getPosition().x;
+	//	this->y = _player->getPosition().y;
+	//	_player->render(&target);
+	//}
+	//else 
+	//{
+	//	//if (/*il tile è sopra allora lo sposta sotto. Va fatto per tutte le direzion*/)
+	//		_player->setPositon(sf::Vector2f(-1.f*(_player->_movementSpeed),
+	//			0 * (_player->_movementSpeed)));
+	//}
+	////if (_enemy->getPosition()!= _tiles.collision.getPosition())
+	//{
+	//	/*la mappa deve cambiare le coordinate di enemy
+	//	dopo che lui le ha detto che le vuole cambiare attraverso il metodo notify()*/
+	//	this->x = _enemy->getPosition().x;
+	//	this->y = _enemy->getPosition().y;
+	//	_enemy->render(&target);
+	//}
+	////else
+	////{
+	////	//if (/*il tile è sopra allora lo sposta sotto. Va fatto per tutte le direzion*/)
+	////	_enemy->setPositon(sf::Vector2f(-1.f*(_player->_movementSpeed),
+	////		0 * (_player->_movementSpeed)));
+	////}
+	this->x = _player->getPosition().x;
+	this->y = _player->getPosition().y;
+	_player->render(&target);
 
-	//_player->render(&target);
-	mousePosScreen = sf::Mouse::getPosition();
-	mousePosWindow = sf::Mouse::getPosition(target);
-	target.setView(_view);
-	mousePosView = target.mapPixelToCoords(mousePosWindow);
-	if (mousePosView.x >= 0.f)
-		mousePosGrid.x = mousePosView.x / gridSizeU;
-	if (mousePosView.y >= 0.f)
-		mousePosGrid.y = mousePosView.y / gridSizeU;
-	target.setView(target.getDefaultView());
-	
-	//player->update(dt, mousePosView);
-
-	//_view.setCenter(player->getPosition());
-
-	std::stringstream ss;
-	ss << "Screen: " << mousePosScreen.x << " " << mousePosScreen.y << "\n"
-		<< "Window: " << mousePosWindow.x << " " << mousePosWindow.y << "\n"
-		<< "View: " << mousePosView.x << " " << mousePosView.y << "\n"
-		<< "Grid: " << mousePosGrid.x << " " << mousePosGrid.y << "\n";
-
-	_text.setString(ss.str());
+	this->x = _enemy->getPosition().x;
+	this->y = _enemy->getPosition().y;
+	_enemy->render(&target);
 };

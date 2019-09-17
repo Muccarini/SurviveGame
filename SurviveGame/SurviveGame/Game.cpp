@@ -1,9 +1,20 @@
 #include "Game.h"
 
 
-Game::Game() : _window(sf::VideoMode(1920, 1080), "Survive.io")
+Game::Game() : _window(sf::VideoMode(1920, 1080), "Survive.io"), _map(&_player, &_enemy)
 {
 	//_wall.setFillColor(sf::Color::Red);
+
+		//Titolo test per la view
+	_font.loadFromFile("Sources/Dosis-Light.ttf");
+	_text.setCharacterSize(30);
+	_text.setFillColor(sf::Color::Black);
+	_text.setFont(_font);
+	_text.setPosition(20.f, 20.f);
+	_text.setString("TEST");
+
+	_player.subscribe(&_map);
+	_enemy.subscribe(&_map);
 }
 
 void Game::run()
@@ -22,7 +33,7 @@ void Game::run()
 			processEvents();
 			update(TimePerFrame);
 		}
-		render();
+		//render();
 	}
 }
 
@@ -53,38 +64,38 @@ void Game::handlePlayerInput(sf::Keyboard::Key key)
 
 void Game::update(sf::Time deltaTime)
 {
-	_player.update(deltaTime, mousePosView);
-	_map.update(deltaTime, _window, &_player);
-	_enemy.update(deltaTime,&_player);
-	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-	{
-		_view.move(-viewSpeed * deltaTime.asSeconds(), 0.f);
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-	{
-		_view.move(viewSpeed * deltaTime.asSeconds(), 0.f);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-	{
-		_view.move(0.f, -viewSpeed * deltaTime.asSeconds());
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-	{
-		_view.move(0.f, viewSpeed * deltaTime.asSeconds());
-	}*/
+	_window.clear(); //SERVE PER PULIRE IL FRAME SOLITAMENTE FA UN SCHERMATA NERA
+
+	_window.draw(_map._tiles);
+
 	
-	/*//update della posizione del mouse
+	//update della posizione del mouse
 	mousePosScreen = sf::Mouse::getPosition();
 	mousePosWindow = sf::Mouse::getPosition(_window);
-	_window.setView(_view);
+	_window.setView(_map._view);
 	mousePosView = _window.mapPixelToCoords(mousePosWindow);
 	if (mousePosView.x >= 0.f)
 		mousePosGrid.x = mousePosView.x / gridSizeU;
 	if (mousePosView.y >= 0.f)
 		mousePosGrid.y = mousePosView.y / gridSizeU;
 	_window.setView(_window.getDefaultView());
-	_view.setCenter(_player.getPosition());
-	*/
+	(&_map)->_view.setCenter(_player.getPosition());
+
+	std::stringstream ss;
+	ss << "Screen: " << mousePosScreen.x << " " << mousePosScreen.y << "\n"
+		<< "Window: " << mousePosWindow.x << " " << mousePosWindow.y << "\n"
+		<< "View: " << mousePosView.x << " " << mousePosView.y << "\n"
+		<< "Grid: " << mousePosGrid.x << " " << mousePosGrid.y << "\n";
+
+	_text.setString(ss.str());
+
+
+	_player.update(_window, deltaTime, mousePosView);
+	_enemy.update(_window, deltaTime, &_player);
+	
+	_window.draw(_text);
+	
+	_window.display();   // LO FACCIAMO VEDERE A SCHERMO ALL'UTENTE
 
 }
 
@@ -95,15 +106,15 @@ void Game::render()
 	
 	_window.draw(_map._tiles);
 
-	_window.draw(_wall);
+	//_window.draw(_wall);
 
 	//_window.draw(*(_map.player));
-	_player.render(&_window); //RENDERIZZIAMO IL GIOCATORE PER IL NUOVO FRAME
+	//_player.render(&_window); //RENDERIZZIAMO IL GIOCATORE PER IL NUOVO FRAME
 	_enemy.render(&_window);
 
-	_window.setView(_window.getDefaultView());
+	//_window.setView(_window.getDefaultView());
 
-	_window.draw(_map._text);
+	_window.draw(_text);
 
 	_window.display();   // LO FACCIAMO VEDERE A SCHERMO ALL'UTENTE
 }

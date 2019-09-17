@@ -27,7 +27,7 @@ void PlayerStrategyMove::move(sf::Time deltaTime, sf::Sprite & _sprite, const fl
 		}
 		else _sprite.setPosition(_sprite.getPosition().x, 0.f);
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
 		if (_sprite.getPosition().y < 1080.f) {
 			vectorMov.x = 0.f;
@@ -49,7 +49,7 @@ void PlayerStrategyMove::move(sf::Time deltaTime, sf::Sprite & _sprite, const fl
 		}
 		else _sprite.setPosition(0.f, _sprite.getPosition().y);
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
 		if (_sprite.getPosition().x < 1920.f){
 		vectorMov.x = 0.f;

@@ -27,6 +27,8 @@ private:
 	sf::RenderWindow _window;
 	Player _player;
 	Enemy _enemy;
+	sf::Text _text;
+	sf::Font _font;
 	Map _map;
 
 

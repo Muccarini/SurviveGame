@@ -1,23 +1,33 @@
 #pragma once
 #include "TileMap.h"
 #include "Player.h"
+#include "Enemy.h"
+#include "Observer.h"
 #include <sstream>
-class Map 
+
+class Map : public Observer
 {
 public:
-	Map();
+	Map(Player* p, Enemy* e);
 	virtual ~Map();
 
 	virtual void draw();
-	void update(sf::Time dt, sf::RenderWindow& target, Player* player);
+	void update(sf::RenderWindow& target) override;
+
+	virtual void attach() {};
+	virtual void detach() {};
+
 
 	Player* _player;
+	Enemy* _enemy;
 	TileMap _tiles;
-	sf::Text _text;
+	/*sf::Text _text;*/
 	sf::View _view;
 
 private:
-	sf::Font _font;
+	//sf::Font _font;
+	float x, y;
+
 
 	//init game 
 	float gridSizeF = 100.f;

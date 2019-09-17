@@ -1,6 +1,15 @@
 #include "TileMap.h"
 
 
+TileMap::TileMap(const int *level) : _level(level)
+{
+}
+
+TileMap::~TileMap()
+{
+	
+}
+
 bool TileMap::load(const std::string & tileset, sf::Vector2u tileSize,
 	const int * tiles, unsigned int width, unsigned int height)
 {
@@ -38,7 +47,10 @@ bool TileMap::load(const std::string & tileset, sf::Vector2u tileSize,
 			quad[3].texCoords = sf::Vector2f(tu * tileSize.x, (tv + 1) * tileSize.y);
 
 			//STO CERCANDO DI CAPIRE COME SETTARE LA COLLISIONE DEI TILE 1
-
+			//do la posizione del Tile attraverso il vertice in alto a sinistra così lo
+			//posso sfruttare con la classe FloatRect
+			posMapX = quad[0].position.x;
+			posMapY = quad[0].position.y;
 			if (tileNumber == 1)
 			{
 				collision.setSize(static_cast<sf::Vector2f>(tileSize));
@@ -47,6 +59,10 @@ bool TileMap::load(const std::string & tileset, sf::Vector2u tileSize,
 				collision.setOutlineThickness(1.f);
 				collision.setPosition(sf::Vector2f(i * tileSize.x, j * tileSize.y));
 				solidTiles.push_back(collision);
+				_col.left = i * tileSize.x;
+				_col.top = j * tileSize.y;
+				_col.width = tileSize.x;
+				_col.height = tileSize.y;
 			}
 		}
 	}
