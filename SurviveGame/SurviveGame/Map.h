@@ -20,8 +20,8 @@ public:
 
 	Player* _player;
 	Enemy* _enemy;
-	TileMap _tiles;
-	/*sf::Text _text;*/
+	TileMap _tileMap;
+	//sf::Text _text;
 	sf::View _view;
 
 private:

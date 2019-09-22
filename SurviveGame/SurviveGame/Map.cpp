@@ -1,7 +1,7 @@
 #include "Map.h"
 
-Map::Map(Player* p, Enemy* e) : _view(sf::Vector2f(0.f, 0.f), sf::Vector2f(600.f, 500.f)),
-						_player(p), _enemy(e), _tiles(NULL)
+Map::Map(Player* p, Enemy* e) : _view(sf::Vector2f(0.f, 0.f), sf::Vector2f(600.f, 280.f)),
+						_player(p), _enemy(e), _tileMap(NULL)
 {
 
 	//init view
@@ -48,9 +48,9 @@ Map::Map(Player* p, Enemy* e) : _view(sf::Vector2f(0.f, 0.f), sf::Vector2f(600.f
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	};
 
-	_tiles._level = level;
+	_tileMap._level = level;
 
-	_tiles.load("Sources/graphics-vertex-array-tilemap-tileset.png",
+	_tileMap.load("Sources/graphics-vertex-array-tilemap-tileset.png",
 		sf::Vector2u(32, 32), level, 60, 34);
 
 };
@@ -68,7 +68,10 @@ void Map::draw()
 
 void Map::update(sf::RenderWindow& target)
 {
-	//if (!_player->_colBox.intersects(_tiles.))
+	//controllo se il tile della mappa e lo sprite del personaggio collidono 
+	//if (!_player->_colBox.intersects(_tileMap.findTile
+	//(sf::Vector2f(_player->_sprite.getGlobalBounds().left,
+	//				_player->_sprite.getGlobalBounds().top), _player->_colBox)))
 	//{
 	//	/*la mappa deve cambiare le coordinate di player
 	//	dopo che lui le ha detto che le vuole cambiare attraverso il metodo notify()*/
@@ -79,8 +82,7 @@ void Map::update(sf::RenderWindow& target)
 	//else 
 	//{
 	//	//if (/*il tile è sopra allora lo sposta sotto. Va fatto per tutte le direzion*/)
-	//		_player->setPositon(sf::Vector2f(-1.f*(_player->_movementSpeed),
-	//			0 * (_player->_movementSpeed)));
+	//		_player->setPositon(sf::Vector2f(1090.f, 800.f));
 	//}
 	////if (_enemy->getPosition()!= _tiles.collision.getPosition())
 	//{
@@ -96,9 +98,20 @@ void Map::update(sf::RenderWindow& target)
 	////	_enemy->setPositon(sf::Vector2f(-1.f*(_player->_movementSpeed),
 	////		0 * (_player->_movementSpeed)));
 	////}
-	this->x = _player->getPosition().x;
-	this->y = _player->getPosition().y;
+	if (_view.getViewport().left > 0 &&
+		_view.getViewport().left + _view.getViewport().width < target.getSize().x &&
+		_view.getViewport().top > 0 &&
+		_view.getViewport().top + _view.getViewport().height < target.getSize().y)
+	{
+		this->x = _player->getPosition().x;
+		this->y = _player->getPosition().y;
+	}
+	/*else 
+	{
+		_player->setPositon(_player->_oldPos);
+	}*/
 	_player->render(&target);
+
 
 	this->x = _enemy->getPosition().x;
 	this->y = _enemy->getPosition().y;

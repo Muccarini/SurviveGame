@@ -1,6 +1,7 @@
 #pragma once
 #include "GameCharacter.h"
 #include "PlayerStrategyMove.h"
+#include <cmath>
 #include <list>
 
 class Player :
@@ -24,7 +25,6 @@ public:
 
 	void setPositon(sf::Vector2f vMove);
 	sf::Vector2f getPosition();
-
 private:
 
 	Type _type;

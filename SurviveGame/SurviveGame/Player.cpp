@@ -4,16 +4,29 @@
 Player::Player()
 {
 	_movementSpeed = 190;
+	//caratteristiche dello sprite e del suo FloatRect
 	_textures.load(Textures::Personaggio, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
 	_sprite.setTexture(_textures.get(Textures::Personaggio));
-	_sprite.setScale(0.2, 0.2);
+	_sprShape.setSize(sf::Vector2f(_sprite.getGlobalBounds().width, _sprite.getGlobalBounds().height));
+	_sprShape.setFillColor(sf::Color::Transparent);
+	_sprShape.setOutlineColor(sf::Color::Magenta);
+	_sprShape.setOutlineThickness(3.f);
+
+
 	_sprite.setPosition(100.f, 100.f);
+	_sprShape.setPosition(_sprite.getPosition());
+	_sprite.setScale(0.2, 0.2);
+	_sprShape.setScale(_sprite.getScale());
 	       // IL PUNTO DI ROTAZIONE NON E' CENTRATO //
 		   // non so se e' 5, 5
-	_sprite.setOrigin(_sprite.getPosition().x +5, _sprite.getPosition().y +5);
+	_sprite.setOrigin(_sprite.getPosition().x +4.5f, _sprite.getPosition().y +4.5f);
+	_sprShape.setOrigin(_sprite.getOrigin());
 	//quadrato che penso utilizzerò per le collisioni 
 	_colBox = _sprite.getGlobalBounds();
 	
+	
+	//!!!RICORDARSI CHE PER OGNI SET DI _sprite DI DEVE FARE IMMEDIATAMENTE DOPO IL SET DEL _sprShape!!!\\
+
 }
 
 Player::~Player()
@@ -28,18 +41,26 @@ void Player::move(sf::Time deltaTime)
 
 void Player::update(sf::RenderWindow &target, sf::Time deltaTime, sf::Vector2f mousePosView)
 {
-		move(deltaTime);
-		
-		float dX = sf::Mouse::getPosition().x - this->_sprite.getPosition().x; //mousePosView.x;
-		float dY = sf::Mouse::getPosition().y - this->_sprite.getPosition().y; //mousePosView.y;
+	_oldPos = this->_sprite.getPosition();
+	move(deltaTime);
+	sf::Vector2f moveVector;
+	moveVector.x = (_sprite.getPosition().x - _oldPos.x);
+	moveVector.y = (_sprite.getPosition().y - _oldPos.y);
 
-		const float PI = 3.14159265f;
-		float deg = atan2(dY, dX) * 180.f / PI;
 
-		this->_sprite.setRotation(deg + 360.f);
-		_colBox = _sprite.getGlobalBounds();
+	float dX = /*sf::Mouse::getPosition().x*/ mousePosView.x - this->_sprite.getPosition().x; //mousePosView.x;
+	float dY = /*sf::Mouse::getPosition().y*/ mousePosView.y - this->_sprite.getPosition().y; //mousePosView.y;
+
+	const float PI = 3.14159265f;
+	float deg = atan2(dY, dX) * 180.f / PI;
+
+	this->_sprite.setRotation(deg + 360.f);
+	this->_sprShape.setPosition(_sprite.getPosition() + moveVector);
+	this->_sprShape.setRotation(deg + 360.f);
+	this->_colBox = _sprShape.getGlobalBounds();
 		
-		notify(target);
+		
+	notify(target);
 
 }
 

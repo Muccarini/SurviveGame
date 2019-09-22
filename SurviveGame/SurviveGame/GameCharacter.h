@@ -10,14 +10,16 @@ public:
 	virtual ~GameCharacter();
 
 	void render(sf::RenderWindow* target);
+	sf::Vector2f _oldPos;
 	float _movementSpeed;
 
-protected:
+	sf::FloatRect _colBox;
+	sf::RectangleShape _sprShape;
+
 
 	sf::Sprite _sprite;
+protected:
+
 	TextureHolder _textures;
-
-	sf::FloatRect _colBox;
-
 };
 

@@ -11,7 +11,6 @@ Game::Game() : _window(sf::VideoMode(1920, 1080), "Survive.io"), _map(&_player, 
 	_text.setFillColor(sf::Color::Black);
 	_text.setFont(_font);
 	_text.setPosition(20.f, 20.f);
-	_text.setString("TEST");
 
 	_player.subscribe(&_map);
 	_enemy.subscribe(&_map);
@@ -66,26 +65,34 @@ void Game::update(sf::Time deltaTime)
 {
 	_window.clear(); //SERVE PER PULIRE IL FRAME SOLITAMENTE FA UN SCHERMATA NERA
 
-	_window.draw(_map._tiles);
+	_window.draw(_map._tileMap);
 
 	
 	//update della posizione del mouse
 	mousePosScreen = sf::Mouse::getPosition();
-	mousePosWindow = sf::Mouse::getPosition(_window);
 	_window.setView(_map._view);
+	(&_map)->_view.setCenter(_player.getPosition());
+	mousePosWindow = sf::Mouse::getPosition(_window);
+
 	mousePosView = _window.mapPixelToCoords(mousePosWindow);
 	if (mousePosView.x >= 0.f)
 		mousePosGrid.x = mousePosView.x / gridSizeU;
 	if (mousePosView.y >= 0.f)
 		mousePosGrid.y = mousePosView.y / gridSizeU;
-	_window.setView(_window.getDefaultView());
-	(&_map)->_view.setCenter(_player.getPosition());
+	//_window.setView(_window.getDefaultView());
+	
 
 	std::stringstream ss;
-	ss << "Screen: " << mousePosScreen.x << " " << mousePosScreen.y << "\n"
+	ss << "TEST\n Screen: " << mousePosScreen.x << " " << mousePosScreen.y << "\n"
 		<< "Window: " << mousePosWindow.x << " " << mousePosWindow.y << "\n"
 		<< "View: " << mousePosView.x << " " << mousePosView.y << "\n"
-		<< "Grid: " << mousePosGrid.x << " " << mousePosGrid.y << "\n";
+		<< "Grid: " << mousePosGrid.x << " " << mousePosGrid.y << "\n"
+		<< _map._tileMap.findTile(sf::Vector2f(_player._sprite.getGlobalBounds().left,
+			_player._sprite.getGlobalBounds().top), _player._colBox).left << " "
+		<< _map._tileMap.findTile(sf::Vector2f(_player._sprite.getGlobalBounds().left,
+			_player._sprite.getGlobalBounds().top), _player._colBox).top<< "\n"
+		<< "                                                                                     " 
+		<< _player._colBox.left << " " << _player._colBox.top;
 
 	_text.setString(ss.str());
 
@@ -93,6 +100,7 @@ void Game::update(sf::Time deltaTime)
 	_player.update(_window, deltaTime, mousePosView);
 	_enemy.update(_window, deltaTime, &_player);
 	
+
 	_window.draw(_text);
 	
 	_window.display();   // LO FACCIAMO VEDERE A SCHERMO ALL'UTENTE
@@ -101,10 +109,10 @@ void Game::update(sf::Time deltaTime)
 
 
 void Game::render()
-{
+{/*
 	_window.clear(); //SERVE PER PULIRE IL FRAME SOLITAMENTE FA UN SCHERMATA NERA
 	
-	_window.draw(_map._tiles);
+	_window.draw(_map._tileMap);
 
 	//_window.draw(_wall);
 
@@ -116,7 +124,7 @@ void Game::render()
 
 	_window.draw(_text);
 
-	_window.display();   // LO FACCIAMO VEDERE A SCHERMO ALL'UTENTE
+	_window.display();   // LO FACCIAMO VEDERE A SCHERMO ALL'UTENTE*/
 }
 
 
