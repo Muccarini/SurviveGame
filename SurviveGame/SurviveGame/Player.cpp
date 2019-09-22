@@ -13,13 +13,13 @@ Player::Player()
 	_sprShape.setOutlineThickness(3.f);
 
 
-	_sprite.setPosition(100.f, 100.f);
+	_sprite.setPosition(1000.f, 400.f);
 	_sprShape.setPosition(_sprite.getPosition());
 	_sprite.setScale(0.2, 0.2);
 	_sprShape.setScale(_sprite.getScale());
 	       // IL PUNTO DI ROTAZIONE NON E' CENTRATO //
 		   // non so se e' 5, 5
-	_sprite.setOrigin(_sprite.getPosition().x +4.5f, _sprite.getPosition().y +4.5f);
+	_sprite.setOrigin(100.5,100.5);
 	_sprShape.setOrigin(_sprite.getOrigin());
 	//quadrato che penso utilizzerò per le collisioni 
 	_colBox = _sprite.getGlobalBounds();
