@@ -4,12 +4,6 @@ Map::Map(Player* p, Enemy* e) : _view(sf::Vector2f(0.f, 0.f), sf::Vector2f(600.f
 						_player(p), _enemy(e), _tileMap(NULL)
 {
 
-	//init view
-	//_view.setSize(320.f, 180.f);
-	//_view.setCenter(320 / 2.f, 180 / 2.f);
-	//_view.setCenter(player->getPosition());
-
-
 	const int level[] =
 	{
 		0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -68,48 +62,36 @@ void Map::draw()
 
 void Map::update(sf::RenderWindow& target)
 {
-	//controllo se il tile della mappa e lo sprite del personaggio collidono 
-	//if (!_player->_colBox.intersects(_tileMap.findTile
-	//(sf::Vector2f(_player->_sprite.getGlobalBounds().left,
-	//				_player->_sprite.getGlobalBounds().top), _player->_colBox)))
-	//{
-	//	/*la mappa deve cambiare le coordinate di player
-	//	dopo che lui le ha detto che le vuole cambiare attraverso il metodo notify()*/
-	//	this->x = _player->getPosition().x;
-	//	this->y = _player->getPosition().y;
-	//	_player->render(&target);
-	//}
-	//else 
-	//{
-	//	//if (/*il tile è sopra allora lo sposta sotto. Va fatto per tutte le direzion*/)
-	//		_player->setPositon(sf::Vector2f(1090.f, 800.f));
-	//}
-	////if (_enemy->getPosition()!= _tiles.collision.getPosition())
-	//{
-	//	/*la mappa deve cambiare le coordinate di enemy
-	//	dopo che lui le ha detto che le vuole cambiare attraverso il metodo notify()*/
-	//	this->x = _enemy->getPosition().x;
-	//	this->y = _enemy->getPosition().y;
-	//	_enemy->render(&target);
-	//}
-	////else
-	////{
-	////	//if (/*il tile è sopra allora lo sposta sotto. Va fatto per tutte le direzion*/)
-	////	_enemy->setPositon(sf::Vector2f(-1.f*(_player->_movementSpeed),
-	////		0 * (_player->_movementSpeed)));
-	////}
-	if (_view.getViewport().left > 0 &&
-		_view.getViewport().left + _view.getViewport().width < target.getSize().x &&
-		_view.getViewport().top > 0 &&
-		_view.getViewport().top + _view.getViewport().height < target.getSize().y)
+	
+	/*_tileMap._col.contains
+	if(_player->_colBox.left + _player->_colBox.width)*/
+	//controllo per i bordi della mappa
+	if (_tileMap._windowSize.contains(_player->_colBox.left, _player->_colBox.top)//alto sinistra
+		&& _tileMap._windowSize.contains(_player->_colBox.left + _player->_colBox.width,
+			_player->_colBox.top + _player->_colBox.height)// basso destra
+		&& _tileMap._windowSize.contains(_player->_colBox.left,
+			_player->_colBox.top + _player->_colBox.height)// basso sinistra
+		&& _tileMap._windowSize.contains(_player->_colBox.left + _player->_colBox.width,
+			_player->_colBox.top))// alto destra
 	{
 		this->x = _player->getPosition().x;
 		this->y = _player->getPosition().y;
 	}
-	/*else 
-	{
-		_player->setPositon(_player->_oldPos);
-	}*/
+
+	else _player->_sprite.setPosition(_player->_oldPos);
+	//
+	//if (_view.getViewport().left > 0 &&
+	//	_view.getViewport().left + _view.getViewport().width < target.getSize().x &&
+	//	_view.getViewport().top > 0 &&
+	//	_view.getViewport().top + _view.getViewport().height < target.getSize().y)
+	//{
+	//	this->x = _player->getPosition().x;
+	//	this->y = _player->getPosition().y;
+	//}
+	//*else 
+	//{
+	//	_player->setPositon(_player->_oldPos);
+	//}*/
 	_player->render(&target);
 
 

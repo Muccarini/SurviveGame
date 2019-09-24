@@ -13,7 +13,7 @@ Player::Player()
 	_sprShape.setOutlineThickness(3.f);
 
 
-	_sprite.setPosition(1000.f, 400.f);
+	_sprite.setPosition(1000.f, 700.f);
 	_sprShape.setPosition(_sprite.getPosition());
 	_sprite.setScale(0.2, 0.2);
 	_sprShape.setScale(_sprite.getScale());
@@ -48,8 +48,8 @@ void Player::update(sf::RenderWindow &target, sf::Time deltaTime, sf::Vector2f m
 	moveVector.y = (_sprite.getPosition().y - _oldPos.y);
 
 
-	float dX = /*sf::Mouse::getPosition().x*/ mousePosView.x - this->_sprite.getPosition().x; //mousePosView.x;
-	float dY = /*sf::Mouse::getPosition().y*/ mousePosView.y - this->_sprite.getPosition().y; //mousePosView.y;
+	float dX = mousePosView.x - this->_sprite.getPosition().x; //mousePosView.x;
+	float dY = mousePosView.y - this->_sprite.getPosition().y; //mousePosView.y;
 
 	const float PI = 3.14159265f;
 	float deg = atan2(dY, dX) * 180.f / PI;

@@ -3,9 +3,6 @@
 
 Game::Game() : _window(sf::VideoMode(1920, 1080), "Survive.io"), _map(&_player, &_enemy)
 {
-	//_wall.setFillColor(sf::Color::Red);
-
-		//Titolo test per la view
 	_font.loadFromFile("Sources/Dosis-Light.ttf");
 	_text.setCharacterSize(30);
 	_text.setFillColor(sf::Color::Black);
@@ -50,7 +47,6 @@ void Game::processEvents()
 		case sf::Event::Closed:
 			_window.close();
 			break;
-
 		}
     }
 }
@@ -79,27 +75,17 @@ void Game::update(sf::Time deltaTime)
 		mousePosGrid.x = mousePosView.x / gridSizeU;
 	if (mousePosView.y >= 0.f)
 		mousePosGrid.y = mousePosView.y / gridSizeU;
-	//_window.setView(_window.getDefaultView());
-	
 
 	std::stringstream ss;
 	ss << "TEST\n Screen: " << mousePosScreen.x << " " << mousePosScreen.y << "\n"
 		<< "Window: " << mousePosWindow.x << " " << mousePosWindow.y << "\n"
 		<< "View: " << mousePosView.x << " " << mousePosView.y << "\n"
-		<< "Grid: " << mousePosGrid.x << " " << mousePosGrid.y << "\n"
-		<< _map._tileMap.findTile(sf::Vector2f(_player._sprite.getGlobalBounds().left,
-			_player._sprite.getGlobalBounds().top), _player._colBox).left << " "
-		<< _map._tileMap.findTile(sf::Vector2f(_player._sprite.getGlobalBounds().left,
-			_player._sprite.getGlobalBounds().top), _player._colBox).top<< "\n"
-		<< "                                                                                     " 
-		<< _player._colBox.left << " " << _player._colBox.top;
-
+		<< "Grid: " << mousePosGrid.x << " " << mousePosGrid.y << "\n";
+		
 	_text.setString(ss.str());
-
 
 	_player.update(_window, deltaTime, mousePosView);
 	_enemy.update(_window, deltaTime, &_player);
-	
 
 	_window.draw(_text);
 	
