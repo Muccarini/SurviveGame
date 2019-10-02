@@ -14,8 +14,8 @@ public:
 	virtual void draw();
 	void update(sf::RenderWindow& target) override;
 
-	virtual void attach() {};
-	virtual void detach() {};
+	virtual void attach();
+	virtual void detach();
 
 	Player* _player;
 	Enemy* _enemy;

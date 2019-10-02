@@ -4,7 +4,7 @@
 #include "Enemy.h"
 #include "Map.h"
 #include <vector>
-#include "Box2D/Box2D.h"
+//#include "Box2D/Box2D.h"
 
 
 
@@ -26,9 +26,9 @@ private:
 
 
 	sf::RenderWindow _window;
-	Map _map;
 	Player _player;
 	Enemy _enemy;
+	Map _map;
 	sf::Text _text;
 	sf::Font _font;
 

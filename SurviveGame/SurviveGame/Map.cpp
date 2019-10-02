@@ -3,6 +3,7 @@
 Map::Map(Player* p, Enemy* e) : _view(sf::Vector2f(0.f, 0.f), sf::Vector2f(600.f, 280.f)),
 						_player(p), _enemy(e), _tileMap(NULL)
 {
+	attach();
 
 	const int level[] =
 	{
@@ -99,3 +100,14 @@ void Map::update(sf::RenderWindow& target)
 	this->y = _enemy->getPosition().y;
 	_enemy->render(&target);
 };
+
+void Map::attach() 
+{
+	_player->subscribe(this);
+};
+
+void Map::detach()
+{
+	_player->unsubscribe(this);
+};
+
