@@ -4,7 +4,7 @@
 
 Enemy::Enemy()
 {
-	_movementSpeed = 150;
+	mov_speed = 150;
 
 	_textures.load(Textures::Enemy, "Sources/zombie1.png");
 	_sprite.setTexture(_textures.get(Textures::Enemy));
@@ -20,7 +20,7 @@ Enemy::~Enemy()
 
 void Enemy::move(sf::Time deltaTime)
 {
-	this->_m.move(deltaTime, this->_sprite, this->_movementSpeed);
+	this->_m.move(deltaTime, this->_sprite, this->mov_speed);
 }
 
 
@@ -34,7 +34,7 @@ void Enemy::update(sf::Time deltaTime, Player* target)
 
 	sf::Vector2f normVect(dX / lenght, dY / lenght);
 
-	this->_sprite.move(normVect * this->_movementSpeed * deltaTime.asSeconds());
+	this->_sprite.move(normVect * this->mov_speed * deltaTime.asSeconds());
 
 
 	            //ROTATION//

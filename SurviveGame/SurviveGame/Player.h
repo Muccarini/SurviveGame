@@ -1,6 +1,5 @@
 #pragma once
 #include "GameCharacter.h"
-#include "PlayerStrategyMove.h"
 
 class Player :
 	public GameCharacter
@@ -12,9 +11,10 @@ public:
 	explicit Player();
 	virtual ~Player();
 	
-	 void move(sf::Time deltaTime);
+	void move(sf::Time deltaTime);
+	void rotate();
 
-	 void update(sf::Time deltaTime);
+	void update(sf::Time deltaTime);
 
 	sf::Vector2f getPosition();
 
@@ -22,6 +22,5 @@ public:
 private:
 
 	Type _type;
-	PlayerStrategyMove _m;
 };
 
