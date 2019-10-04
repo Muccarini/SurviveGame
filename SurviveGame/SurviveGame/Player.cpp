@@ -13,7 +13,6 @@ Player::Player() : view(sf::Vector2f(0.f, 0.f), sf::Vector2f(600.f, 280.f))
 	_sprite.setOrigin(_sprite.getPosition().x +5, _sprite.getPosition().y +5);
 	view.setCenter(this->getPosition());
 	view.setSize(600.f, 280.f);
-
 }
 
 Player::~Player()
@@ -54,11 +53,15 @@ void Player::move(sf::Time deltaTime) // TODO// cambiare mov_speed in movSpeed
 		}
 	}
 
-void Player::rotate()
+void Player::rotate(sf::RenderWindow *_window)
 {
-	float dX = sf::Mouse::getPosition().x - this->_sprite.getPosition().x;
-	float dY = sf::Mouse::getPosition().y - this->_sprite.getPosition().y;
+	sf::Vector2f mousePosView;
+	sf::Vector2i mousePosWindow;
 
+	mousePosView = (*_window).mapPixelToCoords(sf::Mouse::getPosition());
+
+	float dX = mousePosView.x - getPosition().x;
+	float dY = mousePosView.y - getPosition().y;
 	const float PI = 3.14159265f;
 	float deg = atan2(dY, dX) * 180.f / PI;
 
@@ -66,11 +69,11 @@ void Player::rotate()
 }
 
 
-void Player::update(sf::Time deltaTime)
+void Player::update(sf::Time deltaTime, sf::RenderWindow * _window)
 {
-		move(deltaTime);
-		rotate();
-		view.setCenter(this->getPosition());
+	view.setCenter(getPosition());
+	move(deltaTime);
+	rotate(_window);
 
 }
 

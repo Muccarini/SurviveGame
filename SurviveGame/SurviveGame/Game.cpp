@@ -44,7 +44,7 @@ void Game::processEvents()
 
 void Game::update(sf::Time deltaTime)
 {
-	_player.update(deltaTime);
+	_player.update(deltaTime,&_window);
 	_window.setView(_player.view);
 
 	_enemy.update(deltaTime,&_player);
