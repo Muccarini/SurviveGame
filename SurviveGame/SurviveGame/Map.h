@@ -20,6 +20,7 @@ public:
 	Player* _player;
 	Enemy* _enemy;
 	TileMap _tileMap;
+	sf::View _view;
 
 private:
 	float x, y;
