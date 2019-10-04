@@ -1,7 +1,7 @@
 #include "Player.h"
 
 
-Player::Player()
+Player::Player() : view(sf::Vector2f(0.f, 0.f), sf::Vector2f(600.f, 280.f))
 {
 	mov_speed = 250;
 	_textures.load(Textures::Personaggio, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
@@ -11,6 +11,9 @@ Player::Player()
 	       // IL PUNTO DI ROTAZIONE NON E' CENTRATO //
 		   // non so se e' 5, 5
 	_sprite.setOrigin(_sprite.getPosition().x +5, _sprite.getPosition().y +5);
+	view.setCenter(this->getPosition());
+	view.setSize(600.f, 280.f);
+
 }
 
 Player::~Player()
@@ -67,6 +70,8 @@ void Player::update(sf::Time deltaTime)
 {
 		move(deltaTime);
 		rotate();
+		view.setCenter(this->getPosition());
+
 }
 
 sf::Vector2f Player::getPosition()
@@ -74,3 +79,21 @@ sf::Vector2f Player::getPosition()
 	return
 		this->_sprite.getPosition();
 }
+
+
+//_window.clear(); //SERVE PER PULIRE IL FRAME SOLITAMENTE FA UN SCHERMATA NERA
+//
+//_window.draw(_map._tileMap);
+//
+//
+////update della posizione del mouse
+//mousePosScreen = sf::Mouse::getPosition();
+//_window.setView(_map._view);
+//(&_map)->_view.setCenter(_player.getPosition());
+//mousePosWindow = sf::Mouse::getPosition(_window);
+//
+//mousePosView = _window.mapPixelToCoords(mousePosWindow);
+//if (mousePosView.x >= 0.f)
+//mousePosGrid.x = mousePosView.x / gridSizeU;
+//if (mousePosView.y >= 0.f)
+//mousePosGrid.y = mousePosView.y / gridSizeU;

@@ -18,9 +18,10 @@ public:
 
 	sf::Vector2f getPosition();
 
+	sf::View view;
+
 
 private:
-
 	Type _type;
 };
 

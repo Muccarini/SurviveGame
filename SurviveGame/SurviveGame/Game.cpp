@@ -26,7 +26,7 @@ void Game::run()
 void Game::processEvents()
 {
 	sf::Event event;
-	while (_window.pollEvent(event)) 
+	while (_window.pollEvent(event))
 	{
 		switch (event.type)
 		{
@@ -39,19 +39,15 @@ void Game::processEvents()
 			break;
 
 		}
-    }
+	}
 }
-
-void Game::handlePlayerInput(sf::Keyboard::Key key)
-{
-}
-
-
 
 void Game::update(sf::Time deltaTime)
 {
-		_player.update(deltaTime);
-		_enemy.update(deltaTime,&_player);
+	_player.update(deltaTime);
+	_window.setView(_player.view);
+
+	_enemy.update(deltaTime,&_player);
 }
 
 
