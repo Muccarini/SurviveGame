@@ -12,13 +12,11 @@ public:
 	virtual ~Player();
 	
 	void move(sf::Time deltaTime);
-	void rotate(sf::RenderWindow *_window);
+	void rotate(sf::Vector2f mousePosView);
 
-	void update(sf::Time deltaTime, sf::RenderWindow * _window);
+	void update(sf::Time deltaTime, sf::Vector2f mousePosView);
 
 	sf::Vector2f getPosition();
-
-	sf::View view;
 
 
 private:

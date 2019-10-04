@@ -1,18 +1,14 @@
 #include "Player.h"
 
 
-Player::Player() : view(sf::Vector2f(0.f, 0.f), sf::Vector2f(600.f, 280.f))
+Player::Player()
 {
-	mov_speed = 250;
+	mov_speed = 200;
 	_textures.load(Textures::Personaggio, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
 	_sprite.setTexture(_textures.get(Textures::Personaggio));
-	_sprite.setScale(0.4, 0.4);
+	_sprite.setScale(0.1, 0.1);
 	_sprite.setPosition(100.f, 100.f);
-	       // IL PUNTO DI ROTAZIONE NON E' CENTRATO //
-		   // non so se e' 5, 5
 	_sprite.setOrigin(_sprite.getPosition().x +5, _sprite.getPosition().y +5);
-	view.setCenter(this->getPosition());
-	view.setSize(600.f, 280.f);
 }
 
 Player::~Player()
@@ -53,13 +49,8 @@ void Player::move(sf::Time deltaTime) // TODO// cambiare mov_speed in movSpeed
 		}
 	}
 
-void Player::rotate(sf::RenderWindow *_window)
+void Player::rotate(sf::Vector2f mousePosView)
 {
-	sf::Vector2f mousePosView;
-	sf::Vector2i mousePosWindow;
-
-	mousePosView = (*_window).mapPixelToCoords(sf::Mouse::getPosition());
-
 	float dX = mousePosView.x - getPosition().x;
 	float dY = mousePosView.y - getPosition().y;
 	const float PI = 3.14159265f;
@@ -69,11 +60,10 @@ void Player::rotate(sf::RenderWindow *_window)
 }
 
 
-void Player::update(sf::Time deltaTime, sf::RenderWindow * _window)
+void Player::update(sf::Time deltaTime, sf::Vector2f mousePosView)
 {
-	view.setCenter(getPosition());
 	move(deltaTime);
-	rotate(_window);
+	rotate(mousePosView);
 
 }
 

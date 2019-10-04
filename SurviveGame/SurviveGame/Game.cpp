@@ -1,7 +1,11 @@
 #include "Game.h"
 
 
-Game::Game() : _window(sf::VideoMode(1920, 1080), "Survive.io") {}
+Game::Game() : window(sf::VideoMode(1920, 1080), "Survive.io"), game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(600.f, 280.f)) 
+{
+	game_view.setCenter(player.getPosition());
+	game_view.setSize(600.f, 280.f);
+}
 
 void Game::run()
 {
@@ -9,7 +13,7 @@ void Game::run()
     sf::Time timeSinceLastUpdate = sf::Time::Zero;
 	sf::Clock clock;
 
-	while (_window.isOpen()) 
+	while (window.isOpen()) 
 	{
 		processEvents();
 		timeSinceLastUpdate += clock.restart();
@@ -26,16 +30,16 @@ void Game::run()
 void Game::processEvents()
 {
 	sf::Event event;
-	while (_window.pollEvent(event))
+	while (window.pollEvent(event))
 	{
 		switch (event.type)
 		{
 		case sf::Event::KeyPressed:
 			if (event.key.code == sf::Keyboard::Escape)
-				_window.close();
+				window.close();
 			break;
 		case sf::Event::Closed:
-			_window.close();
+			window.close();
 			break;
 
 		}
@@ -44,19 +48,20 @@ void Game::processEvents()
 
 void Game::update(sf::Time deltaTime)
 {
-	_player.update(deltaTime,&_window);
-	_window.setView(_player.view);
+	player.update(deltaTime, (window).mapPixelToCoords(sf::Mouse::getPosition()));
+	enemy.update(deltaTime,&player);
 
-	_enemy.update(deltaTime,&_player);
+	game_view.setCenter(player.getPosition());
+	window.setView(game_view);
 }
 
 
 void Game::render()
 {
-	_window.clear(); //SERVE PER PULIRE IL FRAME SOLITAMENTE FA UN SCHERMATA NERA
-	_player.render(&_window); //RENDERIZZIAMO IL GIOCATORE PER IL NUOVO FRAME
-	_enemy.render(&_window);
-	_window.display();   // LO FACCIAMO VEDERE A SCHERMO ALL'UTENTE
+	window.clear(); //SERVE PER PULIRE IL FRAME SOLITAMENTE FA UN SCHERMATA NERA
+	player.render(&window); //RENDERIZZIAMO IL GIOCATORE PER IL NUOVO FRAME
+	enemy.render(&window);
+	window.display();   // LO FACCIAMO VEDERE A SCHERMO ALL'UTENTE
 }
 
 

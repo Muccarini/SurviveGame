@@ -21,9 +21,13 @@ private:
 
 
 
-	sf::RenderWindow _window;
-	Player _player;
-	Enemy _enemy;
+	sf::RenderWindow window;
+	sf::View game_view;
+	sf::Vector2f mouse_pos_view;
+
+	Player player;
+	Enemy enemy;
+
 
 
 };
