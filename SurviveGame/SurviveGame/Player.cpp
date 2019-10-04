@@ -48,8 +48,8 @@ void Player::update(sf::RenderWindow &target, sf::Time deltaTime, sf::Vector2f m
 	moveVector.y = (_sprite.getPosition().y - _oldPos.y);
 
 
-	float dX = mousePosView.x - this->_sprite.getPosition().x; //mousePosView.x;
-	float dY = mousePosView.y - this->_sprite.getPosition().y; //mousePosView.y;
+	float dX = mousePosView.x - this->_sprite.getPosition().x; 
+	float dY = mousePosView.y - this->_sprite.getPosition().y; ;
 
 	const float PI = 3.14159265f;
 	float deg = atan2(dY, dX) * 180.f / PI;

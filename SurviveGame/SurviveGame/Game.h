@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Map.h"
+#include "TileMap.h"
 #include <vector>
 #include "Box2D/Box2D.h"
 
@@ -28,6 +29,7 @@ private:
 	sf::RenderWindow _window;
 	Player _player;
 	Enemy _enemy;
+	TileMap tile_map;
 	Map _map;
 	sf::Text _text;
 	sf::Font _font;

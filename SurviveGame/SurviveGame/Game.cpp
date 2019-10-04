@@ -87,6 +87,7 @@ void Game::update(sf::Time deltaTime)
 	_player.update(_window, deltaTime, mousePosView);
 	_enemy.update(_window, deltaTime, &_player);
 
+	tile_map.render(_window);
 	_window.draw(_text);
 	
 	_window.display();   // LO FACCIAMO VEDERE A SCHERMO ALL'UTENTE

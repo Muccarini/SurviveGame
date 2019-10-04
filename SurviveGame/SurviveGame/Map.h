@@ -1,5 +1,5 @@
 #pragma once
-#include "TileMap.h"
+#include "TileMap1.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Observer.h"
@@ -19,7 +19,7 @@ public:
 
 	Player* _player;
 	Enemy* _enemy;
-	TileMap _tileMap;
+	TileMap1 _tileMap;
 	sf::View _view;
 
 private:

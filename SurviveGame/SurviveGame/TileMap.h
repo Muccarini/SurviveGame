@@ -1,32 +1,22 @@
 #pragma once
-#include "SFML/Graphics.hpp"
+#include "Tile.h"
+#include "Box2D/Box2D.h"
 
-class TileMap : public sf::Drawable, sf::Transformable
+class TileMap
 {
 public:
-
-	TileMap(const int *level);
+	TileMap();
 	virtual ~TileMap();
 
-	bool load(const std::string& tileset, sf::Vector2u tileSize, const int* tiles,
-		unsigned int width, unsigned int height);
-
-	//Functions
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-
-	//Attributes
-	std::vector<sf::FloatRect> solidShapes;
-	sf::RectangleShape _collision;
-	sf::FloatRect _col;
-	sf::FloatRect _windowSize;
-
-	const int * _level;
-
 private:
-	//Attriburtes
-	sf::VertexArray t_vertex;
-	sf::Texture t_tileset;
+	float grid_size_f;
+	unsigned int grid_size_u;
+	sf::Vector2f max_size;
+	unsigned int layers;
+	std::vector < std::vector < std::vector <Tile> > > map;//cordinate x,y e i layer z
 
+public:
+	void update();
+	void render(sf::RenderTarget& target);
 };
 

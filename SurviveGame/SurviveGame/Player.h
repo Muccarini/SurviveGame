@@ -26,7 +26,7 @@ public:
 	void setPositon(sf::Vector2f vMove);
 	sf::Vector2f getPosition();
 private:
-
+	short type;
 	Type _type;
 	PlayerStrategyMove _m;
 	std::list<Observer *> _observers;
