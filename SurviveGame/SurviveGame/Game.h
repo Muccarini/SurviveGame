@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "GameCharacter.h"
 #include "Player.h"
 #include "Enemy.h"
 #include <vector>
@@ -25,8 +26,8 @@ private:
 	sf::View game_view;
 	sf::Vector2f mouse_pos_view;
 
-	Player player;
-	Enemy enemy;
+	std::vector<GameCharacter *> enemies;
+	GameCharacter *player;
 
 
 

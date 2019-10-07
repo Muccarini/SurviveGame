@@ -1,7 +1,6 @@
 #pragma once
 #include "GameCharacter.h"
 #include "EnemyStrategyMove.h"
-#include "Player.h"
 
 class Enemy :
 	public GameCharacter
@@ -13,9 +12,12 @@ public:
 	Enemy();
 	virtual ~Enemy();
 
-	 void move(sf::Time deltaTime);
+	 void move(sf::Time deltaTime)override;
+	 void rotate(sf::Vector2f vec_dir)override;
 
-	 void update(sf::Time deltaTime, Player* target);
+	 //void update(sf::Time deltaTime, GameCharacter* target);
+
+	 /*sf::Vector2f getPosition();*/
 
 private:
 	EnemyStrategyMove _m;

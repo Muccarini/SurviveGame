@@ -8,15 +8,15 @@ public:
 	enum Type {Warrior, Ranger, Mage};
 	
 public:
-	explicit Player();
+	Player();
 	virtual ~Player();
 	
-	void move(sf::Time deltaTime);
-	void rotate(sf::Vector2f mousePosView);
+	void move(sf::Time deltaTime) override;
+	void rotate(sf::Vector2f mousePosView)override;
 
-	void update(sf::Time deltaTime, sf::Vector2f mousePosView);
+	//void update(sf::Time deltaTime, sf::Vector2f mousePosView);
 
-	sf::Vector2f getPosition();
+	/*sf::Vector2f getPosition();*/
 
 
 private:

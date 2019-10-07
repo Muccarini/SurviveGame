@@ -6,7 +6,7 @@ Player::Player()
 	mov_speed = 200;
 	_textures.load(Textures::Personaggio, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
 	_sprite.setTexture(_textures.get(Textures::Personaggio));
-	_sprite.setScale(0.1, 0.1);
+	_sprite.setScale(0.1f, 0.1f);
 	_sprite.setPosition(100.f, 100.f);
 	_sprite.setOrigin(_sprite.getPosition().x +5, _sprite.getPosition().y +5);
 }
@@ -60,33 +60,15 @@ void Player::rotate(sf::Vector2f mousePosView)
 }
 
 
-void Player::update(sf::Time deltaTime, sf::Vector2f mousePosView)
-{
-	move(deltaTime);
-	rotate(mousePosView);
-
-}
-
-sf::Vector2f Player::getPosition()
-{
-	return
-		this->_sprite.getPosition();
-}
-
-
-//_window.clear(); //SERVE PER PULIRE IL FRAME SOLITAMENTE FA UN SCHERMATA NERA
+//void Player::update(sf::Time deltaTime, sf::Vector2f mousePosView)
+//{
+//	move(deltaTime);
+//	rotate(mousePosView);
 //
-//_window.draw(_map._tileMap);
-//
-//
-////update della posizione del mouse
-//mousePosScreen = sf::Mouse::getPosition();
-//_window.setView(_map._view);
-//(&_map)->_view.setCenter(_player.getPosition());
-//mousePosWindow = sf::Mouse::getPosition(_window);
-//
-//mousePosView = _window.mapPixelToCoords(mousePosWindow);
-//if (mousePosView.x >= 0.f)
-//mousePosGrid.x = mousePosView.x / gridSizeU;
-//if (mousePosView.y >= 0.f)
-//mousePosGrid.y = mousePosView.y / gridSizeU;
+//}
+
+//sf::Vector2f Player::getPosition()
+//{
+//	return
+//		this->_sprite.getPosition();
+//}
