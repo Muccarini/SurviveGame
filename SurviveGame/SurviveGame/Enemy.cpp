@@ -30,4 +30,30 @@ void Enemy::rotate(sf::Vector2f vec_dir)
 	float deg = atan2(vec_dir.y, vec_dir.x ) * 180.f / PI;
 
 	this->_sprite.setRotation(deg + 90.f);
+
+	notify(screen);
+}
+
+void Enemy::notify(sf::RenderWindow &target)
+{
+	for (auto i = std::begin(_observers); i != std::end(_observers); i++)
+	{
+		(*i)->update(target);
+	}
+}
+
+void Enemy::subscribe(Observer * _O)
+{ 
+	_observers.push_back(_O); 
+}
+
+void Enemy::unsubscribe(Observer * _O)
+{
+	_observers.remove(_O);
+}
+
+sf::Vector2f Enemy::getPosition()
+{
+	return 
+		this->_sprite.getPosition();
 }

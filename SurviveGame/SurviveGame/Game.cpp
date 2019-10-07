@@ -16,6 +16,10 @@ Game::Game() : window(sf::VideoMode(1920, 1080), "Survive.io"), game_view(sf::Ve
 	game_view.setSize(600.f, 280.f);
 }
 
+	_player.subscribe(&_map);
+	_enemy.subscribe(&_map);
+}
+
 void Game::run()
 {
 	sf::Time TimePerFrame = sf::seconds(1.f / 60.f);
@@ -32,7 +36,7 @@ void Game::run()
 			processEvents();
 			update(TimePerFrame);
 		}
-		render();
+		//render();
 	}
 }
 
@@ -50,7 +54,6 @@ void Game::processEvents()
 		case sf::Event::Closed:
 			window.close();
 			break;
-
 		}
 	}
 }

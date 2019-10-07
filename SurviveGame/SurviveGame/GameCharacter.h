@@ -23,7 +23,6 @@ public:
 
 protected:
 
-	sf::Sprite _sprite;
 	TextureHolder _textures;
 
 	float mov_speed;

@@ -1,7 +1,12 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Player.h"
+#include "Enemy.h"
+#include "Map.h"
+#include "TileMap.h"
 #include "GameCharacter.h"
 #include <vector>
+#include "Box2D/Box2D.h"
 
 
 
@@ -27,6 +32,9 @@ private:
 	std::vector<GameCharacter *> enemies;
 	GameCharacter *player;
 
+	sf::RenderWindow _window;
+	Player _player;
+	Enemy _enemy;
 
 
 };

@@ -14,6 +14,7 @@ GameCharacter::~GameCharacter()
 void GameCharacter::render(sf::RenderWindow * target)
 {
 	target->draw(_sprite);
+	target->draw(_sprShape);
 }
 
 void GameCharacter::update(sf::Time deltaTime, sf::Vector2f mousePosView)
