@@ -70,14 +70,13 @@ void Game::update(sf::Time deltaTime)
 void Game::render()
 {
 	window.clear();
-
 	window.draw(tile_map);
+
 	player->render(&window);
 	for (auto i = enemies.begin(); i != enemies.end(); i++)
 	{
 		(*i)->render(&window);
 	}
-
 	
 	window.display();
 }
