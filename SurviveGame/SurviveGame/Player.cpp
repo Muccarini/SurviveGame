@@ -7,8 +7,8 @@ Player::Player()
 	_textures.load(Textures::Personaggio, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
 	_sprite.setTexture(_textures.get(Textures::Personaggio));
 	_sprite.setScale(0.1f, 0.1f);
-	_sprite.setPosition(100.f, 100.f);
-	_sprite.setOrigin(_sprite.getPosition().x +5, _sprite.getPosition().y +5);
+	_sprite.setPosition(150.f, 150.f);
+	_sprite.setOrigin(105, 105);
 }
 
 Player::~Player()

@@ -9,7 +9,7 @@ public:
 	enum Type {Ranged, Melee, Boss};
 
 public:
-	Enemy();
+	Enemy(float x,float y);
 	virtual ~Enemy();
 
 	 void move(sf::Time deltaTime)override;
@@ -17,5 +17,6 @@ public:
 
 private:
 	EnemyStrategyMove _m;
+	sf::Vector2f spawn_pos;
 };
 
