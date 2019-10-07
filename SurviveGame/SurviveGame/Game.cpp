@@ -48,7 +48,7 @@ void Game::processEvents()
 
 void Game::update(sf::Time deltaTime)
 {
-	player.update(deltaTime, (window).mapPixelToCoords(sf::Mouse::getPosition()));
+	player.update(deltaTime, (window).mapPixelToCoords(sf::Mouse::getPosition(window)));
 	enemy.update(deltaTime,&player);
 
 	game_view.setCenter(player.getPosition());
