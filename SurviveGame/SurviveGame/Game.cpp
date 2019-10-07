@@ -67,13 +67,15 @@ void Game::update(sf::Time deltaTime)
 
 void Game::render()
 {
-	window.clear(); //SERVE PER PULIRE IL FRAME SOLITAMENTE FA UN SCHERMATA NERA
-	player->render(&window); //RENDERIZZIAMO IL GIOCATORE PER IL NUOVO FRAME
+	window.clear();
+
+	player->render(&window);
 	for (auto i = enemies.begin(); i != enemies.end(); i++)
 	{
 		(*i)->render(&window);
 	}
-	window.display();   // LO FACCIAMO VEDERE A SCHERMO ALL'UTENTE
+
+	window.display();
 }
 
 

@@ -31,26 +31,3 @@ void Enemy::rotate(sf::Vector2f vec_dir)
 
 	this->_sprite.setRotation(deg + 90.f);
 }
-
-
-//void Enemy::update(sf::Time deltaTime, GameCharacter* target)
-//{   
-//	            //MOVEMENT//
-//	float dX = target->getPosition().x - this->_sprite.getPosition().x;
-//	float dY = target->getPosition().y - this->_sprite.getPosition().y;
-//
-//	float lenght = sqrt(pow(dX, 2) + pow(dY, 2));
-//
-//	sf::Vector2f normVect(dX / lenght, dY / lenght);
-//
-//	this->_sprite.move(normVect * this->mov_speed * deltaTime.asSeconds());
-//
-//	rotate(normVect);
-//}
-
-//sf::Vector2f Enemy::getPosition()
-//{
-//	return
-//		this->_sprite.getPosition();
-//}
-

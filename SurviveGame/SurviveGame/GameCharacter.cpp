@@ -30,7 +30,6 @@ void GameCharacter::update(sf::Time deltaTime, GameCharacter * target)
 	float lenght = sqrt(pow(dX, 2) + pow(dY, 2));
 
 	sf::Vector2f normVect(dX / lenght, dY / lenght);
-
 	this->_sprite.move(normVect * this->mov_speed * deltaTime.asSeconds());
 
 	rotate(normVect);

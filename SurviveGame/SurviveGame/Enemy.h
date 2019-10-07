@@ -15,10 +15,6 @@ public:
 	 void move(sf::Time deltaTime)override;
 	 void rotate(sf::Vector2f vec_dir)override;
 
-	 //void update(sf::Time deltaTime, GameCharacter* target);
-
-	 /*sf::Vector2f getPosition();*/
-
 private:
 	EnemyStrategyMove _m;
 };
