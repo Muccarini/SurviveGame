@@ -11,13 +11,8 @@ Game::Game() : window(sf::VideoMode(1920, 1080), "Survive.io"), game_view(sf::Ve
 	{
 		enemies.push_back(new Enemy(rand() % 500, rand() % 500));
 	}
-
 	game_view.setCenter(player->getPosition());
 	game_view.setSize(600.f, 280.f);
-}
-
-	_player.subscribe(&_map);
-	_enemy.subscribe(&_map);
 }
 
 void Game::run()
@@ -36,7 +31,7 @@ void Game::run()
 			processEvents();
 			update(TimePerFrame);
 		}
-		//render();
+		render();
 	}
 }
 
@@ -76,12 +71,14 @@ void Game::render()
 {
 	window.clear();
 
+	window.draw(tile_map);
 	player->render(&window);
 	for (auto i = enemies.begin(); i != enemies.end(); i++)
 	{
 		(*i)->render(&window);
 	}
 
+	
 	window.display();
 }
 

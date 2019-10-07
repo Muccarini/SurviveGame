@@ -7,5 +7,4 @@ EnemyStrategyMove::~EnemyStrategyMove()
 
 void EnemyStrategyMove::move(sf::Time deltatime, sf::Sprite & _sprite, const float mov_speed)
 {
-	//algoritmo di movimento dei nemici
 }

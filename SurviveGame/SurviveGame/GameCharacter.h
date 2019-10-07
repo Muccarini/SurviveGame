@@ -10,9 +10,6 @@ public:
 
 	void render(sf::RenderWindow* target);
 
-	//virtual void update(sf::Time deltaTime, sf::Vector2f mousePosView) = 0;
-	//virtual void update(sf::Time deltaTime, GameCharacter* target) = 0;
-
 	virtual void move(sf::Time deltaTime) = 0;
 	virtual void rotate(sf::Vector2f vec_dir) = 0;
 
@@ -24,6 +21,7 @@ public:
 protected:
 
 	TextureHolder _textures;
+	sf::Sprite _sprite;
 
 	float mov_speed;
 
