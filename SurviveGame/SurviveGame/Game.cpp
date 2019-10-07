@@ -61,9 +61,9 @@ void Game::update(sf::Time deltaTime)
 {
 	_window.clear(); //SERVE PER PULIRE IL FRAME SOLITAMENTE FA UN SCHERMATA NERA
 
-	_window.draw(_map._tileMap);
+	//_window.draw(_map._tileMap);
 
-	
+	_window.draw(tile_map);
 	//update della posizione del mouse
 	mousePosScreen = sf::Mouse::getPosition();
 	_window.setView(_map._view);
@@ -87,7 +87,6 @@ void Game::update(sf::Time deltaTime)
 	_player.update(_window, deltaTime, mousePosView);
 	_enemy.update(_window, deltaTime, &_player);
 
-	tile_map.render(_window);
 	_window.draw(_text);
 	
 	_window.display();   // LO FACCIAMO VEDERE A SCHERMO ALL'UTENTE

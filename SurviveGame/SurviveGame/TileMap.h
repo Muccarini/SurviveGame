@@ -1,8 +1,9 @@
 #pragma once
 #include "Tile.h"
 #include "Box2D/Box2D.h"
+#include <fstream>
 
-class TileMap
+class TileMap : public sf::Drawable, sf::Transformable
 {
 public:
 	TileMap();
@@ -13,10 +14,14 @@ private:
 	unsigned int grid_size_u;
 	sf::Vector2f max_size;
 	unsigned int layers;
-	std::vector < std::vector < std::vector <Tile> > > map;//cordinate x,y e i layer z
+	sf::VertexArray tile_vertex;
+	std::vector <Tile> map;
+	sf::Texture tileset;
 
 public:
-	void update();
+
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
 	void render(sf::RenderTarget& target);
 };
 

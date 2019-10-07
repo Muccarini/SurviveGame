@@ -15,13 +15,16 @@ class Tile
 
 public:
 	Tile();
-	Tile(float x, float y, float grideSizeF);
+	Tile(float x, float y, float grideSizeF, sf::VertexArray texture_area, sf::Texture txt);
 	virtual ~Tile();
 
 protected:
 	sf::RectangleShape shape;
-
-private:
+	sf::Texture textures;
+	sf::Sprite sprite;
+	sf::IntRect rect_shape;
+	sf::VertexArray texture_vertex;
+private: 
 	
 
 public:
