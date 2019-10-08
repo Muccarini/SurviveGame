@@ -71,7 +71,8 @@ void Game::render()
 {
 	window.clear();
 
-	window.draw(tile_map);
+	//window.draw(tile_map);
+	tile_map.render(window);
 	player->render(&window);
 	for (auto i = enemies.begin(); i != enemies.end(); i++)
 	{

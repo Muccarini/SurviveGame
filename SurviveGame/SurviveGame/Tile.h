@@ -14,16 +14,14 @@ class Tile
 {
 
 public:
-	Tile();
-	Tile(float x, float y, float grideSizeF, sf::VertexArray texture_area, sf::Texture txt);
+	Tile(float x, float y, float grideSizeF, sf::Texture& txt);
 	virtual ~Tile();
 
 protected:
 	sf::RectangleShape shape;
-	sf::Texture textures;
-	sf::Sprite sprite;
+	sf::Texture& textures;
 	sf::IntRect rect_shape;
-	sf::VertexArray texture_vertex;
+
 private: 
 	
 

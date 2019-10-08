@@ -3,7 +3,7 @@
 #include "Box2D/Box2D.h"
 #include <fstream>
 
-class TileMap : public sf::Drawable, sf::Transformable
+class TileMap
 {
 public:
 	TileMap();
@@ -11,16 +11,16 @@ public:
 
 private:
 	float grid_size_f;
-	unsigned int grid_size_u;
 	sf::Vector2f max_size;
 	unsigned int layers;
-	sf::VertexArray tile_vertex;
-	std::vector <Tile> map;
+
+	std::vector< std::vector< std::vector<Tile*> > > map;
 	sf::Texture tileset;
 
 public:
 
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+	void loadFromFile(const std::string file_name);
 
 	void render(sf::RenderTarget& target);
 };
