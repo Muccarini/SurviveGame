@@ -3,7 +3,6 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "TileMap.h"
-#include "GameCharacter.h"
 #include <vector>
 #include "Box2D/Box2D.h"
 
@@ -25,11 +24,13 @@ private:
 
 
 	sf::RenderWindow window;
-	sf::View game_view;
 	sf::Vector2f mouse_pos_view;
+
+	sf::View game_view;
 	TileMap tile_map;
-	std::vector<GameCharacter *> enemies;
-	GameCharacter *player;
+
+	std::vector<std::unique_ptr<Enemy>> enemies;
+	Player player;
 
 
 };

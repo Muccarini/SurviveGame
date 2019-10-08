@@ -1,84 +1,123 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Personaggi">
+      <UniqueIdentifier>{646d86dd-a343-49cc-a00e-b4de54a0dabc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Personaggi\Giocatore">
+      <UniqueIdentifier>{78e1ed4f-7efd-4732-8e66-07fe8f8b9f4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Personaggi\Nemici">
+      <UniqueIdentifier>{d49cb70d-33c4-4c28-a7dd-70a07fd612c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameLogic">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Map">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="TextureHolder.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="StrategyMove.cpp">
+    <ClCompile Include="TileMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameCharacter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyStrategyMove.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Personaggi</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Personaggi\Nemici</Filter>
     </ClCompile>
-    <ClCompile Include="TileMap.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="EnemyStrategyMove.cpp">
+      <Filter>Personaggi\Nemici</Filter>
     </ClCompile>
-    <ClCompile Include="Tile.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Player.cpp">
+      <Filter>Personaggi\Giocatore</Filter>
     </ClCompile>
-    <ClCompile Include="TileMap.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Player1.cpp">
+      <Filter>Personaggi\Giocatore</Filter>
+    </ClCompile>
+    <ClCompile Include="Player2.cpp">
+      <Filter>Personaggi\Giocatore</Filter>
+    </ClCompile>
+    <ClCompile Include="Player3.cpp">
+      <Filter>Personaggi\Giocatore</Filter>
+    </ClCompile>
+    <ClCompile Include="StrategyMove.cpp">
+      <Filter>Personaggi\Nemici</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>GameLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>GameLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureHolder.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Melee.cpp">
+      <Filter>Personaggi\Nemici</Filter>
+    </ClCompile>
+    <ClCompile Include="Ranged.cpp">
+      <Filter>Personaggi\Nemici</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureHolder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StrategyMove.h">
+    <ClInclude Include="TileMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameCharacter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyStrategyMove.h">
-      <Filter>Header Files</Filter>
+      <Filter>Personaggi</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
-      <Filter>Header Files</Filter>
+      <Filter>Personaggi\Nemici</Filter>
     </ClInclude>
-    <ClInclude Include="TileMap.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="EnemyStrategyMove.h">
+      <Filter>Personaggi\Nemici</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Personaggi\Giocatore</Filter>
+    </ClInclude>
+    <ClInclude Include="Player1.h">
+      <Filter>Personaggi\Giocatore</Filter>
+    </ClInclude>
+    <ClInclude Include="Player2.h">
+      <Filter>Personaggi\Giocatore</Filter>
+    </ClInclude>
+    <ClInclude Include="Player3.h">
+      <Filter>Personaggi\Giocatore</Filter>
+    </ClInclude>
+    <ClInclude Include="StrategyMove.h">
+      <Filter>Personaggi\Nemici</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>GameLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureHolder.h">
+      <Filter>Resource Files</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
-      <Filter>Header Files</Filter>
+      <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="TileMap.h">
-      <Filter>Header Files</Filter>
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Melee.h">
+      <Filter>Personaggi\Nemici</Filter>
+    </ClInclude>
+    <ClInclude Include="Ranged.h">
+      <Filter>Personaggi\Nemici</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -10,11 +10,10 @@ public:
 
 	void render(sf::RenderWindow* target);
 
-	virtual void move(sf::Time deltaTime) = 0;
-	virtual void rotate(sf::Vector2f vec_dir) = 0;
-
-	void update(sf::Time deltaTime, sf::Vector2f mousePosView);
-	void update(sf::Time deltaTime, GameCharacter* target);
+	//virtual void move(sf::Time deltaTime) = 0;
+	//virtual void rotate(sf::Vector2f vec_dir) = 0;
+	//virtual void update(sf::Time deltaTime, sf::Vector2f mousePosView);
+	//virtual void update(sf::Time deltaTime, GameCharacter* target);
 
 	sf::Vector2f getPosition();
 

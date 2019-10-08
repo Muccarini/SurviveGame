@@ -59,3 +59,9 @@ void Player::rotate(sf::Vector2f mousePosView)
 	this->_sprite.setRotation(deg + 360.f);
 }
 
+void Player::update(sf::Time deltaTime, sf::Vector2f mousePosView)
+{
+	move(deltaTime);
+	rotate(mousePosView);
+}
+
