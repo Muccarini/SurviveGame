@@ -6,9 +6,17 @@ Player::Player()
 	mov_speed = 200;
 	_textures.load(Textures::Personaggio, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
 	_sprite.setTexture(_textures.get(Textures::Personaggio));
+	hit_box.setSize(sf::Vector2f(_sprite.getGlobalBounds().width, _sprite.getGlobalBounds().height));
+	hit_box.setOutlineColor(sf::Color::Magenta);
+	hit_box.setOutlineThickness(3.f);
+	hit_box.setFillColor(sf::Color::Transparent);
 	_sprite.setScale(0.3f, 0.3f);
-	_sprite.setPosition(150.f, 150.f);
+	hit_box.setScale(_sprite.getScale());
+	_sprite.setPosition(300.f, 300.f);
+	hit_box.setPosition(getPosition());
 	_sprite.setOrigin(105, 105);
+	hit_box.setOrigin(_sprite.getOrigin());
+
 }
 
 Player::~Player()
@@ -59,9 +67,17 @@ void Player::rotate(sf::Vector2f mousePosView)
 	this->_sprite.setRotation(deg + 360.f);
 }
 
-void Player::update(sf::Time deltaTime, sf::Vector2f mousePosView)
+void Player::update(sf::Time deltaTime, sf::Vector2f mousePosView, sf::FloatRect collision)
 {
-	move(deltaTime);
+	if (!hit_box.getGlobalBounds().intersects(collision))
+	{
+		move(deltaTime);
+		hit_box.setPosition(getPosition());
+	}
+
 	rotate(mousePosView);
+	hit_box.setRotation(_sprite.getRotation());
+	
+
 }
 

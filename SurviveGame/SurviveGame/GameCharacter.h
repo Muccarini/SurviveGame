@@ -17,6 +17,8 @@ public:
 
 	sf::Vector2f getPosition();
 
+	sf::RectangleShape hit_box;
+
 protected:
 
 	TextureHolder _textures;

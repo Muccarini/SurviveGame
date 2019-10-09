@@ -13,6 +13,7 @@ Game::Game() : window(sf::VideoMode(1920, 1080), "Survive.io"), game_view(sf::Ve
 	}
 
 	game_view.setCenter(player.getPosition());
+	collision = tile_map.getWall();
 }
 
 void Game::run()
@@ -55,7 +56,8 @@ void Game::processEvents()
 
 void Game::update(sf::Time deltaTime)
 {
-	player.update(deltaTime, (window).mapPixelToCoords(sf::Mouse::getPosition(window)));
+	mouse_pos_view = (window).mapPixelToCoords(sf::Mouse::getPosition(window));
+	player.update(deltaTime, mouse_pos_view, collision);
 
 	for(auto i = enemies.begin(); i != enemies.end(); i++)
 	{
@@ -73,6 +75,8 @@ void Game::render()
 
 	tile_map.render(window);
 	player.render(&window);
+	window.draw(player.hit_box);
+
 	for (auto i = enemies.begin(); i != enemies.end(); i++)
 	{
 		(*i)->render(&window);

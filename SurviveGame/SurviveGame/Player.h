@@ -11,7 +11,7 @@ public:
 	Player();
 	virtual ~Player();
 
-	void update(sf::Time deltaTime, sf::Vector2f mousePosView);
+	void update(sf::Time deltaTime, sf::Vector2f mousePosView, sf::FloatRect collision);
 	
 	void move(sf::Time deltaTime);
 	void rotate(sf::Vector2f mousePosView);

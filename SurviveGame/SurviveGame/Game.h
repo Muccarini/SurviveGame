@@ -25,6 +25,7 @@ private:
 
 	sf::RenderWindow window;
 	sf::Vector2f mouse_pos_view;
+	sf::FloatRect collision;
 
 	sf::View game_view;
 	TileMap tile_map;

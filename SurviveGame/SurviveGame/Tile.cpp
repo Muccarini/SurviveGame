@@ -2,6 +2,11 @@
 
 Tile::Tile(float x, float y, float gride_size_f, sf::Texture& txt, int t_type) : textures(txt)
 {
+	if(t_type == 3)
+	{
+		shape.setOutlineColor(sf::Color::Magenta);
+		shape.setOutlineThickness(3.f);
+	}
 
 	rect_shape.width = gride_size_f;
 	rect_shape.height = gride_size_f;

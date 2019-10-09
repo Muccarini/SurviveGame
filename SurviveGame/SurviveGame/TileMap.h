@@ -19,8 +19,11 @@ private:
     std::vector< std::vector<Tile*> > map;
 	sf::Texture tileset;
 
+	sf::RectangleShape wall;
+
 public:
 
+	sf::FloatRect getWall();
 
 	void loadFromFile(const std::string file_name);
 
