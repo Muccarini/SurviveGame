@@ -66,17 +66,8 @@
     <ClCompile Include="TextureHolder.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="Melee.cpp">
-      <Filter>Personaggi\Nemici</Filter>
-    </ClCompile>
-    <ClCompile Include="Ranged.cpp">
-      <Filter>Personaggi\Nemici</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TileMap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameCharacter.h">
       <Filter>Personaggi</Filter>
     </ClInclude>
@@ -113,11 +104,8 @@
     <ClInclude Include="TileMap.h">
       <Filter>Map</Filter>
     </ClInclude>
-    <ClInclude Include="Melee.h">
-      <Filter>Personaggi\Nemici</Filter>
-    </ClInclude>
-    <ClInclude Include="Ranged.h">
-      <Filter>Personaggi\Nemici</Filter>
+    <ClInclude Include="TileMap.h">
+      <Filter>GameLogic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

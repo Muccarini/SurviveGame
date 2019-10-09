@@ -7,8 +7,9 @@ Game::Game() : window(sf::VideoMode(1920, 1080), "Survive.io"), game_view(sf::Ve
 {
 
 	for (int i = 0 ; i < 10 ; i++)
-	{
-		enemies.push_back(std::move(new Enemy(rand() % 500, rand() % 500)));
+	{   
+		std::unique_ptr<Enemy> enemy(new Enemy(rand() % 500, rand() % 500));
+		enemies.push_back(std::move(enemy));
 	}
 
 	game_view.setCenter(player.getPosition());
@@ -72,7 +73,7 @@ void Game::render()
 	window.clear();
 
 	tile_map.render(window);
-	player->render(&window);
+	player.render(&window);
 	for (auto i = enemies.begin(); i != enemies.end(); i++)
 	{
 		(*i)->render(&window);
