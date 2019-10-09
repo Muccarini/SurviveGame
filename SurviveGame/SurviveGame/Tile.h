@@ -14,13 +14,14 @@ class Tile
 {
 
 public:
-	Tile(float x, float y, float grideSizeF, sf::Texture& txt);
+	Tile(float x, float y, float grideSizeF, sf::Texture& txt, int t_type);
 	virtual ~Tile();
 
 protected:
 	sf::RectangleShape shape;
 	sf::Texture& textures;
 	sf::IntRect rect_shape;
+	int type_tile;
 
 private: 
 	
