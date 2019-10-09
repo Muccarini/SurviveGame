@@ -5,13 +5,13 @@
 
 Game::Game() : window(sf::VideoMode(1920, 1080), "Survive.io"), game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(600.f, 280.f)) 
 {
-	player = new Player();
 
 	for (int i = 0 ; i < 10 ; i++)
 	{
-		enemies.push_back(new Enemy(rand() % 500, rand() % 500));
+		enemies.push_back(std::move(new Enemy(rand() % 500, rand() % 500)));
 	}
-	game_view.setCenter(player->getPosition());
+
+	game_view.setCenter(player.getPosition());
 	game_view.setSize(600.f, 280.f);
 }
 
@@ -55,14 +55,14 @@ void Game::processEvents()
 
 void Game::update(sf::Time deltaTime)
 {
-	player->update(deltaTime, (window).mapPixelToCoords(sf::Mouse::getPosition(window)));
+	player.update(deltaTime, (window).mapPixelToCoords(sf::Mouse::getPosition(window)));
 
 	for(auto i = enemies.begin(); i != enemies.end(); i++)
 	{
-		(*i)->update(deltaTime, player);
+		(*i)->update(deltaTime,&player);
 	}
 
-	game_view.setCenter(player->getPosition());
+	game_view.setCenter(player.getPosition());
 	window.setView(game_view);
 }
 
@@ -77,7 +77,6 @@ void Game::render()
 	{
 		(*i)->render(&window);
 	}
-
 	
 	window.display();
 }

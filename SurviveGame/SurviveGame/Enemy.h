@@ -10,10 +10,14 @@ public:
 
 public:
 	Enemy(float x,float y);
+	Enemy();
+
 	virtual ~Enemy();
 
-	 void move(sf::Time deltaTime)override;
-	 void rotate(sf::Vector2f vec_dir)override;
+	 void move(sf::Time deltaTime);
+	 void rotate(sf::Vector2f vec_dir);
+
+	 void update(sf::Time deltaTime, GameCharacter * target);
 
 private:
 	EnemyStrategyMove _m;
