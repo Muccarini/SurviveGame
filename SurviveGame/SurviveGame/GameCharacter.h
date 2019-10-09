@@ -17,7 +17,7 @@ public:
 
 	sf::Vector2f getPosition();
 
-	sf::RectangleShape hit_box;
+	sf::CircleShape hit_box;
 
 protected:
 
