@@ -7,13 +7,11 @@ TileMap::TileMap()
 	this->grid_size_f = 64.f;
 	this->max_size.x = 60;
 	this->max_size.y = 34;
-	this->layers = 1;
 
 	tileset.loadFromFile("Sources/tileSheet/tilesheet3.png");
 	
 	std::ifstream openfile("Sources/Mappa.txt");
 		//devo leggere il file e in base al numero trovato mettere un tile diverso 
-	int type_map[60][34];
 	if(openfile.is_open())
 	{
 		while (!openfile.eof())

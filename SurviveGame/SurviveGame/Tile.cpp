@@ -26,7 +26,7 @@ Tile::Tile(float x, float y, float gride_size_f, sf::Texture& txt, int t_type) :
 	}
 
 
-	this->shape.setTextureRect(sf::IntRect(pos_in_texture.x, pos_in_texture.y, 32, 32));
+	this->shape.setTextureRect(sf::IntRect(pos_in_texture.x, pos_in_texture.y, 62, 62));
 }
 
 
