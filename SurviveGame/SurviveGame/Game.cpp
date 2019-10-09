@@ -3,7 +3,7 @@
 #include "Enemy.h"
 
 
-Game::Game() : window(sf::VideoMode(1920, 1080), "Survive.io"), game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(600.f, 280.f)) 
+Game::Game() : window(sf::VideoMode(1920, 1080), "Survive.io"), game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f)) 
 {
 
 	for (int i = 0 ; i < 10 ; i++)
@@ -13,7 +13,6 @@ Game::Game() : window(sf::VideoMode(1920, 1080), "Survive.io"), game_view(sf::Ve
 	}
 
 	game_view.setCenter(player.getPosition());
-	game_view.setSize(600.f, 280.f);
 }
 
 void Game::run()

@@ -105,7 +105,7 @@
       <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="TileMap.h">
-      <Filter>GameLogic</Filter>
+      <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

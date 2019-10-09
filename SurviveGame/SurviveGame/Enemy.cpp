@@ -8,7 +8,7 @@ Enemy::Enemy(float x, float y) : spawn_pos(x,y)
 
 	_textures.load(Textures::Enemy, "Sources/zombie1.png");
 	_sprite.setTexture(_textures.get(Textures::Enemy));
-	_sprite.setScale(0.3f, 0.3f);
+	_sprite.setScale(0.9f, 0.9f);
 	_sprite.setPosition(spawn_pos);
 	_sprite.setOrigin(+34, +34);
 	_sprite.setTextureRect(sf::IntRect(0, 0, 68, 68));

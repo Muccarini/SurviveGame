@@ -16,7 +16,7 @@ private:
 	unsigned int layers;
 	int tile_type;
 
-std::vector< std::vector<Tile*> > map;
+    std::vector< std::vector<Tile*> > map;
 	sf::Texture tileset;
 
 public:

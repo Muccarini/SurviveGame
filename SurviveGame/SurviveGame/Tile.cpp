@@ -16,17 +16,21 @@ Tile::Tile(float x, float y, float gride_size_f, sf::Texture& txt, int t_type) :
 	this->shape.setTexture(&txt);
 	sf::Vector2u pos_in_texture;
 	
-	for (int i = 0; i < t_type; i++)
+	int n = (txt.getSize().x / static_cast <unsigned>(gride_size_f));
+	int i=0;
+	int j = t_type % n;
+
+	while(t_type > n)
 	{
-		if ((t_type * gride_size_f) < txt.getSize().x)
-		{
-			pos_in_texture = sf::Vector2u(t_type * gride_size_f, i);
-		}
-		else t_type -= (txt.getSize().x / static_cast <unsigned>(gride_size_f));
+		t_type -= (txt.getSize().x / static_cast <unsigned>(gride_size_f));
+		i++;
 	}
 
+	if (i >= 1)
+		j -= 1;
 
-	this->shape.setTextureRect(sf::IntRect(pos_in_texture.x, pos_in_texture.y, 62, 62));
+	pos_in_texture = sf::Vector2u(j * gride_size_f, i * gride_size_f);
+	this->shape.setTextureRect(sf::IntRect(pos_in_texture.x, pos_in_texture.y, 64, 64));
 }
 
 
