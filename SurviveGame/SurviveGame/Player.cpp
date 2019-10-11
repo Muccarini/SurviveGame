@@ -71,17 +71,18 @@ void Player::rotate(sf::Vector2f mousePosView)
 
 void Player::update(sf::Time deltaTime, sf::Vector2f mousePosView, sf::FloatRect collision)
 {
-		post_pos = _sprite.getPosition();
+		old_pos = _sprite.getPosition();
 
 	if (!Intersect(hit_box, collision))
 	{
 		move(deltaTime);
 		hit_box.setPosition(getPosition());
-		old_pos = _sprite.getPosition();
+		sf::Vector2f curr_pos = _sprite.getPosition();
+		move_vect = (curr_pos - old_pos);
 	}
 	else
 	{
-		_sprite.setPosition(post_pos - old_pos);
+		_sprite.setPosition(getPosition() - move_vect);
 		hit_box.setPosition(getPosition());
 	}
 
@@ -96,7 +97,6 @@ bool Player::Intersect(sf::CircleShape hit_box, sf::FloatRect collision)
 
 	sf::Vector2f circleDistance;
 	float cornerDistance_sq;
-	bool intersect;
 
 	circleDistance.x = abs(hit_box.getPosition().x - rect_center.x);
 	circleDistance.y = abs(hit_box.getPosition().y - rect_center.y);

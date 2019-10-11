@@ -19,7 +19,7 @@ public:
 
 	sf::CircleShape hit_box;
 	sf::Vector2f old_pos;
-	sf::Vector2f post_pos;
+	sf::Vector2f move_vect;
 
 protected:
 
