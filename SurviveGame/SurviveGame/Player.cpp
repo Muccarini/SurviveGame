@@ -1,4 +1,6 @@
 #include "Player.h"
+#include <cmath>
+#include <algorithm>
 
 
 Player::Player()
@@ -69,15 +71,45 @@ void Player::rotate(sf::Vector2f mousePosView)
 
 void Player::update(sf::Time deltaTime, sf::Vector2f mousePosView, sf::FloatRect collision)
 {
-	if (!hit_box.getGlobalBounds().intersects(collision))
+		post_pos = _sprite.getPosition();
+
+	if (!Intersect(hit_box, collision))
 	{
 		move(deltaTime);
+		hit_box.setPosition(getPosition());
+		old_pos = _sprite.getPosition();
+	}
+	else
+	{
+		_sprite.setPosition(post_pos - old_pos);
 		hit_box.setPosition(getPosition());
 	}
 
 	rotate(mousePosView);
-	hit_box.setRotation(_sprite.getRotation());
 	
 
+}
+
+bool Player::Intersect(sf::CircleShape hit_box, sf::FloatRect collision)
+{
+	sf::Vector2f rect_center((collision.left + collision.width / 2), (collision.top + collision.height / 2));
+
+	sf::Vector2f circleDistance;
+	float cornerDistance_sq;
+	bool intersect;
+
+	circleDistance.x = abs(hit_box.getPosition().x - rect_center.x);
+	circleDistance.y = abs(hit_box.getPosition().y - rect_center.y);
+
+	if (circleDistance.x * 2 > (collision.width / 2 + hit_box.getRadius())) { return false; }
+	if (circleDistance.y * 2> (collision.height / 2 + hit_box.getRadius())) { return false; }
+
+	if (circleDistance.x * 2 <= (collision.width / 2)) { return true; }
+	if (circleDistance.y * 2 <= (collision.height / 2)) { return true; }
+
+	cornerDistance_sq = (pow((circleDistance.x - collision.width / 2),2)) + pow((circleDistance.y - collision.height / 2), 2);
+	
+	
+	return (cornerDistance_sq * 2<= pow(hit_box.getRadius(), 2));
 }
 
