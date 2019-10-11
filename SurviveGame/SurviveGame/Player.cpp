@@ -25,37 +25,58 @@ Player::~Player()
 {
 }
 
-void Player::move(sf::Time deltaTime) // TODO// cambiare mov_speed in movSpeed
+void Player::move(sf::Time deltaTime, sf::FloatRect collision) // TODO// cambiare mov_speed in movSpeed
 	{
 		sf::Vector2f vectorMov(0.f, 0.f);
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		bool w_is_pressed = sf::Keyboard::isKeyPressed(sf::Keyboard::W);
+		bool a_is_pressed = sf::Keyboard::isKeyPressed(sf::Keyboard::A);
+		bool s_is_pressed = sf::Keyboard::isKeyPressed(sf::Keyboard::S);
+		bool d_is_pressed = sf::Keyboard::isKeyPressed(sf::Keyboard::D);
+
+		if (w_is_pressed && !Intersect(hit_box, collision))
 		{
 			vectorMov.x = 0.f;
 			vectorMov.y = 0.f;
 			vectorMov.y = -mov_speed;
 			_sprite.move(vectorMov* deltaTime.asSeconds());
+
+			hit_box.setPosition(getPosition());
+			sf::Vector2f curr_pos = _sprite.getPosition();
+			move_vect = (curr_pos - old_pos);
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		if (a_is_pressed && !Intersect(hit_box, collision))
 		{
 			vectorMov.x = 0.f;
 			vectorMov.y = 0.f;
 			vectorMov.x = -mov_speed;
 			_sprite.move(vectorMov * deltaTime.asSeconds());
+
+			hit_box.setPosition(getPosition());
+			sf::Vector2f curr_pos = _sprite.getPosition();
+			move_vect = (curr_pos - old_pos);
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		if (s_is_pressed && !Intersect(hit_box, collision))
 		{
 			vectorMov.x = 0.f;
 			vectorMov.y = 0.f;
 			vectorMov.y = mov_speed;
 			_sprite.move(vectorMov * deltaTime.asSeconds());
+
+			hit_box.setPosition(getPosition());
+			sf::Vector2f curr_pos = _sprite.getPosition();
+			move_vect = (curr_pos - old_pos);
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		if (d_is_pressed && !Intersect(hit_box, collision))
 		{
 			vectorMov.x = 0.f;
 			vectorMov.y = 0.f;
 			vectorMov.x = mov_speed;
 			_sprite.move(vectorMov * deltaTime.asSeconds());
+
+			hit_box.setPosition(getPosition());
+			sf::Vector2f curr_pos = _sprite.getPosition();
+			move_vect = (curr_pos - old_pos);
 		}
 	}
 
@@ -72,15 +93,8 @@ void Player::rotate(sf::Vector2f mousePosView)
 void Player::update(sf::Time deltaTime, sf::Vector2f mousePosView, sf::FloatRect collision)
 {
 		old_pos = _sprite.getPosition();
-
-	if (!Intersect(hit_box, collision))
-	{
-		move(deltaTime);
-		hit_box.setPosition(getPosition());
-		sf::Vector2f curr_pos = _sprite.getPosition();
-		move_vect = (curr_pos - old_pos);
-	}
-	else
+		move(deltaTime,collision);
+		if(Intersect(hit_box, collision))
 	{
 		_sprite.setPosition(getPosition() - move_vect);
 		hit_box.setPosition(getPosition());

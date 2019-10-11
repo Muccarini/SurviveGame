@@ -15,7 +15,7 @@ public:
 
 	bool Intersect(sf::CircleShape hit_box, sf::FloatRect collision);
 	
-	void move(sf::Time deltaTime);
+	void move(sf::Time deltaTime, sf::FloatRect collision);
 	void rotate(sf::Vector2f mousePosView);
 
 private:
