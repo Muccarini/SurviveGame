@@ -1,5 +1,5 @@
 #include "Player.h"
-#include <cmath>
+#include <math.h>
 #include <algorithm>
 
 
@@ -26,8 +26,8 @@ Player::~Player()
 }
 
 void Player::move(sf::Time deltaTime, sf::FloatRect collision) // TODO// cambiare mov_speed in movSpeed
-	{
-		sf::Vector2f vectorMov(0.f, 0.f);
+{
+	/*	sf::Vector2f vectorMov(0.f, 0.f);
 
 		bool w_is_pressed = sf::Keyboard::isKeyPressed(sf::Keyboard::W);
 		bool a_is_pressed = sf::Keyboard::isKeyPressed(sf::Keyboard::A);
@@ -45,6 +45,7 @@ void Player::move(sf::Time deltaTime, sf::FloatRect collision) // TODO// cambiar
 			sf::Vector2f curr_pos = _sprite.getPosition();
 			move_vect = (curr_pos - old_pos);
 		}
+
 		if (a_is_pressed && !Intersect(hit_box, collision))
 		{
 			vectorMov.x = 0.f;
@@ -56,6 +57,7 @@ void Player::move(sf::Time deltaTime, sf::FloatRect collision) // TODO// cambiar
 			sf::Vector2f curr_pos = _sprite.getPosition();
 			move_vect = (curr_pos - old_pos);
 		}
+
 		if (s_is_pressed && !Intersect(hit_box, collision))
 		{
 			vectorMov.x = 0.f;
@@ -67,6 +69,7 @@ void Player::move(sf::Time deltaTime, sf::FloatRect collision) // TODO// cambiar
 			sf::Vector2f curr_pos = _sprite.getPosition();
 			move_vect = (curr_pos - old_pos);
 		}
+
 		if (d_is_pressed && !Intersect(hit_box, collision))
 		{
 			vectorMov.x = 0.f;
@@ -77,7 +80,47 @@ void Player::move(sf::Time deltaTime, sf::FloatRect collision) // TODO// cambiar
 			hit_box.setPosition(getPosition());
 			sf::Vector2f curr_pos = _sprite.getPosition();
 			move_vect = (curr_pos - old_pos);
-		}
+		}*/
+	sf::Vector2f dir(0, 0);
+
+	bool w_is_pressed = sf::Keyboard::isKeyPressed(sf::Keyboard::W);
+	bool a_is_pressed = sf::Keyboard::isKeyPressed(sf::Keyboard::A);
+	bool s_is_pressed = sf::Keyboard::isKeyPressed(sf::Keyboard::S);
+	bool d_is_pressed = sf::Keyboard::isKeyPressed(sf::Keyboard::D);
+
+	if (w_is_pressed)
+	{
+		dir.y = -1;
+	}
+
+	if (a_is_pressed)
+	{
+		dir.x = -1;
+	}
+
+	if (s_is_pressed)
+	{
+		dir.y = +1;
+	}
+
+	if (d_is_pressed)
+	{
+		dir.x = +1;
+	}
+
+	if (Intersect(hit_box, collision))
+	{
+		if (move_vect.x = 0)
+			dir.x = 0;
+		else
+			dir.y = 0;
+	}
+
+	this->_sprite.move(dir * this->mov_speed * deltaTime.asSeconds());
+
+	hit_box.setPosition(getPosition());
+	sf::Vector2f curr_pos = _sprite.getPosition();
+	move_vect = (curr_pos - old_pos);
 	}
 
 void Player::rotate(sf::Vector2f mousePosView)
