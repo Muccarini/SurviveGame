@@ -22,6 +22,5 @@ public:
 
 private:
 	Type _type;
-	sf::Vector2f out_mtv;
 };
 

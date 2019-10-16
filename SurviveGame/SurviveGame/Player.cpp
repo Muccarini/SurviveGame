@@ -8,21 +8,21 @@ Player::Player()
 	mov_speed = 200;
 	_textures.load(Textures::Personaggio, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
 	_sprite.setTexture(_textures.get(Textures::Personaggio));
-	hit_box.setSize(sf::Vector2f(150.f,150.f));
+	hit_box.setSize(sf::Vector2f(100.f, 100.f));
 
 	//COLOR
-	hit_box.setOutlineColor(sf::Color::Red);
+	hit_box.setOutlineColor(sf::Color::Transparent);
 	hit_box.setOutlineThickness(3.f);
 	hit_box.setFillColor(sf::Color::Transparent);
 	//SCALE
-	_sprite.setScale(0.3f, 0.3f);
+	_sprite.setScale(0.3, 0.3);
 	hit_box.setScale(_sprite.getScale());
 	//POSITION
 	_sprite.setPosition(300.f, 300.f);
 	hit_box.setPosition(getPosition());
 	//ORIGIN
 	_sprite.setOrigin(92, 121);
-	hit_box.setOrigin(89, 118);
+	hit_box.setOrigin(47.5, 50);
 
 }
 
@@ -62,8 +62,6 @@ void Player::move(sf::Time deltaTime, sf::FloatRect collision)
 	this->_sprite.move(dir * this->mov_speed * deltaTime.asSeconds());
 
 	hit_box.setPosition(getPosition());
-	sf::Vector2f curr_pos = _sprite.getPosition();
-	move_vect = (curr_pos - old_pos);
 	}
 
 void Player::rotate(sf::Vector2f mousePosView)
@@ -78,7 +76,6 @@ void Player::rotate(sf::Vector2f mousePosView)
 
 void Player::update(sf::Time deltaTime, sf::Vector2f mousePosView, sf::FloatRect collision)
 {
-		old_pos = _sprite.getPosition();
 		move(deltaTime, collision);
 
 		if (sat_test(hit_box.getGlobalBounds(), collision, &out_mtv))

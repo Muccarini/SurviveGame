@@ -18,13 +18,12 @@ public:
 	sf::Vector2f getPosition();
 
 	sf::RectangleShape hit_box;
-	sf::Vector2f old_pos;
-	sf::Vector2f move_vect;
 
 protected:
 
 	TextureHolder _textures;
 	sf::Sprite _sprite;
+	sf::Vector2f out_mtv;
 
 	float mov_speed;
 
