@@ -5,9 +5,9 @@
 
 Game::Game() : window(sf::VideoMode(1920, 1080), "Survive.io"), game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f)) 
 {
-	for (int i = 0 ; i < 5 ; i++)
+	for (int i = 0 ; i < 5; i++)
 	{
-		std::shared_ptr<Enemy> enemy(new Enemy(rand() % 500, rand() % 500));
+		std::shared_ptr<Enemy> enemy(new Enemy(rand() % 1000, rand() % 1000));
 		enemies.push_back(enemy); //std:move(enemy) per unique_ptr
 	}
 
@@ -74,6 +74,7 @@ void Game::render()
 
 	tile_map.render(window);
 	player.render(&window);
+	player.bullet.render(&window);
 	window.draw(player.hit_box);
 
 	for (auto i = enemies.begin(); i != enemies.end(); i++)

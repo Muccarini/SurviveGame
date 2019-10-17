@@ -1,26 +1,21 @@
 #pragma once
 #include "GameCharacter.h"
 #include "Enemy.h"
-#include "Bullet.h"
-
-class Player :
+class Bullet :
 	public GameCharacter
 {
 public:
-	enum Type {Warrior, Ranger, Mage};
-	
-public:
-	Player();
-	virtual ~Player();
+	Bullet();
+	~Bullet();
 
 	void update(sf::Time deltaTime, sf::Vector2f mousePosView, std::vector<sf::FloatRect> collision, std::vector<std::shared_ptr<Enemy>> enemies);
-	
-	void move(sf::Time deltaTime);
-	void rotate(sf::Vector2f mousePosView);
-
-	Bullet bullet;
+	void init(sf::Vector2f player_pos);
 
 private:
-	Type _type;
+
+	void rotate(sf::Vector2f vec_dir);
+
+	sf::Vector2f player_pos;
+	float ratio;
 };
 

@@ -66,6 +66,9 @@
     <ClCompile Include="TextureHolder.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Personaggi\Giocatore</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameCharacter.h">
@@ -106,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="TileMap.h">
       <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Personaggi\Giocatore</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

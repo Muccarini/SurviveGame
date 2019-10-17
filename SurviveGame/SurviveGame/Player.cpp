@@ -23,7 +23,6 @@ Player::Player()
 	//ORIGIN
 	_sprite.setOrigin(92, 121);
 	hit_box.setOrigin(47.5, 50);
-
 }
 
 Player::~Player()
@@ -74,8 +73,15 @@ void Player::rotate(sf::Vector2f mousePosView)
 }
 
 void Player::update(sf::Time deltaTime, sf::Vector2f mousePosView, std::vector<sf::FloatRect> collision, std::vector<std::shared_ptr<Enemy>> enemies)
-{
+{      
+	    //if wasd
 		move(deltaTime);
+
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		{
+			bullet.init(getPosition());
+			bullet.update(deltaTime, mousePosView, collision, enemies);
+		}
 
 		 //COLLISION SUI MURI
 		for (int i = 0 ; i != collision.size(); i++)
@@ -100,27 +106,3 @@ void Player::update(sf::Time deltaTime, sf::Vector2f mousePosView, std::vector<s
 	
 
 }
-
-
-//bool Player::Intersect(sf::CircleShape hit_box, sf::FloatRect collision)
-//{
-//	sf::Vector2f rect_center((collision.left + collision.width / 2), (collision.top + collision.height / 2));
-//
-//	sf::Vector2f circleDistance;
-//	float cornerDistance_sq;
-//
-//	circleDistance.x = abs(hit_box.getPosition().x - rect_center.x);
-//	circleDistance.y = abs(hit_box.getPosition().y - rect_center.y);
-//
-//	if (circleDistance.x * 2 > (collision.width / 2 + hit_box.getRadius())) { return false; }
-//	if (circleDistance.y * 2> (collision.height / 2 + hit_box.getRadius())) { return false; }
-//
-//	if (circleDistance.x * 2 <= (collision.width / 2)) { return true; }
-//	if (circleDistance.y * 2 <= (collision.height / 2)) { return true; }
-//
-//	cornerDistance_sq = (pow((circleDistance.x - collision.width / 2),2)) + pow((circleDistance.y - collision.height / 2), 2);
-//	
-//	
-//	return (cornerDistance_sq * 2<= pow(hit_box.getRadius(), 2));
-//}
-
