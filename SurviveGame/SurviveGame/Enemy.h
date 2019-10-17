@@ -17,7 +17,7 @@ public:
 	 void move(sf::Time deltaTime);
 	 void rotate(sf::Vector2f vec_dir);
 
-	 void update(sf::Time deltaTime, GameCharacter * target);
+	 void update(sf::Time deltaTime, GameCharacter * target, std::vector<sf::FloatRect> collision, std::vector<std::shared_ptr<Enemy>> enemies);
 
 private:
 	EnemyStrategyMove _m;

@@ -20,10 +20,16 @@ private:
 	sf::Texture tileset;
 
 	sf::RectangleShape wall;
+	std::vector<sf::RectangleShape> walls;
+	/*sf::RectangleShape creating_wall_block(std::vector<sf::RectangleShape> walls_rect);*/
+
+	std::vector<sf::FloatRect> wall_block;
+
+
 
 public:
 
-	sf::FloatRect getWall();
+	std::vector<sf::FloatRect> getWalls();
 
 	void loadFromFile(const std::string file_name);
 

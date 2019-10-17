@@ -30,7 +30,7 @@ Player::~Player()
 {
 }
 
-void Player::move(sf::Time deltaTime, sf::FloatRect collision)
+void Player::move(sf::Time deltaTime)
 {
 	sf::Vector2f dir(0, 0);
 
@@ -60,7 +60,6 @@ void Player::move(sf::Time deltaTime, sf::FloatRect collision)
 	}
 
 	this->_sprite.move(dir * this->mov_speed * deltaTime.asSeconds());
-
 	hit_box.setPosition(getPosition());
 	}
 
@@ -74,51 +73,34 @@ void Player::rotate(sf::Vector2f mousePosView)
 	this->_sprite.setRotation(deg + 360.f);
 }
 
-void Player::update(sf::Time deltaTime, sf::Vector2f mousePosView, sf::FloatRect collision)
+void Player::update(sf::Time deltaTime, sf::Vector2f mousePosView, std::vector<sf::FloatRect> collision, std::vector<std::shared_ptr<Enemy>> enemies)
 {
-		move(deltaTime, collision);
+		move(deltaTime);
 
-		if (sat_test(hit_box.getGlobalBounds(), collision, &out_mtv))
-			_sprite.move(out_mtv);
+		 //COLLISION SUI MURI
+		for (int i = 0 ; i != collision.size(); i++)
+		{
+			if (sat_test(hit_box.getGlobalBounds(), collision[i], &out_mtv))
+			{
+				_sprite.move(out_mtv);
+			}
+		}
 
-	rotate(mousePosView);
+		//COLLISION SUI NEMICI
+		for (int i = 0; i != enemies.size(); i++)
+		{
+				if (sat_test(hit_box.getGlobalBounds(), enemies[i]->hit_box.getGlobalBounds(), &out_mtv))
+				{
+					_sprite.move(out_mtv);
+				}
+		}
+		
+		
+		rotate(mousePosView);
 	
 
 }
 
-bool Player::sat_test(const sf::FloatRect &rectSp1, const sf::FloatRect &rectSp2, sf::Vector2f *out_mtv)
-{
-
-	float proj_x, proj_y, overlap_x, overlap_y;
-
-	// test overlap in x axis
-	proj_x = std::max(rectSp1.left + rectSp1.width, rectSp2.left + rectSp2.width) - std::min(rectSp1.left, rectSp2.left);
-	if (proj_x < rectSp1.width + rectSp2.width) {
-		if (out_mtv) {
-			// calculate mtv in x
-			overlap_x = rectSp1.width + rectSp2.width - proj_x;
-		}
-		// test overlap in y axis
-		proj_y = std::max(rectSp1.top + rectSp1.height, rectSp2.top + rectSp2.height) - std::min(rectSp1.top, rectSp2.top);
-		if (proj_y < rectSp1.height + rectSp2.height) {
-			if (out_mtv) {
-				// calculate mtv in y
-				overlap_y = rectSp1.height + rectSp2.height - proj_y;
-				out_mtv->x = out_mtv->y = 0;
-
-				// choose minimun overlap
-				if (overlap_x < overlap_y) {
-					out_mtv->x = overlap_x * (rectSp1.left < rectSp2.left ? -1 : 1);
-				}
-				else {
-					out_mtv->y = overlap_y * (rectSp1.top < rectSp2.top ? -1 : 1);
-				}
-			}
-			return true;
-		}
-	}
-	return false;
-}
 
 //bool Player::Intersect(sf::CircleShape hit_box, sf::FloatRect collision)
 //{

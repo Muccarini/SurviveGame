@@ -25,12 +25,12 @@ private:
 
 	sf::RenderWindow window;
 	sf::Vector2f mouse_pos_view;
-	sf::FloatRect collision;
+	std::vector<sf::FloatRect> walls_collision;
 
 	sf::View game_view;
 	TileMap tile_map;
 
-	std::vector<std::unique_ptr<Enemy>> enemies;
+	std::vector<std::shared_ptr<Enemy>> enemies;
 	Player player;
 
 

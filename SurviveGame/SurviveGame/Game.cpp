@@ -5,15 +5,14 @@
 
 Game::Game() : window(sf::VideoMode(1920, 1080), "Survive.io"), game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f)) 
 {
-
-	for (int i = 0 ; i < 10 ; i++)
-	{   
-		std::unique_ptr<Enemy> enemy(new Enemy(rand() % 500, rand() % 500));
-		enemies.push_back(std::move(enemy));
+	for (int i = 0 ; i < 5 ; i++)
+	{
+		std::shared_ptr<Enemy> enemy(new Enemy(rand() % 500, rand() % 500));
+		enemies.push_back(enemy); //std:move(enemy) per unique_ptr
 	}
 
 	game_view.setCenter(player.getPosition());
-	collision = tile_map.getWall();
+	walls_collision = tile_map.getWalls();
 }
 
 void Game::run()
@@ -57,11 +56,11 @@ void Game::processEvents()
 void Game::update(sf::Time deltaTime)
 {
 	mouse_pos_view = (window).mapPixelToCoords(sf::Mouse::getPosition(window));
-	player.update(deltaTime, mouse_pos_view, collision);
+	player.update(deltaTime, mouse_pos_view, walls_collision, enemies);
 
 	for(auto i = enemies.begin(); i != enemies.end(); i++)
 	{
-		(*i)->update(deltaTime,&player);
+		(*i)->update(deltaTime,&player, walls_collision, enemies);
 	}
 
 	game_view.setCenter(player.getPosition());
@@ -80,6 +79,7 @@ void Game::render()
 	for (auto i = enemies.begin(); i != enemies.end(); i++)
 	{
 		(*i)->render(&window);
+		window.draw((*i)->hit_box);
 	}
 	
 	window.display();

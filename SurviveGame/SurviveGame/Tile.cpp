@@ -2,9 +2,9 @@
 
 Tile::Tile(float x, float y, float gride_size_f, sf::Texture& txt, int t_type) : textures(txt)
 {
-	if(t_type == 3)
+	if(t_type == 9)
 	{
-		shape.setOutlineColor(sf::Color::Magenta);
+		shape.setOutlineColor(sf::Color::Transparent);
 		shape.setOutlineThickness(3.f);
 	}
 

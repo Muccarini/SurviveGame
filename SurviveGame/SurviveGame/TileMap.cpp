@@ -6,7 +6,7 @@ TileMap::TileMap()
 {
 	this->grid_size_f = 64.f;
 	this->max_size.x = 60;
-	this->max_size.y = 34;
+	this->max_size.y = 20;
 
 	tileset.loadFromFile("Sources/tileSheet/tilesheet3.png");
 	
@@ -34,10 +34,14 @@ TileMap::TileMap()
 						std::string t_type = value.substr(0, value.find(','));
 						tile_type = atoi(t_type.c_str());
 
-						if (tile_type == 3) 
+						int wall_counter = 0;
+						if (tile_type == 9) 
 						{
 							wall.setPosition(x * grid_size_f, y * grid_size_f);
-							wall.setSize(sf::Vector2f(grid_size_f,grid_size_f));
+							wall.setSize(sf::Vector2f(grid_size_f, grid_size_f));
+
+							walls.push_back(wall);
+							wall_counter++;
 						}
 
 						this->map[y][x] = new Tile(x * this->grid_size_f, y * grid_size_f, this->grid_size_f, tileset, tile_type);
@@ -56,9 +60,22 @@ TileMap::~TileMap()
 {
 }
 
-sf::FloatRect TileMap::getWall()
+//sf::RectangleShape TileMap::creating_wall_block(std::vector<sf::RectangleShape> walls_rect)
+//{
+//	int i = 0;
+//	if()
+//}
+
+std::vector<sf::FloatRect> TileMap::getWalls()
 {
-	return wall.getGlobalBounds();
+	std::vector<sf::FloatRect> wall_block;
+
+	for (int i = 0 ; i!=walls.size() ; i++)
+	{
+		wall_block.push_back(walls[i].getGlobalBounds());
+	}
+
+	return wall_block;
 }
 
 void TileMap::loadFromFile(const std::string file_name)

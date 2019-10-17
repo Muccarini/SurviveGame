@@ -10,16 +10,13 @@ public:
 
 	void render(sf::RenderWindow* target);
 
-	//virtual void move(sf::Time deltaTime) = 0;
-	//virtual void rotate(sf::Vector2f vec_dir) = 0;
-	//virtual void update(sf::Time deltaTime, sf::Vector2f mousePosView);
-	//virtual void update(sf::Time deltaTime, GameCharacter* target);
-
 	sf::Vector2f getPosition();
 
 	sf::RectangleShape hit_box;
 
 protected:
+
+	bool sat_test(const sf::FloatRect &rectSp1, const sf::FloatRect &rectSp2, sf::Vector2f *out_mtv);
 
 	TextureHolder _textures;
 	sf::Sprite _sprite;
