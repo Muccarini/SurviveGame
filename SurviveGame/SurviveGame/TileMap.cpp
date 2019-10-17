@@ -5,7 +5,7 @@
 TileMap::TileMap()
 {
 	this->grid_size_f = 64.f;
-	this->max_size.x = 60;
+	this->max_size.x = 20;
 	this->max_size.y = 20;
 
 	tileset.loadFromFile("Sources/tileSheet/tilesheet3.png");
