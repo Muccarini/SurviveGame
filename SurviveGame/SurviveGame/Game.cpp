@@ -5,10 +5,18 @@
 
 Game::Game() : window(sf::VideoMode(1920, 1080), "Survive.io"), game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f)) 
 {
-	for (int i = 0 ; i < 5; i++)
+	//ENEMY
+	for (int i = 0 ; i < 0; i++)
 	{
 		std::shared_ptr<Enemy> enemy(new Enemy(rand() % 1000, rand() % 1000));
 		enemies.push_back(enemy); //std:move(enemy) per unique_ptr
+	}
+	//GUN
+	ammo = 30;
+	for(int i = 0 ; i < ammo ; i++)
+	{
+		Bullet bullet(player.getPosition());
+		p_bullets.push_back(bullet);
 	}
 
 	game_view.setCenter(player.getPosition());
@@ -58,6 +66,17 @@ void Game::update(sf::Time deltaTime)
 	mouse_pos_view = (window).mapPixelToCoords(sf::Mouse::getPosition(window));
 	player.update(deltaTime, mouse_pos_view, walls_collision, enemies);
 
+	//GUN
+	if (player.shoot() && ammo != 1)
+	{
+		for (int i = 29; i > ammo - 1; i--)
+		{
+			p_bullets[i].update(deltaTime, mouse_pos_view, walls_collision, enemies);
+		}
+		ammo--;
+	}
+
+	//ENEMY
 	for(auto i = enemies.begin(); i != enemies.end(); i++)
 	{
 		(*i)->update(deltaTime,&player, walls_collision, enemies);
@@ -74,7 +93,12 @@ void Game::render()
 
 	tile_map.render(window);
 	player.render(&window);
-	player.bullet.render(&window);
+
+	for (int i = ammo-1; i != 1; i--)
+	{
+		p_bullets[i].render(&window);
+	}
+
 	window.draw(player.hit_box);
 
 	for (auto i = enemies.begin(); i != enemies.end(); i++)

@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "TileMap.h"
+#include "Bullet.h"
 #include <vector>
 #include "Box2D/Box2D.h"
 
@@ -32,6 +33,9 @@ private:
 
 	std::vector<std::shared_ptr<Enemy>> enemies;
 	Player player;
+
+	std::vector<Bullet> p_bullets;
+	int ammo;
 
 
 };

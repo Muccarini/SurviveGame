@@ -1,7 +1,6 @@
 #pragma once
 #include "GameCharacter.h"
 #include "Enemy.h"
-#include "Bullet.h"
 
 class Player :
 	public GameCharacter
@@ -18,7 +17,7 @@ public:
 	void move(sf::Time deltaTime);
 	void rotate(sf::Vector2f mousePosView);
 
-	Bullet bullet;
+	bool shoot();
 
 private:
 	Type _type;

@@ -2,10 +2,13 @@
 
 
 
-Bullet::Bullet()
+Bullet::Bullet(sf::Vector2f player_pos) : player_pos(player_pos)
 {
 	mov_speed = 200;
+	//TEXTURE
 	_textures.load(Textures::Proiettile, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
+	_sprite.setTexture(_textures.get(Textures::Proiettile));
+
 	hit_box.setSize(sf::Vector2f(100.f, 100.f));
 
 	//COLOR
@@ -16,10 +19,15 @@ Bullet::Bullet()
 	_sprite.setScale(0.1, 0.1);
 	hit_box.setScale(_sprite.getScale());
 	//POSITION
+	_sprite.setPosition(player_pos);
 	hit_box.setPosition(getPosition());
 	//ORIGIN
 	_sprite.setOrigin(92, 121);
 	hit_box.setOrigin(47.5, 50);
+}
+
+Bullet::Bullet()
+{
 }
 
 
@@ -29,8 +37,8 @@ Bullet::~Bullet()
 
 void Bullet::update(sf::Time deltaTime, sf::Vector2f mousePosView, std::vector<sf::FloatRect> collision, std::vector<std::shared_ptr<Enemy>> enemies)
 {
-	float dX = player_pos.x - getPosition().x;
-	float dY = player_pos.y - getPosition().y;
+	float dX = player_pos.x - mousePosView.x;
+	float dY = player_pos.y - mousePosView.y;
 
 	float lenght = sqrt(pow(dX, 2) + pow(dY, 2));
 
@@ -45,7 +53,7 @@ void Bullet::update(sf::Time deltaTime, sf::Vector2f mousePosView, std::vector<s
 	{
 		if (sat_test(hit_box.getGlobalBounds(), collision[i], &out_mtv))
 		{
-			_sprite.move(out_mtv);
+		
 		}
 	}
 	//COLLISION SUGLI ALTRI ZOMBIE
@@ -55,20 +63,13 @@ void Bullet::update(sf::Time deltaTime, sf::Vector2f mousePosView, std::vector<s
 		if (enemies[i]->hit_box.getGlobalBounds() != hit_box.getGlobalBounds())
 			if (sat_test(hit_box.getGlobalBounds(), enemies[i]->hit_box.getGlobalBounds(), &out_mtv))
 			{
-				_sprite.move(out_mtv);
+				
 			}
 	}
 
 	rotate(normVect);
 }
 
-void Bullet::init(sf::Vector2f player_pos)
-{
-	_sprite.setPosition(player_pos);
-	_sprite.setTexture(_textures.get(Textures::Proiettile));
-
-	this->player_pos = player_pos;
-}
 
 void Bullet::rotate(sf::Vector2f vec_dir)
 {

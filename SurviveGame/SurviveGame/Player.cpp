@@ -23,6 +23,7 @@ Player::Player()
 	//ORIGIN
 	_sprite.setOrigin(92, 121);
 	hit_box.setOrigin(47.5, 50);
+
 }
 
 Player::~Player()
@@ -72,16 +73,17 @@ void Player::rotate(sf::Vector2f mousePosView)
 	this->_sprite.setRotation(deg + 360.f);
 }
 
+bool Player::shoot()
+{
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		return true;
+	return false;
+}
+
 void Player::update(sf::Time deltaTime, sf::Vector2f mousePosView, std::vector<sf::FloatRect> collision, std::vector<std::shared_ptr<Enemy>> enemies)
 {      
 	    //if wasd
 		move(deltaTime);
-
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-		{
-			bullet.init(getPosition());
-			bullet.update(deltaTime, mousePosView, collision, enemies);
-		}
 
 		 //COLLISION SUI MURI
 		for (int i = 0 ; i != collision.size(); i++)
