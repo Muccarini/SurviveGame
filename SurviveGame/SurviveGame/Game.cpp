@@ -69,11 +69,8 @@ void Game::update(sf::Time deltaTime)
 	//GUN
 	if (player.shoot() && ammo != 1)
 	{
-		for (int i = 29; i > ammo - 1; i--)
-		{
+		int i = 4;
 			p_bullets[i].update(deltaTime, mouse_pos_view, walls_collision, enemies);
-		}
-		ammo--;
 	}
 
 	//ENEMY
@@ -94,10 +91,10 @@ void Game::render()
 	tile_map.render(window);
 	player.render(&window);
 
-	for (int i = ammo-1; i != 1; i--)
-	{
+	
+	int i = 4;
 		p_bullets[i].render(&window);
-	}
+	
 
 	window.draw(player.hit_box);
 

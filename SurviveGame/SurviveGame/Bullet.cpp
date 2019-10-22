@@ -6,8 +6,8 @@ Bullet::Bullet(sf::Vector2f player_pos) : player_pos(player_pos)
 {
 	mov_speed = 200;
 	//TEXTURE
-	_textures.load(Textures::Proiettile, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
-	_sprite.setTexture(_textures.get(Textures::Proiettile));
+	//_textures.load(Textures::Proiettile, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
+	_sprite.setTexture(_textures.get(Textures::Personaggio));
 
 	hit_box.setSize(sf::Vector2f(100.f, 100.f));
 
