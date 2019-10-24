@@ -2,12 +2,12 @@
 
 
 
-Bullet::Bullet(sf::Vector2f player_pos) : player_pos(player_pos)
+Bullet::Bullet()
 {
-	mov_speed = 200;
+	mov_speed = 500;
 	//TEXTURE
-	//_textures.load(Textures::Proiettile, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
-	_sprite.setTexture(_textures.get(Textures::Personaggio));
+	_textures.load(Textures::Proiettile, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
+	_sprite.setTexture(_textures.get(Textures::Proiettile));
 
 	hit_box.setSize(sf::Vector2f(100.f, 100.f));
 
@@ -19,15 +19,10 @@ Bullet::Bullet(sf::Vector2f player_pos) : player_pos(player_pos)
 	_sprite.setScale(0.1, 0.1);
 	hit_box.setScale(_sprite.getScale());
 	//POSITION
-	_sprite.setPosition(player_pos);
-	hit_box.setPosition(getPosition());
+
 	//ORIGIN
 	_sprite.setOrigin(92, 121);
 	hit_box.setOrigin(47.5, 50);
-}
-
-Bullet::Bullet()
-{
 }
 
 
@@ -35,16 +30,9 @@ Bullet::~Bullet()
 {
 }
 
-void Bullet::update(sf::Time deltaTime, sf::Vector2f mousePosView, std::vector<sf::FloatRect> collision, std::vector<std::shared_ptr<Enemy>> enemies)
+void Bullet::update(sf::Time deltaTime, std::vector<sf::FloatRect> collision, std::vector<std::shared_ptr<Enemy>> enemies)
 {
-	float dX = player_pos.x - mousePosView.x;
-	float dY = player_pos.y - mousePosView.y;
-
-	float lenght = sqrt(pow(dX, 2) + pow(dY, 2));
-
-	sf::Vector2f normVect(dX / lenght, dY / lenght);
-
-	this->_sprite.move(normVect * this->mov_speed * deltaTime.asSeconds());
+	this->_sprite.move(dir * this->mov_speed * deltaTime.asSeconds());
 	hit_box.setPosition(getPosition());
 
 	//COLLISON SUI MURI
@@ -67,7 +55,22 @@ void Bullet::update(sf::Time deltaTime, sf::Vector2f mousePosView, std::vector<s
 			}
 	}
 
-	rotate(normVect);
+	rotate(dir);
+}
+
+bool Bullet::init(Player *owner, sf::Vector2f mousePosView)
+{
+	_sprite.setPosition(owner->getPosition());
+	float dX = mousePosView.x - owner->getPosition().x;
+	float dY = mousePosView.y - owner->getPosition().y;
+
+	float lenght = sqrt(pow(dX, 2) + pow(dY, 2));
+
+	sf::Vector2f normVect(dX / lenght, dY / lenght);
+
+	dir = normVect;
+
+	return true;
 }
 
 

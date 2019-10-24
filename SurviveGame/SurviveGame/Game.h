@@ -4,7 +4,7 @@
 #include "Enemy.h"
 #include "TileMap.h"
 #include "Bullet.h"
-#include <vector>d
+#include <vector>
 
 
 
@@ -31,9 +31,10 @@ private:
 	TileMap tile_map;
 
 	std::vector<std::shared_ptr<Enemy>> enemies;
-	Player player;
+	std::vector<std::shared_ptr<Bullet>> p_bullets;
 
-	std::vector<Bullet> p_bullets;
+	Player player;
+	bool p_shooting;
 	int ammo;
 
 
