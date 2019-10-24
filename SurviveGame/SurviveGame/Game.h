@@ -31,7 +31,8 @@ private:
 	TileMap tile_map;
 
 	std::vector<std::shared_ptr<Enemy>> enemies;
-	std::vector<std::shared_ptr<Bullet>> p_bullets;
+	std::vector<std::shared_ptr<Bullet>> bullet_box;
+	std::vector<std::shared_ptr<Bullet>> bullets;
 
 	Player player;
 	bool p_shooting;

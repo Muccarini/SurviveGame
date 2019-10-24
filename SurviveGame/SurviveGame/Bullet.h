@@ -8,10 +8,10 @@ class Bullet :
 {
 public:
 	Bullet();
-	~Bullet();
+	virtual ~Bullet();
 	// Player* DA GENERALIZZARE CON GAMECHARACTER
-	void update(sf::Time deltaTime, std::vector<sf::FloatRect> collision, std::vector<std::shared_ptr<Enemy>> enemies);
-	bool init(Player *player, sf::Vector2f mousePosView);
+	bool update(sf::Time deltaTime, std::vector<sf::FloatRect> collision, std::vector<std::shared_ptr<Enemy>> enemies);
+	bool init(sf::Vector2f owner, sf::Vector2f mousePosView, int ammo);
 
 private:
 
@@ -20,6 +20,7 @@ private:
 	sf::Vector2f player_pos;
 
 	sf::Vector2f dir;
+	int number;
 	
 	float ratio;
 };

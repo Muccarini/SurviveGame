@@ -4,7 +4,7 @@
 
 Bullet::Bullet()
 {
-	mov_speed = 500;
+	mov_speed = 200;
 	//TEXTURE
 	_textures.load(Textures::Proiettile, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
 	_sprite.setTexture(_textures.get(Textures::Proiettile));
@@ -30,9 +30,9 @@ Bullet::~Bullet()
 {
 }
 
-void Bullet::update(sf::Time deltaTime, std::vector<sf::FloatRect> collision, std::vector<std::shared_ptr<Enemy>> enemies)
+bool Bullet::update(sf::Time deltaTime, std::vector<sf::FloatRect> collision, std::vector<std::shared_ptr<Enemy>> enemies)
 {
-	this->_sprite.move(dir * this->mov_speed * deltaTime.asSeconds());
+	this->_sprite.move(this->dir * this->mov_speed * deltaTime.asSeconds());
 	hit_box.setPosition(getPosition());
 
 	//COLLISON SUI MURI
@@ -41,7 +41,7 @@ void Bullet::update(sf::Time deltaTime, std::vector<sf::FloatRect> collision, st
 	{
 		if (sat_test(hit_box.getGlobalBounds(), collision[i], &out_mtv))
 		{
-		
+			return false;
 		}
 	}
 	//COLLISION SUGLI ALTRI ZOMBIE
@@ -51,18 +51,27 @@ void Bullet::update(sf::Time deltaTime, std::vector<sf::FloatRect> collision, st
 		if (enemies[i]->hit_box.getGlobalBounds() != hit_box.getGlobalBounds())
 			if (sat_test(hit_box.getGlobalBounds(), enemies[i]->hit_box.getGlobalBounds(), &out_mtv))
 			{
-				
+				return false;
 			}
 	}
+	float dX = getPosition().x - player_pos.x;
+	float dY = getPosition().y - player_pos.y;
+	float distance = sqrt(pow(dX, 2) + pow(dY, 2));
+
+	if (distance > 1200)
+		return false;
 
 	rotate(dir);
 }
 
-bool Bullet::init(Player *owner, sf::Vector2f mousePosView)
+bool Bullet::init(sf::Vector2f owner, sf::Vector2f mousePosView, int ammo)
 {
-	_sprite.setPosition(owner->getPosition());
-	float dX = mousePosView.x - owner->getPosition().x;
-	float dY = mousePosView.y - owner->getPosition().y;
+	this->player_pos = owner;
+	this->number = ammo;
+
+	_sprite.setPosition(owner);
+	float dX = mousePosView.x - owner.x;
+	float dY = mousePosView.y - owner.y;
 
 	float lenght = sqrt(pow(dX, 2) + pow(dY, 2));
 
