@@ -17,9 +17,14 @@ public:
 	void move(sf::Time deltaTime);
 	void rotate(sf::Vector2f mousePosView);
 
-	bool shoot();
+	bool isShooting();
+
+	int ammo;
+	sf::Time reload_time;
 
 private:
 	Type _type;
+	sf::Texture texture;
+
 };
 

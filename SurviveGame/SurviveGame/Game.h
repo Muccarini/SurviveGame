@@ -30,13 +30,14 @@ private:
 	sf::View game_view;
 	TileMap tile_map;
 
+	TextureHolder _textures;
 	std::vector<std::shared_ptr<Enemy>> enemies;
-	std::vector<std::shared_ptr<Bullet>> bullet_box;
-	std::vector<std::shared_ptr<Bullet>> bullets;
-
 	Player player;
-	bool p_shooting;
-	int ammo;
+
+	std::vector<std::shared_ptr<Bullet>> flying_bullets;
+	int counter_flying_obj;
+
+	sf::Clock time;
 
 
 };

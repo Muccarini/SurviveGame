@@ -87,7 +87,6 @@ void TileMap::loadFromFile(const std::string file_name)
 
 void TileMap::render(sf::RenderTarget & target)
 {
-	//draw(target, sf::RenderStates::Default);
 
 	for (auto &x : this->map)
 	{

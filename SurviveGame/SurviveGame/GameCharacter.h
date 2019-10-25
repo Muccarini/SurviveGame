@@ -18,7 +18,6 @@ protected:
 
 	bool sat_test(const sf::FloatRect &rectSp1, const sf::FloatRect &rectSp2, sf::Vector2f *out_mtv);
 
-	TextureHolder _textures;
 	sf::Sprite _sprite;
 	sf::Vector2f out_mtv;
 

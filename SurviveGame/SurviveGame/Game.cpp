@@ -5,18 +5,16 @@
 
 Game::Game() : window(sf::VideoMode(1920, 1080), "Survive.io"), game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f)) 
 {
+	//TEXTURES
+	_textures.load(Textures::Enemy, "Sources/zombie1.png");
+	_textures.load(Textures::Proiettile, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
+	//PLAYER
+
 	//ENEMY
 	for (int i = 0; i < 5; i++)
 	{
-		std::shared_ptr<Enemy> enemy(new Enemy(rand() % 1000, rand() % 1000));
+		std::shared_ptr<Enemy> enemy(new Enemy(rand() % 1000, rand() % 1000, _textures.get(Textures::Enemy)));
 		enemies.push_back(enemy); //std:move(enemy) per unique_ptr
-	}
-	ammo = 0;
-
-	for (int i = 0; i < 30; i++)
-	{
-		std::shared_ptr<Bullet>bullet(new Bullet());
-		bullet_box.push_back(bullet);
 	}
 
 	game_view.setCenter(player.getPosition());
@@ -44,7 +42,7 @@ void Game::run()
 }
 
 void Game::processEvents()
-{
+{ // E' QUI CHE REGISTRI GLI EVENTI E POI IN UPDATE SELEZIONI
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
@@ -66,29 +64,31 @@ void Game::update(sf::Time deltaTime)
 	mouse_pos_view = (window).mapPixelToCoords(sf::Mouse::getPosition(window));
 	player.update(deltaTime, mouse_pos_view, walls_collision, enemies);
 
+	//BULLET
+	if (player.isShooting() && player.ammo != 0)
+	{
+		std::unique_ptr<Bullet>bullet(new Bullet(_textures.get(Textures::Proiettile))); //creo proiettile
+		player.ammo--;
 
-	//GUN
-	if (player.shoot() && ammo != 30)
-	{
-		p_shooting = bullet_box[ammo]->init(player.getPosition(), mouse_pos_view, ammo);
-		bullets.push_back(bullet_box[ammo]);
-		ammo = (ammo+1)% 30;
+		bullet->setDir(player.getPosition(), mouse_pos_view); //set al proiettile la sua direzione
+		flying_bullets.push_back(std::move(bullet)); //lo metto in un vettore (diventa "autosuff")
+		counter_flying_obj++;
 	}
-	if(player.shoot() && ammo == 0 || sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+	for (int i = 0; i < flying_bullets.size(); i++)
 	{
-		bullet_box.clear();
-		for (int i = 0; i < 30; i++)
+		if (!(flying_bullets[i])->update(deltaTime, walls_collision, enemies))
+			flying_bullets.erase(flying_bullets.begin() + i);
+	}
+	if (player.ammo == 0 || sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+	{
+		player.reload_time -= deltaTime;
+		if (player.reload_time < sf::seconds(0.f))
 		{
-			std::shared_ptr<Bullet>bullet(new Bullet());
-			bullet_box.push_back(bullet);
+			player.ammo = 200;
+			player.reload_time = sf::seconds(1.5);
 		}
 	}
-
-	for (int i= 0; i < bullets.size(); i++)
-	{
-		if (!(bullets[i])->update(deltaTime, walls_collision, enemies))
-			bullets.erase(bullets.begin() + i);
-	}
+	std::cout << player.ammo;
 
 	//ENEMY
 	for(auto i = enemies.begin(); i != enemies.end(); i++)
@@ -108,8 +108,8 @@ void Game::render()
 	tile_map.render(window);
 	player.render(&window);
 
-	//GUN
-	for (auto i = bullets.begin(); i != bullets.end(); i++)
+	//BULLET
+	for (auto i = flying_bullets.begin(); i != flying_bullets.end(); i++)
 	{
 		(*i)->render(&window);
 		window.draw((*i)->hit_box);

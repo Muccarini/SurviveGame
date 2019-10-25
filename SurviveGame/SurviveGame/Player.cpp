@@ -6,8 +6,13 @@
 Player::Player()
 {
 	mov_speed = 200;
-	_textures.load(Textures::Personaggio, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
-	_sprite.setTexture(_textures.get(Textures::Personaggio));
+	reload_time = sf::seconds(1.5);
+	ammo = 200;
+
+	//TEXTURE
+	texture.loadFromFile("Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
+	_sprite.setTexture(texture);
+
 	hit_box.setSize(sf::Vector2f(100.f, 100.f));
 
 	//COLOR
@@ -23,7 +28,6 @@ Player::Player()
 	//ORIGIN
 	_sprite.setOrigin(92, 121);
 	hit_box.setOrigin(47.5, 50);
-
 }
 
 Player::~Player()
@@ -73,7 +77,7 @@ void Player::rotate(sf::Vector2f mousePosView)
 	this->_sprite.setRotation(deg + 360.f);
 }
 
-bool Player::shoot()
+bool Player::isShooting()
 {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		return true;
@@ -82,8 +86,11 @@ bool Player::shoot()
 
 void Player::update(sf::Time deltaTime, sf::Vector2f mousePosView, std::vector<sf::FloatRect> collision, std::vector<std::shared_ptr<Enemy>> enemies)
 {      
-	    //if wasd
+	    //MOVE (IF WASD)
 		move(deltaTime);
+
+		//ROTATION
+		rotate(mousePosView);
 
 		 //COLLISION SUI MURI
 		for (int i = 0 ; i != collision.size(); i++)
@@ -102,9 +109,4 @@ void Player::update(sf::Time deltaTime, sf::Vector2f mousePosView, std::vector<s
 					_sprite.move(out_mtv);
 				}
 		}
-		
-		
-		rotate(mousePosView);
-	
-
 }

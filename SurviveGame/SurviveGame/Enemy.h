@@ -9,7 +9,7 @@ public:
 	enum Type {Ranged, Melee, Boss};
 
 public:
-	Enemy(float x,float y);
+	Enemy(float x,float y, sf::Texture texture);
 	Enemy();
 
 	virtual ~Enemy();
@@ -22,5 +22,6 @@ public:
 private:
 	EnemyStrategyMove _m;
 	sf::Vector2f spawn_pos;
+	sf::Texture texture;
 };
 

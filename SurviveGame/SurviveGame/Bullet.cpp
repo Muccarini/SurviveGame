@@ -2,12 +2,13 @@
 
 
 
-Bullet::Bullet()
+Bullet::Bullet(sf::Texture txt) : texture(txt)
 {
-	mov_speed = 200;
+	mov_speed = 1000;
+	ratio = 1000.f / 60.f; //1000 colpi al minuto
+
 	//TEXTURE
-	_textures.load(Textures::Proiettile, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
-	_sprite.setTexture(_textures.get(Textures::Proiettile));
+	_sprite.setTexture(texture);
 
 	hit_box.setSize(sf::Vector2f(100.f, 100.f));
 
@@ -23,6 +24,10 @@ Bullet::Bullet()
 	//ORIGIN
 	_sprite.setOrigin(92, 121);
 	hit_box.setOrigin(47.5, 50);
+}
+
+Bullet::Bullet()
+{
 }
 
 
@@ -64,10 +69,8 @@ bool Bullet::update(sf::Time deltaTime, std::vector<sf::FloatRect> collision, st
 	rotate(dir);
 }
 
-bool Bullet::init(sf::Vector2f owner, sf::Vector2f mousePosView, int ammo)
+bool Bullet::setDir(sf::Vector2f owner, sf::Vector2f mousePosView)
 {
-	this->player_pos = owner;
-	this->number = ammo;
 
 	_sprite.setPosition(owner);
 	float dX = mousePosView.x - owner.x;

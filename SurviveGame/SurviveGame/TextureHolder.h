@@ -4,7 +4,7 @@
 
 namespace Textures
 {
-	enum ID { Background, Personaggio, Enemy, Proiettile};
+	enum ID { Personaggio, Enemy, Proiettile};
 }
 
 
@@ -13,7 +13,7 @@ class TextureHolder   //NO COSTRU PERCHE MAP VUOTA, NO DESTR PER UNIQUE_PTR
 {
 public:
 	
-	void               load(Textures::ID id, const std::string& filename);
+	void load(Textures::ID id, const std::string& filename);
 	const sf::Texture& get(Textures::ID id) const;
 
 private:
