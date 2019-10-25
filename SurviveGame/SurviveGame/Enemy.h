@@ -10,7 +10,6 @@ public:
 
 public:
 	Enemy(float x,float y, sf::Texture texture);
-	Enemy();
 
 	virtual ~Enemy();
 
