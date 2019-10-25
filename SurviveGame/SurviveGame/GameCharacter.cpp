@@ -22,6 +22,12 @@ sf::Vector2f GameCharacter::getPosition()
 		this->_sprite.getPosition();
 }
 
+int GameCharacter::getHp()
+{
+	return
+		this->hp;
+}
+
 bool GameCharacter::sat_test(const sf::FloatRect &rectSp1, const sf::FloatRect &rectSp2, sf::Vector2f *out_mtv)
 {
 

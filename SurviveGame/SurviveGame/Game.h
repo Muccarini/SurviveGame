@@ -37,6 +37,9 @@ private:
 	std::vector<std::shared_ptr<Bullet>> flying_bullets;
 	int counter_flying_obj;
 
+	int n_max_enemies;
+	int n_enemies_alive;
+
 	sf::Clock time;
 
 

@@ -22,6 +22,8 @@ private:
 	sf::Texture texture;
 	sf::Vector2f dir;
 
+	sf::Vector2f offset;
+
 	float ratio;
 };
 

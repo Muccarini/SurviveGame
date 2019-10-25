@@ -13,7 +13,7 @@ Player::Player()
 	texture.loadFromFile("Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
 	_sprite.setTexture(texture);
 
-	hit_box.setSize(sf::Vector2f(100.f, 100.f));
+	hit_box.setSize(sf::Vector2f(207.f, 207.f));
 
 	//COLOR
 	hit_box.setOutlineColor(sf::Color::Transparent);
@@ -21,13 +21,13 @@ Player::Player()
 	hit_box.setFillColor(sf::Color::Transparent);
 	//SCALE
 	_sprite.setScale(0.3, 0.3);
-	hit_box.setScale(_sprite.getScale());
+	hit_box.setScale(0.15, 0.15);
 	//POSITION
 	_sprite.setPosition(300.f, 300.f);
 	hit_box.setPosition(getPosition());
 	//ORIGIN
-	_sprite.setOrigin(92, 121);
-	hit_box.setOrigin(47.5, 50);
+	_sprite.setOrigin(92, 120);
+	hit_box.setOrigin(_sprite.getOrigin());
 }
 
 Player::~Player()

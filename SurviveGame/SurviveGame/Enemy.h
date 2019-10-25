@@ -19,6 +19,8 @@ public:
 
 	 void update(sf::Time deltaTime, GameCharacter * target, std::vector<sf::FloatRect> collision, std::vector<std::shared_ptr<Enemy>> enemies);
 
+	 void getDamage();
+
 private:
 	EnemyStrategyMove _m;
 	sf::Vector2f spawn_pos;

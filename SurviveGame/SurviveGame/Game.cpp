@@ -7,15 +7,12 @@ Game::Game() : window(sf::VideoMode(1920, 1080), "Survive.io"), game_view(sf::Ve
 {
 	//TEXTURES
 	_textures.load(Textures::Enemy, "Sources/zombie1.png");
-	_textures.load(Textures::Proiettile, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
+	_textures.load(Textures::Proiettile, "Sources/bullets/bullet1.png");
 	//PLAYER
 
 	//ENEMY
-	for (int i = 0; i < 5; i++)
-	{
-		std::shared_ptr<Enemy> enemy(new Enemy(rand() % 1000, rand() % 1000, _textures.get(Textures::Enemy)));
-		enemies.push_back(enemy); //std:move(enemy) per unique_ptr
-	}
+	n_max_enemies = 5;
+	n_enemies_alive = 0;
 
 	game_view.setCenter(player.getPosition());
 	walls_collision = tile_map.getWalls();
@@ -64,8 +61,28 @@ void Game::update(sf::Time deltaTime)
 	mouse_pos_view = (window).mapPixelToCoords(sf::Mouse::getPosition(window));
 	player.update(deltaTime, mouse_pos_view, walls_collision, enemies);
 
+	//ENEMY
+	while(n_enemies_alive != n_max_enemies)
+	{
+		std::shared_ptr<Enemy> enemy(new Enemy(rand() % 1000, rand() % 1000, _textures.get(Textures::Enemy)));
+		enemies.push_back(enemy); //std:move(enemy) per unique_ptr
+		n_enemies_alive++; //VITA
+	}
+
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		enemies[i]->update(deltaTime, &player, walls_collision, enemies);
+
+		if (!(enemies[i]->getHp()))
+		{
+			enemies.erase(enemies.begin() + i);
+			n_enemies_alive--; //MORTE
+		}
+
+	}
+
 	//BULLET
-	if (player.isShooting() && player.ammo != 0)
+	if (player.isShooting() && player.ammo)
 	{
 		std::unique_ptr<Bullet>bullet(new Bullet(_textures.get(Textures::Proiettile))); //creo proiettile
 		player.ammo--;
@@ -76,10 +93,11 @@ void Game::update(sf::Time deltaTime)
 	}
 	for (int i = 0; i < flying_bullets.size(); i++)
 	{
-		if (!(flying_bullets[i])->update(deltaTime, walls_collision, enemies))
+		if (!(flying_bullets[i])->update(deltaTime, walls_collision, enemies)) 
 			flying_bullets.erase(flying_bullets.begin() + i);
 	}
-	if (player.ammo == 0 || sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+	//RELOAD   //TODO: DA FARE SU PLAYER
+	if (player.ammo == 0 /*|| sf::Keyboard::isKeyPressed(sf::Keyboard::R)*/)
 	{
 		player.reload_time -= deltaTime;
 		if (player.reload_time < sf::seconds(0.f))
@@ -88,13 +106,7 @@ void Game::update(sf::Time deltaTime)
 			player.reload_time = sf::seconds(1.5);
 		}
 	}
-	std::cout << player.ammo;
-
-	//ENEMY
-	for(auto i = enemies.begin(); i != enemies.end(); i++)
-	{
-		(*i)->update(deltaTime,&player, walls_collision, enemies);
-	}
+	/*std::cout << player.ammo;*/
 
 	game_view.setCenter(player.getPosition());
 	window.setView(game_view);

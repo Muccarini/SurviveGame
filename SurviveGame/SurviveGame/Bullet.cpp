@@ -10,20 +10,20 @@ Bullet::Bullet(sf::Texture txt) : texture(txt)
 	//TEXTURE
 	_sprite.setTexture(texture);
 
-	hit_box.setSize(sf::Vector2f(100.f, 100.f));
+	hit_box.setSize(sf::Vector2f(813.f, 306.f));
 
 	//COLOR
-	hit_box.setOutlineColor(sf::Color::Red);
+	hit_box.setOutlineColor(sf::Color::Transparent);
 	hit_box.setOutlineThickness(3.f);
 	hit_box.setFillColor(sf::Color::Transparent);
 	//SCALE
-	_sprite.setScale(0.1, 0.1);
+	_sprite.setScale(0.013, 0.013);
 	hit_box.setScale(_sprite.getScale());
 	//POSITION
 
 	//ORIGIN
-	_sprite.setOrigin(92, 121);
-	hit_box.setOrigin(47.5, 50);
+	_sprite.setOrigin(-3500, -562);
+	hit_box.setOrigin(_sprite.getOrigin());
 }
 
 Bullet::Bullet()
@@ -53,9 +53,10 @@ bool Bullet::update(sf::Time deltaTime, std::vector<sf::FloatRect> collision, st
 
 	for (int i = 0; i != enemies.size(); i++)
 	{
-		if (enemies[i]->hit_box.getGlobalBounds() != hit_box.getGlobalBounds())
+		/*if (enemies[i]->hit_box.getGlobalBounds() != hit_box.getGlobalBounds())*/
 			if (sat_test(hit_box.getGlobalBounds(), enemies[i]->hit_box.getGlobalBounds(), &out_mtv))
 			{
+				enemies[i]->getDamage();
 				return false;
 			}
 	}
@@ -71,6 +72,7 @@ bool Bullet::update(sf::Time deltaTime, std::vector<sf::FloatRect> collision, st
 
 bool Bullet::setDir(sf::Vector2f owner, sf::Vector2f mousePosView)
 {
+	this->player_pos = owner;
 
 	_sprite.setPosition(owner);
 	float dX = mousePosView.x - owner.x;
@@ -91,5 +93,6 @@ void Bullet::rotate(sf::Vector2f vec_dir)
 	const float PI = 3.14159265f;
 	float deg = atan2(vec_dir.y, vec_dir.x) * 180.f / PI;
 
-	this->_sprite.setRotation(deg + 90.f);
+	this->_sprite.setRotation(deg);
+	this->hit_box.setRotation(deg);
 }

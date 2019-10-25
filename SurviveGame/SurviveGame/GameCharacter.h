@@ -14,12 +14,17 @@ public:
 
 	sf::RectangleShape hit_box;
 
+	int getHp();
+
 protected:
 
 	bool sat_test(const sf::FloatRect &rectSp1, const sf::FloatRect &rectSp2, sf::Vector2f *out_mtv);
 
 	sf::Sprite _sprite;
 	sf::Vector2f out_mtv;
+
+	int hp;
+	bool hit;
 
 	float mov_speed;
 
