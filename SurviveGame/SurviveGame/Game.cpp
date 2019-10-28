@@ -73,7 +73,7 @@ void Game::update(sf::Time deltaTime)
 	{
 		enemies[i]->update(deltaTime, &player, walls_collision, enemies);
 
-		if (!(enemies[i]->getHp()))
+		if ((enemies[i]->getHp() < 0))
 		{
 			enemies.erase(enemies.begin() + i);
 			n_enemies_alive--; //MORTE
