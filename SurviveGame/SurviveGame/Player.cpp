@@ -8,6 +8,7 @@ Player::Player()
 	mov_speed = 200;
 	reload_time = sf::seconds(1.5);
 	ammo = 200;
+	ratio = sf::seconds(0);
 
 	//TEXTURE
 	texture.loadFromFile("Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
@@ -77,10 +78,31 @@ void Player::rotate(sf::Vector2f mousePosView)
 	this->_sprite.setRotation(deg + 360.f);
 }
 
-bool Player::isShooting()
+void Player::reload(sf::Time deltaTime)
 {
+	if (ammo == 0)
+	{
+		reload_time -= deltaTime;
+		if (reload_time < sf::seconds(0.f))
+		{
+			ammo = 200;
+			reload_time = sf::seconds(1.5);
+		}
+	}
+}
+
+bool Player::isShooting(sf::Time deltaTime)
+{
+	ratio += deltaTime;
+
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-		return true;
+	{
+		if (ratio > sf::seconds(1.f / 16.f))
+		{
+			ratio = sf::seconds(0);
+			return true;
+		}
+	}
 	return false;
 }
 
@@ -91,6 +113,9 @@ void Player::update(sf::Time deltaTime, sf::Vector2f mousePosView, std::vector<s
 
 		//ROTATION
 		rotate(mousePosView);
+
+		//RELOAD
+		reload(deltaTime);
 
 		 //COLLISION SUI MURI
 		for (int i = 0 ; i != collision.size(); i++)

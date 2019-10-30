@@ -16,15 +16,18 @@ public:
 	
 	void move(sf::Time deltaTime);
 	void rotate(sf::Vector2f mousePosView);
+	void reload(sf::Time deltaTime);
 
-	bool isShooting();
+	bool isShooting(sf::Time deltaTime);
 
 	int ammo;
-	sf::Time reload_time;
 
 private:
 	Type _type;
 	sf::Texture texture;
+
+	sf::Time reload_time;
+	sf::Time ratio;
 
 };
 

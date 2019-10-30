@@ -82,7 +82,7 @@ void Game::update(sf::Time deltaTime)
 	}
 
 	//BULLET
-	if (player.isShooting() && player.ammo)
+	if (player.isShooting(deltaTime) && player.ammo)
 	{
 		std::unique_ptr<Bullet>bullet(new Bullet(_textures.get(Textures::Proiettile))); //creo proiettile
 		player.ammo--;
@@ -96,17 +96,6 @@ void Game::update(sf::Time deltaTime)
 		if (!(flying_bullets[i])->update(deltaTime, walls_collision, enemies)) 
 			flying_bullets.erase(flying_bullets.begin() + i);
 	}
-	//RELOAD   //TODO: DA FARE SU PLAYER
-	if (player.ammo == 0 /*|| sf::Keyboard::isKeyPressed(sf::Keyboard::R)*/)
-	{
-		player.reload_time -= deltaTime;
-		if (player.reload_time < sf::seconds(0.f))
-		{
-			player.ammo = 200;
-			player.reload_time = sf::seconds(1.5);
-		}
-	}
-	/*std::cout << player.ammo;*/
 
 	game_view.setCenter(player.getPosition());
 	window.setView(game_view);
