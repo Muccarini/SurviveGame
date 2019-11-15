@@ -59,7 +59,12 @@ void Game::processEvents()
 void Game::update(sf::Time deltaTime)
 {
 	mouse_pos_view = (window).mapPixelToCoords(sf::Mouse::getPosition(window));
+	// UPDATE
 	player.update(deltaTime, mouse_pos_view, walls_collision, enemies);
+	if ((player.getHp() < 0))
+	{
+		window.close();
+	}
 
 	//ENEMY
 	while(n_enemies_alive != n_max_enemies)

@@ -9,6 +9,7 @@ Player::Player()
 	reload_time = sf::seconds(1.5);
 	ammo = 200;
 	ratio = sf::seconds(0);
+	hp = 600;
 
 	//TEXTURE
 	texture.loadFromFile("Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
@@ -97,7 +98,7 @@ bool Player::isShooting(sf::Time deltaTime)
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
-		if (ratio > sf::seconds(1.f / 16.f))
+		if (ratio > sf::seconds(1.f / 16.666))
 		{
 			ratio = sf::seconds(0);
 			return true;
@@ -132,6 +133,7 @@ void Player::update(sf::Time deltaTime, sf::Vector2f mousePosView, std::vector<s
 				if (sat_test(hit_box.getGlobalBounds(), enemies[i]->hit_box.getGlobalBounds(), &out_mtv))
 				{
 					_sprite.move(out_mtv);
+					hp = hp - 1;
 				}
 		}
 }

@@ -5,13 +5,13 @@
 Enemy::Enemy(float x, float y, sf::Texture txt) : spawn_pos(x,y), texture(txt)
 {
 	mov_speed = 100;
-	hp = 100;
+	hp = 1;
 
 	_sprite.setTexture(texture);
 	hit_box.setSize(sf::Vector2f(50.f, 50.f));
 
 	//COLOR
-	hit_box.setOutlineColor(sf::Color::Red);
+	hit_box.setOutlineColor(sf::Color::Transparent);
 	hit_box.setOutlineThickness(3.f);
 	hit_box.setFillColor(sf::Color::Transparent);
 	//SCALE
