@@ -8,7 +8,7 @@ Player::Player()
 	mov_speed = 200;
 	reload_time = sf::seconds(1.5);
 	ammo = 200;
-	ratio = sf::seconds(0);
+	ratio = sf::seconds(1.f / 16.666);
 	hp = 600;
 
 	//TEXTURE
@@ -94,13 +94,13 @@ void Player::reload(sf::Time deltaTime)
 
 bool Player::isShooting(sf::Time deltaTime)
 {
-	ratio += deltaTime;
+	ratio -= deltaTime;
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
-		if (ratio > sf::seconds(1.f / 16.666))
+		if (ratio < sf::seconds(0.f))
 		{
-			ratio = sf::seconds(0);
+			ratio = sf::seconds(1.f / 16.666);
 			return true;
 		}
 	}
@@ -109,16 +109,13 @@ bool Player::isShooting(sf::Time deltaTime)
 
 void Player::update(sf::Time deltaTime, sf::Vector2f mousePosView, std::vector<sf::FloatRect> collision, std::vector<std::shared_ptr<Enemy>> enemies)
 {      
-	    //MOVE (IF WASD)
 		move(deltaTime);
-
-		//ROTATION
 		rotate(mousePosView);
-
-		//RELOAD
 		reload(deltaTime);
 
-		 //COLLISION SUI MURI
+		gui.updateText(ammo, hp, getPosition());
+
+		//COLLISION MURI
 		for (int i = 0 ; i != collision.size(); i++)
 		{
 			if (sat_test(hit_box.getGlobalBounds(), collision[i], &out_mtv))

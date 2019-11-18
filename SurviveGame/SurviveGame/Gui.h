@@ -7,12 +7,18 @@ public:
 	Gui();
 	~Gui();
 
-	void setText(int integer, sf::Vector2f view);
-	//OVERLOAD WITH STRINGS void setText(sf::String string, sf::View view);
+	void updateText(int ammo, int hp, sf::Vector2f view);
 
-	void renderText(sf::RenderWindow * target);
+	void renderTexts(sf::RenderWindow * target);
 
-	sf::Text text;
+private:
+	void fontInit();
+
+	std::vector<sf::Text> texts;
+	sf::Text ammo;
+	sf::Text hp;
+
+	sf::Font font;
 	sf::Vector2f offset_view;
 };
 

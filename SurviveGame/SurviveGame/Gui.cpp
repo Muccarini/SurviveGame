@@ -5,8 +5,12 @@
 
 Gui::Gui()
 {
-	offset_view.x = 100;
-	offset_view.y = 100;
+	texts.push_back(ammo);
+	texts.push_back(hp);
+	fontInit();
+
+	offset_view.x = 0;
+	offset_view.y = 0;
 }
 
 
@@ -14,16 +18,34 @@ Gui::~Gui()
 {
 }
 
-void Gui::renderText(sf::RenderWindow * target)
+void Gui::renderTexts(sf::RenderWindow * target)
 {
-	target->draw(text);
+	for (auto i = texts.begin(); i != texts.end(); i++)
+	{
+		target->draw(*(i));
+	}
 }
 
-void Gui::setText(int ammo, sf::Vector2f view)
+void Gui::updateText(int ammo, int hp, sf::Vector2f obj)
 {
+	//AMMO GUI
+	texts[0].setString(std::to_string(ammo));
+	texts[0].setFillColor(sf::Color::Blue);
+	texts[0].setCharacterSize(20);
+	texts[0].setPosition(obj.x -25, obj.y +25);
 
-	text.setString(std::to_string(ammo));
-	text.setFillColor(sf::Color::Magenta);
-	text.setCharacterSize(24);
-	text.setPosition(view.x, view.y);
+	//HP GUI
+	texts[1].setString(std::to_string(hp));
+	texts[1].setFillColor(sf::Color::Red);
+	texts[1].setCharacterSize(20);
+	texts[1].setPosition(obj.x +25, obj.y +25);
+}
+
+void Gui::fontInit()
+{
+	font.loadFromFile("Sources/Dosis-Light.ttf");
+	for (auto i = texts.begin(); i != texts.end(); i++)
+	{
+		(i)->setFont(font);
+	}
 }

@@ -5,17 +5,9 @@
 
 Game::Game() : window(sf::VideoMode(1920, 1080), "Survive.io"), game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f)) 
 {
-	//TEXTURES
-	_textures.load(Textures::Enemy, "Sources/zombie1.png");
-	_textures.load(Textures::Proiettile, "Sources/bullets/bullet1.png");
-	//PLAYER
-
-	//ENEMY
-	n_max_enemies = 5;
-	n_enemies_alive = 0;
-
-	game_view.setCenter(player.getPosition());
-	walls_collision = tile_map.getWalls();
+	textureInit();
+	enemiesInit();
+	gameViewInit();
 }
 
 void Game::run()
@@ -60,52 +52,11 @@ void Game::update(sf::Time deltaTime)
 {
 	mouse_pos_view = (window).mapPixelToCoords(sf::Mouse::getPosition(window));
 
-	// UPDATE
-	player.update(deltaTime, mouse_pos_view, walls_collision, enemies);
-	if ((player.getHp() < 0))
-	{
-		window.close();
-	}
+	updatePlayer(deltaTime);
+	updateEnemies(deltaTime);
+	updateBullets(deltaTime);
 
-	//ENEMY
-	while(n_enemies_alive != n_max_enemies)
-	{
-		std::shared_ptr<Enemy> enemy(new Enemy(rand() % 1000, rand() % 1000, _textures.get(Textures::Enemy)));
-		enemies.push_back(enemy); //std:move(enemy) per unique_ptr
-		n_enemies_alive++; //VITA
-	}
-
-	for (int i = 0; i < enemies.size(); i++)
-	{
-		enemies[i]->update(deltaTime, &player, walls_collision, enemies);
-
-		if ((enemies[i]->getHp() < 0))
-		{
-			enemies.erase(enemies.begin() + i);
-			n_enemies_alive--; //MORTE
-		}
-
-	}
-
-	//BULLET
-	if (player.isShooting(deltaTime) && player.ammo)
-	{
-		std::unique_ptr<Bullet>bullet(new Bullet(_textures.get(Textures::Proiettile))); //creo proiettile
-		player.ammo--;
-
-		bullet->setDir(player.getPosition(), mouse_pos_view); //set al proiettile la sua direzione
-		flying_bullets.push_back(std::move(bullet)); //lo metto in un vettore (diventa "autosuff")
-		counter_flying_obj++;
-	}
-	for (int i = 0; i < flying_bullets.size(); i++)
-	{
-		if (!(flying_bullets[i])->update(deltaTime, walls_collision, enemies)) 
-			flying_bullets.erase(flying_bullets.begin() + i);
-	}
-	//GUI
-	game_view.setCenter(player.getPosition());
-	window.setView(game_view);
-	gui.setText(player.ammo, player.getPosition());
+	updateGameView();
 }
 
 
@@ -113,32 +64,113 @@ void Game::render()
 {
 	window.clear();
 
-	//MAP
 	tile_map.render(window);
 
-	//PLAYER
-	player.render(&window);
+	renderPlayer();
+	renderBullet();
+	renderEnemies();
+	
+	window.display();
+}
 
-	//BULLET
+void Game::updateEnemies(sf::Time deltaTime)
+{
+	while (enemies_alive != max_enemies)
+	{
+		std::shared_ptr<Enemy> enemy(new Enemy(rand() % 1000, rand() % 1000, _textures.get(Textures::Enemy)));
+		enemies.push_back(enemy);
+		enemies_alive++;
+	}
+
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		enemies[i]->update(deltaTime, &player, tile_map.getWalls(), enemies);
+
+		if ((enemies[i]->getHp() < 0))
+		{
+			enemies.erase(enemies.begin() + i);
+			enemies_alive--;
+		}
+
+	}
+}
+
+void Game::updatePlayer(sf::Time deltaTime)
+{
+	player.update(deltaTime, mouse_pos_view, tile_map.getWalls(), enemies);
+
+	//MORTE GIOCATORE
+	if ((player.getHp() < 0))
+	{
+		window.close();
+	}
+}
+
+void Game::updateBullets(sf::Time deltaTime)
+{
+	if (player.isShooting(deltaTime) && player.getAmmo())
+	{
+		std::unique_ptr<Bullet>bullet(new Bullet(_textures.get(Textures::Proiettile)));
+		player.decreaseAmmo();
+
+		bullet->setDir(player.getPosition(), mouse_pos_view);
+		flying_bullets.push_back(std::move(bullet));
+		counter_flying_obj++;
+	}
+	for (int i = 0; i < flying_bullets.size(); i++)
+	{
+		if (!(flying_bullets[i])->update(deltaTime, tile_map.getWalls(), enemies))
+			flying_bullets.erase(flying_bullets.begin() + i);
+	}
+}
+
+void Game::updateGameView()
+{
+	game_view.setCenter(player.getPosition());
+	window.setView(game_view);
+}
+
+
+void Game::renderPlayer()
+{
+	player.render(&window);
+	window.draw(player.hit_box);
+}
+
+void Game::renderBullet()
+{
 	for (auto i = flying_bullets.begin(); i != flying_bullets.end(); i++)
 	{
 		(*i)->render(&window);
 		window.draw((*i)->hit_box);
 	}
+}
 
-	window.draw(player.hit_box);
-
-	//ENEMY
+void Game::renderEnemies()
+{
 	for (auto i = enemies.begin(); i != enemies.end(); i++)
 	{
 		(*i)->render(&window);
 		window.draw((*i)->hit_box);
 	}
+}
 
-	//GUI
-	gui.renderText(&window);
-	
-	window.display();
+
+void Game::textureInit()
+{
+	_textures.load(Textures::Enemy, "Sources/zombie1.png");
+	_textures.load(Textures::Proiettile, "Sources/bullets/bullet1.png");
+}
+
+void Game::gameViewInit()
+{
+	game_view.setCenter(player.getPosition());
+}
+
+void Game::enemiesInit()
+{
+	max_enemies = 5;
+	enemies_alive = 0;
 }
 
 

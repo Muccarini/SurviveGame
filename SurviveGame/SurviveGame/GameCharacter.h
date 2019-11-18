@@ -1,6 +1,7 @@
 #pragma once
 #include"SFML/Graphics.hpp"
 #include"TextureHolder.h"
+#include"Gui.h"
 
 class GameCharacter
 {
@@ -13,8 +14,12 @@ public:
 	sf::Vector2f getPosition();
 
 	sf::RectangleShape hit_box;
+	void takeDamage(/*TIPO DEL PROIETTILE DA CUI VIENE COLPITO*/);
 
 	int getHp();
+	int getAmmo();
+	void setAmmo(int a);
+	void decreaseAmmo();
 
 protected:
 
@@ -23,7 +28,10 @@ protected:
 	sf::Sprite _sprite;
 	sf::Vector2f out_mtv;
 
+	Gui gui;
+
 	int hp;
+	int ammo;
 	bool hit;
 
 	float mov_speed;

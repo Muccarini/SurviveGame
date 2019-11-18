@@ -56,7 +56,7 @@ bool Bullet::update(sf::Time deltaTime, std::vector<sf::FloatRect> collision, st
 		/*if (enemies[i]->hit_box.getGlobalBounds() != hit_box.getGlobalBounds())*/
 			if (sat_test(hit_box.getGlobalBounds(), enemies[i]->hit_box.getGlobalBounds(), &out_mtv))
 			{
-				enemies[i]->getDamage();
+				enemies[i]->takeDamage();
 				return false;
 			}
 	}

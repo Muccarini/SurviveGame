@@ -81,8 +81,3 @@ void Enemy::update(sf::Time deltaTime, GameCharacter * target, std::vector<sf::F
 	rotate(normVect);
 }
 
-void Enemy::getDamage()
-{
-	this->hp -= 10;
-}
-

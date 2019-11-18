@@ -18,9 +18,21 @@ public:
 
 private:
 	void processEvents();
-
 	void update(sf::Time deltaTime);
 	void render();
+
+	void updateEnemies(sf::Time deltaTime);
+	void updatePlayer(sf::Time deltaTime);
+	void updateBullets(sf::Time deltaTime);
+	void updateGameView();
+
+	void renderPlayer();
+	void renderBullet();
+	void renderEnemies();
+
+	void textureInit();
+	void gameViewInit();
+	void enemiesInit();
 
 
 
@@ -29,7 +41,6 @@ private:
 	std::vector<sf::FloatRect> walls_collision;
 
 	sf::View game_view;
-	Gui gui;
 	TileMap tile_map;
 
 	TextureHolder _textures;
@@ -39,8 +50,8 @@ private:
 	std::vector<std::shared_ptr<Bullet>> flying_bullets;
 	int counter_flying_obj;
 
-	int n_max_enemies;
-	int n_enemies_alive;
+	int max_enemies;
+	int enemies_alive;
 
 	sf::Clock time;
 

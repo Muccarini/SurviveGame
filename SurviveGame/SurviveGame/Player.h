@@ -20,9 +20,8 @@ public:
 
 	bool isShooting(sf::Time deltaTime);
 
-	int ammo;
-
 private:
+
 	Type _type;
 	sf::Texture texture;
 

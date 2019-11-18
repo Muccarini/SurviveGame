@@ -14,6 +14,7 @@ GameCharacter::~GameCharacter()
 void GameCharacter::render(sf::RenderWindow * target)
 {
 	target->draw(_sprite);
+	gui.renderTexts(target);
 }
 
 sf::Vector2f GameCharacter::getPosition()
@@ -26,6 +27,28 @@ int GameCharacter::getHp()
 {
 	return
 		this->hp;
+}
+
+void GameCharacter::takeDamage()
+{
+	this->hp--;
+}
+
+int GameCharacter::getAmmo()
+{
+	return
+		this->ammo;
+}
+
+void GameCharacter::setAmmo(int a)
+{
+	this->ammo = a;
+}
+
+
+void GameCharacter::decreaseAmmo()
+{
+	ammo--;
 }
 
 bool GameCharacter::sat_test(const sf::FloatRect &rectSp1, const sf::FloatRect &rectSp2, sf::Vector2f *out_mtv)
