@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Gui.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "TileMap.h"
@@ -28,6 +29,7 @@ private:
 	std::vector<sf::FloatRect> walls_collision;
 
 	sf::View game_view;
+	Gui gui;
 	TileMap tile_map;
 
 	TextureHolder _textures;

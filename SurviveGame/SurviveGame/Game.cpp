@@ -59,6 +59,7 @@ void Game::processEvents()
 void Game::update(sf::Time deltaTime)
 {
 	mouse_pos_view = (window).mapPixelToCoords(sf::Mouse::getPosition(window));
+
 	// UPDATE
 	player.update(deltaTime, mouse_pos_view, walls_collision, enemies);
 	if ((player.getHp() < 0))
@@ -101,9 +102,10 @@ void Game::update(sf::Time deltaTime)
 		if (!(flying_bullets[i])->update(deltaTime, walls_collision, enemies)) 
 			flying_bullets.erase(flying_bullets.begin() + i);
 	}
-
+	//GUI
 	game_view.setCenter(player.getPosition());
 	window.setView(game_view);
+	gui.setText(player.ammo, player.getPosition());
 }
 
 
@@ -111,7 +113,10 @@ void Game::render()
 {
 	window.clear();
 
+	//MAP
 	tile_map.render(window);
+
+	//PLAYER
 	player.render(&window);
 
 	//BULLET
@@ -129,6 +134,9 @@ void Game::render()
 		(*i)->render(&window);
 		window.draw((*i)->hit_box);
 	}
+
+	//GUI
+	gui.renderText(&window);
 	
 	window.display();
 }

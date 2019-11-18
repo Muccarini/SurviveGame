@@ -69,6 +69,9 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Personaggi\Giocatore</Filter>
     </ClCompile>
+    <ClCompile Include="Gui.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameCharacter.h">
@@ -112,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>Personaggi\Giocatore</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui.h">
+      <Filter>GameLogic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
