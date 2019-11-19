@@ -5,11 +5,13 @@
 
 Player::Player()
 {
-	hp          = 100;
-	mov_speed   = 200;
-	reload_time = sf::seconds(1.5);
-	ammo        = 200;
-	ratio       = sf::seconds(1.f / 16.666);
+	hp             = 100;
+	mov_speed      = 200;
+	reload_time    = sf::seconds(1.f);
+	reload_counter = reload_time;
+	max_ammo       = 200;
+	ammo           = max_ammo;
+	ratio          = sf::seconds(1.f / 20.f);
 
 	texture.loadFromFile("Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
 	initSprite();
@@ -83,15 +85,21 @@ void Player::rotate(sf::Vector2f mousePosView)
 }
 
 void Player::reload(sf::Time deltaTime) //TODO VOGLIO FARE LA CLASSE ANIMATION E METTERE L'ANIMAZIONE DEL RELOAD
-{
-	if (ammo == 0)
+{ 
+	if(!is_reloading)
 	{
-		reload_time -= deltaTime;
-		if (reload_time < sf::seconds(0.f))
-		{
-			ammo = 200;
-			reload_time = sf::seconds(1.5);
-		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) && ammo != max_ammo)
+			is_reloading = true;
+	}
+	if (ammo == 0 || is_reloading)
+	{
+		reload_counter -= deltaTime;
+			if (reload_counter < sf::seconds(0.f))
+			{
+				ammo = max_ammo;
+				reload_counter = sf::seconds(1.f);
+				is_reloading = false;
+			}
 	}
 }
 
@@ -99,7 +107,7 @@ bool Player::isShooting(sf::Time deltaTime)
 {
 	ratio -= deltaTime;
 
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !is_reloading)
 	{
 		if (ratio < sf::seconds(0.f))
 		{

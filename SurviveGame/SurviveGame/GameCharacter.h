@@ -17,6 +17,7 @@ public:
 	void takeDamage(/*TIPO DEL PROIETTILE DA CUI VIENE COLPITO*/);
 
 	int getHp();
+
 	int getAmmo();
 	void setAmmo(int a);
 	void decreaseAmmo();
@@ -32,7 +33,9 @@ protected:
 
 	int hp;
 	int ammo;
+	int max_ammo;
 	bool hit;
+	bool is_reloading;
 
 	float mov_speed;
 

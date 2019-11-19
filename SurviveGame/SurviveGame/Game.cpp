@@ -5,7 +5,7 @@
 
 Game::Game() : window(sf::VideoMode(1920, 1080), "Survive.io"), game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f)) 
 {
-	textureInit();
+	textureInit(); //TODO CAMBIARE TEXTURE A BULLET
 	enemiesInit();
 	gameViewInit();
 }
@@ -157,7 +157,7 @@ void Game::renderEnemies()
 void Game::textureInit()
 {
 	_textures.load(Textures::Enemy, "Sources/zombie1.png");
-	_textures.load(Textures::Proiettile, "Sources/bullets/bullet1.png");
+	_textures.load(Textures::Proiettile, "Sources/bullets/bullet1.png"); //TODO CAMBIARE IMMAGINE TROPPO DETTAGLIATA PER UN OGGETTO COSI' PICCOLO
 }
 
 void Game::gameViewInit()

@@ -60,12 +60,6 @@ TileMap::~TileMap()
 {
 }
 
-//sf::RectangleShape TileMap::creating_wall_block(std::vector<sf::RectangleShape> walls_rect)
-//{
-//	int i = 0;
-//	if()
-//}
-
 std::vector<sf::FloatRect> TileMap::getWalls()
 {
 	std::vector<sf::FloatRect> wall_block;

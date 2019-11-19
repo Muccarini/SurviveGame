@@ -4,7 +4,7 @@
 
 Bullet::Bullet(sf::Texture txt) : texture(txt)
 {
-	mov_speed = 1000;
+	mov_speed = 1500;
 	initSprite();
 	initHitBox();
 }
@@ -42,6 +42,7 @@ bool Bullet::update(sf::Time deltaTime, std::vector<sf::FloatRect> collision, st
 				return false;
 			}
 	}
+
 	float dX = getPosition().x - player_pos.x;
 	float dY = getPosition().y - player_pos.y;
 	float distance = sqrt(pow(dX, 2) + pow(dY, 2));

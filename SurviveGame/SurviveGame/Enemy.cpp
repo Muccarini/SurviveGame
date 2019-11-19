@@ -15,7 +15,7 @@ Enemy::Enemy(float x, float y, sf::Texture txt) : spawn_pos(x,y), texture(txt)
 Enemy::~Enemy()
 {
 }
- void Enemy::move(sf::Time deltaTime)
+void Enemy::move(sf::Time deltaTime)
 {
 	//this->_m.move(deltaTime, this->_sprite, this->mov_speed);
 }

@@ -26,6 +26,7 @@ private:
 	Type _type;
 	sf::Texture texture;
 
+	sf::Time reload_counter;
 	sf::Time reload_time;
 	sf::Time ratio;
 
