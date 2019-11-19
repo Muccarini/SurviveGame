@@ -5,35 +5,38 @@
 
 Player::Player()
 {
-	mov_speed = 200;
+	hp          = 100;
+	mov_speed   = 200;
 	reload_time = sf::seconds(1.5);
-	ammo = 200;
-	ratio = sf::seconds(1.f / 16.666);
-	hp = 600;
+	ammo        = 200;
+	ratio       = sf::seconds(1.f / 16.666);
 
-	//TEXTURE
 	texture.loadFromFile("Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
-	_sprite.setTexture(texture);
-
-	hit_box.setSize(sf::Vector2f(207.f, 207.f));
-
-	//COLOR
-	hit_box.setOutlineColor(sf::Color::Transparent);
-	hit_box.setOutlineThickness(3.f);
-	hit_box.setFillColor(sf::Color::Transparent);
-	//SCALE
-	_sprite.setScale(0.3, 0.3);
-	hit_box.setScale(0.15, 0.15);
-	//POSITION
-	_sprite.setPosition(300.f, 300.f);
-	hit_box.setPosition(getPosition());
-	//ORIGIN
-	_sprite.setOrigin(92, 120);
-	hit_box.setOrigin(_sprite.getOrigin());
+	initSprite();
+	initHitBox();
 }
 
 Player::~Player()
 {
+}
+
+void Player::initSprite()
+{
+	_sprite.setTexture(texture);       //TEXTURE
+	_sprite.setScale(0.3, 0.3);        //SCALE
+	_sprite.setPosition(600.f, 600.f); //POS
+	_sprite.setOrigin(92, 120);        //ORIGIN
+}
+
+void Player::initHitBox()
+{
+	hit_box.setSize(sf::Vector2f(207.f, 207.f));     //SIZE
+	hit_box.setOutlineColor(sf::Color::Transparent); //COLOR
+	hit_box.setOutlineThickness(3.f);
+	hit_box.setFillColor(sf::Color::Transparent);
+	hit_box.setScale(0.15, 0.15);                    //SCALE
+	hit_box.setPosition(getPosition());              //POS
+	hit_box.setOrigin(_sprite.getOrigin());          //ORIGIN
 }
 
 void Player::move(sf::Time deltaTime)
@@ -79,7 +82,7 @@ void Player::rotate(sf::Vector2f mousePosView)
 	this->_sprite.setRotation(deg + 360.f);
 }
 
-void Player::reload(sf::Time deltaTime)
+void Player::reload(sf::Time deltaTime) //TODO VOGLIO FARE LA CLASSE ANIMATION E METTERE L'ANIMAZIONE DEL RELOAD
 {
 	if (ammo == 0)
 	{

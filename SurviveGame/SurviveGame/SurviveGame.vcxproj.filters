@@ -70,7 +70,7 @@
       <Filter>Personaggi\Giocatore</Filter>
     </ClCompile>
     <ClCompile Include="Gui.cpp">
-      <Filter>Map</Filter>
+      <Filter>Personaggi</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -117,7 +117,7 @@
       <Filter>Personaggi\Giocatore</Filter>
     </ClInclude>
     <ClInclude Include="Gui.h">
-      <Filter>GameLogic</Filter>
+      <Filter>Personaggi</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -9,8 +9,7 @@ Gui::Gui()
 	texts.push_back(hp);
 	fontInit();
 
-	offset_view.x = 0;
-	offset_view.y = 0;
+	texts[0].setPosition(0, 0);
 }
 
 
@@ -30,9 +29,10 @@ void Gui::updateText(int ammo, int hp, sf::Vector2f obj)
 {
 	//AMMO GUI
 	texts[0].setString(std::to_string(ammo));
-	texts[0].setFillColor(sf::Color::Blue);
+	texts[0].setFillColor(sf::Color::Magenta);
 	texts[0].setCharacterSize(20);
 	texts[0].setPosition(obj.x -25, obj.y +25);
+
 
 	//HP GUI
 	texts[1].setString(std::to_string(hp));

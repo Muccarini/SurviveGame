@@ -31,7 +31,7 @@ void Game::run()
 }
 
 void Game::processEvents()
-{ // E' QUI CHE REGISTRI GLI EVENTI E POI IN UPDATE SELEZIONI
+{
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
@@ -66,9 +66,9 @@ void Game::render()
 
 	tile_map.render(window);
 
+	renderEnemies();
 	renderPlayer();
 	renderBullet();
-	renderEnemies();
 	
 	window.display();
 }
@@ -86,7 +86,7 @@ void Game::updateEnemies(sf::Time deltaTime)
 	{
 		enemies[i]->update(deltaTime, &player, tile_map.getWalls(), enemies);
 
-		if ((enemies[i]->getHp() < 0))
+		if ((enemies[i]->getHp() <= 0))
 		{
 			enemies.erase(enemies.begin() + i);
 			enemies_alive--;
@@ -98,11 +98,9 @@ void Game::updateEnemies(sf::Time deltaTime)
 void Game::updatePlayer(sf::Time deltaTime)
 {
 	player.update(deltaTime, mouse_pos_view, tile_map.getWalls(), enemies);
-
-	//MORTE GIOCATORE
-	if ((player.getHp() < 0))
+	if ((player.getHp() <= 0))
 	{
-		window.close();
+		//window.close();  GAME OVER
 	}
 }
 

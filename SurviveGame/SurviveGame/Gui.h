@@ -7,7 +7,7 @@ public:
 	Gui();
 	~Gui();
 
-	void updateText(int ammo, int hp, sf::Vector2f view);
+	void updateText(int ammo, int hp, sf::Vector2f obj);
 
 	void renderTexts(sf::RenderWindow * target);
 

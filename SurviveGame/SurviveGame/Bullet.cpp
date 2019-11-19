@@ -5,25 +5,8 @@
 Bullet::Bullet(sf::Texture txt) : texture(txt)
 {
 	mov_speed = 1000;
-	ratio = 1000.f / 60.f; //1000 colpi al minuto
-
-	//TEXTURE
-	_sprite.setTexture(texture);
-
-	hit_box.setSize(sf::Vector2f(813.f, 306.f));
-
-	//COLOR
-	hit_box.setOutlineColor(sf::Color::Transparent);
-	hit_box.setOutlineThickness(3.f);
-	hit_box.setFillColor(sf::Color::Transparent);
-	//SCALE
-	_sprite.setScale(0.013, 0.013);
-	hit_box.setScale(_sprite.getScale());
-	//POSITION
-
-	//ORIGIN
-	_sprite.setOrigin(-3500, -562);
-	hit_box.setOrigin(_sprite.getOrigin());
+	initSprite();
+	initHitBox();
 }
 
 Bullet::Bullet()
@@ -53,7 +36,6 @@ bool Bullet::update(sf::Time deltaTime, std::vector<sf::FloatRect> collision, st
 
 	for (int i = 0; i != enemies.size(); i++)
 	{
-		/*if (enemies[i]->hit_box.getGlobalBounds() != hit_box.getGlobalBounds())*/
 			if (sat_test(hit_box.getGlobalBounds(), enemies[i]->hit_box.getGlobalBounds(), &out_mtv))
 			{
 				enemies[i]->takeDamage();
@@ -85,6 +67,23 @@ bool Bullet::setDir(sf::Vector2f owner, sf::Vector2f mousePosView)
 	dir = normVect;
 
 	return true;
+}
+
+void Bullet::initSprite()
+{
+	_sprite.setTexture(texture);
+	_sprite.setScale(0.013, 0.013);
+	_sprite.setOrigin(-3500, -562);
+}
+
+void Bullet::initHitBox()
+{
+	hit_box.setSize(sf::Vector2f(813.f, 306.f));
+	hit_box.setOutlineColor(sf::Color::Transparent);
+	hit_box.setOutlineThickness(3.f);
+	hit_box.setFillColor(sf::Color::Transparent);
+	hit_box.setScale(_sprite.getScale());
+	hit_box.setOrigin(_sprite.getOrigin());
 }
 
 

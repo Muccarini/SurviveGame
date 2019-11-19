@@ -5,39 +5,20 @@
 Enemy::Enemy(float x, float y, sf::Texture txt) : spawn_pos(x,y), texture(txt)
 {
 	mov_speed = 100;
-	hp = 1;
+	hp = 10;
 
-	_sprite.setTexture(texture);
-	hit_box.setSize(sf::Vector2f(50.f, 50.f));
-
-	//COLOR
-	hit_box.setOutlineColor(sf::Color::Transparent);
-	hit_box.setOutlineThickness(3.f);
-	hit_box.setFillColor(sf::Color::Transparent);
-	//SCALE
-	_sprite.setScale(0.9f, 0.9f);
-	hit_box.setScale(_sprite.getScale());
-	//POSITION
-	_sprite.setPosition(spawn_pos);
-	hit_box.setPosition(getPosition());
-	//ORIGIN
-	_sprite.setOrigin(+34, +34);
-	hit_box.setOrigin(20, 25);
-
-	_sprite.setTextureRect(sf::IntRect(0, 0, 68, 68));
+	initSprite();
+	initHitBox();
 }
 
 
 Enemy::~Enemy()
 {
 }
-
  void Enemy::move(sf::Time deltaTime)
 {
 	//this->_m.move(deltaTime, this->_sprite, this->mov_speed);
 }
-
-
 void Enemy::rotate(sf::Vector2f vec_dir)
 {
 	const float PI = 3.14159265f;
@@ -48,6 +29,7 @@ void Enemy::rotate(sf::Vector2f vec_dir)
 
 void Enemy::update(sf::Time deltaTime, GameCharacter * target, std::vector<sf::FloatRect> collision, std::vector<std::shared_ptr<Enemy>> enemies)
 {
+	//MOVE DA CAMBIARE CI STIAMO LAVORANDO
 	float dX = target->getPosition().x - this->_sprite.getPosition().x;
 	float dY = target->getPosition().y - this->_sprite.getPosition().y;
 
@@ -57,6 +39,8 @@ void Enemy::update(sf::Time deltaTime, GameCharacter * target, std::vector<sf::F
 
 	this->_sprite.move(normVect * this->mov_speed * deltaTime.asSeconds());
 	hit_box.setPosition(getPosition());
+	
+	gui.updateText(ammo, hp, getPosition());
 
 	//COLLISON SUI MURI
 
@@ -79,5 +63,25 @@ void Enemy::update(sf::Time deltaTime, GameCharacter * target, std::vector<sf::F
 	}
 
 	rotate(normVect);
+}
+
+void Enemy::initSprite()
+{
+	_sprite.setTexture(texture);
+	_sprite.setScale(0.9f, 0.9f);
+	_sprite.setPosition(spawn_pos);
+	_sprite.setOrigin(+34, +34);
+	_sprite.setTextureRect(sf::IntRect(0, 0, 68, 68));
+}
+
+void Enemy::initHitBox()
+{
+	hit_box.setSize(sf::Vector2f(50.f, 50.f));
+	hit_box.setOutlineColor(sf::Color::Transparent);
+	hit_box.setOutlineThickness(3.f);
+	hit_box.setFillColor(sf::Color::Transparent);
+	hit_box.setScale(_sprite.getScale());
+	hit_box.setPosition(getPosition());
+	hit_box.setOrigin(20, 25);
 }
 

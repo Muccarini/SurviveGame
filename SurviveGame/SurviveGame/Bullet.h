@@ -10,9 +10,10 @@ public:
 	Bullet(sf::Texture txt);
 	Bullet();
 	virtual ~Bullet();
-	// Player* DA GENERALIZZARE CON GAMECHARACTER
 	bool update(sf::Time deltaTime, std::vector<sf::FloatRect> collision, std::vector<std::shared_ptr<Enemy>> enemies);
 	bool setDir(sf::Vector2f owner, sf::Vector2f target);
+	void initSprite();
+	void initHitBox();
 
 private:
 

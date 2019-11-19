@@ -10,15 +10,17 @@ public:
 
 public:
 	Enemy(float x,float y, sf::Texture texture);
+	~Enemy();
 
-	virtual ~Enemy();
+	void move(sf::Time deltaTime);
+	void rotate(sf::Vector2f vec_dir);
 
-	 void move(sf::Time deltaTime);
-	 void rotate(sf::Vector2f vec_dir);
-
-	 void update(sf::Time deltaTime, GameCharacter * target, std::vector<sf::FloatRect> collision, std::vector<std::shared_ptr<Enemy>> enemies);
+	void update(sf::Time deltaTime, GameCharacter * target, std::vector<sf::FloatRect> collision, std::vector<std::shared_ptr<Enemy>> enemies);
 
 private:
+	void initSprite();
+	void initHitBox();
+
 	EnemyStrategyMove _m;
 	sf::Vector2f spawn_pos;
 	sf::Texture texture;
