@@ -56,7 +56,7 @@ void Game::update(sf::Time deltaTime)
 	updateEnemies(deltaTime);
 	updateBullets(deltaTime);
 
-	updateGameView();
+	updateGameView(deltaTime);
 }
 
 
@@ -122,9 +122,11 @@ void Game::updateBullets(sf::Time deltaTime)
 	}
 }
 
-void Game::updateGameView()
+void Game::updateGameView(sf::Time deltaTime)
 {
-	game_view.setCenter(player.getPosition());
+	sf::Vector2f dir = player.getPosition() - game_view.getCenter();
+	game_view.move(dir * deltaTime.asSeconds() * this->game_view_speed );
+	//game_view.setCenter(player.getPosition());
 	window.setView(game_view);
 }
 
@@ -163,11 +165,12 @@ void Game::textureInit()
 void Game::gameViewInit()
 {
 	game_view.setCenter(player.getPosition());
+	this->game_view_speed = 5.f;
 }
 
 void Game::enemiesInit()
 {
-	max_enemies = 5;
+	max_enemies = 1;
 	enemies_alive = 0;
 }
 

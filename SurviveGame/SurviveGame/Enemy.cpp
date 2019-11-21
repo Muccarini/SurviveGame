@@ -4,7 +4,7 @@
 
 Enemy::Enemy(float x, float y, sf::Texture txt) : spawn_pos(x,y), texture(txt)
 {
-	mov_speed = 100;
+	mov_speed = 150;
 	hp = 10;
 
 	initSprite();
@@ -40,7 +40,7 @@ void Enemy::update(sf::Time deltaTime, GameCharacter * target, std::vector<sf::F
 	this->_sprite.move(normVect * this->mov_speed * deltaTime.asSeconds());
 	hit_box.setPosition(getPosition());
 	
-	gui.updateText(ammo, hp, getPosition());
+	gui.updateText(hp, getPosition());
 
 	//COLLISON SUI MURI
 
@@ -76,12 +76,12 @@ void Enemy::initSprite()
 
 void Enemy::initHitBox()
 {
-	hit_box.setSize(sf::Vector2f(50.f, 50.f));
+	hit_box.setSize(sf::Vector2f(70.f, 70.f));
 	hit_box.setOutlineColor(sf::Color::Transparent);
 	hit_box.setOutlineThickness(3.f);
 	hit_box.setFillColor(sf::Color::Transparent);
 	hit_box.setScale(_sprite.getScale());
 	hit_box.setPosition(getPosition());
-	hit_box.setOrigin(20, 25);
+	hit_box.setOrigin(35, 35);
 }
 

@@ -22,13 +22,18 @@ private:
 	void move(sf::Time deltaTime);
 	void rotate(sf::Vector2f mousePosView);
 	void reload(sf::Time deltaTime);
+	void dash(sf::Vector2f dir, sf::Time deltaTime);
 
 	Type _type;
 	sf::Texture texture;
 
-	sf::Time reload_counter;
-	sf::Time reload_time;
+	sf::Time reload_cd;
+	sf::Time reload_clock;
 	sf::Time ratio;
+
+	float dash_speed;
+	float dash_cd;
+	bool is_dashing;
 
 };
 
