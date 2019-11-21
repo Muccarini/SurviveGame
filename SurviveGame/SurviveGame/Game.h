@@ -24,7 +24,7 @@ private:
 	void updateEnemies(sf::Time deltaTime);
 	void updatePlayer(sf::Time deltaTime);
 	void updateBullets(sf::Time deltaTime);
-	void updateGameView();
+	void updateGameView(sf::Time deltaTime);
 
 	void renderPlayer();
 	void renderBullet();
@@ -41,6 +41,7 @@ private:
 	std::vector<sf::FloatRect> walls_collision;
 
 	sf::View game_view;
+	float game_view_speed;
 	TileMap tile_map;
 
 	TextureHolder _textures;

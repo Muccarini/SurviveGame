@@ -6,11 +6,18 @@
 Player::Player()
 {
 	hp             = 100;
+
 	mov_speed      = 200;
-	reload_time    = sf::seconds(1.f);
-	reload_counter = reload_time;
+	dash_speed     = 1000;
+	dash_cd        = 10.f;
+	is_dashing     = false;
+
+	reload_cd      = sf::seconds(1.f);
+	reload_clock   = reload_cd;
+
 	max_ammo       = 200;
 	ammo           = max_ammo;
+
 	ratio          = sf::seconds(1.f / 20.f);
 
 	texture.loadFromFile("Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
@@ -70,6 +77,8 @@ void Player::move(sf::Time deltaTime)
 		dir.x = +1;
 	}
 
+	dash(dir, deltaTime);
+
 	this->_sprite.move(dir * this->mov_speed * deltaTime.asSeconds());
 	hit_box.setPosition(getPosition());
 	}
@@ -93,13 +102,33 @@ void Player::reload(sf::Time deltaTime) //TODO VOGLIO FARE LA CLASSE ANIMATION E
 	}
 	if (ammo == 0 || is_reloading)
 	{
-		reload_counter -= deltaTime;
-			if (reload_counter < sf::seconds(0.f))
+		reload_clock -= deltaTime;
+			if (reload_clock < sf::seconds(0.f))
 			{
 				ammo = max_ammo;
-				reload_counter = sf::seconds(1.f);
+				reload_clock = sf::seconds(1.f);
 				is_reloading = false;
 			}
+	}
+}
+
+void Player::dash(sf::Vector2f dir, sf::Time deltaTime)
+{
+	bool space_is_pressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
+
+	if (space_is_pressed && !is_dashing)
+	{
+		_sprite.setPosition(getPosition().x + (dir.x * 160), (dir.y * 160) + getPosition().y);
+		is_dashing = true;
+	}
+	if (is_dashing && dash_cd > 0)
+	{
+		dash_cd -= deltaTime.asSeconds();
+		if (dash_cd < 0)
+		{
+			is_dashing = false;
+			dash_cd = 10;
+		}
 	}
 }
 
@@ -124,7 +153,7 @@ void Player::update(sf::Time deltaTime, sf::Vector2f mousePosView, std::vector<s
 		rotate(mousePosView);
 		reload(deltaTime);
 
-		gui.updateText(ammo, hp, getPosition());
+		gui.updateText(ammo, hp, dash_cd, getPosition());
 
 		//COLLISION MURI
 		for (int i = 0 ; i != collision.size(); i++)
