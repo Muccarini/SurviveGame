@@ -33,13 +33,12 @@ void Gui::updateText(int ammo, int hp, sf::Vector2f obj)
 	texts[0].setCharacterSize(15);
 	texts[0].setPosition(obj.x -50, obj.y +25);
 
-
 	//HP GUI
 	texts[1].setString(std::to_string(hp));
 	texts[1].setFillColor(sf::Color::Red);
 	texts[1].setCharacterSize(15);
 	texts[1].setPosition(obj.x +20, obj.y +25);
-}
+} 
 
 void Gui::fontInit()
 {

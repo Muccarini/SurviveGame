@@ -1,6 +1,5 @@
 #pragma once
 #include "Tile.h"
-#include "Box2D/Box2D.h"
 #include <fstream>
 #include <sstream>
 
