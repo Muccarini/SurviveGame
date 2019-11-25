@@ -1,16 +1,14 @@
-#include "Game.h"
-#include "Player.h"
-#include "Enemy.h"
+#include "GameLogic.h"
 
 
-Game::Game() : window(sf::VideoMode(1920, 1080), "Survive.io"), game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f)) 
+GameLogic::GameLogic() : window(sf::VideoMode(1920, 1080), "Survive.io"), game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f)) 
 {
 	textureInit(); //TODO CAMBIARE TEXTURE A BULLET
 	enemiesInit();
 	gameViewInit();
 }
 
-void Game::run()
+void GameLogic::run()
 {
 	sf::Time TimePerFrame = sf::seconds(1.f / 60.f);
     sf::Time timeSinceLastUpdate = sf::Time::Zero;
@@ -30,7 +28,7 @@ void Game::run()
 	}
 }
 
-void Game::processEvents()
+void GameLogic::processEvents()
 {
 	sf::Event event;
 	while (window.pollEvent(event))
@@ -48,7 +46,7 @@ void Game::processEvents()
 	}
 }
 
-void Game::update(sf::Time deltaTime)
+void GameLogic::update(sf::Time deltaTime)
 {
 	mouse_pos_view = (window).mapPixelToCoords(sf::Mouse::getPosition(window));
 
@@ -60,7 +58,7 @@ void Game::update(sf::Time deltaTime)
 }
 
 
-void Game::render()
+void GameLogic::render()
 {
 	window.clear();
 
@@ -73,7 +71,7 @@ void Game::render()
 	window.display();
 }
 
-void Game::updateEnemies(sf::Time deltaTime)
+void GameLogic::updateEnemies(sf::Time deltaTime)
 {
 	while (enemies_alive != max_enemies)
 	{
@@ -91,11 +89,10 @@ void Game::updateEnemies(sf::Time deltaTime)
 			enemies.erase(enemies.begin() + i);
 			enemies_alive--;
 		}
-
 	}
 }
 
-void Game::updatePlayer(sf::Time deltaTime)
+void GameLogic::updatePlayer(sf::Time deltaTime)
 {
 	player.update(deltaTime, mouse_pos_view, tile_map.getWalls(), enemies);
 	if ((player.getHp() <= 0))
@@ -104,7 +101,7 @@ void Game::updatePlayer(sf::Time deltaTime)
 	}
 }
 
-void Game::updateBullets(sf::Time deltaTime)
+void GameLogic::updateBullets(sf::Time deltaTime)
 {
 	if (player.isShooting(deltaTime) && player.getAmmo())
 	{
@@ -122,7 +119,7 @@ void Game::updateBullets(sf::Time deltaTime)
 	}
 }
 
-void Game::updateGameView(sf::Time deltaTime)
+void GameLogic::updateGameView(sf::Time deltaTime)
 {
 	sf::Vector2f dir = player.getPosition() - game_view.getCenter();
 	game_view.move(dir * deltaTime.asSeconds() * this->game_view_speed );
@@ -131,13 +128,13 @@ void Game::updateGameView(sf::Time deltaTime)
 }
 
 
-void Game::renderPlayer()
+void GameLogic::renderPlayer()
 {
 	player.render(&window);
 	window.draw(player.hit_box);
 }
 
-void Game::renderBullet()
+void GameLogic::renderBullet()
 {
 	for (auto i = flying_bullets.begin(); i != flying_bullets.end(); i++)
 	{
@@ -146,7 +143,7 @@ void Game::renderBullet()
 	}
 }
 
-void Game::renderEnemies()
+void GameLogic::renderEnemies()
 {
 	for (auto i = enemies.begin(); i != enemies.end(); i++)
 	{
@@ -156,19 +153,19 @@ void Game::renderEnemies()
 }
 
 
-void Game::textureInit()
+void GameLogic::textureInit()
 {
 	_textures.load(Textures::Enemy, "Sources/zombie1.png");
 	_textures.load(Textures::Proiettile, "Sources/bullets/bullet1.png"); //TODO CAMBIARE IMMAGINE TROPPO DETTAGLIATA PER UN OGGETTO COSI' PICCOLO
 }
 
-void Game::gameViewInit()
+void GameLogic::gameViewInit()
 {
 	game_view.setCenter(player.getPosition());
 	this->game_view_speed = 5.f;
 }
 
-void Game::enemiesInit()
+void GameLogic::enemiesInit()
 {
 	max_enemies = 1;
 	enemies_alive = 0;

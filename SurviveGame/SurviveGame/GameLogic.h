@@ -9,10 +9,10 @@
 
 
 
-class Game
+class GameLogic
 {
 public:
-	explicit Game();
+	explicit GameLogic();
 	
 	void run();
 
