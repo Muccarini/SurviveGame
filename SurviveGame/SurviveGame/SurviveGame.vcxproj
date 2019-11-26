@@ -134,6 +134,7 @@
     <ClCompile Include="EnemyStrategyMove.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameLogic.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Hud.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="EnemyStrategyMove.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameLogic.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Hud.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Player.h" />

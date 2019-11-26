@@ -16,6 +16,10 @@ public:
 
 	std::stack<State*>* states;
 	sf::RenderWindow* window;
+
+protected:
+	void updateMousePos();
+	sf::Vector2f mouse_pos_view;
 private:
 	bool quit;
 };

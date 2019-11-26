@@ -14,7 +14,7 @@ GameLogic::~GameLogic()
 
 void GameLogic::update(sf::Time deltaTime)
 {
-	mouse_pos_view = (window)->mapPixelToCoords(sf::Mouse::getPosition(*window));
+	updateMousePos();
 
 	updatePlayer(deltaTime);
 	updateEnemies(deltaTime);
@@ -128,7 +128,7 @@ void GameLogic::gameViewInit()
 
 void GameLogic::enemiesInit()
 {
-	max_enemies = 1;
+	max_enemies = 5;
 	enemies_alive = 0;
 }
 

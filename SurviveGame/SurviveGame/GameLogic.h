@@ -37,8 +37,6 @@ private:
 	void enemiesInit();
 
 
-
-	sf::Vector2f mouse_pos_view;
 	std::vector<sf::FloatRect> walls_collision;
 
 	sf::View game_view;
