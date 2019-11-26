@@ -19,6 +19,7 @@ public:
 	bool isActive(const sf::Vector2f mouse_pos_view);
 
 	void buttonAnimation();
+	void setStandard();
 
 
 private:

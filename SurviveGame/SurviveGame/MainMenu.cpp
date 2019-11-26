@@ -42,6 +42,8 @@ void MainMenu::updateButtons()
 	{
 		new_game.buttonAnimation();
 	}
+	else
+		new_game.setStandard();
 
 	if (new_game.isActive(mouse_pos_view))
 	{

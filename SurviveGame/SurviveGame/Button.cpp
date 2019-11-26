@@ -57,16 +57,17 @@ void Button::buttonAnimation()  //TODO FIX IT!
 		text.setScale(text.getScale().x * 1.1, text.getScale().y * 1.1);
 		text.setFillColor(sf::Color::White);
 	}
-	else
-	{
-		text.setScale(right_scale);
-		text.setFillColor(right_color);
-	}
+}
+
+void Button::setStandard()
+{
+	text.setScale(right_scale);
+	text.setFillColor(right_color);
 }
 
 
 void Button::draw(sf::RenderTarget * target)
 {
 	target->draw(this->text);
-	target->draw(this->box);
+	//target->draw(this->box);
 }
