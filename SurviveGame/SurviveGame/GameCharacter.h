@@ -1,7 +1,7 @@
 #pragma once
 #include"SFML/Graphics.hpp"
 #include"TextureHolder.h"
-#include"Gui.h"
+#include"Hud.h"
 
 class GameCharacter
 {
@@ -29,7 +29,7 @@ protected:
 	sf::Sprite _sprite;
 	sf::Vector2f out_mtv;
 
-	Gui gui;
+	Hud gui;
 
 	int hp;
 	int ammo;

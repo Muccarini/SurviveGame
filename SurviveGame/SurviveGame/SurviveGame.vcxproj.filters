@@ -14,13 +14,13 @@
     <Filter Include="Personaggi\Nemici">
       <UniqueIdentifier>{d49cb70d-33c4-4c28-a7dd-70a07fd612c9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameLogic">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Map">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -58,7 +58,7 @@
       <Filter>Personaggi\Nemici</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>GameLogic</Filter>
+      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="TextureHolder.cpp">
       <Filter>Resource Files</Filter>
@@ -66,14 +66,20 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Personaggi\Giocatore</Filter>
     </ClCompile>
-    <ClCompile Include="Gui.cpp">
+    <ClCompile Include="GameLogic.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Hud.cpp">
       <Filter>Personaggi</Filter>
     </ClCompile>
-    <ClCompile Include="GameLogic.cpp">
-      <Filter>GameLogic</Filter>
+    <ClCompile Include="State.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Menu.cpp">
-      <Filter>Map</Filter>
+    <ClCompile Include="Game.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -116,14 +122,20 @@
     <ClInclude Include="Bullet.h">
       <Filter>Personaggi\Giocatore</Filter>
     </ClInclude>
-    <ClInclude Include="Gui.h">
-      <Filter>Personaggi</Filter>
-    </ClInclude>
     <ClInclude Include="GameLogic.h">
-      <Filter>GameLogic</Filter>
+      <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="Menu.h">
-      <Filter>GameLogic</Filter>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Hud.h">
+      <Filter>Personaggi</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

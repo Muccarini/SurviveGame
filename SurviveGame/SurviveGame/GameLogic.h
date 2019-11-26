@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Gui.h"
+#include "State.h"
+#include "Hud.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "TileMap.h"
@@ -9,16 +10,17 @@
 
 
 
-class GameLogic
+class GameLogic :
+	public State
 {
 public:
 	explicit GameLogic();
-	
-	void run();
+	virtual ~GameLogic();
+
+	void update(sf::Time deltaTime);
 
 private:
-	void processEvents();
-	void update(sf::Time deltaTime);
+
 	void render();
 
 	void updateEnemies(sf::Time deltaTime);
@@ -36,7 +38,6 @@ private:
 
 
 
-	sf::RenderWindow window;
 	sf::Vector2f mouse_pos_view;
 	std::vector<sf::FloatRect> walls_collision;
 

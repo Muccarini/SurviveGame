@@ -1,11 +1,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-class Gui
+class Hud
 {
 public:
-	Gui();
-	~Gui();
+	Hud();
+	~Hud();
 
 	void updateText(int hp, sf::Vector2f obj);
 	void updateText(int ammo, int hp, float dash_cd, sf::Vector2f obj);
@@ -15,7 +15,6 @@ public:
 private:
 	void fontInit();
 
-	std::vector<sf::Text> texts;
 	sf::Text ammo;
 	sf::Text hp;
 	sf::Text dash_cd;

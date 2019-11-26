@@ -1,10 +1,10 @@
-#include "GameLogic.h"
+#include "Game.h"
 
 
 
 int main()
 {
-	GameLogic game;
+	Game game;
 	game.run();
 
 	return 0;

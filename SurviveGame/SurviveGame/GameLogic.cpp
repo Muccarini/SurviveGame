@@ -1,54 +1,20 @@
 #include "GameLogic.h"
 
 
-GameLogic::GameLogic() : window(sf::VideoMode(1920, 1080), "Survive.io"), game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f)) 
+GameLogic::GameLogic() : game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f))
 {
 	textureInit(); //TODO CAMBIARE TEXTURE A BULLET
 	enemiesInit();
 	gameViewInit();
 }
 
-void GameLogic::run()
+GameLogic::~GameLogic()
 {
-	sf::Time TimePerFrame = sf::seconds(1.f / 60.f);
-    sf::Time timeSinceLastUpdate = sf::Time::Zero;
-	sf::Clock clock;
-
-	while (window.isOpen()) 
-	{
-		processEvents();
-		timeSinceLastUpdate += clock.restart();
-		while (timeSinceLastUpdate > TimePerFrame) 
-		{
-			timeSinceLastUpdate -= TimePerFrame;
-			processEvents();
-			update(TimePerFrame);
-		}
-		render();
-	}
-}
-
-void GameLogic::processEvents()
-{
-	sf::Event event;
-	while (window.pollEvent(event))
-	{
-		switch (event.type)
-		{
-		case sf::Event::KeyPressed:
-			if (event.key.code == sf::Keyboard::Escape)
-				window.close();
-			break;
-		case sf::Event::Closed:
-			window.close();
-			break;
-		}
-	}
 }
 
 void GameLogic::update(sf::Time deltaTime)
 {
-	mouse_pos_view = (window).mapPixelToCoords(sf::Mouse::getPosition(window));
+	mouse_pos_view = (window)->mapPixelToCoords(sf::Mouse::getPosition(*window));
 
 	updatePlayer(deltaTime);
 	updateEnemies(deltaTime);
@@ -60,15 +26,11 @@ void GameLogic::update(sf::Time deltaTime)
 
 void GameLogic::render()
 {
-	window.clear();
-
-	tile_map.render(window);
+	tile_map.render(*window);
 
 	renderEnemies();
 	renderPlayer();
 	renderBullet();
-	
-	window.display();
 }
 
 void GameLogic::updateEnemies(sf::Time deltaTime)
@@ -97,7 +59,7 @@ void GameLogic::updatePlayer(sf::Time deltaTime)
 	player.update(deltaTime, mouse_pos_view, tile_map.getWalls(), enemies);
 	if ((player.getHp() <= 0))
 	{
-		//window.close();  GAME OVER
+		//window.close();  endstate();
 	}
 }
 
@@ -123,23 +85,22 @@ void GameLogic::updateGameView(sf::Time deltaTime)
 {
 	sf::Vector2f dir = player.getPosition() - game_view.getCenter();
 	game_view.move(dir * deltaTime.asSeconds() * this->game_view_speed );
-	//game_view.setCenter(player.getPosition());
-	window.setView(game_view);
+	window->setView(game_view);
 }
 
 
 void GameLogic::renderPlayer()
 {
-	player.render(&window);
-	window.draw(player.hit_box);
+	player.render(window);
+	window->draw(player.hit_box);
 }
 
 void GameLogic::renderBullet()
 {
 	for (auto i = flying_bullets.begin(); i != flying_bullets.end(); i++)
 	{
-		(*i)->render(&window);
-		window.draw((*i)->hit_box);
+		(*i)->render(window);
+		window->draw((*i)->hit_box);
 	}
 }
 
@@ -147,8 +108,8 @@ void GameLogic::renderEnemies()
 {
 	for (auto i = enemies.begin(); i != enemies.end(); i++)
 	{
-		(*i)->render(&window);
-		window.draw((*i)->hit_box);
+		(*i)->render(window);
+		window->draw((*i)->hit_box);
 	}
 }
 
