@@ -45,7 +45,7 @@ void Hud::updateText(int kill_counter, float countdown, sf::View view)
 	this->countdown.setString(std::to_string(static_cast<int>(countdown)));
 	this->countdown.setFillColor(sf::Color::Red);
 	this->countdown.setCharacterSize(50);
-	this->countdown.setPosition(view.getCenter().x, view.getCenter().y);
+	this->countdown.setPosition(view.getCenter().x - 20, view.getCenter().y -30);
 
 	this->cd = static_cast<int>(countdown);
 }

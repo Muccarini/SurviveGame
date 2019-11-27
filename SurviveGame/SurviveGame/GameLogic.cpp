@@ -42,9 +42,10 @@ void GameLogic::updateHud()
 	hud.updateText(kill_counter, countdown.asSeconds(), game_view);
 }
 
+//TODO DA ABBELLIRE KILL COUNTER E COUNTDOWN
 void GameLogic::updateEnemies(sf::Time deltaTime)
 {
-	if (kill_counter == 5) //RESET ROUND
+	if (kill_counter == 20) //RESET ROUND
 	{
 		for (int i = 0; i < enemies.size(); i++)
 		{
