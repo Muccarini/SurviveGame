@@ -54,7 +54,6 @@ void Game::render()
 {
 	window->clear();
 
-	//Render items
 	if (!this->states.empty())
 		this->states.top()->render();
 

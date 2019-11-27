@@ -4,7 +4,6 @@
 
 State::State()
 {
-	quit = false;
 }
 
 

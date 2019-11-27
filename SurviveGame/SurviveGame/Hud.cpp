@@ -6,7 +6,6 @@
 Hud::Hud()
 {
 	fontInit();
-
 }
 
 
@@ -14,24 +13,41 @@ Hud::~Hud()
 {
 }
 
-void Hud::renderTexts(sf::RenderWindow * target)
+void Hud::renderTextsGui(sf::RenderWindow * target)
 {
 	 target->draw(this->ammo);
 	 target->draw(this->hp);
-	 target->draw(this->kill_counter);
 	 if (d_cd != 10)
 		 target->draw(this->dash_cd);
 
 }
 
-
-void Hud::updateText(int kill_counter, sf::View view)
+void Hud::renderTextsHud(sf::RenderWindow * target)
 {
-	//HP GUI
+	if(this->kc > 0)
+		target->draw(this->kill_counter);
+	if(this->cd > 0.2)
+		target->draw(this->countdown);
+}
+
+
+void Hud::updateText(int kill_counter, float countdown, sf::View view)
+{
+	//KILLCOUNTER
 	this->kill_counter.setString(std::to_string(kill_counter));
 	this->kill_counter.setFillColor(sf::Color::Red);
 	this->kill_counter.setCharacterSize(30);
-	this->kill_counter.setPosition(view.getCenter());
+	this->kill_counter.setPosition(view.getCenter().x - 600, view.getCenter().y - 330);
+
+	this->kc = kill_counter;
+
+	//COUNTDOWN
+	this->countdown.setString(std::to_string(static_cast<int>(countdown)));
+	this->countdown.setFillColor(sf::Color::Red);
+	this->countdown.setCharacterSize(50);
+	this->countdown.setPosition(view.getCenter().x, view.getCenter().y);
+
+	this->cd = static_cast<int>(countdown);
 }
 
 
@@ -59,6 +75,7 @@ void Hud::updateText(int ammo, int hp, float dash_cd, sf::Vector2f obj)
 	this->hp.setPosition(obj.x + 20, obj.y + 25);
 
 	//DASH_CD
+
 	this->dash_cd.setString(std::to_string(static_cast<int>(dash_cd)));
 	this->dash_cd.setFillColor(sf::Color::Blue);
 	this->dash_cd.setCharacterSize(15);
@@ -70,7 +87,11 @@ void Hud::updateText(int ammo, int hp, float dash_cd, sf::Vector2f obj)
 void Hud::fontInit()
 {
 	font.loadFromFile("Sources/04B_30__.ttf");
+
 		ammo.setFont(font);
 		hp.setFont(font);
 		dash_cd.setFont(font);
+
+		kill_counter.setFont(font);
+		countdown.setFont(font);
 }

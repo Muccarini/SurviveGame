@@ -141,7 +141,7 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
-      <Filter>Map</Filter>
+      <Filter>Personaggi\Giocatore</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

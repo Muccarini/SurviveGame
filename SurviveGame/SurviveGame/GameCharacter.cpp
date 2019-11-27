@@ -13,7 +13,7 @@ GameCharacter::~GameCharacter()
 
 void GameCharacter::render(sf::RenderWindow * target)
 {
-	gui.renderTexts(target);
+	gui.renderTextsGui(target);
 	target->draw(_sprite);
 }
 

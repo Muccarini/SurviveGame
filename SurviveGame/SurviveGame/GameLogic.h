@@ -8,13 +8,11 @@
 #include "Bullet.h"
 #include <vector>
 
-
-
 class GameLogic :
 	public State
 {
 public:
-	explicit GameLogic();
+    GameLogic();
 	virtual ~GameLogic();
 
 
@@ -22,6 +20,7 @@ private:
 	void update(sf::Time deltaTime);
 	void render();
 
+	void updateHud();
 	void updateEnemies(sf::Time deltaTime);
 	void updatePlayer(sf::Time deltaTime);
 	void updateBullets(sf::Time deltaTime);
@@ -34,29 +33,29 @@ private:
 	void textureInit();
 	void gameViewInit();
 	void enemiesInit();
+	void varInit();
 
-
-	std::vector<sf::FloatRect> walls_collision;
-
-	sf::View game_view;
-	Hud hud;
-	int kill_counter;
-
-	float game_view_speed;
-
-	TileMap tile_map;
+	void newRound();
 
 	TextureHolder _textures;
-	std::vector<std::shared_ptr<Enemy>> enemies;
-	Player player;
+	TileMap tile_map;
+	sf::View game_view;
+	Hud hud;
 
+	std::vector<sf::FloatRect> walls_collision;
+	std::vector<std::shared_ptr<Enemy>> enemies;
 	std::vector<std::shared_ptr<Bullet>> flying_bullets;
-	int counter_flying_obj;
+	Player player;
 
 	int max_enemies;
 	int enemies_alive;
+	int kill_counter;
 
-	sf::Clock time;
+	int counter_flying_obj;
+	bool loading_new_level;
+	sf::Time countdown;
+
+	float game_view_speed;
 
 
 };

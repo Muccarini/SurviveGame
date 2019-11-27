@@ -15,7 +15,7 @@ private:
 	unsigned int layers;
 	int tile_type;
 
-    std::vector< std::vector<Tile*> > map;
+    std::vector<std::vector<Tile*>> map;
 	sf::Texture tileset;
 
 	sf::RectangleShape wall;
@@ -32,6 +32,6 @@ public:
 
 	void loadFromFile(const std::string file_name);
 
-	void render(sf::RenderTarget& target);
+	void render(sf::RenderTarget * target);
 };
 

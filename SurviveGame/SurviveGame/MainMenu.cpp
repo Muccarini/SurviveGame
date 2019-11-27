@@ -37,6 +37,7 @@ void MainMenu::initBackground()
 
 void MainMenu::updateButtons()
 {
+	//NEWGAME
 	if (new_game.isHover(mouse_pos_view))
 	{
 		new_game.buttonAnimation();
@@ -50,6 +51,34 @@ void MainMenu::updateButtons()
 		this->states->top()->window = this->window;
 		this->states->top()->states = this->states;
 	}
+
+
+	//EXIT
+	if (exit.isHover(mouse_pos_view))
+	{
+		exit.buttonAnimation();
+	}
+	else
+		exit.setStandard();
+
+	if (exit.isActive(mouse_pos_view))
+	{
+		this->states->top()->endState();
+	}
+
+	//SETTINGS
+	if (settings.isHover(mouse_pos_view))
+	{
+		settings.buttonAnimation();
+	}
+	else
+		settings.setStandard();
+
+	if (settings.isActive(mouse_pos_view))
+	{
+		//OPEN STATE SETTINGS
+	}
+
 }
 
 void MainMenu::update(sf::Time deltaTime)

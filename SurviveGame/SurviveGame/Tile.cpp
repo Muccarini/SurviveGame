@@ -41,7 +41,6 @@ Tile::Tile(float x, float y, float gride_size_f, sf::Texture& txt, int t_type) :
 
 Tile::~Tile()
 {
-
 }
 
 
@@ -52,7 +51,7 @@ void Tile::update()
 
 
 
-void Tile::render(sf::RenderTarget & target)
+void Tile::render(sf::RenderTarget * target)
 {
-	target.draw(shape);
+	target->draw(shape);
 }

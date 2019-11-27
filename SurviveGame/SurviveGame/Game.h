@@ -13,8 +13,6 @@ public:
 	void run();
 
 private:
-	//void update();
-	//void updateDeltaTime();
 
 	void render();
 	void processEvents();

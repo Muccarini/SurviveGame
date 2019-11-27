@@ -8,7 +8,11 @@ TileMap::TileMap()
 	this->max_size.x = 20;
 	this->max_size.y = 20;
 
-	tileset.loadFromFile("Sources/tileSheet/tilesheet3.png");
+	if(!tileset.loadFromFile("Sources/tileSheet/tilesheet.png"))
+	{//THROW
+		throw std::runtime_error("il file errore");
+	}
+	tileset.loadFromFile("Sources/tileSheet/tilesheet.png");
 	
 	std::ifstream openfile("Sources/Mappa.txt");
 		//devo leggere il file e in base al numero trovato mettere un tile diverso 
@@ -79,7 +83,7 @@ void TileMap::loadFromFile(const std::string file_name)
 }
 
 
-void TileMap::render(sf::RenderTarget & target)
+void TileMap::render(sf::RenderTarget * target)
 {
 
 	for (auto &x : this->map)
