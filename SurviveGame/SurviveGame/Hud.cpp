@@ -18,10 +18,22 @@ void Hud::renderTexts(sf::RenderWindow * target)
 {
 	 target->draw(this->ammo);
 	 target->draw(this->hp);
+	 target->draw(this->kill_counter);
 	 if (d_cd != 10)
 		 target->draw(this->dash_cd);
 
 }
+
+
+void Hud::updateText(int kill_counter, sf::View view)
+{
+	//HP GUI
+	this->kill_counter.setString(std::to_string(kill_counter));
+	this->kill_counter.setFillColor(sf::Color::Red);
+	this->kill_counter.setCharacterSize(30);
+	this->kill_counter.setPosition(view.getCenter());
+}
+
 
 void Hud::updateText(int hp, sf::Vector2f obj)
 {

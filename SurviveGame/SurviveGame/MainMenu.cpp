@@ -27,7 +27,6 @@ void MainMenu::initButtons()
 
 	exit.setText("Sources/edunline.ttf", "Exit", sf::Color::Black, 70.f, sf::Vector2f(900.f, 600.f));
 	exit.setBox(sf::Vector2f(135.f, 50.f), sf::Color::Magenta, 3.f, sf::Color::Transparent, sf::Vector2f(900.f, 620.f));
-
 }
 
 void MainMenu::initBackground()
@@ -55,6 +54,7 @@ void MainMenu::updateButtons()
 
 void MainMenu::update(sf::Time deltaTime)
 {
+	window->setView(window->getDefaultView());
 	updateMousePos();
 	updateButtons();
 	render();

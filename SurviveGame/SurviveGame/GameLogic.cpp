@@ -3,17 +3,19 @@
 
 GameLogic::GameLogic() : game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f))
 {
-	textureInit(); //TODO CAMBIARE TEXTURE A BULLET
+	textureInit();  //TODO CAMBIARE TEXTURE A BULLET
 	enemiesInit();
 	gameViewInit();
 }
 
 GameLogic::~GameLogic()
-{
+{ 
 }
 
 void GameLogic::update(sf::Time deltaTime)
 {
+	hud.updateText(kill_counter, game_view);
+
 	updateMousePos();
 
 	updatePlayer(deltaTime);
@@ -27,6 +29,8 @@ void GameLogic::update(sf::Time deltaTime)
 void GameLogic::render()
 {
 	tile_map.render(*window);
+
+	window->draw(hud.kill_counter);
 
 	renderEnemies();
 	renderPlayer();
@@ -50,6 +54,7 @@ void GameLogic::updateEnemies(sf::Time deltaTime)
 		{
 			enemies.erase(enemies.begin() + i);
 			enemies_alive--;
+			kill_counter++;
 		}
 	}
 }
@@ -59,7 +64,7 @@ void GameLogic::updatePlayer(sf::Time deltaTime)
 	player.update(deltaTime, mouse_pos_view, tile_map.getWalls(), enemies);
 	if ((player.getHp() <= 0))
 	{
-		//window.close();  endstate();
+		endState();
 	}
 }
 
@@ -74,6 +79,7 @@ void GameLogic::updateBullets(sf::Time deltaTime)
 		flying_bullets.push_back(std::move(bullet));
 		counter_flying_obj++;
 	}
+
 	for (int i = 0; i < flying_bullets.size(); i++)
 	{
 		if (!(flying_bullets[i])->update(deltaTime, tile_map.getWalls(), enemies))
@@ -122,14 +128,15 @@ void GameLogic::textureInit()
 
 void GameLogic::gameViewInit()
 {
-	game_view.setCenter(player.getPosition());
-	this->game_view_speed = 5.f;
+	this->game_view.setCenter(player.getPosition());
+	this->game_view_speed = 4.5;
 }
 
 void GameLogic::enemiesInit()
 {
 	max_enemies = 5;
 	enemies_alive = 0;
+	kill_counter = 0;
 }
 
 

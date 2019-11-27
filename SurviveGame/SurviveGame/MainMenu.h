@@ -15,7 +15,6 @@ public:
 	void render();
 
 private:
-
 	void initMainMenu();
 	void initButtons();
 	void initBackground();

@@ -149,7 +149,7 @@ bool Player::isShooting(sf::Time deltaTime)
 
 void Player::update(sf::Time deltaTime, sf::Vector2f mousePosView, std::vector<sf::FloatRect> collision, std::vector<std::shared_ptr<Enemy>> enemies)
 {      
-		move(deltaTime);
+	    move(deltaTime);
 		rotate(mousePosView);
 		reload(deltaTime);
 

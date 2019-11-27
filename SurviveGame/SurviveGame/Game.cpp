@@ -4,7 +4,7 @@
 
 Game::Game()
 {
-	this->window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Survive.io");
+	this->window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Survive.io", sf::Style::Fullscreen);
 	states.push(new MainMenu());
 	states.top()->window = this->window;
 	states.top()->states = &this->states;
@@ -43,6 +43,8 @@ void Game::run()
 					}
 				}
 			}
+			else
+				window->close();
 		}
 		render();
 	}
@@ -68,7 +70,7 @@ void Game::processEvents()
 		{
 		case sf::Event::KeyPressed:
 			if (event.key.code == sf::Keyboard::Escape)
-				window->close();
+				this->states.top()->endState();
 			break;
 		case sf::Event::Closed:
 			window->close();

@@ -17,10 +17,9 @@ public:
 	explicit GameLogic();
 	virtual ~GameLogic();
 
-	void update(sf::Time deltaTime);
 
 private:
-
+	void update(sf::Time deltaTime);
 	void render();
 
 	void updateEnemies(sf::Time deltaTime);
@@ -40,7 +39,11 @@ private:
 	std::vector<sf::FloatRect> walls_collision;
 
 	sf::View game_view;
+	Hud hud;
+	int kill_counter;
+
 	float game_view_speed;
+
 	TileMap tile_map;
 
 	TextureHolder _textures;

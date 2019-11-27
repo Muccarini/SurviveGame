@@ -82,7 +82,7 @@
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Button.cpp">
-      <Filter>Map</Filter>
+      <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -122,9 +122,6 @@
     <ClInclude Include="TileMap.h">
       <Filter>Map</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>Personaggi\Giocatore</Filter>
-    </ClInclude>
     <ClInclude Include="GameLogic.h">
       <Filter>Game</Filter>
     </ClInclude>
@@ -142,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
