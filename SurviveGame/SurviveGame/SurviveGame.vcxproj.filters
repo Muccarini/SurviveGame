@@ -84,6 +84,12 @@
     <ClCompile Include="Button.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="RoundManager.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameCharacter.h">
@@ -142,6 +148,12 @@
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>Personaggi\Giocatore</Filter>
+    </ClInclude>
+    <ClInclude Include="RoundManager.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

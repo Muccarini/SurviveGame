@@ -31,7 +31,7 @@ void Enemy::rotate(sf::Vector2f vec_dir)
 
 void Enemy::update(sf::Time deltaTime, GameCharacter * target, std::vector<sf::FloatRect> collision, std::vector<std::shared_ptr<Enemy>> enemies)
 {
-	//MOVE DA CAMBIARE CI STIAMO LAVORANDO
+	//MOVE
 	float dX = target->getPosition().x - this->_sprite.getPosition().x;
 	float dY = target->getPosition().y - this->_sprite.getPosition().y;
 

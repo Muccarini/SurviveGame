@@ -7,9 +7,9 @@ public:
 	Hud();
 	~Hud();
 
-	void updateText(int hp, sf::Vector2f obj);                          //ENEMY
-	void updateText(int ammo, int hp, float dash_cd, sf::Vector2f obj); //PLAYER
-	void updateText(int kill_counter, float countdown, sf::View view);  //VIEW
+	void updateText(const int hp, const  sf::Vector2f obj);                          //ENEMY
+	void updateText(const int ammo, const int hp, const float dash_cd, const sf::Vector2f obj); //PLAYER
+	void updateText(const int kill_counter, const float countdown, const int round, const sf::View view);  //VIEW
 
 	void renderTextsGui(sf::RenderWindow * target);
 	void renderTextsHud(sf::RenderWindow * target);
@@ -22,10 +22,12 @@ private:
 	sf::Text dash_cd;
 	int d_cd;
 
-	sf::Text kill_counter;
+	sf::Text kills;
 	int kc;
 	sf::Text countdown;
 	int cd;
+
+	sf::Text round;
 
 	sf::Font font;
 	sf::Vector2f offset_view;

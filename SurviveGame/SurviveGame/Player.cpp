@@ -39,13 +39,13 @@ void Player::initSprite()
 
 void Player::initHitBox()
 {
-	hit_box.setSize(sf::Vector2f(207.f, 207.f));     //SIZE
+	hit_box.setSize(sf::Vector2f(100.f, 100.f));     //SIZE
 	hit_box.setOutlineColor(sf::Color::Transparent); //COLOR
 	hit_box.setOutlineThickness(3.f);
 	hit_box.setFillColor(sf::Color::Transparent);
-	hit_box.setScale(0.15, 0.15);                    //SCALE
+	hit_box.setScale(_sprite.getScale());                    //SCALE
 	hit_box.setPosition(getPosition());              //POS
-	hit_box.setOrigin(_sprite.getOrigin());          //ORIGIN
+	hit_box.setOrigin(45, 60);          //ORIGIN
 }
 
 void Player::move(sf::Time deltaTime)

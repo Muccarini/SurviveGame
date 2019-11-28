@@ -4,7 +4,7 @@
 
 Game::Game()
 {
-	this->window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Survive.io", sf::Style::Fullscreen);
+	this->window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Survive.io"/*, sf::Style::Fullscreen*/);
 	states.push(new MainMenu());
 	states.top()->window = this->window;
 	states.top()->states = &this->states;

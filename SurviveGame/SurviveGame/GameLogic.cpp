@@ -6,7 +6,6 @@ GameLogic::GameLogic() : game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 
 	textureInit();  //TODO CAMBIARE TEXTURE A BULLET
 	enemiesInit();
 	gameViewInit();
-	varInit();
 }
 
 GameLogic::~GameLogic()
@@ -31,6 +30,7 @@ void GameLogic::render()
 	tile_map.render(window);
 
 	renderEnemies();
+	renderBoss();
 	renderPlayer();
 	renderBullet();
 
@@ -39,24 +39,27 @@ void GameLogic::render()
 
 void GameLogic::updateHud()
 {
-	hud.updateText(kill_counter, countdown.asSeconds(), game_view);
+	hud.updateText(kill_counter, round.getCountdown().asSeconds(), round.getCounter(), game_view);
 }
 
-//TODO DA ABBELLIRE KILL COUNTER E COUNTDOWN
 void GameLogic::updateEnemies(sf::Time deltaTime)
 {
-	if (kill_counter == 20) //RESET ROUND
+	if (kill_counter == 1) //RESET ROUND
 	{
 		for (int i = 0; i < enemies.size(); i++)
 		{
-			enemies.erase(enemies.begin() + i);
+			enemies.erase(enemies.begin(), enemies.end());
 		}
+		enemies_alive = 0,
 		kill_counter = 0;
-		loading_new_level = true;
-		countdown = sf::seconds(6.f);
+		round.reset();
+		round.increase();
+
+		if (round.getCounter() % 3 == 0)
+			round.setBossRound(true);
 	}
 
-	if (!loading_new_level)
+	if (!round.isLoading() && !round.isBossRound())
 	{
 		while (enemies_alive != max_enemies)
 		{
@@ -64,7 +67,6 @@ void GameLogic::updateEnemies(sf::Time deltaTime)
 			enemies.push_back(enemy);
 			enemies_alive++;
 		}
-
 		for (int i = 0; i < enemies.size(); i++)
 		{
 			enemies[i]->update(deltaTime, &player, tile_map.getWalls(), enemies);
@@ -73,16 +75,17 @@ void GameLogic::updateEnemies(sf::Time deltaTime)
 			{
 				enemies.erase(enemies.begin() + i);
 				enemies_alive--;
-
 				kill_counter++;
 			}
 		}
-	} 
+	}
 	else
-	{ //COUNTDOWN END
-		countdown -= deltaTime;
-		if (countdown <= sf::seconds(1.f))
-			loading_new_level = false;
+	{
+		round.startCountdown(deltaTime);
+		if(!round.isLoading() && round.isBossRound())
+		{
+			updateBoss(deltaTime);
+		}
 	}
 }
 
@@ -97,6 +100,7 @@ void GameLogic::updatePlayer(sf::Time deltaTime)
 
 void GameLogic::updateBullets(sf::Time deltaTime)
 {
+	//E' POSSIBILE METTERLO DENTRO PLAYER MA NON PUO ESTENDERE GAMECHARACTER BISOGNA FARE UN CLASSE BULLET APPARTE
 	if (player.isShooting(deltaTime) && player.getAmmo())
 	{
 		std::unique_ptr<Bullet>bullet(new Bullet(_textures.get(Textures::Proiettile)));
@@ -111,6 +115,16 @@ void GameLogic::updateBullets(sf::Time deltaTime)
 	{
 		if (!(flying_bullets[i])->update(deltaTime, tile_map.getWalls(), enemies))
 			flying_bullets.erase(flying_bullets.begin() + i);
+	}
+}
+
+void GameLogic::updateBoss(sf::Time deltaTime)
+{
+	boss.update(deltaTime, &player, tile_map.getWalls());
+	if ((boss.getHp() <= 0))
+	{
+		//BOSS MORTO
+		round.setBossRound(false);
 	}
 }
 
@@ -146,10 +160,16 @@ void GameLogic::renderEnemies()
 	}
 }
 
+void GameLogic::renderBoss()
+{
+	boss.render(window);
+}
+
 void GameLogic::textureInit()
 {
 	_textures.load(Textures::Enemy, "Sources/zombie1.png");
 	_textures.load(Textures::Proiettile, "Sources/bullets/bullet1.png"); //TODO CAMBIARE IMMAGINE TROPPO DETTAGLIATA PER UN OGGETTO COSI' PICCOLO
+	_textures.load(Textures::Boss, "Sources/boss/boss.png");
 }
 
 void GameLogic::gameViewInit()
@@ -162,18 +182,6 @@ void GameLogic::enemiesInit()
 {
 	max_enemies = 5;
 	enemies_alive = 0;
-	kill_counter = 0;
-}
-
-void GameLogic::varInit()
-{
-	countdown = sf::seconds(6.f);
-	loading_new_level = true;
-}
-
-void GameLogic::newRound()
-{
-	hud.updateText(kill_counter,countdown.asSeconds(), game_view);
 	kill_counter = 0;
 }
 

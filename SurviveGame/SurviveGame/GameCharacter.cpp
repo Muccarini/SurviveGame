@@ -15,6 +15,7 @@ void GameCharacter::render(sf::RenderWindow * target)
 {
 	gui.renderTextsGui(target);
 	target->draw(_sprite);
+	target->draw(hit_box);
 }
 
 sf::Vector2f GameCharacter::getPosition()

@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyStrategyMove.cpp" />
@@ -143,6 +144,7 @@
     <ClCompile Include="Player1.cpp" />
     <ClCompile Include="Player2.cpp" />
     <ClCompile Include="Player3.cpp" />
+    <ClCompile Include="RoundManager.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StrategyMove.cpp" />
     <ClCompile Include="TextureHolder.cpp" />
@@ -150,6 +152,7 @@
     <ClCompile Include="TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Boss.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyStrategyMove.h" />
@@ -163,6 +166,7 @@
     <ClInclude Include="Player1.h" />
     <ClInclude Include="Player2.h" />
     <ClInclude Include="Player3.h" />
+    <ClInclude Include="RoundManager.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StrategyMove.h" />
     <ClInclude Include="TextureHolder.h" />
