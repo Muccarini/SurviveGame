@@ -1,28 +1,29 @@
 #pragma once
-#include "GameCharacter.h"
+#include "Character.h"
 #include "EnemyStrategyMove.h"
 
 class Enemy :
-	public GameCharacter
+	public Character
 {
 public:
 	enum Type {Ranged, Melee, Boss};
 
 public:
-	Enemy(float x,float y, sf::Texture texture);
+	Enemy();
 	~Enemy();
 
-	void move(sf::Time deltaTime);
-	void rotate(sf::Vector2f vec_dir);
-
-	void update(sf::Time deltaTime, GameCharacter * target, std::vector<sf::FloatRect> collision, std::vector<std::shared_ptr<Enemy>> enemies);
-
 private:
+	void update(std::shared_ptr<EntityData> entitydata);
+
+	void updateMove(sf::Time deltaTime, const std::shared_ptr<Entity> target);
+	void updateRotate(const std::shared_ptr<Entity> target);
+
+	void collisionWalls(std::vector<sf::FloatRect> walls);
+	void collisionEnemies(std::vector<std::shared_ptr<Entity>> enemies);
+
 	void initSprite();
 	void initHitBox();
 
 	EnemyStrategyMove _m;
-	sf::Vector2f spawn_pos;
-	sf::Texture texture;
 };
 

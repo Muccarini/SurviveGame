@@ -3,11 +3,10 @@
 #include "State.h"
 #include "RoundManager.h"
 #include "Hud.h"
-#include "Player.h"
-#include "Enemy.h"
-#include "Boss.h"
 #include "TileMap.h"
 #include "Bullet.h"
+#include "PlayerT.h"
+#include "Enemy.h"
 #include <vector>
 
 class GameLogic :
@@ -23,17 +22,15 @@ private:
 	void render();
 
 	void updateHud();
-	void updateEnemies(sf::Time deltaTime);
-	void updatePlayer(sf::Time deltaTime);
-	void updateBullets(sf::Time deltaTime);
-	void updateBoss(sf::Time deltaTime);
+
+	void updateCharacter(sf::Time deltaTime);
+	void renderCharacter();
+
 	void updateGameView(sf::Time deltaTime);
 
-	void renderPlayer();
 	void renderBullet();
-	void renderEnemies();
-	void renderBoss();
 
+	void characterinit();
 	void textureInit();
 	void gameViewInit();
 	void enemiesInit();
@@ -44,11 +41,10 @@ private:
 	Hud hud;
 	RoundManager round;
 
-	std::vector<sf::FloatRect> walls_collision;
-	std::vector<std::shared_ptr<Enemy>> enemies;
 	std::vector<std::shared_ptr<Bullet>> flying_bullets;
-	Player player;
-	Boss boss;
+
+	std::vector<std::shared_ptr<Character>> entities;
+	std::shared_ptr<EntityData> entitydata;
 
 	int max_enemies;
 	int enemies_alive;
@@ -57,6 +53,5 @@ private:
 	int counter_flying_obj;
 
 	float game_view_speed;
-
 
 };

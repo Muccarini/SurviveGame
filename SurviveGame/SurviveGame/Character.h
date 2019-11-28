@@ -2,12 +2,12 @@
 #include "Entity.h"
 #include "Hud.h"
 
-class Characters :
+class Character :
 	public Entity
 {
 public:
-	Characters();
-	virtual ~Characters();
+	Character();
+	virtual ~Character();
 
 	int getHp();
 	int getMovSpeed();
@@ -21,6 +21,8 @@ protected:
 	sf::Time reload_cd;
 	sf::Time reload_clock;
 	sf::Time ratio;
+
+	sf::CircleShape range;
 
 	int hp;
 	int hp_max;

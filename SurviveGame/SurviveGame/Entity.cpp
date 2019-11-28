@@ -29,7 +29,13 @@ sf::Vector2f Entity::getPosition()
 		this->sprite.getPosition();
 }
 
-bool Entity::sat_test(const sf::FloatRect & rectSp1, const sf::FloatRect & rectSp2, sf::Vector2f * out_mtv)
+sf::RectangleShape Entity::getHitBox()
+{
+	return
+		this->hit_box;
+}
+
+bool Entity::sat_test(const sf::FloatRect &rectSp1, const sf::FloatRect &rectSp2, sf::Vector2f *out_mtv)
 {
 	float proj_x, proj_y, overlap_x, overlap_y;
 

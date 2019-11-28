@@ -165,10 +165,20 @@ void GameLogic::renderBoss()
 	boss.render(window);
 }
 
+void GameLogic::characterinit()
+{
+		entities.emplace_back(new PlayerT());
+		entities.begin()
+		for(int i = 0 ; i < max_enemies ; i++)
+		{
+			entities.emplace_back(new Enemy());
+		}
+}
+
 void GameLogic::textureInit()
 {
 	_textures.load(Textures::Enemy, "Sources/zombie1.png");
-	_textures.load(Textures::Proiettile, "Sources/bullets/bullet1.png"); //TODO CAMBIARE IMMAGINE TROPPO DETTAGLIATA PER UN OGGETTO COSI' PICCOLO
+	_textures.load(Textures::Proiettile, "Sources/bullets/bullet1.png"); 
 	_textures.load(Textures::Boss, "Sources/boss/boss.png");
 }
 

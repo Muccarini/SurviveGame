@@ -2,7 +2,7 @@
 #include <math.h>
 
 
-Enemy::Enemy(float x, float y, sf::Texture txt) : spawn_pos(x,y), texture(txt)
+Enemy::Enemy() 
 {
 	mov_speed = 150;
 	hp = 10;
@@ -16,74 +16,80 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::move(sf::Time deltaTime)
+void Enemy::updateMove(sf::Time deltaTime, const std::shared_ptr<Entity> target)
 {
-	//this->_m.move(deltaTime, this->_sprite, this->mov_speed);
-}
-
-void Enemy::rotate(sf::Vector2f vec_dir)
-{
-	const float PI = 3.14159265f;
-	float deg = atan2(vec_dir.y, vec_dir.x ) * 180.f / PI;
-
-	this->_sprite.setRotation(deg + 90.f);
-}
-
-void Enemy::update(sf::Time deltaTime, GameCharacter * target, std::vector<sf::FloatRect> collision, std::vector<std::shared_ptr<Enemy>> enemies)
-{
-	//MOVE
-	float dX = target->getPosition().x - this->_sprite.getPosition().x;
-	float dY = target->getPosition().y - this->_sprite.getPosition().y;
+	float dX = target->getPosition().x - this->sprite.getPosition().x;
+	float dY = target->getPosition().y - this->sprite.getPosition().y;
 
 	float lenght = sqrt(pow(dX, 2) + pow(dY, 2));
 
 	sf::Vector2f normVect(dX / lenght, dY / lenght);
 
-	this->_sprite.move(normVect * this->mov_speed * deltaTime.asSeconds());
+	this->sprite.move((normVect.x * this->mov_speed * deltaTime.asSeconds()), (normVect.y * this->mov_speed * deltaTime.asSeconds()));
 	hit_box.setPosition(getPosition());
-	
+
 	gui.updateText(hp, getPosition());
+}
 
-	//COLLISON SUI MURI
+void Enemy::updateRotate(const std::shared_ptr<Entity> target)
+{
+	float dX = target->getPosition().x - this->sprite.getPosition().x;
+	float dY = target->getPosition().y - this->sprite.getPosition().y;
+	const float PI = 3.14159265f;
+	float deg = atan2(dY, dX) * 180.f / PI;
 
-	for (int i = 0; i != collision.size(); i++)
+	this->sprite.setRotation(deg + 90.f);
+}
+
+void Enemy::collisionWalls(std::vector<sf::FloatRect> walls)
+{
+	for (int i = 0; i != walls.size(); i++)
 	{
-		if (sat_test(hit_box.getGlobalBounds(), collision[i], &out_mtv))
+		if (sat_test(hit_box.getGlobalBounds(), walls[i], &out_mtv))
 		{
-			_sprite.move(out_mtv);
+			sprite.move(out_mtv);
 		}
 	}
-	//COLLISION SUGLI ALTRI ZOMBIE
+}
 
+void Enemy::update(std::shared_ptr<EntityData> entitydata)
+{
+	updateMove(entitydata->deltaTime, entitydata->target);
+	updateRotate(entitydata->target);
+
+	collisionWalls(entitydata->walls);
+	collisionEnemies(entitydata->enemies);
+}
+
+void Enemy::collisionEnemies(std::vector<std::shared_ptr<Entity>> enemies)
+{
 	for (int i = 0; i != enemies.size(); i++)
 	{
-		if(enemies[i]->hit_box.getGlobalBounds() != hit_box.getGlobalBounds())
-			if (sat_test(hit_box.getGlobalBounds(), enemies[i]->hit_box.getGlobalBounds(), &out_mtv))
+		if (enemies[i]->getHitBox().getGlobalBounds() != this->hit_box.getGlobalBounds())
+			if (sat_test(hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds(), &out_mtv))
 			{
-				_sprite.move(out_mtv);
+				sprite.move(out_mtv);
 			}
 	}
-
-	rotate(normVect);
 }
 
 void Enemy::initSprite()
 {
-	_sprite.setTexture(texture);
-	_sprite.setScale(0.9f, 0.9f);
-	_sprite.setPosition(spawn_pos);
-	_sprite.setOrigin(+34, +34);
-	_sprite.setTextureRect(sf::IntRect(0, 0, 68, 68));
+	sprite.setTexture(texture);
+	sprite.setScale(0.9, 0.9);
+	sprite.setPosition(rand() % 400 + 500.f , rand() % 400);
+	sprite.setOrigin(+34.f, +34.f);
+	sprite.setTextureRect(sf::IntRect(0, 0, 68, 68));
 }
 
 void Enemy::initHitBox()
 {
-	hit_box.setSize(sf::Vector2f(70.f, 70.f));
-	hit_box.setOutlineColor(sf::Color::Transparent);
-	hit_box.setOutlineThickness(3.f);
-	hit_box.setFillColor(sf::Color::Transparent);
-	hit_box.setScale(_sprite.getScale());
-	hit_box.setPosition(getPosition());
-	hit_box.setOrigin(35, 35);
+	this->hit_box.setSize(sf::Vector2f(70.f, 70.f));
+	this->hit_box.setOutlineColor(sf::Color::Transparent);
+	this->hit_box.setOutlineThickness(3.f);
+	this->hit_box.setFillColor(sf::Color::Transparent);
+	this->hit_box.setScale(sprite.getScale());
+	this->hit_box.setPosition(getPosition());
+	this->hit_box.setOrigin(35, 35);
 }
 
