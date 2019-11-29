@@ -16,7 +16,7 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::updateMove(sf::Time deltaTime, const std::shared_ptr<Entity> target)
+void Enemy::updateMove(sf::Time deltaTime, const std::shared_ptr<Character> target)
 {
 	float dX = target->getPosition().x - this->sprite.getPosition().x;
 	float dY = target->getPosition().y - this->sprite.getPosition().y;
@@ -27,11 +27,9 @@ void Enemy::updateMove(sf::Time deltaTime, const std::shared_ptr<Entity> target)
 
 	this->sprite.move((normVect.x * this->mov_speed * deltaTime.asSeconds()), (normVect.y * this->mov_speed * deltaTime.asSeconds()));
 	hit_box.setPosition(getPosition());
-
-	gui.updateText(hp, getPosition());
 }
 
-void Enemy::updateRotate(const std::shared_ptr<Entity> target)
+void Enemy::updateRotate(const std::shared_ptr<Character> target)
 {
 	float dX = target->getPosition().x - this->sprite.getPosition().x;
 	float dY = target->getPosition().y - this->sprite.getPosition().y;
@@ -41,41 +39,25 @@ void Enemy::updateRotate(const std::shared_ptr<Entity> target)
 	this->sprite.setRotation(deg + 90.f);
 }
 
-void Enemy::collisionWalls(std::vector<sf::FloatRect> walls)
+void Enemy::updateHud()
 {
-	for (int i = 0; i != walls.size(); i++)
-	{
-		if (sat_test(hit_box.getGlobalBounds(), walls[i], &out_mtv))
-		{
-			sprite.move(out_mtv);
-		}
-	}
+	hud_character.updateText(hp, getPosition());
 }
 
 void Enemy::update(std::shared_ptr<EntityData> entitydata)
 {
 	updateMove(entitydata->deltaTime, entitydata->target);
 	updateRotate(entitydata->target);
+	updateHud();
 
 	collisionWalls(entitydata->walls);
-	collisionEnemies(entitydata->enemies);
+	collisionEnemies(*entitydata->enemies);
 }
 
-void Enemy::collisionEnemies(std::vector<std::shared_ptr<Entity>> enemies)
-{
-	for (int i = 0; i != enemies.size(); i++)
-	{
-		if (enemies[i]->getHitBox().getGlobalBounds() != this->hit_box.getGlobalBounds())
-			if (sat_test(hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds(), &out_mtv))
-			{
-				sprite.move(out_mtv);
-			}
-	}
-}
 
 void Enemy::initSprite()
 {
-	sprite.setTexture(texture);
+	sprite.setTexture(textures.get(Textures::Enemy));
 	sprite.setScale(0.9, 0.9);
 	sprite.setPosition(rand() % 400 + 500.f , rand() % 400);
 	sprite.setOrigin(+34.f, +34.f);

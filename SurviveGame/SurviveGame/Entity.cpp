@@ -5,11 +5,18 @@
 Entity::Entity()
 {
 	alive = false;
+	initTexture();
 }
 
 
 Entity::~Entity()
 {
+}
+
+void Entity::render(std::shared_ptr<sf::RenderWindow> target)
+{
+	target->draw(sprite);
+	target->draw(hit_box);
 }
 
 bool Entity::isAlive()
@@ -66,4 +73,12 @@ bool Entity::sat_test(const sf::FloatRect &rectSp1, const sf::FloatRect &rectSp2
 		}
 	}
 	return false;
+}
+
+void Entity::initTexture()
+{
+	textures.load(Textures::Enemy, "Sources/zombie1.png");
+	textures.load(Textures::Proiettile, "Sources/bullets/bullet1.png");
+	textures.load(Textures::Boss, "Sources/boss/boss.png");
+	textures.load(Textures::Personaggio, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
 }

@@ -1,7 +1,7 @@
 #pragma once
-#include "Player.h"
+#include "Playert.h"
 class Player3 : //DA CAMBIARE NOME IN ATTESA DEL TIPO DI PERSONAGGIO
-	public Player
+	public PlayerT
 {
 public:
 	Player3();

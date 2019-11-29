@@ -83,7 +83,7 @@ void TileMap::loadFromFile(const std::string file_name)
 }
 
 
-void TileMap::render(sf::RenderTarget * target)
+void TileMap::render(std::shared_ptr<sf::RenderTarget> target)
 {
 
 	for (auto &x : this->map)

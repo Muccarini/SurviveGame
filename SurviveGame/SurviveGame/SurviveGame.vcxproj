@@ -140,9 +140,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Hud.cpp" />
     <ClCompile Include="MainMenu.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="GameCharacter.cpp" />
     <ClCompile Include="Player1.cpp" />
     <ClCompile Include="Player2.cpp" />
     <ClCompile Include="Player3.cpp" />
@@ -166,8 +164,6 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Hud.h" />
     <ClInclude Include="MainMenu.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="GameCharacter.h" />
     <ClInclude Include="Player1.h" />
     <ClInclude Include="Player2.h" />
     <ClInclude Include="Player3.h" />

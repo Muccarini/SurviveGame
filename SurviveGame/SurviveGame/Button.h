@@ -13,7 +13,7 @@ public:
 
 	void setBox(const sf::Vector2f size, const sf::Color color, const float thickness, const sf::Color fill_color, const sf::Vector2f pos);
 
-	void draw(sf::RenderTarget * target);
+	void draw(std::shared_ptr<sf::RenderWindow> target);
 
 	bool isHover(const sf::Vector2f mouse_pos_view);
 	bool isActive(const sf::Vector2f mouse_pos_view);

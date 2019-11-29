@@ -5,8 +5,6 @@
 class Enemy :
 	public Character
 {
-public:
-	enum Type {Ranged, Melee, Boss};
 
 public:
 	Enemy();
@@ -15,11 +13,9 @@ public:
 private:
 	void update(std::shared_ptr<EntityData> entitydata);
 
-	void updateMove(sf::Time deltaTime, const std::shared_ptr<Entity> target);
-	void updateRotate(const std::shared_ptr<Entity> target);
-
-	void collisionWalls(std::vector<sf::FloatRect> walls);
-	void collisionEnemies(std::vector<std::shared_ptr<Entity>> enemies);
+	void updateMove(sf::Time deltaTime, const std::shared_ptr<Character> target);
+	void updateRotate(const std::shared_ptr<Character> target);
+	void updateHud();
 
 	void initSprite();
 	void initHitBox();

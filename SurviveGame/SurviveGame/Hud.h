@@ -7,12 +7,12 @@ public:
 	Hud();
 	~Hud();
 
-	void updateText(const int hp, const  sf::Vector2f obj);                          //ENEMY
-	void updateText(const int ammo, const int hp, const float dash_cd, const sf::Vector2f obj); //PLAYER
+	void updateText(const int hp, const  sf::Vector2f obj);                                                //ENEMY
+	void updateText(const int ammo, const int hp, const float dash_cd, const sf::Vector2f obj);            //PLAYER
 	void updateText(const int kill_counter, const float countdown, const int round, const sf::View view);  //VIEW
 
-	void renderTextsGui(sf::RenderWindow * target);
-	void renderTextsHud(sf::RenderWindow * target);
+	void renderTextsGui(std::shared_ptr<sf::RenderWindow> target);
+	void renderTextsHud(std::shared_ptr<sf::RenderWindow> target);
 
 private:
 	void fontInit();

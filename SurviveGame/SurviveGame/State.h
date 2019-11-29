@@ -15,7 +15,7 @@ public:
 	bool getQuit();
 
 	std::stack<State*>* states;
-	sf::RenderWindow* window;
+	std::shared_ptr<sf::RenderWindow> window;
 
 protected:
 	void updateMousePos();

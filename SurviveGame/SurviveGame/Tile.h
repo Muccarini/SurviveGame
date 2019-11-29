@@ -29,7 +29,7 @@ private:
 
 public:
 	void update();
-	void render(sf::RenderTarget *target);
+	void render(std::shared_ptr<sf::RenderTarget> target);
 
 };
 

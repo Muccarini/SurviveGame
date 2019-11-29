@@ -4,9 +4,9 @@
 #include "RoundManager.h"
 #include "Hud.h"
 #include "TileMap.h"
-#include "Bullet.h"
 #include "PlayerT.h"
 #include "Enemy.h"
+#include "TextureHolder.h"
 #include <vector>
 
 class GameLogic :
@@ -22,28 +22,29 @@ private:
 	void render();
 
 	void updateHud();
-
-	void updateCharacter(sf::Time deltaTime);
-	void renderCharacter();
-
+	void updatePlayer(const std::shared_ptr<EntityData> entitydata);
+	void updateEnemies(const std::shared_ptr<EntityData> entitydata);
 	void updateGameView(sf::Time deltaTime);
 
-	void renderBullet();
+	void renderEnemies();
+	void renderPlayer();
+	/*void renderBullet();*/
 
-	void characterinit();
-	void textureInit();
+	void entitiesInit();
 	void gameViewInit();
-	void enemiesInit();
+	void varInit();
 
-	TextureHolder _textures;
+	TextureHolder textures;
 	TileMap tile_map;
 	sf::View game_view;
 	Hud hud;
 	RoundManager round;
 
-	std::vector<std::shared_ptr<Bullet>> flying_bullets;
+	/*std::vector<std::shared_ptr<Bullet>> flying_bullets;*/
 
-	std::vector<std::shared_ptr<Character>> entities;
+    std::vector<std::shared_ptr<Character>> * enemies;
+	std::shared_ptr<Character> player;
+
 	std::shared_ptr<EntityData> entitydata;
 
 	int max_enemies;

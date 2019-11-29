@@ -17,7 +17,7 @@ private:
 	void render();
 	void processEvents();
 
-	sf::RenderWindow* window;
+	std::shared_ptr<sf::RenderWindow> window;
 	std::stack<State*> states;
 
 	sf::Clock dt_clock;

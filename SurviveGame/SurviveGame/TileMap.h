@@ -32,6 +32,6 @@ public:
 
 	void loadFromFile(const std::string file_name);
 
-	void render(sf::RenderTarget * target);
+	void render(std::shared_ptr<sf::RenderTarget> target);
 };
 

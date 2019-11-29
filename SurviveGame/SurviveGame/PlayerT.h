@@ -8,14 +8,17 @@ public:
 	PlayerT();
 	virtual ~PlayerT();
 
-private:
 	void update(std::shared_ptr<EntityData> entitydata);
+
+private:
 
 	void updateMove(sf::Time deltaTime);
 	void updateRotate(sf::Vector2f mousePosView);
 	void updateReload(sf::Time deltaTime);
 	void updateDash(sf::Vector2f dir, sf::Time deltaTime);
+	void updateHud();
 
+	void initVar();
 	void initSprite();
 	void initHitBox();
 

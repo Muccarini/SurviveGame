@@ -66,7 +66,7 @@ void Button::setStandard()
 }
 
 
-void Button::draw(sf::RenderTarget * target)
+void Button::draw(std::shared_ptr<sf::RenderWindow> target)
 {
 	target->draw(this->text);
 	//target->draw(this->box);

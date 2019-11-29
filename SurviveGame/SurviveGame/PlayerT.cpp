@@ -2,6 +2,9 @@
 
 PlayerT::PlayerT()
 {
+	initVar();
+	initSprite();
+	initHitBox();
 }
 
 
@@ -12,8 +15,12 @@ PlayerT::~PlayerT()
 void PlayerT::update(std::shared_ptr<EntityData> entitydata)
 {
 	updateMove(entitydata->deltaTime);
-	updateRotate(entitydata->mouse_pos_view);
+	updateRotate(*entitydata->mouse_pos_view);
 	updateReload(entitydata->deltaTime);
+	updateHud();
+
+	collisionWalls(entitydata->walls);
+	collisionEnemies(*entitydata->enemies);
 }
 
 void PlayerT::updateMove(sf::Time deltaTime)
@@ -48,7 +55,6 @@ void PlayerT::updateMove(sf::Time deltaTime)
 	updateDash(dir, deltaTime);
 
 	this->sprite.move((dir.x * this->mov_speed* deltaTime.asSeconds()) , dir.y * this->mov_speed* deltaTime.asSeconds());
-
 	hit_box.setPosition(getPosition());
 }
 
@@ -101,12 +107,24 @@ void PlayerT::updateDash(sf::Vector2f dir, sf::Time deltaTime)
 	}
 }
 
+void PlayerT::updateHud()
+{
+	hud_character.updateText(getAmmo(), getHp(), this->dash_cd, getPosition());
+}
+
+
+void PlayerT::initVar()
+{
+	this->mov_speed_max = 200;
+	this->mov_speed = this->mov_speed_max;
+}
+
 void PlayerT::initSprite()
 {
-	sprite.setTexture(texture);       //TEXTURE
-	sprite.setScale(0.3, 0.3);        //SCALE
-	sprite.setPosition(600.f, 600.f); //POS
-	sprite.setOrigin(92, 120);        //ORIGIN
+	sprite.setTexture(textures.get(Textures::Personaggio)); //TEXTURE
+	sprite.setScale(0.3, 0.3);                              //SCALE
+	sprite.setPosition(600.f, 600.f);                       //POS
+	sprite.setOrigin(92, 120);                              //ORIGIN
 }
 
 void PlayerT::initHitBox()
@@ -115,7 +133,7 @@ void PlayerT::initHitBox()
 	hit_box.setOutlineColor(sf::Color::Transparent); //COLOR
 	hit_box.setOutlineThickness(3.f);
 	hit_box.setFillColor(sf::Color::Transparent);
-	hit_box.setScale(sprite.getScale());            //SCALE
+	hit_box.setScale(sprite.getScale());             //SCALE
 	hit_box.setPosition(getPosition());              //POS
 	hit_box.setOrigin(45, 60);                       //ORIGIN
 }

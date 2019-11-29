@@ -13,7 +13,7 @@ Hud::~Hud()
 {
 }
 
-void Hud::renderTextsGui(sf::RenderWindow * target)
+void Hud::renderTextsGui(std::shared_ptr<sf::RenderWindow> target)
 {
 	 target->draw(this->ammo);
 	 target->draw(this->hp);
@@ -22,10 +22,9 @@ void Hud::renderTextsGui(sf::RenderWindow * target)
 
 }
 
-void Hud::renderTextsHud(sf::RenderWindow * target)
+void Hud::renderTextsHud(std::shared_ptr<sf::RenderWindow> target)
 {
 	target->draw(round);
-
 	if(this->kc > 0)
 		target->draw(this->kills);
 	if(this->cd > 0.2)

@@ -22,9 +22,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Game\idea">
-      <UniqueIdentifier>{f3deb318-c617-41d3-b522-8fe124b57697}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TileMap.cpp">
@@ -36,17 +33,8 @@
     <ClCompile Include="TileMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameCharacter.cpp">
-      <Filter>Personaggi</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Personaggi\Nemici</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyStrategyMove.cpp">
       <Filter>Personaggi\Nemici</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Personaggi\Giocatore</Filter>
     </ClCompile>
     <ClCompile Include="Player1.cpp">
       <Filter>Personaggi\Giocatore</Filter>
@@ -84,9 +72,6 @@
     <ClCompile Include="Game.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Game\idea</Filter>
-    </ClCompile>
     <ClCompile Include="Boss.cpp">
       <Filter>Personaggi\Nemici</Filter>
     </ClCompile>
@@ -96,25 +81,22 @@
     <ClCompile Include="Button.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="Character.cpp">
-      <Filter>Game\idea</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerT.cpp">
-      <Filter>Game\idea</Filter>
+      <Filter>Personaggi\Giocatore</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Personaggi\Nemici</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Personaggi</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Personaggi</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameCharacter.h">
-      <Filter>Personaggi</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Personaggi\Nemici</Filter>
-    </ClInclude>
     <ClInclude Include="EnemyStrategyMove.h">
       <Filter>Personaggi\Nemici</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Personaggi\Giocatore</Filter>
     </ClInclude>
     <ClInclude Include="Player1.h">
       <Filter>Personaggi\Giocatore</Filter>
@@ -158,9 +140,6 @@
     <ClInclude Include="Bullet.h">
       <Filter>Personaggi\Giocatore</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Game\idea</Filter>
-    </ClInclude>
     <ClInclude Include="Boss.h">
       <Filter>Personaggi\Nemici</Filter>
     </ClInclude>
@@ -170,11 +149,17 @@
     <ClInclude Include="Button.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="Character.h">
-      <Filter>Game\idea</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerT.h">
-      <Filter>Game\idea</Filter>
+      <Filter>Personaggi\Giocatore</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Personaggi\Nemici</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Personaggi</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Personaggi</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

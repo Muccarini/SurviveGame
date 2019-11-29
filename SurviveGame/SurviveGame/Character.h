@@ -2,6 +2,16 @@
 #include "Entity.h"
 #include "Hud.h"
 
+namespace PlayerType
+{
+	enum Type { Type1, Type2, Type3 };
+}
+
+namespace EnemyType
+{
+	enum Type { Melee, Ranged };
+}
+
 class Character :
 	public Entity
 {
@@ -15,8 +25,12 @@ public:
 	bool isReloading();
 	bool isShooting();
 
+	void collisionWalls(std::vector<sf::FloatRect> walls);
+	void collisionEnemies(std::vector<std::shared_ptr<Character>> enemies);
+
 protected:
-	Hud gui;
+
+	Hud hud_character;
 
 	sf::Time reload_cd;
 	sf::Time reload_clock;
