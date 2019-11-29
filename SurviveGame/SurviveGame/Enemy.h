@@ -17,6 +17,7 @@ private:
 	void updateRotate(const std::shared_ptr<Character> target);
 	void updateHud();
 
+	void initVar();
 	void initSprite();
 	void initHitBox();
 

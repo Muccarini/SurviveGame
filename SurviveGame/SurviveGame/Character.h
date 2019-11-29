@@ -45,7 +45,7 @@ protected:
 	int mov_speed_max;
 
 	int ammo;
-	int max_ammo;
+	int ammo_max;
 
 	bool reloading;
 	bool shooting;

@@ -4,9 +4,6 @@
 
 Enemy::Enemy() 
 {
-	mov_speed = 150;
-	hp = 10;
-
 	initSprite();
 	initHitBox();
 }
@@ -54,6 +51,12 @@ void Enemy::update(std::shared_ptr<EntityData> entitydata)
 	collisionEnemies(*entitydata->enemies);
 }
 
+
+void Enemy::initVar()
+{
+	mov_speed = 150;
+	hp = 10;
+}
 
 void Enemy::initSprite()
 {

@@ -72,7 +72,7 @@ void PlayerT::updateReload(sf::Time deltaTime)
 {
 	if (!reloading)
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) && ammo != max_ammo)
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) && ammo != ammo_max)
 			reloading = true;
 	}
 	if (ammo == 0 || reloading)
@@ -80,7 +80,7 @@ void PlayerT::updateReload(sf::Time deltaTime)
 		reload_clock -= deltaTime;
 		if (reload_clock < sf::seconds(0.f))
 		{
-			ammo = max_ammo;
+			ammo = ammo_max;
 			reload_clock = sf::seconds(1.f);
 			reloading = false;
 		}
@@ -115,8 +115,22 @@ void PlayerT::updateHud()
 
 void PlayerT::initVar()
 {
-	this->mov_speed_max = 200;
-	this->mov_speed = this->mov_speed_max;
+	mov_speed_max = 200;
+	mov_speed = mov_speed_max;
+
+	hp = 100;
+
+	reload_cd = sf::seconds(1.f);
+	reload_clock = reload_cd;
+
+	ammo_max = 200;
+	ammo = ammo_max;
+
+	ratio = sf::seconds(1.f / 20.f);
+
+	this->dash_speed = 1000;
+	this->dash_cd = 10.f;
+	this->is_dashing = false;
 }
 
 void PlayerT::initSprite()
