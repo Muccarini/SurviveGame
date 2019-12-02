@@ -5,7 +5,6 @@ PlayerT::PlayerT()
 	initVar();
 	initSprite();
 	initHitBox();
-	initBullets();
 }
 
 
@@ -64,14 +63,18 @@ void PlayerT::updateBullets(std::shared_ptr<EntityData> entitydata)
 {
 	if (isShooting(entitydata->deltaTime) && getAmmo())
 	{
+		std::unique_ptr<Bullet>bullet(new Bullet());
 		ammo--;
+
+		bullet->setDir(entitydata->target, *entitydata->mouse_pos_view);
+		bullets.emplace_back(std::move(bullet));
 		bullet_counter++;
 	}
 
-	for (int i = 0; i < bullet_counter; i++)
+	for (int i = 0; i < bullets.size(); i++)
 	{
 		bullets[i]->update(entitydata);
-		if (bullets[i]->isCollideEnemy() || bullets[i]->isCollideWall())
+		if(bullets[i]->isCollideEnemy() || bullets[i]->isCollideWall())
 			bullets.erase(bullets.begin() + i);
 	}
 }
@@ -149,7 +152,7 @@ void PlayerT::initVar()
 	reload_cd = sf::seconds(1.f);
 	reload_clock = reload_cd;
 
-	ammo_max = 5;
+	ammo_max = 200;
 	ammo = ammo_max;
 	bullet_counter = 0;
 
@@ -177,14 +180,6 @@ void PlayerT::initHitBox()
 	hit_box.setScale(sprite.getScale());             //SCALE
 	hit_box.setPosition(getPosition());              //POS
 	hit_box.setOrigin(45, 60);                       //ORIGIN
-}
-
-void PlayerT::initBullets()
-{
-	for (int i = 0; i < this->ammo_max; i++)
-	{
-		this->bullets.emplace_back(new Bullet());
-	}
 }
 
 void PlayerT::collisionWalls(std::vector<sf::FloatRect> walls)

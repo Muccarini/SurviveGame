@@ -16,7 +16,8 @@ Bullet::~Bullet()
 
 void Bullet::update(std::shared_ptr<EntityData> entitydata)
 {
-	setDir(entitydata->target, *entitydata->mouse_pos_view);
+	collisionEnemies(*entitydata->enemies);
+	collisionWalls(entitydata->walls);
 
 	this->sprite.move(this->dir.x * this->mov_speed * entitydata->deltaTime.asSeconds(), this->dir.y * this->mov_speed * entitydata->deltaTime.asSeconds());
 	hit_box.setPosition(getPosition());

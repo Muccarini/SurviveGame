@@ -10,11 +10,11 @@ public:
 	virtual ~Bullet();
 
 	void update(std::shared_ptr<EntityData> entitydata);
+	void setDir(std::shared_ptr<Character> owner, sf::Vector2f target);
 
 private:
 
 	void rotate(sf::Vector2f vec_dir);
-	void setDir(std::shared_ptr<Character> owner, sf::Vector2f target);
 
 	void initSprite();
 	void initHitBox();
@@ -24,7 +24,5 @@ private:
 
 	sf::Vector2f player_pos;
 	sf::Vector2f dir;
-
-	sf::Vector2f offset;
 };
 

@@ -50,7 +50,7 @@ void GameLogic::updateHud()
 
 void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
 {
-	if (kill_counter == 1) //RESET ROUND
+	if (kill_counter == 5) //RESET ROUND
 	{
 		for (int i = 0; i < enemies->size(); i++)
 		{
