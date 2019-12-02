@@ -71,7 +71,6 @@ void Bullet::collisionWalls(std::vector<sf::FloatRect> walls)
 			collideWall = true;
 		}
 	}
-	collideWall = false;
 }
 
 void Bullet::collisionEnemies(const std::vector<std::shared_ptr<Character>> enemies)
@@ -84,7 +83,6 @@ void Bullet::collisionEnemies(const std::vector<std::shared_ptr<Character>> enem
 			collideEnemy = true;
 		}
 	}
-	collideEnemy = false;
 }
 
 

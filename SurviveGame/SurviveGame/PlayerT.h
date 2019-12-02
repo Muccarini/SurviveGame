@@ -23,7 +23,6 @@ private:
 	void initVar();
 	void initSprite();
 	void initHitBox();
-	void initBullets();
 
 	void collisionWalls(std::vector<sf::FloatRect> walls);
 	void collisionEnemies(std::vector<std::shared_ptr<Character>> enemies);

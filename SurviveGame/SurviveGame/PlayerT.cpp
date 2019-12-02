@@ -105,7 +105,6 @@ void PlayerT::updateReload(sf::Time deltaTime)
 			ammo = ammo_max;
 			reload_clock = sf::seconds(1.f);
 			reloading = false;
-			bullet_counter = 0;
 		}
 	}
 }
@@ -137,8 +136,10 @@ void PlayerT::updateHud()
 
 void PlayerT::renderBullets(std::shared_ptr<sf::RenderWindow> target)
 {
-	for (int i = 0; i < bullet_counter; i++)
-		bullets[i]->render(target);
+	for (auto i = bullets.begin(); i != bullets.end(); i++)
+	{
+		(*i)->render(target);
+	}
 }
 
 
