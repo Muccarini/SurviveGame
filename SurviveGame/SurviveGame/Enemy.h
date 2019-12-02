@@ -12,6 +12,7 @@ public:
 
 private:
 	void update(std::shared_ptr<EntityData> entitydata);
+	void renderBullets(std::shared_ptr<sf::RenderWindow> target);
 
 	void updateMove(sf::Time deltaTime, const std::shared_ptr<Character> target);
 	void updateRotate(const std::shared_ptr<Character> target);
@@ -23,6 +24,8 @@ private:
 
 	void collisionWalls(std::vector<sf::FloatRect> walls);
 	void collisionEnemies(std::vector<std::shared_ptr<Character>> enemies);
+
+	void takeDamage(/*tipo di danno*/);
 
 	EnemyStrategyMove _m;
 };

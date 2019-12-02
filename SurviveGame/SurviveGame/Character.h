@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include "Hud.h"
+#include "Bullet.h"
 
 namespace PlayerType
 {
@@ -20,13 +21,15 @@ public:
 	virtual ~Character();
 
 	void renderHud(std::shared_ptr<sf::RenderWindow> target);
+	virtual void renderBullets(std::shared_ptr<sf::RenderWindow> target) = 0;
+
+	virtual void takeDamage() = 0;
 
 	int getHp();
 	int getMovSpeed();
 	int getAmmo();
 	bool isReloading();
 	bool isShooting(sf::Time deltaTime);
-
 protected:
 
 	Hud hud;

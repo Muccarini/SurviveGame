@@ -29,6 +29,9 @@ public:
 	bool isAlive();
 	void setAlive(bool boolean);
 
+	bool isCollideWall();
+	bool isCollideEnemy();
+
 	sf::Vector2f getPosition();
 	sf::RectangleShape getHitBox();
 
@@ -42,6 +45,9 @@ protected:
 	sf::Vector2f out_mtv;
 
 	bool alive;
+
+	bool collideWall;
+	bool collideEnemy;
 
 	int mov_speed;
 	int mov_speed_max;

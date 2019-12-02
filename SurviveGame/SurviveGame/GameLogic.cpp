@@ -125,6 +125,7 @@ void GameLogic::renderPlayer()
 {
 	player->render(window);
 	player->renderHud(window);
+	player->renderBullets(window);
 }
 
 //void GameLogic::renderBullet()

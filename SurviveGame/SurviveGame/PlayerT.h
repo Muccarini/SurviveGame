@@ -1,6 +1,5 @@
 #pragma once
 #include "Character.h"
-#include "Bullet.h"
 
 class PlayerT :
 	public Character
@@ -10,6 +9,7 @@ public:
 	virtual ~PlayerT();
 
 	void update(std::shared_ptr<EntityData> entitydata);
+	void renderBullets(std::shared_ptr<sf::RenderWindow> target);
 
 private:
 
@@ -29,6 +29,9 @@ private:
 	void collisionEnemies(std::vector<std::shared_ptr<Character>> enemies);
 
 	std::vector<std::shared_ptr<Bullet>> bullets;
+	int bullet_counter;
+
+	void takeDamage();
 
 	float dash_speed;
 	float dash_cd;

@@ -53,6 +53,10 @@ void Enemy::update(std::shared_ptr<EntityData> entitydata)
 	collisionEnemies(*entitydata->enemies);
 }
 
+void Enemy::renderBullets(std::shared_ptr<sf::RenderWindow> target)
+{
+}
+
 
 void Enemy::initVar()
 {
@@ -101,5 +105,10 @@ void Enemy::collisionEnemies(std::vector<std::shared_ptr<Character>> enemies)
 				sprite.move(out_mtv);
 			}
 	}
+}
+
+void Enemy::takeDamage()
+{// a seconda del tipo di proiettile da cui viene colpito take dmg
+	this->hp--;
 }
 

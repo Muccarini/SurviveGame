@@ -4,7 +4,9 @@
 
 Entity::Entity()
 {
-	alive = false;
+	this->alive = false;
+	this->collideEnemy = false;
+	this->collideWall = false;
 	initTexture();
 }
 
@@ -28,6 +30,18 @@ bool Entity::isAlive()
 void Entity::setAlive(const bool boolean)
 {
 	this->alive = boolean;
+}
+
+bool Entity::isCollideWall()
+{
+	return
+		this->collideWall;
+}
+
+bool Entity::isCollideEnemy()
+{
+	return
+		this->collideEnemy;
 }
 
 sf::Vector2f Entity::getPosition()

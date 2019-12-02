@@ -16,6 +16,7 @@ PlayerT::~PlayerT()
 void PlayerT::update(std::shared_ptr<EntityData> entitydata)
 {
 	updateMove(entitydata->deltaTime);
+	updateBullets(entitydata);
 	updateRotate(*entitydata->mouse_pos_view);
 	updateReload(entitydata->deltaTime);
 	updateHud();
@@ -61,20 +62,17 @@ void PlayerT::updateMove(sf::Time deltaTime)
 
 void PlayerT::updateBullets(std::shared_ptr<EntityData> entitydata)
 {
-	//E' POSSIBILE METTERLO DENTRO PLAYER MA NON PUO ESTENDERE GAMECHARACTER BISOGNA FARE UN CLASSE BULLET APPARTE
 	if (isShooting(entitydata->deltaTime) && getAmmo())
 	{
-		
-
-		bullet->setDir(player.getPosition(), mouse_pos_view);
-		flying_bullets.push_back(std::move(bullet));
-		counter_flying_obj++;
+		ammo--;
+		bullet_counter++;
 	}
 
-	for (int i = 0; i < flying_bullets.size(); i++)
+	for (int i = 0; i < bullet_counter; i++)
 	{
-		if (!(flying_bullets[i])->update(deltaTime, tile_map.getWalls(), enemies))
-			flying_bullets.erase(flying_bullets.begin() + i);
+		bullets[i]->update(entitydata);
+		if (bullets[i]->isCollideEnemy() || bullets[i]->isCollideWall())
+			bullets.erase(bullets.begin() + i);
 	}
 }
 
@@ -95,6 +93,7 @@ void PlayerT::updateReload(sf::Time deltaTime)
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) && ammo != ammo_max)
 			reloading = true;
 	}
+
 	if (ammo == 0 || reloading)
 	{
 		reload_clock -= deltaTime;
@@ -103,6 +102,7 @@ void PlayerT::updateReload(sf::Time deltaTime)
 			ammo = ammo_max;
 			reload_clock = sf::seconds(1.f);
 			reloading = false;
+			bullet_counter = 0;
 		}
 	}
 }
@@ -132,6 +132,12 @@ void PlayerT::updateHud()
 	hud.updateText(getAmmo(), getHp(), this->dash_cd, getPosition());
 }
 
+void PlayerT::renderBullets(std::shared_ptr<sf::RenderWindow> target)
+{
+	for (int i = 0; i < bullet_counter; i++)
+		bullets[i]->render(target);
+}
+
 
 void PlayerT::initVar()
 {
@@ -143,8 +149,9 @@ void PlayerT::initVar()
 	reload_cd = sf::seconds(1.f);
 	reload_clock = reload_cd;
 
-	ammo_max = 200;
+	ammo_max = 5;
 	ammo = ammo_max;
+	bullet_counter = 0;
 
 	ratio = sf::seconds(1.f / 20.f);
 
@@ -174,10 +181,9 @@ void PlayerT::initHitBox()
 
 void PlayerT::initBullets()
 {
-	for (int i = 0; i < ammo_max; i++)
+	for (int i = 0; i < this->ammo_max; i++)
 	{
 		this->bullets.emplace_back(new Bullet());
-		this->ammo = ammo_max;
 	}
 }
 
@@ -199,8 +205,13 @@ void PlayerT::collisionEnemies(std::vector<std::shared_ptr<Character>> enemies)
 		if (sat_test(hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds(), &out_mtv))
 		{
 			sprite.move(out_mtv);
-			this->hp--; //MELEE DAMAGE //TODO ADD RATIO
+			takeDamage(); //MELEE DAMAGE //TODO ADD RATIO
 		}
 			
 	}
+}
+
+void PlayerT::takeDamage()
+{
+	this->hp--;
 }

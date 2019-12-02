@@ -4,7 +4,7 @@
 
 Bullet::Bullet()
 {
-	mov_speed = 1500;
+	this->mov_speed = 1500;
 
 	initSprite();
 	initHitBox();
@@ -16,54 +16,32 @@ Bullet::~Bullet()
 
 void Bullet::update(std::shared_ptr<EntityData> entitydata)
 {
-	this->sprite.move(this->dir.x * this->mov_speed * deltaTime.asSeconds(), this->dir.y * this->mov_speed * deltaTime.asSeconds());
+	setDir(entitydata->target, *entitydata->mouse_pos_view);
+
+	this->sprite.move(this->dir.x * this->mov_speed * entitydata->deltaTime.asSeconds(), this->dir.y * this->mov_speed * entitydata->deltaTime.asSeconds());
 	hit_box.setPosition(getPosition());
-
-	//COLLISON SUI MURI
-
-	for (int i = 0; i != collision.size(); i++)
-	{
-		if (sat_test(hit_box.getGlobalBounds(), collision[i], &out_mtv))
-		{
-			return false;
-		}
-	}
-	//COLLISION SUGLI ALTRI ZOMBIE
-
-	for (int i = 0; i != enemies.size(); i++)
-	{
-			if (sat_test(hit_box.getGlobalBounds(), enemies[i]->hit_box.getGlobalBounds(), &out_mtv))
-			{
-				enemies[i]->takeDamage();
-				return false;
-			}
-	}
 
 	float dX = getPosition().x - player_pos.x;
 	float dY = getPosition().y - player_pos.y;
 	float distance = sqrt(pow(dX, 2) + pow(dY, 2));
 
-	if (distance > 1200)
-		return false;
-
 	rotate(dir);
 }
 
-bool Bullet::setDir(sf::Vector2f owner, sf::Vector2f mousePosView)
+void Bullet::setDir(const std::shared_ptr<Character> owner, sf::Vector2f mousePosView)
 {
-	this->player_pos = owner;
+	this->player_pos = owner->getPosition();
 
-	sprite.setPosition(owner);
-	float dX = mousePosView.x - owner.x;
-	float dY = mousePosView.y - owner.y;
+	this->sprite.setPosition(player_pos);
+
+	float dX = mousePosView.x - player_pos.x;
+	float dY = mousePosView.y - player_pos.y;
 
 	float lenght = sqrt(pow(dX, 2) + pow(dY, 2));
 
 	sf::Vector2f normVect(dX / lenght, dY / lenght);
 
 	dir = normVect;
-
-	return true;
 }
 
 void Bullet::initSprite()
@@ -81,6 +59,31 @@ void Bullet::initHitBox()
 	hit_box.setFillColor(sf::Color::Transparent);
 	hit_box.setScale(sprite.getScale());
 	hit_box.setOrigin(sprite.getOrigin());
+}
+
+void Bullet::collisionWalls(std::vector<sf::FloatRect> walls)
+{
+	for (int i = 0; i != walls.size(); i++)
+	{
+		if (sat_test(hit_box.getGlobalBounds(), walls[i], &out_mtv))
+		{
+			collideWall = true;
+		}
+	}
+	collideWall = false;
+}
+
+void Bullet::collisionEnemies(const std::vector<std::shared_ptr<Character>> enemies)
+{
+	for (int i = 0; i != enemies.size(); i++)
+	{
+		if (sat_test(hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds(), &out_mtv))
+		{
+			enemies[i]->takeDamage();
+			collideEnemy = true;
+		}
+	}
+	collideEnemy = false;
 }
 
 
