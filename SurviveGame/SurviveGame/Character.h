@@ -19,18 +19,17 @@ public:
 	Character();
 	virtual ~Character();
 
+	void renderHud(std::shared_ptr<sf::RenderWindow> target);
+
 	int getHp();
 	int getMovSpeed();
 	int getAmmo();
 	bool isReloading();
-	bool isShooting();
-
-	void collisionWalls(std::vector<sf::FloatRect> walls);
-	void collisionEnemies(std::vector<std::shared_ptr<Character>> enemies);
+	bool isShooting(sf::Time deltaTime);
 
 protected:
 
-	Hud hud_character;
+	Hud hud;
 
 	sf::Time reload_cd;
 	sf::Time reload_clock;
@@ -40,9 +39,6 @@ protected:
 
 	int hp;
 	int hp_max;
-
-	int mov_speed;
-	int mov_speed_max;
 
 	int ammo;
 	int ammo_max;

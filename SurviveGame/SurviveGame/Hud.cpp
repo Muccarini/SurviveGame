@@ -13,7 +13,7 @@ Hud::~Hud()
 {
 }
 
-void Hud::renderTextsGui(std::shared_ptr<sf::RenderWindow> target)
+void Hud::renderTextsCharacter(std::shared_ptr<sf::RenderWindow> target)
 {
 	 target->draw(this->ammo);
 	 target->draw(this->hp);

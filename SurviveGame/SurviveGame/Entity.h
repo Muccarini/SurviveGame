@@ -42,6 +42,10 @@ protected:
 	sf::Vector2f out_mtv;
 
 	bool alive;
+
+	int mov_speed;
+	int mov_speed_max;
+
 private:
 	void initTexture();
 };

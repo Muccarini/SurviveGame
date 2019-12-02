@@ -5,6 +5,7 @@ PlayerT::PlayerT()
 	initVar();
 	initSprite();
 	initHitBox();
+	initBullets();
 }
 
 
@@ -58,6 +59,25 @@ void PlayerT::updateMove(sf::Time deltaTime)
 	hit_box.setPosition(getPosition());
 }
 
+void PlayerT::updateBullets(std::shared_ptr<EntityData> entitydata)
+{
+	//E' POSSIBILE METTERLO DENTRO PLAYER MA NON PUO ESTENDERE GAMECHARACTER BISOGNA FARE UN CLASSE BULLET APPARTE
+	if (isShooting(entitydata->deltaTime) && getAmmo())
+	{
+		
+
+		bullet->setDir(player.getPosition(), mouse_pos_view);
+		flying_bullets.push_back(std::move(bullet));
+		counter_flying_obj++;
+	}
+
+	for (int i = 0; i < flying_bullets.size(); i++)
+	{
+		if (!(flying_bullets[i])->update(deltaTime, tile_map.getWalls(), enemies))
+			flying_bullets.erase(flying_bullets.begin() + i);
+	}
+}
+
 void PlayerT::updateRotate(sf::Vector2f mousePosView)
 {
 	float dX = mousePosView.x - getPosition().x;
@@ -109,7 +129,7 @@ void PlayerT::updateDash(sf::Vector2f dir, sf::Time deltaTime)
 
 void PlayerT::updateHud()
 {
-	hud_character.updateText(getAmmo(), getHp(), this->dash_cd, getPosition());
+	hud.updateText(getAmmo(), getHp(), this->dash_cd, getPosition());
 }
 
 
@@ -150,4 +170,37 @@ void PlayerT::initHitBox()
 	hit_box.setScale(sprite.getScale());             //SCALE
 	hit_box.setPosition(getPosition());              //POS
 	hit_box.setOrigin(45, 60);                       //ORIGIN
+}
+
+void PlayerT::initBullets()
+{
+	for (int i = 0; i < ammo_max; i++)
+	{
+		this->bullets.emplace_back(new Bullet());
+		this->ammo = ammo_max;
+	}
+}
+
+void PlayerT::collisionWalls(std::vector<sf::FloatRect> walls)
+{
+	for (int i = 0; i != walls.size(); i++)
+	{
+		if (sat_test(hit_box.getGlobalBounds(), walls[i], &out_mtv))
+		{
+			sprite.move(out_mtv);
+		}
+	}
+}
+
+void PlayerT::collisionEnemies(std::vector<std::shared_ptr<Character>> enemies)
+{
+	for (int i = 0; i != enemies.size(); i++)
+	{
+		if (sat_test(hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds(), &out_mtv))
+		{
+			sprite.move(out_mtv);
+			this->hp--; //MELEE DAMAGE //TODO ADD RATIO
+		}
+			
+	}
 }

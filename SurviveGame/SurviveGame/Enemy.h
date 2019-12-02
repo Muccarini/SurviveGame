@@ -21,6 +21,9 @@ private:
 	void initSprite();
 	void initHitBox();
 
+	void collisionWalls(std::vector<sf::FloatRect> walls);
+	void collisionEnemies(std::vector<std::shared_ptr<Character>> enemies);
+
 	EnemyStrategyMove _m;
 };
 

@@ -4,6 +4,7 @@
 
 Enemy::Enemy() 
 {
+	initVar();
 	initSprite();
 	initHitBox();
 }
@@ -38,8 +39,9 @@ void Enemy::updateRotate(const std::shared_ptr<Character> target)
 
 void Enemy::updateHud()
 {
-	hud_character.updateText(hp, getPosition());
+	hud.updateText(hp, getPosition());
 }
+
 
 void Enemy::update(std::shared_ptr<EntityData> entitydata)
 {
@@ -76,5 +78,28 @@ void Enemy::initHitBox()
 	this->hit_box.setScale(sprite.getScale());
 	this->hit_box.setPosition(getPosition());
 	this->hit_box.setOrigin(35, 35);
+}
+
+void Enemy::collisionWalls(std::vector<sf::FloatRect> walls)
+{
+	for (int i = 0; i != walls.size(); i++)
+	{
+		if (sat_test(hit_box.getGlobalBounds(), walls[i], &out_mtv))
+		{
+			sprite.move(out_mtv);
+		}
+	}
+}
+
+void Enemy::collisionEnemies(std::vector<std::shared_ptr<Character>> enemies)
+{
+	for (int i = 0; i != enemies.size(); i++)
+	{
+		if (enemies[i]->getHitBox().getGlobalBounds() != this->hit_box.getGlobalBounds())
+			if (sat_test(hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds(), &out_mtv))
+			{
+				sprite.move(out_mtv);
+			}
+	}
 }
 

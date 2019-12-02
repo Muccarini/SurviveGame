@@ -4,9 +4,9 @@
 #include "RoundManager.h"
 #include "Hud.h"
 #include "TileMap.h"
-#include "PlayerT.h"
-#include "Enemy.h"
 #include "TextureHolder.h"
+#include "Enemy.h"
+#include "PlayerT.h"
 #include <vector>
 
 class GameLogic :

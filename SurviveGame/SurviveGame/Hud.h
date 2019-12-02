@@ -11,7 +11,7 @@ public:
 	void updateText(const int ammo, const int hp, const float dash_cd, const sf::Vector2f obj);            //PLAYER
 	void updateText(const int kill_counter, const float countdown, const int round, const sf::View view);  //VIEW
 
-	void renderTextsGui(std::shared_ptr<sf::RenderWindow> target);
+	void renderTextsCharacter(std::shared_ptr<sf::RenderWindow> target);
 	void renderTextsHud(std::shared_ptr<sf::RenderWindow> target);
 
 private:

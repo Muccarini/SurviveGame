@@ -34,10 +34,10 @@ void GameLogic::update(sf::Time deltaTime)
 void GameLogic::render()
 {
 	tile_map.render(window);
+
 	if(!round.isLoading() && !round.isBossRound())
 		renderEnemies();
 
-	hud.renderTextsGui(window);
 	renderPlayer();
 
 	hud.renderTextsHud(window);
@@ -103,26 +103,6 @@ void GameLogic::updatePlayer(const std::shared_ptr<EntityData> entitydata)
 	}
 }
 
-//void GameLogic::updateBullets(sf::Time deltaTime)
-//{
-//	//E' POSSIBILE METTERLO DENTRO PLAYER MA NON PUO ESTENDERE GAMECHARACTER BISOGNA FARE UN CLASSE BULLET APPARTE
-//	if (player.isShooting(deltaTime) && player.getAmmo())
-//	{
-//		std::unique_ptr<Bullet>bullet(new Bullet(_textures.get(Textures::Proiettile)));
-//		player.decreaseAmmo();
-//
-//		bullet->setDir(player.getPosition(), mouse_pos_view);
-//		flying_bullets.push_back(std::move(bullet));
-//		counter_flying_obj++;
-//	}
-//
-//	for (int i = 0; i < flying_bullets.size(); i++)
-//	{
-//		if (!(flying_bullets[i])->update(deltaTime, tile_map.getWalls(), enemies))
-//			flying_bullets.erase(flying_bullets.begin() + i);
-//	}
-//}
-//
 //void GameLogic::updateBoss(sf::Time deltaTime)
 //{
 //	boss.update(deltaTime, &player, tile_map.getWalls());
@@ -144,6 +124,7 @@ void GameLogic::updateGameView(sf::Time deltaTime)
 void GameLogic::renderPlayer()
 {
 	player->render(window);
+	player->renderHud(window);
 }
 
 //void GameLogic::renderBullet()
@@ -160,6 +141,7 @@ void GameLogic::renderEnemies()
 	for (auto i = enemies->begin(); i != enemies->end(); i++)
 	{
 		(*i)->render(window);
+		(*i)->renderHud(window);
 	}
 }
 
