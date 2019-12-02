@@ -68,7 +68,7 @@ void Enemy::initSprite()
 {
 	sprite.setTexture(textures.get(Textures::Enemy));
 	sprite.setScale(0.9, 0.9);
-	sprite.setPosition(rand() % 400 + 500.f , rand() % 400);
+	sprite.setPosition(rand() % 400 + 500.f , rand() % 400 + 500.f);
 	sprite.setOrigin(+34.f, +34.f);
 	sprite.setTextureRect(sf::IntRect(0, 0, 68, 68));
 }

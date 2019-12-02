@@ -159,11 +159,7 @@ void GameLogic::entitiesInit()
 	//ENEMY INIT
 	this->enemies = new std::vector<std::shared_ptr<Character>>;
 
-		for(int i = 0 ; i < max_enemies ; i++)
-		{
-			this->enemies->emplace_back(new Enemy());
-			this->enemies_alive = max_enemies;
-		}
+	
 	//PLAYER INIT
 		this->player = std::make_shared<PlayerT>();
 }
