@@ -5,13 +5,14 @@ class PlayerT :
 	public Character
 {
 public:
+	PlayerT(sf::Texture texture_player, sf::Texture texture_bullet);
+
 	PlayerT();
 	virtual ~PlayerT();
 
-	void update(std::shared_ptr<EntityData> entitydata);
-	void renderBullets(std::shared_ptr<sf::RenderWindow> target);
-
 private:
+	virtual void update(std::shared_ptr<EntityData> entitydata);
+	virtual void renderBullets(std::shared_ptr<sf::RenderWindow> target);
 
 	void updateMove(sf::Time deltaTime);
 	void updateBullets(std::shared_ptr<EntityData> entitydata);

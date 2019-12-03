@@ -10,7 +10,7 @@ public:
 	EntityData() {};
 
 	sf::Time deltaTime;
-	sf::Vector2f * mouse_pos_view;
+	sf::Vector2f * mouse_pos_view; //da provare senza puntatore come deltaTime quest'ultimo da mettere come data member in state.h
 	std::vector<sf::FloatRect> walls;
     std::vector<std::shared_ptr<Character>> * enemies;
 	std::shared_ptr<Character> target;
@@ -40,7 +40,7 @@ protected:
 	bool sat_test(const sf::FloatRect &rectSp1, const sf::FloatRect &rectSp2, sf::Vector2f *out_mtv);
 
 	sf::Sprite sprite;
-	TextureHolder textures;
+	sf::Texture texture;
 	sf::RectangleShape hit_box;
 	sf::Vector2f out_mtv;
 
@@ -51,7 +51,4 @@ protected:
 
 	int mov_speed;
 	int mov_speed_max;
-
-private:
-	void initTexture();
 };

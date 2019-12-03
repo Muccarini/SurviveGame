@@ -1,8 +1,12 @@
 #include "Enemy.h"
-#include <math.h>
 
 
-Enemy::Enemy() 
+Enemy::Enemy(sf::Texture txt_e)
+{
+	this->texture = txt_e;
+}
+
+Enemy::Enemy()
 {
 	initVar();
 	initSprite();
@@ -55,6 +59,8 @@ void Enemy::update(std::shared_ptr<EntityData> entitydata)
 
 void Enemy::renderBullets(std::shared_ptr<sf::RenderWindow> target)
 {
+		/*for (int i = 0; i < bullets.size(); i++)
+			bullets[i]->render(target);*/
 }
 
 
@@ -66,7 +72,7 @@ void Enemy::initVar()
 
 void Enemy::initSprite()
 {
-	sprite.setTexture(textures.get(Textures::Enemy));
+	sprite.setTexture(texture);
 	sprite.setScale(0.9, 0.9);
 	sprite.setPosition(rand() % 400 + 500.f , rand() % 400 + 500.f);
 	sprite.setOrigin(+34.f, +34.f);

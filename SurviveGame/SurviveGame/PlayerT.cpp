@@ -1,5 +1,11 @@
 #include "PlayerT.h"
 
+PlayerT::PlayerT(sf::Texture txt_p, sf::Texture txt_b)
+{
+	this->texture = txt_p;
+	this->texture_bullet = txt_b;
+}
+
 PlayerT::PlayerT()
 {
 	initVar();
@@ -63,11 +69,10 @@ void PlayerT::updateBullets(std::shared_ptr<EntityData> entitydata)
 {
 	if (isShooting(entitydata->deltaTime) && getAmmo())
 	{
-		std::unique_ptr<Bullet>bullet(new Bullet());
+		std::shared_ptr<Bullet>bullet(new Bullet(texture_bullet));
 		ammo--;
-
-		bullet->setDir(entitydata->target, *entitydata->mouse_pos_view);
-		bullets.emplace_back(std::move(bullet));
+		bullets.emplace_back(bullet);
+		bullet->setDir(entitydata->target->getPosition(), *entitydata->mouse_pos_view);
 		bullet_counter++;
 	}
 
@@ -136,9 +141,9 @@ void PlayerT::updateHud()
 
 void PlayerT::renderBullets(std::shared_ptr<sf::RenderWindow> target)
 {
-	for (auto i = bullets.begin(); i != bullets.end(); i++)
+	for (int i=0; i < bullets.size(); i++)
 	{
-		(*i)->render(target);
+		bullets[i]->render(target);
 	}
 }
 
@@ -166,7 +171,7 @@ void PlayerT::initVar()
 
 void PlayerT::initSprite()
 {
-	sprite.setTexture(textures.get(Textures::Personaggio)); //TEXTURE
+	sprite.setTexture(texture); //TEXTURE
 	sprite.setScale(0.3, 0.3);                              //SCALE
 	sprite.setPosition(600.f, 600.f);                       //POS
 	sprite.setOrigin(92, 120);                              //ORIGIN

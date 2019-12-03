@@ -3,18 +3,14 @@
 
 GameLogic::GameLogic() : game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f))
 {
-	varInit();
 	entitiesInit();
-
-	entitydata->enemies = this->enemies;
-	entitydata->walls = this->tile_map.getWalls();
-	entitydata->target = this->player;
-	entitydata->mouse_pos_view = &this->mouse_pos_view;
+	varInit();
 	gameViewInit();
 }
 
 GameLogic::~GameLogic()
 { 
+	delete enemies;
 }
 
 void GameLogic::update(sf::Time deltaTime)
@@ -25,7 +21,6 @@ void GameLogic::update(sf::Time deltaTime)
 
 	updatePlayer(entitydata);
 	updateEnemies(entitydata);
-	/*updateBullets(deltaTime);*/
 
 	updateGameView(deltaTime);
 }
@@ -69,7 +64,7 @@ void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
 	{
 		while (enemies_alive != max_enemies)
 		{
-			this->enemies->emplace_back(new Enemy());
+			this->enemies->emplace_back(new Enemy(textures.get(Textures::Enemy)));
 			enemies_alive++;
 		}
 		for (int i = 0; i < enemies->size(); i++)
@@ -153,28 +148,42 @@ void GameLogic::renderEnemies()
 
 void GameLogic::entitiesInit()
 {  
-	//DATA INIT
 	entitydata = std::make_shared<EntityData>();
 
-	//ENEMY INIT
 	this->enemies = new std::vector<std::shared_ptr<Character>>;
-
-	
-	//PLAYER INIT
-		this->player = std::make_shared<PlayerT>();
+	this->player = std::make_shared<PlayerT>(textures.get(Textures::Personaggio), textures.get(Textures::Proiettile));
 }
 
 void GameLogic::gameViewInit()
 {
 	this->game_view.setCenter(player->getPosition());
-	this->game_view_speed = 4.5;
 }
 
 void GameLogic::varInit()
 {
-	max_enemies = 5;
-	enemies_alive = 0;
-	kill_counter = 0;
+	this->max_enemies = 5;
+	this->enemies_alive = 0;
+	this->kill_counter = 0;
+	this->game_view_speed = 4.5f;
+
+	textureInit();
+	entitydataInit();
+}
+
+void GameLogic::entitydataInit()
+{
+	entitydata->enemies        =  this->enemies;
+	entitydata->walls          =  this->tile_map.getWalls();
+	entitydata->target         =  this->player;
+	entitydata->mouse_pos_view = &this->mouse_pos_view;
+}
+
+void GameLogic::textureInit()
+{
+	textures.load(Textures::Enemy, "Sources/zombie1.png");
+	textures.load(Textures::Proiettile, "Sources/bullets/bullet1.png");
+	textures.load(Textures::Boss, "Sources/boss/boss.png");
+	textures.load(Textures::Personaggio, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
 }
 
 

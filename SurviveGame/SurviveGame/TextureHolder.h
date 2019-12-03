@@ -9,7 +9,7 @@ namespace Textures
 
 
 
-class TextureHolder   //NO COSTRU PERCHE MAP VUOTA, NO DESTR PER UNIQUE_PTR
+class TextureHolder   //NO COSTRU PERCHE MAP VUOTA
 {
 public:
 	

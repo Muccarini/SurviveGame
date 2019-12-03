@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include "Hud.h"
 #include "Bullet.h"
+#include <math.h>
 
 namespace PlayerType
 {
@@ -30,9 +31,11 @@ public:
 	int getAmmo();
 	bool isReloading();
 	bool isShooting(sf::Time deltaTime);
-protected:
 
+protected:
 	Hud hud;
+
+	sf::Texture texture_bullet;
 
 	sf::Time reload_cd;
 	sf::Time reload_clock;
