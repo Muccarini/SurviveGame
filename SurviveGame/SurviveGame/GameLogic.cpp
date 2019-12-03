@@ -16,8 +16,8 @@ GameLogic::~GameLogic()
 
 void GameLogic::update(sf::Time deltaTime)
 {
-	entitydata->deltaTime = deltaTime;
 	updateMousePos();
+	updateEntityData(deltaTime);
 	updateHud();
 
 	updatePlayer(entitydata);
@@ -116,6 +116,12 @@ void GameLogic::updateGameView(sf::Time deltaTime)
 	window->setView(game_view);
 }
 
+void GameLogic::updateEntityData(sf::Time deltaTime)
+{
+	entitydata->deltaTime = deltaTime;
+	entitydata->mouse_pos_view = this->mouse_pos_view;
+}
+
 
 void GameLogic::renderPlayer()
 {
@@ -175,7 +181,6 @@ void GameLogic::entitydataInit()
 	entitydata->enemies        =  this->enemies;
 	entitydata->walls          =  this->tile_map.getWalls();
 	entitydata->target         =  this->player;
-	entitydata->mouse_pos_view = &this->mouse_pos_view;
 }
 
 void GameLogic::textureInit()

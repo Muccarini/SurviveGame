@@ -23,7 +23,7 @@ void PlayerT::update(std::shared_ptr<EntityData> entitydata)
 {
 	updateMove(entitydata->deltaTime);
 	updateBullets(entitydata);
-	updateRotate(*entitydata->mouse_pos_view);
+	updateRotate(entitydata->mouse_pos_view);
 	updateReload(entitydata->deltaTime);
 	updateHud();
 
@@ -73,7 +73,7 @@ void PlayerT::updateBullets(std::shared_ptr<EntityData> entitydata)
 		std::shared_ptr<Bullet>bullet(new Bullet(texture_bullet));
 		ammo--;
 		bullets.emplace_back(bullet);
-		bullet->setDir(entitydata->target->getPosition(), *entitydata->mouse_pos_view);
+		bullet->setDir(entitydata->target->getPosition(), entitydata->mouse_pos_view);
 		bullet_counter++;
 	}
 

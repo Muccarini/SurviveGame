@@ -20,6 +20,7 @@ public:
 protected:
 	void updateMousePos();
 	sf::Vector2f mouse_pos_view;
+
 private:
 	bool quit;
 };

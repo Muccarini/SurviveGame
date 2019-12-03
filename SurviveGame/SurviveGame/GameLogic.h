@@ -24,6 +24,7 @@ private:
 	void updatePlayer(std::shared_ptr<EntityData> entitydata);
 	void updateEnemies(std::shared_ptr<EntityData> entitydata);
 	void updateGameView(sf::Time deltaTime);
+	void updateEntityData(sf::Time deltaTime);
 	void updateHud();
 
 	void renderEnemies();

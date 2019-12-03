@@ -10,7 +10,7 @@ public:
 	EntityData() {};
 
 	sf::Time deltaTime;
-	sf::Vector2f * mouse_pos_view; //da provare senza puntatore come deltaTime quest'ultimo da mettere come data member in state.h
+	sf::Vector2f mouse_pos_view; //da provare senza puntatore come deltaTime quest'ultimo da mettere come data member in state.h
 	std::vector<sf::FloatRect> walls;
     std::vector<std::shared_ptr<Character>> * enemies;
 	std::shared_ptr<Character> target;
