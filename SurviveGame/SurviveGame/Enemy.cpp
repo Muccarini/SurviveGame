@@ -4,13 +4,13 @@
 Enemy::Enemy(sf::Texture txt_e)
 {
 	this->texture = txt_e;
+	initVar();
+	initSprite();
+	initHitBox();
 }
 
 Enemy::Enemy()
 {
-	initVar();
-	initSprite();
-	initHitBox();
 }
 
 

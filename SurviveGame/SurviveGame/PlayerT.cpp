@@ -4,13 +4,14 @@ PlayerT::PlayerT(sf::Texture txt_p, sf::Texture txt_b)
 {
 	this->texture = txt_p;
 	this->texture_bullet = txt_b;
+
+	initVar();
+	initSprite();
+	initHitBox();
 }
 
 PlayerT::PlayerT()
 {
-	initVar();
-	initSprite();
-	initHitBox();
 }
 
 

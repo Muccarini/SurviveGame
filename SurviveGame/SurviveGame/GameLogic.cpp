@@ -3,6 +3,7 @@
 
 GameLogic::GameLogic() : game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f))
 {
+	textureInit();
 	entitiesInit();
 	varInit();
 	gameViewInit();
@@ -166,7 +167,6 @@ void GameLogic::varInit()
 	this->kill_counter = 0;
 	this->game_view_speed = 4.5f;
 
-	textureInit();
 	entitydataInit();
 }
 
