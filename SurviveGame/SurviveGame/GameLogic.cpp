@@ -31,10 +31,10 @@ void GameLogic::render()
 {
 	tile_map.render(window);
 
+	renderPlayer();
+
 	if(!round.isLoading() && !round.isBossRound())
 		renderEnemies();
-
-	renderPlayer();
 
 	hud.renderTextsHud(window);
 }
@@ -125,8 +125,8 @@ void GameLogic::updateEntityData(sf::Time deltaTime)
 
 void GameLogic::renderPlayer()
 {
-	player->render(window);
 	player->renderHud(window);
+	player->render(window);
 	player->renderBullets(window);
 }
 
