@@ -14,21 +14,21 @@
     <Filter Include="Personaggi\Nemici">
       <UniqueIdentifier>{d49cb70d-33c4-4c28-a7dd-70a07fd612c9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Map">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="Game">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
+    <Filter Include="Personaggi\Giocatore\Map">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TileMap.cpp">
-      <Filter>Map</Filter>
+      <Filter>Personaggi\Giocatore\Map</Filter>
     </ClCompile>
     <ClCompile Include="Tile.cpp">
-      <Filter>Map</Filter>
+      <Filter>Personaggi\Giocatore\Map</Filter>
     </ClCompile>
     <ClCompile Include="TileMap.cpp">
       <Filter>Source Files</Filter>
@@ -93,6 +93,9 @@
     <ClCompile Include="Character.cpp">
       <Filter>Personaggi</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnemyStrategyMove.h">
@@ -114,10 +117,10 @@
       <Filter>Resource Files</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
-      <Filter>Map</Filter>
+      <Filter>Personaggi\Giocatore\Map</Filter>
     </ClInclude>
     <ClInclude Include="TileMap.h">
-      <Filter>Map</Filter>
+      <Filter>Personaggi\Giocatore\Map</Filter>
     </ClInclude>
     <ClInclude Include="TileMap.h">
       <Filter>Map</Filter>
@@ -160,6 +163,9 @@
     </ClInclude>
     <ClInclude Include="Character.h">
       <Filter>Personaggi</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -7,6 +7,7 @@
 #include "TextureHolder.h"
 #include "Enemy.h"
 #include "PlayerT.h"
+#include "Boss.h"
 #include <vector>
 
 class GameLogic :
@@ -23,12 +24,14 @@ private:
 
 	void updatePlayer(std::shared_ptr<EntityData> entitydata);
 	void updateEnemies(std::shared_ptr<EntityData> entitydata);
+	void updateBoss(std::shared_ptr<EntityData> entitydata);
 	void updateGameView(sf::Time deltaTime);
 	void updateEntityData(sf::Time deltaTime);
 	void updateHud();
 
 	void renderEnemies();
 	void renderPlayer();
+	void renderBoss();
 
 	void entitiesInit();
 	void gameViewInit();
@@ -44,6 +47,7 @@ private:
 
     std::vector<std::shared_ptr<Character>> * enemies;
 	std::shared_ptr<Character> player;
+	std::shared_ptr<Character> boss;
 
 	std::shared_ptr<EntityData> entitydata;
 

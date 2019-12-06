@@ -20,6 +20,9 @@ private:
 	void updateReload(sf::Time deltaTime);
 	void updateDash(sf::Vector2f dir, sf::Time deltaTime);
 	void updateHud();
+	void updateCollision(std::shared_ptr<EntityData> entitydata);
+
+	bool isShooting(sf::Time deltaTime);
 
 	void initVar();
 	void initSprite();
@@ -29,7 +32,6 @@ private:
 	void collisionEnemies(std::vector<std::shared_ptr<Character>> enemies);
 
 	std::vector<std::shared_ptr<Bullet>> bullets;
-	int bullet_counter;
 
 	void takeDamage();
 

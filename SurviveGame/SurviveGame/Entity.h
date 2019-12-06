@@ -1,6 +1,9 @@
-#pragma once
+#ifndef ENTITY_H
+#define ENTITY_H
+
 #include <SFML/Graphics.hpp>
 #include "TextureHolder.h"
+#include "CollisionManager.h"
 
 class Character;
 
@@ -13,7 +16,8 @@ public:
 	sf::Vector2f mouse_pos_view;
 	std::vector<sf::FloatRect> walls;
     std::vector<std::shared_ptr<Character>> * enemies;
-	std::shared_ptr<Character> target;
+	std::shared_ptr<Character> player;
+	std::shared_ptr<Character> boss;
 };
 
 
@@ -37,12 +41,14 @@ public:
 
 protected:
 
-	bool sat_test(const sf::FloatRect &rectSp1, const sf::FloatRect &rectSp2, sf::Vector2f *out_mtv);
+	/*bool sat_test(const sf::FloatRect &rectSp1, const sf::FloatRect &rectSp2, sf::Vector2f *out_mtv);*/
 
 	sf::Sprite sprite;
 	sf::Texture texture;
 	sf::RectangleShape hit_box;
+	std::shared_ptr<CollisionManager> collision;
 	sf::Vector2f out_mtv;
+
 
 	bool alive;
 
@@ -52,3 +58,4 @@ protected:
 	int mov_speed;
 	int mov_speed_max;
 };
+#endif

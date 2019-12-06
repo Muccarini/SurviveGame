@@ -35,6 +35,8 @@ void GameLogic::render()
 
 	if(!round.isLoading() && !round.isBossRound())
 		renderEnemies();
+	if(!round.isLoading() && round.isBossRound())
+		renderBoss();
 
 	hud.renderTextsHud(window);
 }
@@ -46,13 +48,15 @@ void GameLogic::updateHud()
 
 void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
 {
-	if (kill_counter == 5) //RESET ROUND
+	//ROUND CHECK
+	if (kill_counter == 1)
 	{
 		for (int i = 0; i < enemies->size(); i++)
 		{
 			enemies->erase(enemies->begin(), enemies->end());
 		}
-		enemies_alive = 0,
+
+		enemies_alive = 0;
 		kill_counter = 0;
 		round.reset();
 		round.increase();
@@ -61,6 +65,7 @@ void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
 			round.setBossRound(true);
 	}
 
+	//ZOMBIE SPAWN
 	if (!round.isLoading() && !round.isBossRound())
 	{
 		while (enemies_alive != max_enemies)
@@ -68,6 +73,7 @@ void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
 			this->enemies->emplace_back(new Enemy(textures.get(Textures::Enemy)));
 			enemies_alive++;
 		}
+
 		for (int i = 0; i < enemies->size(); i++)
 		{
 			(*enemies)[i]->update(entitydata);
@@ -80,12 +86,14 @@ void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
 			}
 		}
 	}
+
 	else
+		//BOSS SPAWN
 	{
 		round.startCountdown(this->entitydata->deltaTime);
 		if(!round.isLoading() && round.isBossRound())
 		{
-			/*updateBoss(deltaTime);*/
+			updateBoss(entitydata);
 		}
 	}
 }
@@ -99,15 +107,15 @@ void GameLogic::updatePlayer(const std::shared_ptr<EntityData> entitydata)
 	}
 }
 
-//void GameLogic::updateBoss(sf::Time deltaTime)
-//{
-//	boss.update(deltaTime, &player, tile_map.getWalls());
-//	if ((boss.getHp() <= 0))
-//	{
-//		//BOSS MORTO
-//		round.setBossRound(false);
-//	}
-//}
+void GameLogic::updateBoss(std::shared_ptr<EntityData> entitydata)
+{
+	boss->update(entitydata);
+	if ((boss->getHp() <= 0))
+	{
+		/*delete boss;*/
+		round.setBossRound(false);
+	}
+}
 
 void GameLogic::updateGameView(sf::Time deltaTime)
 {
@@ -122,22 +130,12 @@ void GameLogic::updateEntityData(sf::Time deltaTime)
 	entitydata->mouse_pos_view = this->mouse_pos_view;
 }
 
-
 void GameLogic::renderPlayer()
 {
 	player->renderHud(window);
 	player->render(window);
 	player->renderBullets(window);
 }
-
-//void GameLogic::renderBullet()
-//{
-//	for (auto i = flying_bullets.begin(); i != flying_bullets.end(); i++)
-//	{
-//		(*i)->render(window);
-//		window->draw((*i)->hit_box);
-//	}
-//}
 
 void GameLogic::renderEnemies()
 {
@@ -148,10 +146,12 @@ void GameLogic::renderEnemies()
 	}
 }
 
-//void GameLogic::renderBoss()
-//{
-//	boss.render(window);
-//}
+void GameLogic::renderBoss()
+{
+	boss->renderHud(window);
+	boss->render(window);
+	boss->renderBullets(window);
+}
 
 void GameLogic::entitiesInit()
 {  
@@ -159,6 +159,7 @@ void GameLogic::entitiesInit()
 
 	this->enemies = new std::vector<std::shared_ptr<Character>>;
 	this->player = std::make_shared<PlayerT>(textures.get(Textures::Personaggio), textures.get(Textures::Proiettile));
+	this->boss = std::make_shared<Boss>(textures.get(Textures::Boss), textures.get(Textures::Proiettile));
 }
 
 void GameLogic::gameViewInit()
@@ -178,9 +179,10 @@ void GameLogic::varInit()
 
 void GameLogic::entitydataInit()
 {
-	entitydata->enemies        =  this->enemies;
-	entitydata->walls          =  this->tile_map.getWalls();
-	entitydata->target         =  this->player;
+	entitydata->enemies        = this->enemies;
+	entitydata->walls          = this->tile_map.getWalls();
+	entitydata->player         = this->player;
+	entitydata->boss           = this->boss;
 }
 
 void GameLogic::textureInit()
@@ -190,5 +192,4 @@ void GameLogic::textureInit()
 	textures.load(Textures::Boss, "Sources/boss/boss.png");
 	textures.load(Textures::Personaggio, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
 }
-
 

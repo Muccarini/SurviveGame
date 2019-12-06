@@ -26,9 +26,7 @@ void PlayerT::update(std::shared_ptr<EntityData> entitydata)
 	updateRotate(entitydata->mouse_pos_view);
 	updateReload(entitydata->deltaTime);
 	updateHud();
-
-	collisionWalls(entitydata->walls);
-	collisionEnemies(*entitydata->enemies);
+	updateCollision(entitydata);
 }
 
 void PlayerT::updateMove(sf::Time deltaTime)
@@ -70,11 +68,10 @@ void PlayerT::updateBullets(std::shared_ptr<EntityData> entitydata)
 {
 	if (isShooting(entitydata->deltaTime) && getAmmo())
 	{
-		std::shared_ptr<Bullet>bullet(new Bullet(texture_bullet));
+		std::shared_ptr<Bullet>bullet(new Bullet(entitydata->player, texture_bullet));
 		ammo--;
 		bullets.emplace_back(bullet);
-		bullet->setDir(entitydata->target->getPosition(), entitydata->mouse_pos_view);
-		bullet_counter++;
+		bullet->setDir(entitydata->player->getPosition(), entitydata->mouse_pos_view);
 	}
 
 	for (int i = 0; i < bullets.size(); i++)
@@ -109,7 +106,7 @@ void PlayerT::updateReload(sf::Time deltaTime)
 		if (reload_clock < sf::seconds(0.f))
 		{
 			ammo = ammo_max;
-			reload_clock = sf::seconds(1.f);
+			reload_clock = reload;
 			reloading = false;
 		}
 	}
@@ -140,6 +137,34 @@ void PlayerT::updateHud()
 	hud.updateText(getAmmo(), getHp(), this->dash_cd, getPosition());
 }
 
+void PlayerT::updateCollision(std::shared_ptr<EntityData> entitydata)
+{
+	sf::Vector2f dir(0, 0);
+
+	dir = collision->isCollideWith(entitydata->player, *entitydata->enemies);
+	if (dir.x == 0 && dir.y == 0)
+		takeDamage();
+
+	dir += collision->isCollideWithWalls(entitydata->player, entitydata->walls);
+
+	sprite.move((dir.x * this->mov_speed* entitydata->deltaTime.asSeconds()), dir.y * this->mov_speed* entitydata->deltaTime.asSeconds());
+}
+
+bool PlayerT::isShooting(sf::Time deltaTime)
+{
+	ratio_clock -= deltaTime;
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !reloading)
+	{
+		if (ratio_clock < sf::seconds(0.f))
+		{
+			ratio_clock = ratio;
+			return true;
+		}
+	}
+	return false;
+}
+
 void PlayerT::renderBullets(std::shared_ptr<sf::RenderWindow> target)
 {
 	for (int i=0; i < bullets.size(); i++)
@@ -156,14 +181,16 @@ void PlayerT::initVar()
 
 	hp = 100;
 
-	reload_cd = sf::seconds(1.f);
-	reload_clock = reload_cd;
+	reload = sf::seconds(1.f);
+	reload_clock = reload;
 
 	ammo_max = 200;
 	ammo = ammo_max;
-	bullet_counter = 0;
 
-	ratio = sf::seconds(1.f / 20.f);
+	ratio = sf::seconds(1.f / 16.666);
+	ratio_clock = ratio;
+
+	allied = true;
 
 	this->dash_speed = 1000;
 	this->dash_cd = 10.f;
@@ -187,30 +214,6 @@ void PlayerT::initHitBox()
 	hit_box.setScale(sprite.getScale());             //SCALE
 	hit_box.setPosition(getPosition());              //POS
 	hit_box.setOrigin(45, 60);                       //ORIGIN
-}
-
-void PlayerT::collisionWalls(std::vector<sf::FloatRect> walls)
-{
-	for (int i = 0; i != walls.size(); i++)
-	{
-		if (sat_test(hit_box.getGlobalBounds(), walls[i], &out_mtv))
-		{
-			sprite.move(out_mtv);
-		}
-	}
-}
-
-void PlayerT::collisionEnemies(std::vector<std::shared_ptr<Character>> enemies)
-{
-	for (int i = 0; i != enemies.size(); i++)
-	{
-		if (sat_test(hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds(), &out_mtv))
-		{
-			sprite.move(out_mtv);
-			takeDamage(); //MELEE DAMAGE //TODO ADD RATIO
-		}
-			
-	}
 }
 
 void PlayerT::takeDamage()

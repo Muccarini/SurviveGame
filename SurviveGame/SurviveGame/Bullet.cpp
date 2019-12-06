@@ -2,9 +2,11 @@
 
 
 
-Bullet::Bullet(sf::Texture txt)
+Bullet::Bullet(const std::shared_ptr<Character> own, sf::Texture txt)
 {
+	this->owner = own;
 	this->texture = txt;
+
 	this->mov_speed = 1500;
 	collideEnemy = false;
 	collideWall = false;
@@ -26,30 +28,32 @@ void Bullet::update(std::shared_ptr<EntityData> entitydata)
 	this->sprite.move(this->dir.x * this->mov_speed * entitydata->deltaTime.asSeconds(), this->dir.y * this->mov_speed * entitydata->deltaTime.asSeconds());
 	hit_box.setPosition(sprite.getPosition());
 
-	collisionEnemies(*entitydata->enemies);
+	if(this->owner == entitydata->player)
+		collisionCharacter(*entitydata->enemies);
+	if(this->owner == entitydata->boss)
+		collisionCharacter(entitydata->player);
+
 	collisionWalls(entitydata->walls);
 
-	float dX = sprite.getPosition().x - player_pos.x;
-	float dY = sprite.getPosition().y - player_pos.y;
-	float distance = sqrt(pow(dX, 2) + pow(dY, 2));
+	//float dX = sprite.getPosition().x - player_pos.x;
+	//float dY = sprite.getPosition().y - player_pos.y;
+	//float distance = sqrt(pow(dX, 2) + pow(dY, 2));
 
 	rotate(dir);
 }
 
-void Bullet::setDir(sf::Vector2f owner_pos, sf::Vector2f mousePosView)
+void Bullet::setDir(sf::Vector2f owner_pos, sf::Vector2f target)
 {
-	this->player_pos = owner_pos;
+	this->sprite.setPosition(owner->getPosition());
 
-	this->sprite.setPosition(player_pos);
-
-	float dX = mousePosView.x - player_pos.x;
-	float dY = mousePosView.y - player_pos.y;
+	float dX = target.x - owner->getPosition().x;
+	float dY = target.y - owner->getPosition().y;
 
 	float lenght = sqrt(pow(dX, 2) + pow(dY, 2));
 
 	sf::Vector2f normVect(dX / lenght, dY / lenght);
 
-	dir = normVect;
+	this->dir = normVect;
 }
 
 void Bullet::initSprite()
@@ -82,15 +86,24 @@ void Bullet::collisionWalls(std::vector<sf::FloatRect> walls)
 	}
 }
 
-void Bullet::collisionEnemies(std::vector<std::shared_ptr<Character>> enemies)
+void Bullet::collisionCharacter(std::vector<std::shared_ptr<Character>> target)
 {
-	for (int i = 0; i != enemies.size(); i++)
+	for (int i = 0; i != target.size(); i++)
 	{
-		if (sat_test(hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds(), &out_mtv))
+		if (sat_test(hit_box.getGlobalBounds(), target[i]->getHitBox().getGlobalBounds(), &out_mtv))
 		{
-			enemies[i]->takeDamage();
+			target[i]->takeDamage();
 			collideEnemy = true;
 		}
+	}
+}
+
+void Bullet::collisionCharacter(const std::shared_ptr<Character> player) //CON CONST NON MI DA ERRORE DI COMPILAZIONE NONSTANTE CI SIA TAKEDAMAGE SU PLAYER CHE CAMBIA I SUOI HP DA RIGUARDARE DEF DI CONST
+{
+	if (sat_test(hit_box.getGlobalBounds(), player->getHitBox().getGlobalBounds(), &out_mtv))
+	{
+		player->takeDamage();
+		collideEnemy = true;
 	}
 }
 

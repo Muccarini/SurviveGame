@@ -41,18 +41,7 @@ bool Character::isReloading()
 		this->reloading;
 }
 
-
-bool Character::isShooting(sf::Time deltaTime)
+bool Character::isAllied()
 {
-	ratio -= deltaTime;
-
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !reloading)
-	{
-		if (ratio < sf::seconds(0.f))
-		{
-			ratio = sf::seconds(1.f / 16.666);
-			return true;
-		}
-	}
-	return false;
+	return this->allied;
 }

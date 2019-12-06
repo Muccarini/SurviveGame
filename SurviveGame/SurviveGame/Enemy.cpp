@@ -20,12 +20,12 @@ Enemy::~Enemy()
 
 void Enemy::updateMove(sf::Time deltaTime, const std::shared_ptr<Character> target)
 {
-	float dX = target->getPosition().x - this->sprite.getPosition().x;
-	float dY = target->getPosition().y - this->sprite.getPosition().y;
+	float dx = target->getPosition().x - this->sprite.getPosition().x;
+	float dy = target->getPosition().y - this->sprite.getPosition().y;
 
-	float lenght = sqrt(pow(dX, 2) + pow(dY, 2));
+	float lenght = sqrt(pow(dx, 2) + pow(dy, 2));
 
-	sf::Vector2f normVect(dX / lenght, dY / lenght);
+	sf::Vector2f normVect(dx / lenght, dy / lenght);
 
 	this->sprite.move((normVect.x * this->mov_speed * deltaTime.asSeconds()), (normVect.y * this->mov_speed * deltaTime.asSeconds()));
 	hit_box.setPosition(getPosition());
@@ -46,15 +46,25 @@ void Enemy::updateHud()
 	hud.updateText(hp, getPosition());
 }
 
+void Enemy::updateCollision(std::shared_ptr<EntityData> entitydata)
+{
+	sf::Vector2f dir(0, 0);
+
+	dir = collision->isCollideWith(entitydata->player, *entitydata->enemies);
+	if (dir.x == 0 && dir.y == 0)
+		takeDamage();
+
+	dir += collision->isCollideWithWalls(entitydata->player, entitydata->walls);
+
+	sprite.move((dir.x * this->mov_speed* entitydata->deltaTime.asSeconds()), dir.y * this->mov_speed* entitydata->deltaTime.asSeconds());
+}
 
 void Enemy::update(std::shared_ptr<EntityData> entitydata)
 {
-	updateMove(entitydata->deltaTime, entitydata->target);
-	updateRotate(entitydata->target);
+	updateMove(entitydata->deltaTime, entitydata->player);
+	updateRotate(entitydata->player);
 	updateHud();
-
-	collisionWalls(entitydata->walls);
-	collisionEnemies(*entitydata->enemies);
+	updateCollision(entitydata);
 }
 
 void Enemy::renderBullets(std::shared_ptr<sf::RenderWindow> target)
@@ -68,6 +78,8 @@ void Enemy::initVar()
 {
 	mov_speed = 150;
 	hp = 10;
+
+	allied = false;
 }
 
 void Enemy::initSprite()

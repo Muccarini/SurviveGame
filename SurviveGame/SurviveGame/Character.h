@@ -30,18 +30,19 @@ public:
 	int getMovSpeed();
 	int getAmmo();
 	bool isReloading();
-	bool isShooting(sf::Time deltaTime);
+	bool isAllied();
 
 protected:
 	Hud hud;
 
 	sf::Texture texture_bullet;
 
-	sf::Time reload_cd;
+	sf::Time reload;
 	sf::Time reload_clock;
 	sf::Time ratio;
+	sf::Time ratio_clock;
 
-	sf::CircleShape range;
+	float range;
 
 	int hp;
 	int hp_max;
@@ -50,6 +51,6 @@ protected:
 	int ammo_max;
 
 	bool reloading;
-	bool shooting;
+	bool allied;
 };
 
