@@ -4,6 +4,7 @@
 
 CollisionManager::CollisionManager()
 {
+	this->collide = false;
 }
 
 
@@ -11,37 +12,41 @@ CollisionManager::~CollisionManager()
 {
 }
 
-sf::Vector2f CollisionManager::isCollideWithWalls(const std::shared_ptr<Entity> entity, std::vector<sf::FloatRect> walls)
+sf::Vector2f CollisionManager::CollideWithWalls(const sf::FloatRect & rectSp1, const std::vector<sf::FloatRect> walls)
 {
 	sf::Vector2f dir(0, 0);
 
-	for(int i = 0; i != walls.size(); i++)
+	while (this->collide == false)
 	{
-		if (sat_test(entity->getHitBox().getGlobalBounds(), walls[i]))
+		for (int i = 0; i != walls.size(); i++)
 		{
-			dir += out_mtv;
+			if (sat_test(rectSp1, walls[i]))
+			{
+				this->collide = true;
+			}
 		}
 	}
+
+	if (dir.x == 0 && dir.y == 0)
+		this->collide = false;
+	
 	return dir;
 }
 
-sf::Vector2f CollisionManager::isCollideWith(const std::shared_ptr<Entity> entity, std::vector<std::shared_ptr<Character>> characters)
+sf::Vector2f CollisionManager::CollideWithEntity(const sf::FloatRect & rectSp1, const sf::FloatRect & rectSp2)
 {
-	sf::Vector2f dir(0, 0);
-
-	for (int i = 0; i != characters.size(); i++)
+	if (sat_test(rectSp1, rectSp2))
 	{
-		dir += isCollideWith(entity, characters[i]);
-	}
-	return dir;
-}
-
-sf::Vector2f CollisionManager::isCollideWith(const std::shared_ptr<Entity> entity1, std::shared_ptr<Character> character)
-{
-	if (sat_test(entity1->getHitBox().getGlobalBounds(), character->getHitBox().getGlobalBounds()))
-	{
+		collide = true;
 		return out_mtv;
 	}
+	collide = false;
+}
+
+bool CollisionManager::isCollide()
+{
+	return
+		this->collide;
 }
 
 bool CollisionManager::sat_test(const sf::FloatRect & rectSp1, const sf::FloatRect & rectSp2)

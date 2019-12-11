@@ -1,11 +1,11 @@
-#ifndef ENTITY_H
-#define ENTITY_H
+#pragma once
 
 #include <SFML/Graphics.hpp>
 #include "TextureHolder.h"
 #include "CollisionManager.h"
 
 class Character;
+class CollisionManager;
 
 class EntityData
 {
@@ -33,8 +33,7 @@ public:
 	bool isAlive();
 	void setAlive(bool boolean);
 
-	bool isCollideWall();
-	bool isCollideEnemy();
+	bool isCollide(); 
 
 	sf::Vector2f getPosition();
 	sf::RectangleShape getHitBox();
@@ -52,10 +51,8 @@ protected:
 
 	bool alive;
 
-	bool collideWall;
-	bool collideEnemy;
+	bool collide;
 
 	int mov_speed;
 	int mov_speed_max;
 };
-#endif

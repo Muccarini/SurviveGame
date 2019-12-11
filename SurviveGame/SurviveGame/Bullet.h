@@ -15,12 +15,8 @@ public:
 
 private:
 
+	void updateCollsion(std::shared_ptr<EntityData> entitydata);
 	void rotate(sf::Vector2f vec_dir);
-
-	void collisionWalls(std::vector<sf::FloatRect> walls);
-	void collisionCharacter(std::vector<std::shared_ptr<Character>> target);
-	void collisionCharacter(const std::shared_ptr<Character> player);
-
 	void initSprite();
 	void initHitBox();
 

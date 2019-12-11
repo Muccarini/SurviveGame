@@ -8,8 +8,6 @@ Bullet::Bullet(const std::shared_ptr<Character> own, sf::Texture txt)
 	this->texture = txt;
 
 	this->mov_speed = 1500;
-	collideEnemy = false;
-	collideWall = false;
 
 	initSprite();
 	initHitBox();
@@ -28,17 +26,11 @@ void Bullet::update(std::shared_ptr<EntityData> entitydata)
 	this->sprite.move(this->dir.x * this->mov_speed * entitydata->deltaTime.asSeconds(), this->dir.y * this->mov_speed * entitydata->deltaTime.asSeconds());
 	hit_box.setPosition(sprite.getPosition());
 
-	if(this->owner == entitydata->player)
-		collisionCharacter(*entitydata->enemies);
-	if(this->owner == entitydata->boss)
-		collisionCharacter(entitydata->player);
-
-	collisionWalls(entitydata->walls);
-
 	//float dX = sprite.getPosition().x - player_pos.x;
 	//float dY = sprite.getPosition().y - player_pos.y;
 	//float distance = sqrt(pow(dX, 2) + pow(dY, 2));
 
+	updateCollsion(entitydata);
 	rotate(dir);
 }
 
@@ -59,7 +51,7 @@ void Bullet::setDir(sf::Vector2f owner_pos, sf::Vector2f target)
 void Bullet::initSprite()
 {
 	sprite.setTexture(texture);
-	sprite.setScale(0.013, 0.013);
+	sprite.setScale(0.013f, 0.013f);
 	sprite.setOrigin(-3500, -562);
 }
 
@@ -72,39 +64,67 @@ void Bullet::initHitBox()
 	hit_box.setScale(sprite.getScale());
 	hit_box.setOrigin(sprite.getOrigin());
 }
+//
+//void Bullet::collisionWalls(std::vector<sf::FloatRect> walls)
+//{
+//	collideWall = false;
+//
+//	for (int i = 0; i != walls.size(); i++)
+//	{
+//		if (sat_test(hit_box.getGlobalBounds(), walls[i], &out_mtv))
+//		{
+//			collideWall = true;
+//		}
+//	}
+//}
+//
+//void Bullet::collisionCharacter(std::vector<std::shared_ptr<Character>> target)
+//{
+//	for (int i = 0; i != target.size(); i++)
+//	{
+//		if (sat_test(hit_box.getGlobalBounds(), target[i]->getHitBox().getGlobalBounds(), &out_mtv))
+//		{
+//			target[i]->takeDamage();
+//			collideEnemy = true;
+//		}
+//	}
+//}
+//
+//void Bullet::collisionCharacter(const std::shared_ptr<Character> player) //CON CONST NON MI DA ERRORE DI COMPILAZIONE NONSTANTE CI SIA TAKEDAMAGE SU PLAYER CHE CAMBIA I SUOI HP DA RIGUARDARE DEF DI CONST
+//{
+//	if (sat_test(hit_box.getGlobalBounds(), player->getHitBox().getGlobalBounds(), &out_mtv))
+//	{
+//		player->takeDamage();
+//		collideEnemy = true;
+//	}
+//}
 
-void Bullet::collisionWalls(std::vector<sf::FloatRect> walls)
+void Bullet::updateCollsion(std::shared_ptr<EntityData> entitydata)
 {
-	collideWall = false;
-
-	for (int i = 0; i != walls.size(); i++)
+	//PLAYER CASE
+	if (this->owner == entitydata->player)
 	{
-		if (sat_test(hit_box.getGlobalBounds(), walls[i], &out_mtv))
+		std::vector<std::shared_ptr<Character>> enemies;
+		enemies = *entitydata->enemies;
+
+		for (int i = 0; i != enemies.size(); i++)
 		{
-			collideWall = true;
+			collision->CollideWithEntity(this->hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds());
+			if (collision->isCollide())
+				entitydata->boss->takeDamage();
 		}
 	}
-}
+	//BOSS CASE
+	if (this->owner == entitydata->boss)
+		collision->CollideWithEntity(this->hit_box.getGlobalBounds(), entitydata->player->getHitBox().getGlobalBounds());
+	if (collision->isCollide())
+		entitydata->player->takeDamage();
 
-void Bullet::collisionCharacter(std::vector<std::shared_ptr<Character>> target)
-{
-	for (int i = 0; i != target.size(); i++)
-	{
-		if (sat_test(hit_box.getGlobalBounds(), target[i]->getHitBox().getGlobalBounds(), &out_mtv))
-		{
-			target[i]->takeDamage();
-			collideEnemy = true;
-		}
-	}
-}
+	//WALL CASE
+	collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->walls);
 
-void Bullet::collisionCharacter(const std::shared_ptr<Character> player) //CON CONST NON MI DA ERRORE DI COMPILAZIONE NONSTANTE CI SIA TAKEDAMAGE SU PLAYER CHE CAMBIA I SUOI HP DA RIGUARDARE DEF DI CONST
-{
-	if (sat_test(hit_box.getGlobalBounds(), player->getHitBox().getGlobalBounds(), &out_mtv))
-	{
-		player->takeDamage();
-		collideEnemy = true;
-	}
+	if (collision->isCollide())
+		this->collide = true;
 }
 
 void Bullet::rotate(sf::Vector2f vec_dir)

@@ -5,8 +5,7 @@
 Entity::Entity()
 {
 	this->alive = false;
-	this->collideEnemy = false;
-	this->collideWall = false;
+	this->collision = std::make_shared<CollisionManager>();
 }
 
 
@@ -31,16 +30,10 @@ void Entity::setAlive(const bool boolean)
 	this->alive = boolean;
 }
 
-bool Entity::isCollideWall()
+bool Entity::isCollide()
 {
 	return
-		this->collideWall;
-}
-
-bool Entity::isCollideEnemy()
-{
-	return
-		this->collideEnemy;
+		this->collide;
 }
 
 sf::Vector2f Entity::getPosition()

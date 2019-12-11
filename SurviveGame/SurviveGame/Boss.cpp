@@ -65,7 +65,7 @@ void Boss::updateBullets(std::shared_ptr<EntityData> entitydata)
 	for (int i = 0; i != bullets.size(); i++)
 	{
 		bullets[i]->update(entitydata);
-		if (bullets[i]->isCollideEnemy() || bullets[i]->isCollideWall())
+		if (bullets[i]->isCollide())
 			bullets.erase(bullets.begin() + i);
 	}
 }
@@ -105,11 +105,8 @@ void Boss::updateCollision(std::shared_ptr<EntityData> entitydata)
 {
 	sf::Vector2f dir(0, 0);
 
-	dir = collision->isCollideWith(entitydata->boss, entitydata->player);
-	if (dir.x == 0 && dir.y == 0)
-		takeDamage();
-
-	dir += collision->isCollideWithWalls(entitydata->boss, entitydata->walls);
+	dir = this->collision->CollideWithEntity(this->getHitBox().getGlobalBounds(), entitydata->player->getHitBox().getGlobalBounds());
+	dir += this->collision->CollideWithWalls(this->getHitBox().getGlobalBounds(), entitydata->walls);
 
 	sprite.move((dir.x * this->mov_speed* entitydata->deltaTime.asSeconds()), dir.y * this->mov_speed* entitydata->deltaTime.asSeconds());
 }
@@ -160,7 +157,7 @@ void Boss::initVar()
 	ammo_max = 200;  // DA SCEGLIERE
 	ammo = ammo_max;
 
-	ratio = sf::seconds(1.f / 16.666); //DA SCEGLIERE
+	ratio = sf::seconds(1.f / 16.666f); //DA SCEGLIERE
 	ratio_clock = ratio;
 
 	reloading = false;

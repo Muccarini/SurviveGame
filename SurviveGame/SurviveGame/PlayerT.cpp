@@ -74,11 +74,14 @@ void PlayerT::updateBullets(std::shared_ptr<EntityData> entitydata)
 		bullet->setDir(entitydata->player->getPosition(), entitydata->mouse_pos_view);
 	}
 
-	for (int i = 0; i < bullets.size(); i++)
+	if (!bullets.empty())
 	{
-		bullets[i]->update(entitydata);
-		if(bullets[i]->isCollideEnemy() || bullets[i]->isCollideWall())
-			bullets.erase(bullets.begin() + i);
+		for (int i = 0; i != bullets.size(); i++)
+		{
+			bullets[i]->update(entitydata);
+			if (bullets[i]->isCollide())
+				bullets.erase(bullets.begin() + i);
+		}
 	}
 }
 
@@ -141,13 +144,19 @@ void PlayerT::updateCollision(std::shared_ptr<EntityData> entitydata)
 {
 	sf::Vector2f dir(0, 0);
 
-	dir = collision->isCollideWith(entitydata->player, *entitydata->enemies);
-	if (dir.x == 0 && dir.y == 0)
+	std::vector<std::shared_ptr<Character>> enemies;
+	enemies = *entitydata->enemies;
+
+	for(int i = 0; i != enemies.size(); i++)
+	{
+	dir = this->collision->CollideWithEntity(this->hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds());
+	if (dir.x != 0 && dir.y != 0)
 		takeDamage();
+	}
+	
+	dir += this->collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->walls);
 
-	dir += collision->isCollideWithWalls(entitydata->player, entitydata->walls);
-
-	sprite.move((dir.x * this->mov_speed* entitydata->deltaTime.asSeconds()), dir.y * this->mov_speed* entitydata->deltaTime.asSeconds());
+	sprite.move((dir.x * this->mov_speed* entitydata->deltaTime.asSeconds()), dir.y * this->mov_speed * entitydata->deltaTime.asSeconds());
 }
 
 bool PlayerT::isShooting(sf::Time deltaTime)
@@ -167,7 +176,7 @@ bool PlayerT::isShooting(sf::Time deltaTime)
 
 void PlayerT::renderBullets(std::shared_ptr<sf::RenderWindow> target)
 {
-	for (int i=0; i < bullets.size(); i++)
+	for (int i=0; i != bullets.size(); i++)
 	{
 		bullets[i]->render(target);
 	}
@@ -187,7 +196,7 @@ void PlayerT::initVar()
 	ammo_max = 200;
 	ammo = ammo_max;
 
-	ratio = sf::seconds(1.f / 16.666);
+	ratio = sf::seconds(1.f / 16.666f);
 	ratio_clock = ratio;
 
 	allied = true;
@@ -200,7 +209,7 @@ void PlayerT::initVar()
 void PlayerT::initSprite()
 {
 	sprite.setTexture(texture); //TEXTURE
-	sprite.setScale(0.3, 0.3);                              //SCALE
+	sprite.setScale(0.3f, 0.3f);                              //SCALE
 	sprite.setPosition(600.f, 600.f);                       //POS
 	sprite.setOrigin(92, 120);                              //ORIGIN
 }

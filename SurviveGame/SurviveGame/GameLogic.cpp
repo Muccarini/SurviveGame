@@ -51,7 +51,7 @@ void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
 	//ROUND CHECK
 	if (kill_counter == 1)
 	{
-		for (int i = 0; i < enemies->size(); i++)
+		for (int i = 0; i != enemies->size(); i++)
 		{
 			enemies->erase(enemies->begin(), enemies->end());
 		}
@@ -74,7 +74,7 @@ void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
 			enemies_alive++;
 		}
 
-		for (int i = 0; i < enemies->size(); i++)
+		for (int i = 0; i != enemies->size(); i++)
 		{
 			(*enemies)[i]->update(entitydata);
 

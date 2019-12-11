@@ -50,11 +50,8 @@ void Enemy::updateCollision(std::shared_ptr<EntityData> entitydata)
 {
 	sf::Vector2f dir(0, 0);
 
-	dir = collision->isCollideWith(entitydata->player, *entitydata->enemies);
-	if (dir.x == 0 && dir.y == 0)
-		takeDamage();
-
-	dir += collision->isCollideWithWalls(entitydata->player, entitydata->walls);
+	dir = collision->CollideWithEntity(entitydata->player->getHitBox().getGlobalBounds(), this->getHitBox().getGlobalBounds());
+	dir += collision->CollideWithWalls(this->getHitBox().getGlobalBounds(), entitydata->walls);
 
 	sprite.move((dir.x * this->mov_speed* entitydata->deltaTime.asSeconds()), dir.y * this->mov_speed* entitydata->deltaTime.asSeconds());
 }
@@ -85,7 +82,7 @@ void Enemy::initVar()
 void Enemy::initSprite()
 {
 	sprite.setTexture(texture);
-	sprite.setScale(0.9, 0.9);
+	sprite.setScale(0.9f, 0.9f);
 	sprite.setPosition(rand() % 400 + 500.f , rand() % 400 + 500.f);
 	sprite.setOrigin(+34.f, +34.f);
 	sprite.setTextureRect(sf::IntRect(0, 0, 68, 68));
@@ -102,28 +99,28 @@ void Enemy::initHitBox()
 	this->hit_box.setOrigin(35, 35);
 }
 
-void Enemy::collisionWalls(std::vector<sf::FloatRect> walls)
-{
-	for (int i = 0; i != walls.size(); i++)
-	{
-		if (sat_test(hit_box.getGlobalBounds(), walls[i], &out_mtv))
-		{
-			sprite.move(out_mtv);
-		}
-	}
-}
-
-void Enemy::collisionEnemies(std::vector<std::shared_ptr<Character>> enemies)
-{
-	for (int i = 0; i != enemies.size(); i++)
-	{
-		if (enemies[i]->getHitBox().getGlobalBounds() != this->hit_box.getGlobalBounds())
-			if (sat_test(hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds(), &out_mtv))
-			{
-				sprite.move(out_mtv);
-			}
-	}
-}
+//void Enemy::collisionWalls(std::vector<sf::FloatRect> walls)
+//{
+//	for (int i = 0; i != walls.size(); i++)
+//	{
+//		if (sat_test(hit_box.getGlobalBounds(), walls[i], &out_mtv))
+//		{
+//			sprite.move(out_mtv);
+//		}
+//	}
+//}
+//
+//void Enemy::collisionEnemies(std::vector<std::shared_ptr<Character>> enemies)
+//{
+//	for (int i = 0; i != enemies.size(); i++)
+//	{
+//		if (enemies[i]->getHitBox().getGlobalBounds() != this->hit_box.getGlobalBounds())
+//			if (sat_test(hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds(), &out_mtv))
+//			{
+//				sprite.move(out_mtv);
+//			}
+//	}
+//}
 
 void Enemy::takeDamage()
 {// a seconda del tipo di proiettile da cui viene colpito take dmg
