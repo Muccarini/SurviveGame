@@ -153,10 +153,11 @@ void PlayerT::updateCollision(std::shared_ptr<EntityData> entitydata)
 	if (dir.x != 0 && dir.y != 0)
 		takeDamage();
 	}
-	
+	dir = sf::Vector2f(0.f, 0.f);
 	dir += this->collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->walls);
 
-	sprite.move((dir.x * this->mov_speed* entitydata->deltaTime.asSeconds()), dir.y * this->mov_speed * entitydata->deltaTime.asSeconds());
+	sprite.move(dir);
+	collision->resetOutMtv();
 }
 
 bool PlayerT::isShooting(sf::Time deltaTime)

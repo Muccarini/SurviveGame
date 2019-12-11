@@ -30,7 +30,7 @@ void Bullet::update(std::shared_ptr<EntityData> entitydata)
 	//float dY = sprite.getPosition().y - player_pos.y;
 	//float distance = sqrt(pow(dX, 2) + pow(dY, 2));
 
-	updateCollsion(entitydata);
+	updateCollision(entitydata);
 	rotate(dir);
 }
 
@@ -99,7 +99,7 @@ void Bullet::initHitBox()
 //	}
 //}
 
-void Bullet::updateCollsion(std::shared_ptr<EntityData> entitydata)
+void Bullet::updateCollision(std::shared_ptr<EntityData> entitydata)
 {
 	//PLAYER CASE
 	if (this->owner == entitydata->player)
@@ -111,20 +111,32 @@ void Bullet::updateCollsion(std::shared_ptr<EntityData> entitydata)
 		{
 			collision->CollideWithEntity(this->hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds());
 			if (collision->isCollide())
+			{
+				enemies[i]->takeDamage();
+				continue;
+			}
+		}
+		if (!collision->isCollide())
+		{
+			collision->CollideWithEntity(this->hit_box.getGlobalBounds(), entitydata->boss->getHitBox().getGlobalBounds());
+			if (collision->isCollide())
 				entitydata->boss->takeDamage();
+			else //WALL CASE
+				collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->walls);
 		}
 	}
 	//BOSS CASE
-	if (this->owner == entitydata->boss)
+	else if (this->owner == entitydata->boss)
+	{
 		collision->CollideWithEntity(this->hit_box.getGlobalBounds(), entitydata->player->getHitBox().getGlobalBounds());
-	if (collision->isCollide())
-		entitydata->player->takeDamage();
+		if (collision->isCollide())
+			entitydata->player->takeDamage();
+		else //WALL CASE
+			collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->walls);
+	}
 
-	//WALL CASE
-	collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->walls);
 
-	if (collision->isCollide())
-		this->collide = true;
+	this->collide = collision->isCollide();
 }
 
 void Bullet::rotate(sf::Vector2f vec_dir)

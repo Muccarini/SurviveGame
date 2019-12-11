@@ -15,7 +15,7 @@ public:
 
 private:
 
-	void updateCollsion(std::shared_ptr<EntityData> entitydata);
+	void updateCollision(std::shared_ptr<EntityData> entitydata);
 	void rotate(sf::Vector2f vec_dir);
 	void initSprite();
 	void initHitBox();

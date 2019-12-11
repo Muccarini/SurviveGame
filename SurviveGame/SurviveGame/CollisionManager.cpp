@@ -1,4 +1,5 @@
 #include "CollisionManager.h"
+#include <iostream>
 
 
 
@@ -16,19 +17,21 @@ sf::Vector2f CollisionManager::CollideWithWalls(const sf::FloatRect & rectSp1, c
 {
 	sf::Vector2f dir(0, 0);
 
-	while (this->collide == false)
+	for (int i = 0; i != walls.size(); i++)
 	{
-		for (int i = 0; i != walls.size(); i++)
+		if (sat_test(rectSp1, walls[i]))
 		{
-			if (sat_test(rectSp1, walls[i]))
-			{
-				this->collide = true;
-			}
-		}
+			std::cout << "collide!\n" << out_mtv.x;
+			this->collide = true;
+		}/*
+		if (collide == true)
+			break;*/
 	}
-
+	dir = out_mtv;
 	if (dir.x == 0 && dir.y == 0)
+	{
 		this->collide = false;
+	}
 	
 	return dir;
 }
@@ -41,6 +44,11 @@ sf::Vector2f CollisionManager::CollideWithEntity(const sf::FloatRect & rectSp1, 
 		return out_mtv;
 	}
 	collide = false;
+}
+
+void CollisionManager::resetOutMtv()
+{
+	this->out_mtv = sf::Vector2f(0.f, 0.f);
 }
 
 bool CollisionManager::isCollide()

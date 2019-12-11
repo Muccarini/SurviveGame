@@ -10,7 +10,7 @@ public:
 
 	sf::Vector2f CollideWithWalls(const sf::FloatRect & rectSp1, const std::vector<sf::FloatRect> walls);
 	sf::Vector2f CollideWithEntity(const sf::FloatRect & rectSp1, const sf::FloatRect & rectSp2);
-
+	void resetOutMtv();
 	bool isCollide();
 
 private:

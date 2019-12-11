@@ -46,7 +46,6 @@ protected:
 	sf::Texture texture;
 	sf::RectangleShape hit_box;
 	std::shared_ptr<CollisionManager> collision;
-	sf::Vector2f out_mtv;
 
 
 	bool alive;
