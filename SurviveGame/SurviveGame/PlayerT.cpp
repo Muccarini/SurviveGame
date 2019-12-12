@@ -155,11 +155,13 @@ void PlayerT::updateCollision(std::shared_ptr<EntityData> entitydata)
 		takeDamage();
 	}
 	sprite.move(ent);
+	hit_box.setPosition(getPosition());
 	collision->resetOutMtv();
 
 	dir = this->collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->walls);
 
 	sprite.move(dir);
+	hit_box.setPosition(getPosition());
 	collision->resetOutMtv();
 }
 

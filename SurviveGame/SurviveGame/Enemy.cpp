@@ -53,10 +53,12 @@ void Enemy::updateCollision(std::shared_ptr<EntityData> entitydata)
 
 	ent = this->collision->CollideWithEntity(entitydata->player->getHitBox().getGlobalBounds(), this->getHitBox().getGlobalBounds());
 	sprite.move(ent);
+	hit_box.setPosition(getPosition());
 	collision->resetOutMtv();
 
 	dir = this->collision->CollideWithWalls(this->getHitBox().getGlobalBounds(), entitydata->walls);
  	sprite.move(dir);
+	hit_box.setPosition(getPosition());
 	collision->resetOutMtv();
 }
 
