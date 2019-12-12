@@ -48,12 +48,16 @@ void Enemy::updateHud()
 
 void Enemy::updateCollision(std::shared_ptr<EntityData> entitydata)
 {
+	sf::Vector2f ent(0, 0);
 	sf::Vector2f dir(0, 0);
 
-	dir = collision->CollideWithEntity(entitydata->player->getHitBox().getGlobalBounds(), this->getHitBox().getGlobalBounds());
-	dir += collision->CollideWithWalls(this->getHitBox().getGlobalBounds(), entitydata->walls);
+	ent = this->collision->CollideWithEntity(entitydata->player->getHitBox().getGlobalBounds(), this->getHitBox().getGlobalBounds());
+	collision->resetOutMtv();
 
-	sprite.move((dir.x * this->mov_speed* entitydata->deltaTime.asSeconds()), dir.y * this->mov_speed* entitydata->deltaTime.asSeconds());
+	dir = this->collision->CollideWithWalls(this->getHitBox().getGlobalBounds(), entitydata->walls);
+
+ 	sprite.move(dir + ent);
+	collision->resetOutMtv();
 }
 
 void Enemy::update(std::shared_ptr<EntityData> entitydata)

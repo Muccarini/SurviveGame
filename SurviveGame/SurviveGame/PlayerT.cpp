@@ -143,6 +143,7 @@ void PlayerT::updateHud()
 void PlayerT::updateCollision(std::shared_ptr<EntityData> entitydata)
 {
 	sf::Vector2f dir(0, 0);
+	sf::Vector2f ent(0, 0);
 
 	std::vector<std::shared_ptr<Character>> enemies;
 	enemies = *entitydata->enemies;
@@ -153,8 +154,9 @@ void PlayerT::updateCollision(std::shared_ptr<EntityData> entitydata)
 	if (dir.x != 0 && dir.y != 0)
 		takeDamage();
 	}
-	dir = sf::Vector2f(0.f, 0.f);
-	dir += this->collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->walls);
+	collision->resetOutMtv();
+
+	ent += this->collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->walls);
 
 	sprite.move(dir);
 	collision->resetOutMtv();
