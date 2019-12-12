@@ -180,7 +180,7 @@ void GameLogic::varInit()
 void GameLogic::entitydataInit()
 {
 	entitydata->enemies        = this->enemies;
-	entitydata->walls          = this->tile_map.getWalls();
+	entitydata->map            = std::make_shared<TileMap>(this->tile_map);
 	entitydata->player         = this->player;
 	entitydata->boss           = this->boss;
 }

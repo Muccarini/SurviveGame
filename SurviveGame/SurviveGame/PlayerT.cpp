@@ -159,7 +159,7 @@ void PlayerT::updateCollision(std::shared_ptr<EntityData> entitydata)
 	hit_box.setPosition(getPosition());
 	collision->resetOutMtv();
 
-	dir = this->collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->walls);
+	dir = this->collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->map->findWalls(sprite.getPosition().y, sprite.getPosition().x));
 
 	sprite.move(dir);
 	hit_box.setPosition(getPosition());
@@ -217,7 +217,7 @@ void PlayerT::initSprite()
 {
 	sprite.setTexture(texture); //TEXTURE
 	sprite.setScale(0.3f, 0.3f);                              //SCALE
-	sprite.setPosition(600.f, 600.f);                       //POS
+	sprite.setPosition(70.f, 70.f);                       //POS
 	sprite.setOrigin(92, 120);                              //ORIGIN
 }
 
@@ -225,7 +225,7 @@ void PlayerT::initHitBox()
 {
 	hit_box.setSize(sf::Vector2f(100.f, 100.f));     //SIZE
 	hit_box.setOutlineColor(sf::Color::Red); //COLOR
-	hit_box.setOutlineThickness(3.f);
+	//hit_box.setOutlineThickness(3.f);
 	hit_box.setFillColor(sf::Color::Transparent);
 	hit_box.setScale(sprite.getScale());             //SCALE
 	hit_box.setPosition(getPosition());              //POS

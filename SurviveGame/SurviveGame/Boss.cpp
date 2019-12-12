@@ -106,7 +106,7 @@ void Boss::updateCollision(std::shared_ptr<EntityData> entitydata)
 	sf::Vector2f dir(0, 0);
 
 	dir = this->collision->CollideWithEntity(this->getHitBox().getGlobalBounds(), entitydata->player->getHitBox().getGlobalBounds());
-	dir += this->collision->CollideWithWalls(this->getHitBox().getGlobalBounds(), entitydata->walls);
+	dir += this->collision->CollideWithWalls(this->getHitBox().getGlobalBounds(), entitydata->map->findWalls(sprite.getPosition().x, sprite.getPosition().y));
 
 	sprite.move((dir.x * this->mov_speed* entitydata->deltaTime.asSeconds()), dir.y * this->mov_speed* entitydata->deltaTime.asSeconds());
 }

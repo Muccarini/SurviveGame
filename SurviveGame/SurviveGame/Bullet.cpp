@@ -122,7 +122,7 @@ void Bullet::updateCollision(std::shared_ptr<EntityData> entitydata)
 			if (collision->isCollide())
 				entitydata->boss->takeDamage();
 			else //WALL CASE
-				collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->walls);
+				collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->map->findWalls(sprite.getPosition().y, sprite.getPosition().x));
 		}
 	}
 	//BOSS CASE
@@ -132,7 +132,7 @@ void Bullet::updateCollision(std::shared_ptr<EntityData> entitydata)
 		if (collision->isCollide())
 			entitydata->player->takeDamage();
 		else //WALL CASE
-			collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->walls);
+			collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->map->findWalls(sprite.getPosition().y, sprite.getPosition().x));
 	}
 
 

@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "TextureHolder.h"
 #include "CollisionManager.h"
+#include "TileMap.h"
 
 class Character;
 class CollisionManager;
@@ -14,7 +15,7 @@ public:
 
 	sf::Time deltaTime;
 	sf::Vector2f mouse_pos_view;
-	std::vector<sf::FloatRect> walls;
+	std::shared_ptr<TileMap> map;
     std::vector<std::shared_ptr<Character>> * enemies;
 	std::shared_ptr<Character> player;
 	std::shared_ptr<Character> boss;

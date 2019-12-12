@@ -58,7 +58,7 @@ void Enemy::updateCollision(std::shared_ptr<EntityData> entitydata)
 	//hit_box.setPosition(getPosition());
 	collision->resetOutMtv();
 
-	dir = this->collision->CollideWithWalls(this->getHitBox().getGlobalBounds(), entitydata->walls);
+	dir = this->collision->CollideWithWalls(this->getHitBox().getGlobalBounds(), entitydata->map->findWalls(sprite.getPosition().x, sprite.getPosition().y));
  	sprite.move(dir);
 	hit_box.setPosition(getPosition());
 	collision->resetOutMtv();
@@ -100,7 +100,6 @@ void Enemy::initHitBox()
 {
 	this->hit_box.setSize(sf::Vector2f(60.f, 60.f));
 	this->hit_box.setOutlineColor(sf::Color::Blue);
-	this->hit_box.setOutlineThickness(0.5f);
 	this->hit_box.setFillColor(sf::Color::Transparent);
 	this->hit_box.setScale(sprite.getScale());
 	this->hit_box.setPosition(getPosition());

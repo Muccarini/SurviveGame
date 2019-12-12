@@ -96,37 +96,41 @@ void TileMap::render(std::shared_ptr<sf::RenderTarget> target)
 	}
 }
 
-std::vector<sf::IntRect> TileMap::findWalls(int x, int y)
+std::vector<sf::FloatRect> TileMap::findWalls(int x, int y)
 {
-	sf::Vector2i pos((x + 32) / grid_size_f, (y + 32) / grid_size_f);
-	sf::IntRect wall;
-	std::vector<sf::IntRect> wallvect;
-	wallvect.resize(9);
+	sf::Vector2i pos(x / grid_size_f, y / grid_size_f);
+	std::vector<sf::FloatRect> wallvect;
 	if (pos.y > 0)
 	{
 		if (map[pos.y - 1][pos.x]->type_tile == 9)
-			wallvect.push_back(map[pos.y - 1][pos.x]->rect_shape);
+			wallvect.push_back(map[pos.y - 1][pos.x]->shape.getGlobalBounds());
 		if (pos.x < max_size.x - 1)
 			if (map[pos.y - 1][pos.x + 1]->type_tile == 9)
-				wallvect.push_back(map[pos.y - 1][pos.x + 1]->rect_shape);
+				wallvect.push_back(map[pos.y - 1][pos.x + 1]->shape.getGlobalBounds());
+		if(pos.x > 0)
+			if (map[pos.y - 1][pos.x - 1]->type_tile == 9)
+				wallvect.push_back(map[pos.y - 1][pos.x - 1]->shape.getGlobalBounds());
 	}
 	if (pos.y < max_size.y - 1)
 	{
 		if (map[pos.y + 1][pos.x]->type_tile == 9)
-			wallvect.push_back(map[pos.y + 1][pos.x]->rect_shape);
+			wallvect.push_back(map[pos.y + 1][pos.x]->shape.getGlobalBounds());
 		if(pos.x < max_size.x - 1)
 			if (map[pos.y + 1][pos.x + 1]->type_tile == 9)
-				wallvect.push_back(map[pos.y + 1][pos.x + 1]->rect_shape);
+				wallvect.push_back(map[pos.y + 1][pos.x + 1]->shape.getGlobalBounds());
+		if (pos.x > 0)
+			if (map[pos.y + 1][pos.x - 1]->type_tile == 9)
+				wallvect.push_back(map[pos.y + 1][pos.x - 1]->shape.getGlobalBounds());
 	}
 	if (pos.x > 0)
 	{
 		if (map[pos.y][pos.x - 1]->type_tile == 9)
-			wallvect.push_back(map[pos.y][pos.x - 1]->rect_shape);
+			wallvect.push_back(map[pos.y][pos.x - 1]->shape.getGlobalBounds());
 	}
 	if (pos.x < max_size.x - 1)
 	{
 		if (map[pos.y][pos.x - 1]->type_tile == 9)
-			wallvect.push_back(map[pos.y][pos.x + 1]->rect_shape);
+			wallvect.push_back(map[pos.y][pos.x + 1]->shape.getGlobalBounds());
 	}
 	return wallvect;
 }

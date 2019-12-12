@@ -34,6 +34,6 @@ public:
 
 	void render(std::shared_ptr<sf::RenderTarget> target);
 
-	std::vector<sf::IntRect> findWalls(int x, int y);
+	std::vector<sf::FloatRect> findWalls(int x, int y);
 };
 
