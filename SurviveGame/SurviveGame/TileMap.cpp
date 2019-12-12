@@ -95,3 +95,13 @@ void TileMap::render(std::shared_ptr<sf::RenderTarget> target)
 		}
 	}
 }
+
+std::vector<sf::IntRect> TileMap::findWalls(int x, int y)
+{
+	sf::Vector2i pos((x + 32) / grid_size_f, (y + 32) / grid_size_f);
+	sf::IntRect wall;
+	std::vector<sf::IntRect> wallvect;
+	wallvect.resize(9);
+	if (map[pos.y][pos.x]->type_tile == 9)
+		wallvect.push_back(map[y][x]->rect_shape);
+}

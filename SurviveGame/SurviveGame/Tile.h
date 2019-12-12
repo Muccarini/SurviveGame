@@ -21,13 +21,14 @@ public:
 protected:
 	sf::RectangleShape shape;
 	sf::Texture& textures;
-	sf::IntRect rect_shape;
-	int type_tile;
 
 private: 
 	
 
 public:
+
+	int type_tile;
+	sf::IntRect rect_shape;
 	void update();
 	void render(std::shared_ptr<sf::RenderTarget> target);
 

@@ -21,6 +21,7 @@ PlayerT::~PlayerT()
 
 void PlayerT::update(std::shared_ptr<EntityData> entitydata)
 {
+	updateCollision(entitydata);
 	updateMove(entitydata->deltaTime);
 	updateBullets(entitydata);
 	updateRotate(entitydata->mouse_pos_view);
@@ -151,7 +152,7 @@ void PlayerT::updateCollision(std::shared_ptr<EntityData> entitydata)
 	for(int i = 0; i != enemies.size(); i++)
 	{
 	ent = this->collision->CollideWithEntity(this->hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds());
-	if (ent.x != 0 && ent.y != 0)
+	if (ent.x != 0 || ent.y != 0)
 		takeDamage();
 	}
 	sprite.move(ent);
@@ -223,7 +224,7 @@ void PlayerT::initSprite()
 void PlayerT::initHitBox()
 {
 	hit_box.setSize(sf::Vector2f(100.f, 100.f));     //SIZE
-	hit_box.setOutlineColor(sf::Color::Transparent); //COLOR
+	hit_box.setOutlineColor(sf::Color::Red); //COLOR
 	hit_box.setOutlineThickness(3.f);
 	hit_box.setFillColor(sf::Color::Transparent);
 	hit_box.setScale(sprite.getScale());             //SCALE
