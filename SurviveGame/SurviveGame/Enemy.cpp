@@ -49,8 +49,8 @@ void Enemy::updateHud()
 
 void Enemy::update(std::shared_ptr<EntityData> entitydata)
 {
-	updateMove(entitydata->deltaTime, entitydata->target);
-	updateRotate(entitydata->target);
+	updateMove(entitydata->deltaTime, entitydata->player);
+	updateRotate(entitydata->player);
 	updateHud();
 
 	collisionWalls(entitydata->walls);

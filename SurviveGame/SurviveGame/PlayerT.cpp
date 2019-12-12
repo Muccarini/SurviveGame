@@ -1,9 +1,10 @@
 #include "PlayerT.h"
 
-PlayerT::PlayerT(sf::Texture txt_p, sf::Texture txt_b)
+PlayerT::PlayerT(sf::Texture txt_p, sf::Texture txt_b, sf::Texture txt_ms)
 {
 	this->texture = txt_p;
 	this->texture_bullet = txt_b;
+	this->texture_movspeed = txt_ms;
 
 	initVar();
 	initSprite();
@@ -61,6 +62,7 @@ void PlayerT::updateMove(sf::Time deltaTime)
 	}
 
 	updateDash(dir, deltaTime);
+	updateMovSpeed(deltaTime);
 
 	this->sprite.move((dir.x * this->mov_speed* deltaTime.asSeconds()) , dir.y * this->mov_speed* deltaTime.asSeconds());
 	hit_box.setPosition(getPosition());
@@ -73,7 +75,7 @@ void PlayerT::updateBullets(std::shared_ptr<EntityData> entitydata)
 		std::shared_ptr<Bullet>bullet(new Bullet(texture_bullet));
 		ammo--;
 		bullets.emplace_back(bullet);
-		bullet->setDir(entitydata->target->getPosition(), entitydata->mouse_pos_view);
+		bullet->setDir(entitydata->player->getPosition(), entitydata->mouse_pos_view);
 		bullet_counter++;
 	}
 
@@ -109,7 +111,7 @@ void PlayerT::updateReload(sf::Time deltaTime)
 		if (reload_clock < sf::seconds(0.f))
 		{
 			ammo = ammo_max;
-			reload_clock = sf::seconds(1.f);
+			reload_clock = reload_cd;
 			reloading = false;
 		}
 	}
@@ -124,20 +126,37 @@ void PlayerT::updateDash(sf::Vector2f dir, sf::Time deltaTime)
 		sprite.setPosition(getPosition().x + (dir.x * 160), (dir.y * 160) + getPosition().y);
 		is_dashing = true;
 	}
-	if (is_dashing && dash_cd > 0)
+	if (is_dashing && dash_clock > 0)
 	{
-		dash_cd -= deltaTime.asSeconds();
-		if (dash_cd < 0)
+		dash_clock -= deltaTime.asSeconds();
+		if (dash_clock < 0)
 		{
 			is_dashing = false;
-			dash_cd = 10;
+			dash_clock = dash_cd;
 		}
 	}
 }
 
+void PlayerT::updateMovSpeed(sf::Time deltaTime)
+{
+	if (this->mov_speed != this->mov_speed_default)
+	{
+		this->sprite.setTexture(this->texture_movspeed);
+		this->ms_clock -= deltaTime.asSeconds();
+	}
+
+	if (ms_clock < 0.f)
+	{
+		this->ms_clock = this->ms_cd;
+		this->mov_speed = this->mov_speed_default;
+		this->sprite.setTexture(this->texture);
+	}
+		
+}
+
 void PlayerT::updateHud()
 {
-	hud.updateText(getAmmo(), getHp(), this->dash_cd, getPosition());
+	hud.updateText(getAmmo(), getHp(), this->dash_clock, getPosition());
 }
 
 void PlayerT::renderBullets(std::shared_ptr<sf::RenderWindow> target)
@@ -151,10 +170,11 @@ void PlayerT::renderBullets(std::shared_ptr<sf::RenderWindow> target)
 
 void PlayerT::initVar()
 {
-	mov_speed_max = 200;
-	mov_speed = mov_speed_max;
+	mov_speed_default = 200;
+	mov_speed = mov_speed_default;
 
-	hp = 100;
+	hp_max = 100;
+	hp = hp_max;
 
 	reload_cd = sf::seconds(1.f);
 	reload_clock = reload_cd;
@@ -163,19 +183,24 @@ void PlayerT::initVar()
 	ammo = ammo_max;
 	bullet_counter = 0;
 
-	ratio = sf::seconds(1.f / 20.f);
+	ratio_cd = sf::seconds(1.f / 20.f);
+	ratio_clock = ratio_cd;
 
 	this->dash_speed = 1000;
 	this->dash_cd = 10.f;
+	this->dash_clock = dash_cd;
 	this->is_dashing = false;
+
+	this->ms_cd = 3.f;
+	this->ms_clock = ms_cd;
 }
 
 void PlayerT::initSprite()
 {
-	sprite.setTexture(texture); //TEXTURE
-	sprite.setScale(0.3, 0.3);                              //SCALE
-	sprite.setPosition(600.f, 600.f);                       //POS
-	sprite.setOrigin(92, 120);                              //ORIGIN
+	sprite.setTexture(texture);       //TEXTURE
+	sprite.setScale(0.3, 0.3);        //SCALE
+	sprite.setPosition(600.f, 600.f); //POS
+	sprite.setOrigin(92, 120);        //ORIGIN
 }
 
 void PlayerT::initHitBox()

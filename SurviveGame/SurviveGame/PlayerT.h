@@ -5,7 +5,7 @@ class PlayerT :
 	public Character
 {
 public:
-	PlayerT(sf::Texture texture_player, sf::Texture texture_bullet);
+	PlayerT(sf::Texture texture_player, sf::Texture texture_bullet, sf::Texture texture_player_movspeed);
 
 	PlayerT();
 	virtual ~PlayerT();
@@ -19,6 +19,7 @@ private:
 	void updateRotate(sf::Vector2f mousePosView);
 	void updateReload(sf::Time deltaTime);
 	void updateDash(sf::Vector2f dir, sf::Time deltaTime);
+	void updateMovSpeed(sf::Time deltaTime);
 	void updateHud();
 
 	void initVar();
@@ -28,13 +29,20 @@ private:
 	void collisionWalls(std::vector<sf::FloatRect> walls);
 	void collisionEnemies(std::vector<std::shared_ptr<Character>> enemies);
 
+
 	std::vector<std::shared_ptr<Bullet>> bullets;
 	int bullet_counter;
 
 	void takeDamage();
 
+	sf::Texture texture_movspeed;
+
 	float dash_speed;
 	float dash_cd;
+	float dash_clock;
+
+	float ms_cd;
+	float ms_clock;
 
 	bool is_dashing;
 };

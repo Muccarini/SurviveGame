@@ -93,6 +93,9 @@
     <ClCompile Include="Character.cpp">
       <Filter>Personaggi</Filter>
     </ClCompile>
+    <ClCompile Include="boost.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnemyStrategyMove.h">
@@ -160,6 +163,9 @@
     </ClInclude>
     <ClInclude Include="Character.h">
       <Filter>Personaggi</Filter>
+    </ClInclude>
+    <ClInclude Include="boost.h">
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

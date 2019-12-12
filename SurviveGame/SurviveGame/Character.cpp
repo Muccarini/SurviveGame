@@ -17,16 +17,39 @@ void Character::renderHud(std::shared_ptr<sf::RenderWindow> target)
 }
 
 
+void Character::boostHeal()
+{
+	if ((this->hp = this->hp + 30) > this->hp_max)
+		this->hp = this->hp_max;
+}
+
+void Character::boostMovSpeed()
+{
+	this->mov_speed += 100;
+}
+
 int Character::getHp()
 {
 	return
 		this->hp;
 }
 
+int Character::getHpMax()
+{
+	return
+		this->hp_max;
+}
+
 int Character::getMovSpeed()
 {
 	return
 		this->mov_speed;
+}
+
+int Character::getMovSpeedDef()
+{
+	return
+		this->mov_speed_default;
 }
 
 int Character::getAmmo()
@@ -44,13 +67,13 @@ bool Character::isReloading()
 
 bool Character::isShooting(sf::Time deltaTime)
 {
-	ratio -= deltaTime;
+	ratio_clock -= deltaTime;
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !reloading)
 	{
-		if (ratio < sf::seconds(0.f))
+		if (ratio_clock < sf::seconds(0.f))
 		{
-			ratio = sf::seconds(1.f / 16.666);
+			ratio_clock = ratio_cd;
 			return true;
 		}
 	}

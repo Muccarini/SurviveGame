@@ -11,7 +11,7 @@ GameLogic::GameLogic() : game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 
 
 GameLogic::~GameLogic()
 { 
-	delete enemies;
+	//delete enemies;
 }
 
 void GameLogic::update(sf::Time deltaTime)
@@ -22,6 +22,7 @@ void GameLogic::update(sf::Time deltaTime)
 
 	updatePlayer(entitydata);
 	updateEnemies(entitydata);
+	updateBoost(entitydata);
 
 	updateGameView(deltaTime);
 }
@@ -30,6 +31,9 @@ void GameLogic::update(sf::Time deltaTime)
 void GameLogic::render()
 {
 	tile_map.render(window);
+
+	if(!boost.empty())
+		renderBoost();
 
 	renderPlayer();
 
@@ -90,6 +94,27 @@ void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
 	}
 }
 
+void GameLogic::updateBoost(std::shared_ptr<EntityData> entitydata)
+{
+	if (boost.size() < 4)
+	{
+		if (boost_time.getElapsedTime() > rand_time)
+		{
+			this->boost.emplace_back(new Boost(boost_pos, textures.get(Textures::HP), textures.get(Textures::MS)));
+			this->boost_time.restart();
+			this->rand_time = sf::seconds((rand() % 10)+ 5);
+		}
+	}
+	//if !empty
+		for (int i = 0; i < boost.size(); i++)
+		{
+			boost[i]->update(entitydata);
+			if (!boost[i]->isAlive())
+				boost.erase(boost.begin() + i);
+
+		}
+}
+
 void GameLogic::updatePlayer(const std::shared_ptr<EntityData> entitydata)
 {
 	player->update(entitydata);
@@ -106,6 +131,7 @@ void GameLogic::updatePlayer(const std::shared_ptr<EntityData> entitydata)
 //	{
 //		//BOSS MORTO
 //		round.setBossRound(false);
+//      player->spawnPet(textures.get(Textures::Pet));
 //	}
 //}
 
@@ -130,14 +156,13 @@ void GameLogic::renderPlayer()
 	player->renderBullets(window);
 }
 
-//void GameLogic::renderBullet()
-//{
-//	for (auto i = flying_bullets.begin(); i != flying_bullets.end(); i++)
-//	{
-//		(*i)->render(window);
-//		window->draw((*i)->hit_box);
-//	}
-//}
+void GameLogic::renderBoost()
+{
+	for(int i = 0; i != boost.size(); i++)
+	{
+		boost[i]->render(window);
+	}
+}
 
 void GameLogic::renderEnemies()
 {
@@ -158,7 +183,7 @@ void GameLogic::entitiesInit()
 	entitydata = std::make_shared<EntityData>();
 
 	this->enemies = new std::vector<std::shared_ptr<Character>>;
-	this->player = std::make_shared<PlayerT>(textures.get(Textures::Personaggio), textures.get(Textures::Proiettile));
+	this->player = std::make_shared<PlayerT>(textures.get(Textures::Personaggio), textures.get(Textures::Proiettile), textures.get(Textures::PersonaggioMS));
 }
 
 void GameLogic::gameViewInit()
@@ -168,19 +193,21 @@ void GameLogic::gameViewInit()
 
 void GameLogic::varInit()
 {
-	this->max_enemies = 5;
+	this->max_enemies = 1;
 	this->enemies_alive = 0;
 	this->kill_counter = 0;
 	this->game_view_speed = 4.5f;
+	this->rand_time = sf::seconds((rand() % 10) +5);
 
+	boost_pos = std::make_shared<BoostPos>();
 	entitydataInit();
 }
 
 void GameLogic::entitydataInit()
 {
-	entitydata->enemies        =  this->enemies;
-	entitydata->walls          =  this->tile_map.getWalls();
-	entitydata->target         =  this->player;
+	entitydata->enemies = this->enemies;
+	entitydata->walls   = this->tile_map.getWalls();
+	entitydata->player  = this->player;
 }
 
 void GameLogic::textureInit()
@@ -189,6 +216,9 @@ void GameLogic::textureInit()
 	textures.load(Textures::Proiettile, "Sources/bullets/bullet1.png");
 	textures.load(Textures::Boss, "Sources/boss/boss.png");
 	textures.load(Textures::Personaggio, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
+	textures.load(Textures::PersonaggioMS, "Sources/player_boost_speed.png");
+	textures.load(Textures::HP, "Sources/hp.png");
+	textures.load(Textures::MS, "Sources/ms.png");
 }
 
 

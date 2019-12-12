@@ -25,10 +25,17 @@ public:
 	virtual void renderBullets(std::shared_ptr<sf::RenderWindow> target) = 0;
 
 	virtual void takeDamage() = 0;
+	void boostHeal();
+	void boostMovSpeed();
 
 	int getHp();
+	int getHpMax();
+
 	int getMovSpeed();
+	int getMovSpeedDef();
+
 	int getAmmo();
+
 	bool isReloading();
 	bool isShooting(sf::Time deltaTime);
 
@@ -39,7 +46,9 @@ protected:
 
 	sf::Time reload_cd;
 	sf::Time reload_clock;
-	sf::Time ratio;
+
+	sf::Time ratio_cd;
+	sf::Time ratio_clock;
 
 	sf::CircleShape range;
 

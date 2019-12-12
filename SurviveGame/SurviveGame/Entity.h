@@ -13,9 +13,19 @@ public:
 	sf::Vector2f mouse_pos_view;
 	std::vector<sf::FloatRect> walls;
     std::vector<std::shared_ptr<Character>> * enemies;
-	std::shared_ptr<Character> target;
+	std::shared_ptr<Character> player;
 };
 
+class BoostPos {
+
+public:
+	BoostPos() { pos1_1 = false; pos1_2 = false; pos2_1 = false; pos2_2 = false; };
+
+	bool pos1_1;
+	bool pos1_2;
+	bool pos2_1;
+	bool pos2_2;
+};
 
 class Entity
 {
@@ -27,13 +37,13 @@ public:
 	void render(std::shared_ptr<sf::RenderWindow> target);
 
 	bool isAlive();
-	void setAlive(bool boolean);
 
 	bool isCollideWall();
 	bool isCollideEnemy();
 
 	sf::Vector2f getPosition();
 	sf::RectangleShape getHitBox();
+	bool getAlive();
 
 protected:
 
@@ -50,5 +60,5 @@ protected:
 	bool collideEnemy;
 
 	int mov_speed;
-	int mov_speed_max;
+	int mov_speed_default;
 };

@@ -26,11 +26,6 @@ bool Entity::isAlive()
 		this->alive;
 }
 
-void Entity::setAlive(const bool boolean)
-{
-	this->alive = boolean;
-}
-
 bool Entity::isCollideWall()
 {
 	return
@@ -54,6 +49,7 @@ sf::RectangleShape Entity::getHitBox()
 	return
 		this->hit_box;
 }
+
 
 bool Entity::sat_test(const sf::FloatRect &rectSp1, const sf::FloatRect &rectSp2, sf::Vector2f *out_mtv)
 {
