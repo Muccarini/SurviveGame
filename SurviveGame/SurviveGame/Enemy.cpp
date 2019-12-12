@@ -52,11 +52,11 @@ void Enemy::updateCollision(std::shared_ptr<EntityData> entitydata)
 	sf::Vector2f dir(0, 0);
 
 	ent = this->collision->CollideWithEntity(entitydata->player->getHitBox().getGlobalBounds(), this->getHitBox().getGlobalBounds());
+	sprite.move(ent);
 	collision->resetOutMtv();
 
 	dir = this->collision->CollideWithWalls(this->getHitBox().getGlobalBounds(), entitydata->walls);
-
- 	sprite.move(dir + ent);
+ 	sprite.move(dir);
 	collision->resetOutMtv();
 }
 

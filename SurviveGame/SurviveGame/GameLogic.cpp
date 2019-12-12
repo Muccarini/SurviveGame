@@ -169,7 +169,7 @@ void GameLogic::gameViewInit()
 
 void GameLogic::varInit()
 {
-	this->max_enemies = 5;
+	this->max_enemies = 1;
 	this->enemies_alive = 0;
 	this->kill_counter = 0;
 	this->game_view_speed = 4.5f;

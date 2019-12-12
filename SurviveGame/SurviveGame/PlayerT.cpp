@@ -150,13 +150,14 @@ void PlayerT::updateCollision(std::shared_ptr<EntityData> entitydata)
 
 	for(int i = 0; i != enemies.size(); i++)
 	{
-	dir = this->collision->CollideWithEntity(this->hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds());
-	if (dir.x != 0 && dir.y != 0)
+	ent = this->collision->CollideWithEntity(this->hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds());
+	if (ent.x != 0 && ent.y != 0)
 		takeDamage();
 	}
+	sprite.move(ent);
 	collision->resetOutMtv();
 
-	ent += this->collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->walls);
+	dir = this->collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->walls);
 
 	sprite.move(dir);
 	collision->resetOutMtv();
