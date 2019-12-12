@@ -23,8 +23,11 @@ private:
 	void initSprite();
 	void initHitBox();
 
-	sf::Vector2f player_pos;
+	sf::Vector2f owner_pos;
 	sf::Vector2f dir;
+
+	///*/*Owner owner;*/*/
+
 
 };
 

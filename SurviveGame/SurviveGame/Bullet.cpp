@@ -29,8 +29,8 @@ void Bullet::update(std::shared_ptr<EntityData> entitydata)
 	collisionEnemies(*entitydata->enemies);
 	collisionWalls(entitydata->walls);
 
-	float dX = sprite.getPosition().x - player_pos.x;
-	float dY = sprite.getPosition().y - player_pos.y;
+	float dX = sprite.getPosition().x - owner_pos.x;
+	float dY = sprite.getPosition().y - owner_pos.y;
 	float distance = sqrt(pow(dX, 2) + pow(dY, 2));
 
 	rotate(dir);
@@ -38,12 +38,12 @@ void Bullet::update(std::shared_ptr<EntityData> entitydata)
 
 void Bullet::setDir(sf::Vector2f owner_pos, sf::Vector2f mousePosView)
 {
-	this->player_pos = owner_pos;
+	this->owner_pos = owner_pos;
 
-	this->sprite.setPosition(player_pos);
+	this->sprite.setPosition(owner_pos);
 
-	float dX = mousePosView.x - player_pos.x;
-	float dY = mousePosView.y - player_pos.y;
+	float dX = mousePosView.x - owner_pos.x;
+	float dY = mousePosView.y - owner_pos.y;
 
 	float lenght = sqrt(pow(dX, 2) + pow(dY, 2));
 

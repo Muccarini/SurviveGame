@@ -96,6 +96,9 @@
     <ClCompile Include="boost.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="Pet.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnemyStrategyMove.h">
@@ -165,6 +168,9 @@
       <Filter>Personaggi</Filter>
     </ClInclude>
     <ClInclude Include="boost.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Pet.h">
       <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>

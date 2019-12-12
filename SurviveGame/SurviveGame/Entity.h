@@ -14,6 +14,7 @@ public:
 	std::vector<sf::FloatRect> walls;
     std::vector<std::shared_ptr<Character>> * enemies;
 	std::shared_ptr<Character> player;
+	std::shared_ptr<Character> boss;
 };
 
 class BoostPos {

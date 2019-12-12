@@ -142,6 +142,7 @@
     <ClCompile Include="Hud.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Pet.cpp" />
     <ClCompile Include="Player1.cpp" />
     <ClCompile Include="Player2.cpp" />
     <ClCompile Include="Player3.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Hud.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="Pet.h" />
     <ClInclude Include="Player1.h" />
     <ClInclude Include="Player2.h" />
     <ClInclude Include="Player3.h" />

@@ -167,7 +167,6 @@ void PlayerT::renderBullets(std::shared_ptr<sf::RenderWindow> target)
 	}
 }
 
-
 void PlayerT::initVar()
 {
 	mov_speed_default = 200;

@@ -42,8 +42,6 @@ public:
 protected:
 	Hud hud;
 
-	sf::Texture texture_bullet;
-
 	sf::Time reload_cd;
 	sf::Time reload_clock;
 

@@ -22,6 +22,7 @@ void GameLogic::update(sf::Time deltaTime)
 
 	updatePlayer(entitydata);
 	updateEnemies(entitydata);
+	updatePets(entitydata);
 	updateBoost(entitydata);
 
 	updateGameView(deltaTime);
@@ -36,6 +37,7 @@ void GameLogic::render()
 		renderBoost();
 
 	renderPlayer();
+	renderPets();
 
 	if(!round.isLoading() && !round.isBossRound())
 		renderEnemies();
@@ -60,6 +62,9 @@ void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
 		kill_counter = 0;
 		round.reset();
 		round.increase();
+
+		//INIT PET
+		pets.emplace_back(new Pet(textures.get(Textures::HP), textures.get(Textures::Proiettile), player->getPosition()));
 
 		if (round.getCounter() % 3 == 0)
 			round.setBossRound(true);
@@ -91,6 +96,14 @@ void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
 		{
 			/*updateBoss(deltaTime);*/
 		}
+	}
+}
+
+void GameLogic::updatePets(std::shared_ptr<EntityData> entitydata)
+{
+	for (int i = 0; i != pets.size(); i++)
+	{
+		pets[i]->update(entitydata);
 	}
 }
 
@@ -131,7 +144,7 @@ void GameLogic::updatePlayer(const std::shared_ptr<EntityData> entitydata)
 //	{
 //		//BOSS MORTO
 //		round.setBossRound(false);
-//      player->spawnPet(textures.get(Textures::Pet));
+//      player->spawnPet(boss->getPosition());
 //	}
 //}
 
@@ -154,6 +167,16 @@ void GameLogic::renderPlayer()
 	player->renderHud(window);
 	player->render(window);
 	player->renderBullets(window);
+}
+
+void GameLogic::renderPets()
+{
+	for (int i = 0; i != pets.size(); i++)
+	{
+		pets[i]->renderHud(window);
+		pets[i]->render(window);
+		pets[i]->renderBullets(window);
+	}
 }
 
 void GameLogic::renderBoost()
@@ -208,6 +231,7 @@ void GameLogic::entitydataInit()
 	entitydata->enemies = this->enemies;
 	entitydata->walls   = this->tile_map.getWalls();
 	entitydata->player  = this->player;
+	/*entitydata->boss    = this->boss;*/
 }
 
 void GameLogic::textureInit()
