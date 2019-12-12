@@ -102,6 +102,31 @@ std::vector<sf::IntRect> TileMap::findWalls(int x, int y)
 	sf::IntRect wall;
 	std::vector<sf::IntRect> wallvect;
 	wallvect.resize(9);
-	if (map[pos.y][pos.x]->type_tile == 9)
-		wallvect.push_back(map[y][x]->rect_shape);
+	if (pos.y > 0)
+	{
+		if (map[pos.y - 1][pos.x]->type_tile == 9)
+			wallvect.push_back(map[pos.y - 1][pos.x]->rect_shape);
+		if (pos.x < max_size.x - 1)
+			if (map[pos.y - 1][pos.x + 1]->type_tile == 9)
+				wallvect.push_back(map[pos.y - 1][pos.x + 1]->rect_shape);
+	}
+	if (pos.y < max_size.y - 1)
+	{
+		if (map[pos.y + 1][pos.x]->type_tile == 9)
+			wallvect.push_back(map[pos.y + 1][pos.x]->rect_shape);
+		if(pos.x < max_size.x - 1)
+			if (map[pos.y + 1][pos.x + 1]->type_tile == 9)
+				wallvect.push_back(map[pos.y + 1][pos.x + 1]->rect_shape);
+	}
+	if (pos.x > 0)
+	{
+		if (map[pos.y][pos.x - 1]->type_tile == 9)
+			wallvect.push_back(map[pos.y][pos.x - 1]->rect_shape);
+	}
+	if (pos.x < max_size.x - 1)
+	{
+		if (map[pos.y][pos.x - 1]->type_tile == 9)
+			wallvect.push_back(map[pos.y][pos.x + 1]->rect_shape);
+	}
+	return wallvect;
 }
