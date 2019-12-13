@@ -33,5 +33,7 @@ public:
 	void loadFromFile(const std::string file_name);
 
 	void render(std::shared_ptr<sf::RenderTarget> target);
+
+	std::vector<sf::FloatRect> findWalls(int x, int y);
 };
 

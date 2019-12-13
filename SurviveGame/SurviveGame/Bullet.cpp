@@ -6,9 +6,8 @@ Bullet::Bullet(BulletOwner::Owner owner, sf::Texture txt)
 {
 	this->owner = owner;
 	this->texture = txt;
+
 	this->mov_speed = 1500;
-	collideEnemy = false;
-	collideWall = false;
 
 	initSprite();
 	initHitBox();
@@ -26,8 +25,7 @@ void Bullet::update(std::shared_ptr<EntityData> entitydata)
 {
 	this->sprite.move(this->dir.x * this->mov_speed * entitydata->deltaTime.asSeconds(), this->dir.y * this->mov_speed * entitydata->deltaTime.asSeconds());
 	hit_box.setPosition(sprite.getPosition());
-
-	switch(this->owner)
+	/*switch(this->owner)
 	{
 	case(BulletOwner::Allied):
 		collisionEnemies(*entitydata->enemies);
@@ -36,7 +34,9 @@ void Bullet::update(std::shared_ptr<EntityData> entitydata)
 		collisionPlayer(entitydata->player);
 		break;
 	}
-	collisionWalls(entitydata->walls);
+	collisionWalls(entitydata->walls);*/
+
+	updateCollision(entitydata);
 
 	float dX = sprite.getPosition().x - owner_pos.x;
 	float dY = sprite.getPosition().y - owner_pos.y;
@@ -45,26 +45,25 @@ void Bullet::update(std::shared_ptr<EntityData> entitydata)
 	rotate(dir);
 }
 
-void Bullet::setDir(sf::Vector2f owner_pos, sf::Vector2f mousePosView)
+void Bullet::setDir(sf::Vector2f owner_pos, sf::Vector2f target)
 {
 	this->owner_pos = owner_pos;
 
 	this->sprite.setPosition(owner_pos);
-
-	float dX = mousePosView.x - owner_pos.x;
-	float dY = mousePosView.y - owner_pos.y;
+	float dX = target.x - owner->getPosition().x;
+	float dY = target.y - owner->getPosition().y;
 
 	float lenght = sqrt(pow(dX, 2) + pow(dY, 2));
 
 	sf::Vector2f normVect(dX / lenght, dY / lenght);
 
-	dir = normVect;
+	this->dir = normVect;
 }
 
 void Bullet::initSprite()
 {
 	sprite.setTexture(texture);
-	sprite.setScale(0.013, 0.013);
+	sprite.setScale(0.013f, 0.013f);
 	sprite.setOrigin(-3500, -562);
 }
 
@@ -78,38 +77,56 @@ void Bullet::initHitBox()
 	hit_box.setOrigin(sprite.getOrigin());
 }
 
-void Bullet::collisionWalls(std::vector<sf::FloatRect> walls)
+void Bullet::updateCollision(std::shared_ptr<EntityData> entitydata)
 {
-	collideWall = false;
-
-	for (int i = 0; i != walls.size(); i++)
+	//PLAYER CASE
+	if (this->owner == entitydata->player)
 	{
-		if (sat_test(hit_box.getGlobalBounds(), walls[i], &out_mtv))
+		std::vector<std::shared_ptr<Character>> enemies;
+		enemies = *entitydata->enemies;
+
+		for (int i = 0; i != enemies.size(); i++)
 		{
-			collideWall = true;
+			collision->CollideWithEntity(this->hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds());
+			if (collision->isCollide())
+			{
+				enemies[i]->takeDamage();
+				collision->resetOutMtv();
+				continue;
+			}
+		}
+		if (!collision->isCollide())
+		{
+			collision->CollideWithEntity(this->hit_box.getGlobalBounds(), entitydata->boss->getHitBox().getGlobalBounds());
+			if (collision->isCollide())
+			{
+				entitydata->boss->takeDamage();
+				collision->resetOutMtv();
+			}
+			else //WALL CASE
+			{
+				collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->map->findWalls(sprite.getPosition().x, sprite.getPosition().y));
+				collision->resetOutMtv();
+			}
 		}
 	}
-}
-
-void Bullet::collisionPlayer(std::shared_ptr<Character> player)
-{
-	if (sat_test(hit_box.getGlobalBounds(), player->getHitBox().getGlobalBounds(), &out_mtv))
+	//BOSS CASE
+	else if (this->owner == entitydata->boss)
 	{
-		player->takeDamage();
-		collideEnemy = true;
-	}
-}
-
-void Bullet::collisionEnemies(std::vector<std::shared_ptr<Character>> enemies)
-{
-	for (int i = 0; i != enemies.size(); i++)
-	{
-		if (sat_test(hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds(), &out_mtv))
+		collision->CollideWithEntity(this->hit_box.getGlobalBounds(), entitydata->player->getHitBox().getGlobalBounds());
+		if (collision->isCollide())
 		{
-			enemies[i]->takeDamage();
-			collideEnemy = true;
+			entitydata->player->takeDamage();
+			collision->resetOutMtv();
+		}
+		else //WALL CASE
+		{
+			collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->map->findWalls(sprite.getPosition().x, sprite.getPosition().y	));
+			collision->resetOutMtv();
 		}
 	}
+
+	this->collide = collision->isCollide();
 }
 
 void Bullet::rotate(sf::Vector2f vec_dir)

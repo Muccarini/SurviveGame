@@ -1,8 +1,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "TextureHolder.h"
+#include "CollisionManager.h"
+#include "TileMap.h"
 
 class Character;
+class CollisionManager;
 
 namespace BulletOwner
 {
@@ -16,7 +19,7 @@ public:
 
 	sf::Time deltaTime;
 	sf::Vector2f mouse_pos_view;
-	std::vector<sf::FloatRect> walls;
+	std::shared_ptr<TileMap> map;
     std::vector<std::shared_ptr<Character>> * enemies;
 	std::shared_ptr<Character> player;
 	std::shared_ptr<Character> boss;
@@ -44,12 +47,10 @@ public:
 
 	bool isAlive();
 
-	bool isCollideWall();
-	bool isCollideEnemy();
+	bool isCollide(); 
 
 	sf::Vector2f getPosition();
 	sf::RectangleShape getHitBox();
-	bool getAlive();
 
 protected:
 
@@ -58,12 +59,12 @@ protected:
 	sf::Sprite sprite;
 	sf::Texture texture;
 	sf::RectangleShape hit_box;
-	sf::Vector2f out_mtv;
+	std::shared_ptr<CollisionManager> collision;
+
 
 	bool alive;
 
-	bool collideWall;
-	bool collideEnemy;
+	bool collide;
 
 	int mov_speed;
 	int mov_speed_default;

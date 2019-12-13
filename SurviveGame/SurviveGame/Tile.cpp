@@ -4,8 +4,8 @@ Tile::Tile(float x, float y, float gride_size_f, sf::Texture& txt, int t_type) :
 {
 	if(t_type == 9)
 	{
+		type_tile = 9;
 		shape.setOutlineColor(sf::Color::Transparent);
-		shape.setOutlineThickness(3.f);
 	}
 
 	rect_shape.width = gride_size_f;

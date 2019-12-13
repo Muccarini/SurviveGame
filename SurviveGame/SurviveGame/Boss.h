@@ -18,9 +18,7 @@ private:
 	void updateRotate(std::shared_ptr<Character> target);
 	void updateReload(sf::Time deltaTime);
 	void updateHud();
-
-	void collisionWalls(std::vector<sf::FloatRect> walls);
-	void collisionPlayer(std::shared_ptr<Character> player);
+	void updateCollision(std::shared_ptr<EntityData> entitydata);
 
 	bool isShooting(std::shared_ptr<EntityData> entitydata);
 	bool isInRange(sf::Vector2f obj1, sf::Vector2f obj2);
@@ -31,7 +29,6 @@ private:
 	void initHitBox();
 
 	std::vector<std::shared_ptr<Bullet>> bullets;
-
 	sf::Texture texture_bullet;
 };
 

@@ -19,15 +19,17 @@ public:
 	virtual ~Tile();
 
 protected:
-	sf::RectangleShape shape;
+
+	sf::FloatRect rect_shape;
 	sf::Texture& textures;
-	sf::IntRect rect_shape;
-	int type_tile;
 
 private: 
 	
 
 public:
+
+	sf::RectangleShape shape;
+	int type_tile;
 	void update();
 	void render(std::shared_ptr<sf::RenderTarget> target);
 

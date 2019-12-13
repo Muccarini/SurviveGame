@@ -11,16 +11,12 @@ public:
 
 	void update(std::shared_ptr<EntityData> entitydata);
 
-	void setDir(sf::Vector2f owner_pos, sf::Vector2f target);
+	void setDir(const sf::Vector2f owner_pos, const sf::Vector2f target);
 
 private:
 
+	void updateCollision(std::shared_ptr<EntityData> entitydata);
 	void rotate(sf::Vector2f vec_dir);
-
-	void collisionWalls(std::vector<sf::FloatRect> walls);
-	void collisionPlayer(std::shared_ptr<Character> player);
-	void collisionEnemies(std::vector<std::shared_ptr<Character>> enemies);
-
 	void initSprite();
 	void initHitBox();
 

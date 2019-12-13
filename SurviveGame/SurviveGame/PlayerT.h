@@ -13,8 +13,6 @@ public:
 	virtual void update(std::shared_ptr<EntityData> entitydata);
 	virtual void renderBullets(std::shared_ptr<sf::RenderWindow> target);
 
-private:
-
 	void updateMove(sf::Time deltaTime);
 	void updateBullets(std::shared_ptr<EntityData> entitydata);
 	void updateRotate(sf::Vector2f mousePosView);
@@ -22,18 +20,17 @@ private:
 	void updateDash(sf::Vector2f dir, sf::Time deltaTime);
 	void updateMovSpeed(sf::Time deltaTime);
 	void updateHud();
+	void updateCollision(std::shared_ptr<EntityData> entitydata);
+
+	bool isShooting(sf::Time deltaTime);
 
 
 	void initVar();
 	void initSprite();
 	void initHitBox();
 
-	void collisionWalls(std::vector<sf::FloatRect> walls);
-	void collisionEnemies(std::vector<std::shared_ptr<Character>> enemies);
-
 	std::vector<std::shared_ptr<Bullet>> bullets;
 
-	int bullet_counter;
 	virtual void takeDamage();
 
 	sf::Texture texture_movspeed;

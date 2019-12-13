@@ -27,9 +27,8 @@ void Boss::update(std::shared_ptr<EntityData> entitydata)
 	updateRotate(entitydata->player);
 	updateBullets(entitydata);
 	updateHud();
+	updateCollision(entitydata);
 
-	collisionPlayer(entitydata->player);
-	collisionWalls(entitydata->walls);
 }
 
 void Boss::renderBullets(std::shared_ptr<sf::RenderWindow> target)
@@ -102,24 +101,7 @@ void Boss::updateHud()
 	hud.updateText(hp, getPosition());
 }
 
-void Boss::collisionWalls(std::vector<sf::FloatRect> walls)
-{
-	for (int i = 0; i != walls.size(); i++)
-	{
-		if (sat_test(hit_box.getGlobalBounds(), walls[i], &out_mtv))
-		{
-			sprite.move(out_mtv);
-		}
-	}
-}
 
-void Boss::collisionPlayer(std::shared_ptr<Character> player)
-{
-	if (sat_test(hit_box.getGlobalBounds(), player->getHitBox().getGlobalBounds(), &out_mtv))
-	{
-		sprite.move(out_mtv);
-	}
-}
 
 bool Boss::isShooting(std::shared_ptr<EntityData> entitydata)
 {

@@ -50,6 +50,7 @@ void MainMenu::updateButtons()
 		this->states->push(new GameLogic());
 		this->states->top()->window = this->window;
 		this->states->top()->states = this->states;
+		return;
 	}
 
 

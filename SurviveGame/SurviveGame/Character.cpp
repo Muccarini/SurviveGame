@@ -65,17 +65,4 @@ bool Character::isReloading()
 }
 
 
-bool Character::isShooting(sf::Time deltaTime)
-{
-	ratio_clock -= deltaTime;
 
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !reloading)
-	{
-		if (ratio_clock < sf::seconds(0.f))
-		{
-			ratio_clock = ratio_cd;
-			return true;
-		}
-	}
-	return false;
-}
