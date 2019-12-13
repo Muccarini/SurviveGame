@@ -20,7 +20,8 @@ private:
 	void updateHud();
 	void updateCollision(std::shared_ptr<EntityData> entitydata);
 
-	bool isShooting(std::shared_ptr<EntityData> entitydata);
+	void updateShooting(std::shared_ptr<EntityData> entitydata);
+
 	bool isInRange(sf::Vector2f obj1, sf::Vector2f obj2);
 	void takeDamage();
 

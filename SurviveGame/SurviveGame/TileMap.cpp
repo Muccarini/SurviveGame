@@ -100,7 +100,7 @@ std::vector<sf::FloatRect> TileMap::findWalls(int x, int y)
 {
 	sf::Vector2i pos(x / grid_size_f, y / grid_size_f);
 	std::vector<sf::FloatRect> wallvect;
-	if(map[y][x]->type_tile)
+	/*if(map[y][x]->type_tile)*/
 	if (pos.y > 0)
 	{
 		if (map[pos.y - 1][pos.x]->type_tile == 9)

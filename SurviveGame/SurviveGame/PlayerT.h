@@ -22,7 +22,7 @@ public:
 	void updateHud();
 	void updateCollision(std::shared_ptr<EntityData> entitydata);
 
-	bool isShooting(sf::Time deltaTime);
+	void updateShooting(sf::Time deltaTime);
 
 
 	void initVar();

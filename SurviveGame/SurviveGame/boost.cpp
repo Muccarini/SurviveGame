@@ -27,7 +27,7 @@ Boost::~Boost()
 
 void Boost::update(std::shared_ptr<EntityData> entitydata)
 {
-	if (sat_test(entitydata->player->getHitBox().getGlobalBounds(), getHitBox().getGlobalBounds(), &out_mtv))
+	if (sat_test(entitydata->player->getHitBox().getGlobalBounds(), getHitBox().getGlobalBounds(), &vec))
 	{
 		switch (type)
 		{

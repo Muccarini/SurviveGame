@@ -37,7 +37,7 @@ public:
 	int getAmmo();
 
 	bool isReloading();
-	bool isShooting(sf::Time deltaTime);
+	bool isShooting();
 
 protected:
 	Hud hud;

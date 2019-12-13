@@ -64,5 +64,10 @@ bool Character::isReloading()
 		this->reloading;
 }
 
+bool Character::isShooting()
+{
+	return shooting;
+}
+
 
 

@@ -83,8 +83,6 @@ void Enemy::initVar()
 {
 	mov_speed = 150;
 	hp = 10;
-
-	allied = false;
 }
 
 void Enemy::initSprite()

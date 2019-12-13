@@ -47,7 +47,7 @@ void Pet::updateMove(std::shared_ptr<Character> target, sf::Time deltaTime)
 
 void Pet::updateBullets(std::shared_ptr<EntityData> entitydata)
 {
-	if (entitydata->player->isShooting(entitydata->deltaTime) && entitydata->player->getAmmo())
+	if (entitydata->player->isShooting() && entitydata->player->getAmmo())
 	{
 		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Allied, texture_bullet));
 		bullets.emplace_back(bullet);
@@ -57,7 +57,7 @@ void Pet::updateBullets(std::shared_ptr<EntityData> entitydata)
 	for (int i = 0; i < bullets.size(); i++)
 	{
 		bullets[i]->update(entitydata);
-		if (bullets[i]->isCollideEnemy() || bullets[i]->isCollideWall())
+		if (bullets[i]->isCollide())
 			bullets.erase(bullets.begin() + i);
 	}
 }

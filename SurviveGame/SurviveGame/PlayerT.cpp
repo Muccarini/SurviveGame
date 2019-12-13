@@ -68,7 +68,9 @@ void PlayerT::updateMove(sf::Time deltaTime)
 
 void PlayerT::updateBullets(std::shared_ptr<EntityData> entitydata)
 {
-	if (isShooting(entitydata->deltaTime) && getAmmo())
+	updateShooting(entitydata->deltaTime);
+
+	if (shooting && getAmmo())
 	{
 		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Allied, texture_bullet));
 		ammo--;
@@ -184,19 +186,22 @@ void PlayerT::updateCollision(std::shared_ptr<EntityData> entitydata)
 	collision->resetOutMtv();
 }
 
-bool PlayerT::isShooting(sf::Time deltaTime)
+void PlayerT::updateShooting(sf::Time deltaTime)
 {
-	ratio_clock -= deltaTime;
-
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !reloading)
 	{
+		ratio_clock -= deltaTime;
+
 		if (ratio_clock < sf::seconds(0.f))
 		{
 			ratio_clock = ratio_cd;
-			return true;
+			this->shooting = true;
 		}
+		else
+			shooting = false;
 	}
-	return false;
+	else
+		shooting = false;
 }
 
 void PlayerT::renderBullets(std::shared_ptr<sf::RenderWindow> target)
@@ -215,13 +220,13 @@ void PlayerT::initVar()
 	hp_max = 100;
 	hp = hp_max;
 
-	reload = sf::seconds(1.f);
-	reload_clock = reload;
+	reload_cd = sf::seconds(1.f);
+	reload_clock = reload_cd;
 
 	ammo_max = 200;
 	ammo = ammo_max;
 
-	ratio_cd = sf::seconds(1.f / 20.f);
+	ratio_cd = sf::seconds(1.f / 16.666f);
 	ratio_clock = ratio_cd;
 
 

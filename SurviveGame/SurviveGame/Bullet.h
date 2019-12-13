@@ -14,9 +14,14 @@ public:
 	void setDir(const sf::Vector2f owner_pos, const sf::Vector2f target);
 
 private:
+	void updateMove(std::shared_ptr<EntityData> entitydata);
 
-	void updateCollision(std::shared_ptr<EntityData> entitydata);
-	void rotate(sf::Vector2f vec_dir);
+	void updateAlliedCollision(std::shared_ptr<EntityData> entitydata);
+	void updateEnemyCollision(std::shared_ptr<EntityData> entitydata);
+	void updateWallsCollision(std::shared_ptr<EntityData> entitydata);
+
+	void updateRotate(sf::Vector2f vec_dir);
+
 	void initSprite();
 	void initHitBox();
 

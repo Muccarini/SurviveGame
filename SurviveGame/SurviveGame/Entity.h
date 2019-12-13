@@ -54,13 +54,14 @@ public:
 
 protected:
 
-	bool sat_test(const sf::FloatRect &rectSp1, const sf::FloatRect &rectSp2, sf::Vector2f *out_mtv);
+	bool sat_test(const sf::FloatRect &rectSp1, const sf::FloatRect &rectSp2, sf::Vector2f *vec);
 
 	sf::Sprite sprite;
 	sf::Texture texture;
 	sf::RectangleShape hit_box;
 	std::shared_ptr<CollisionManager> collision;
 
+	sf::Vector2f vec;
 
 	bool alive;
 

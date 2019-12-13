@@ -54,7 +54,9 @@ void Boss::updateMove(sf::Time deltaTime, std::shared_ptr<Character> target)
 
 void Boss::updateBullets(std::shared_ptr<EntityData> entitydata)
 {
-	if (isShooting(entitydata) && getAmmo())
+	updateShooting(entitydata);
+
+	if (shooting && getAmmo())
 	{
 		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Enemy, texture_bullet));
 		ammo--;
@@ -65,7 +67,7 @@ void Boss::updateBullets(std::shared_ptr<EntityData> entitydata)
 	for (int i = 0; i < bullets.size(); i++)
 	{
 		bullets[i]->update(entitydata);
-		if (bullets[i]->isCollideEnemy() || bullets[i]->isCollideWall())
+		if (bullets[i]->isCollide())
 			bullets.erase(bullets.begin() + i);
 	}
 }
@@ -101,9 +103,26 @@ void Boss::updateHud()
 	hud.updateText(hp, getPosition());
 }
 
+void Boss::updateCollision(std::shared_ptr<EntityData> entitydata)
+{
+	sf::Vector2f dir(0.f, 0.f);
+	sf::Vector2f ent(0.f, 0.f);
+
+	ent = this->collision->CollideWithEntity(this->getHitBox().getGlobalBounds(), entitydata->player->getHitBox().getGlobalBounds());
+	sprite.move(ent);
+
+	if (ent != sf::Vector2f(0.f, 0.f))
+		collision->resetOutMtv();
+
+	dir = this->collision->CollideWithWalls(this->getHitBox().getGlobalBounds(), entitydata->map->findWalls(sprite.getPosition().x, sprite.getPosition().y));
+	sprite.move(dir);
+
+	if (dir != sf::Vector2f(0.f, 0.f))
+		collision->resetOutMtv();
+}
 
 
-bool Boss::isShooting(std::shared_ptr<EntityData> entitydata)
+void Boss::updateShooting(std::shared_ptr<EntityData> entitydata)
 {
 	ratio_clock -= entitydata->deltaTime;
 
@@ -112,10 +131,13 @@ bool Boss::isShooting(std::shared_ptr<EntityData> entitydata)
 		if (ratio_clock < sf::seconds(0.f))
 		{
 			ratio_clock = ratio_cd;
-			return true;
+			shooting = true;
 		}
+		else
+			shooting = false;
 	}
-	return false;
+	else
+		shooting = false;
 }
 
 bool Boss::isInRange(sf::Vector2f obj1, sf::Vector2f obj2)
