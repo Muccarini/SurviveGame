@@ -4,6 +4,11 @@
 
 class Character;
 
+namespace BulletOwner
+{
+	enum Owner { Allied, Enemy };
+}
+
 class EntityData
 {
 public:

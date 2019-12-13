@@ -72,11 +72,10 @@ void PlayerT::updateBullets(std::shared_ptr<EntityData> entitydata)
 {
 	if (isShooting(entitydata->deltaTime) && getAmmo())
 	{
-		std::shared_ptr<Bullet>bullet(new Bullet(texture_bullet));
+		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Allied, texture_bullet));
 		ammo--;
 		bullets.emplace_back(bullet);
 		bullet->setDir(entitydata->player->getPosition(), entitydata->mouse_pos_view);
-		bullet_counter++;
 	}
 
 	for (int i = 0; i < bullets.size(); i++)

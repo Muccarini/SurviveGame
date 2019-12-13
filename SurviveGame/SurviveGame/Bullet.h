@@ -5,7 +5,7 @@ class Bullet :
 	public Entity
 {
 public:
-	Bullet(sf::Texture texture);
+	Bullet(BulletOwner::Owner owner, sf::Texture texture);
 	Bullet();
 	virtual ~Bullet();
 
@@ -18,6 +18,7 @@ private:
 	void rotate(sf::Vector2f vec_dir);
 
 	void collisionWalls(std::vector<sf::FloatRect> walls);
+	void collisionPlayer(std::shared_ptr<Character> player);
 	void collisionEnemies(std::vector<std::shared_ptr<Character>> enemies);
 
 	void initSprite();
@@ -26,7 +27,7 @@ private:
 	sf::Vector2f owner_pos;
 	sf::Vector2f dir;
 
-	///*/*Owner owner;*/*/
+	BulletOwner::Owner owner;
 
 
 };

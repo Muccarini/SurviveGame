@@ -48,7 +48,7 @@ protected:
 	sf::Time ratio_cd;
 	sf::Time ratio_clock;
 
-	sf::CircleShape range;
+	float range;
 
 	int hp;
 	int hp_max;

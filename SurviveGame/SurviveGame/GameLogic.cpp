@@ -39,8 +39,11 @@ void GameLogic::render()
 	renderPlayer();
 	renderPets();
 
-	if(!round.isLoading() && !round.isBossRound())
+	if (!round.isLoading() && !round.isBossRound())
 		renderEnemies();
+	else
+		if (round.isBossRound())
+			renderBoss();
 
 	hud.renderTextsHud(window);
 }
@@ -94,8 +97,18 @@ void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
 		round.startCountdown(this->entitydata->deltaTime);
 		if(!round.isLoading() && round.isBossRound())
 		{
-			/*updateBoss(deltaTime);*/
+			updateBoss(entitydata);
 		}
+	}
+}
+
+void GameLogic::updateBoss(std::shared_ptr<EntityData> entitydata)
+{
+	boss->update(entitydata);
+	if ((boss->getHp() <= 0))
+	{
+		/*delete boss;*/
+		round.setBossRound(false);
 	}
 }
 
@@ -137,17 +150,6 @@ void GameLogic::updatePlayer(const std::shared_ptr<EntityData> entitydata)
 	}
 }
 
-//void GameLogic::updateBoss(sf::Time deltaTime)
-//{
-//	boss.update(deltaTime, &player, tile_map.getWalls());
-//	if ((boss.getHp() <= 0))
-//	{
-//		//BOSS MORTO
-//		round.setBossRound(false);
-//      player->spawnPet(boss->getPosition());
-//	}
-//}
-
 void GameLogic::updateGameView(sf::Time deltaTime)
 {
 	sf::Vector2f dir = player->getPosition() - game_view.getCenter();
@@ -167,6 +169,13 @@ void GameLogic::renderPlayer()
 	player->renderHud(window);
 	player->render(window);
 	player->renderBullets(window);
+}
+
+void GameLogic::renderBoss()
+{
+	boss->renderHud(window);
+	boss->render(window);
+	boss->renderBullets(window);
 }
 
 void GameLogic::renderPets()
@@ -196,17 +205,13 @@ void GameLogic::renderEnemies()
 	}
 }
 
-//void GameLogic::renderBoss()
-//{
-//	boss.render(window);
-//}
-
 void GameLogic::entitiesInit()
 {  
 	entitydata = std::make_shared<EntityData>();
 
 	this->enemies = new std::vector<std::shared_ptr<Character>>;
 	this->player = std::make_shared<PlayerT>(textures.get(Textures::Personaggio), textures.get(Textures::Proiettile), textures.get(Textures::PersonaggioMS));
+	this->boss = std::make_shared<Boss>(textures.get(Textures::Boss), textures.get(Textures::Proiettile));
 }
 
 void GameLogic::gameViewInit()
@@ -231,7 +236,7 @@ void GameLogic::entitydataInit()
 	entitydata->enemies = this->enemies;
 	entitydata->walls   = this->tile_map.getWalls();
 	entitydata->player  = this->player;
-	/*entitydata->boss    = this->boss;*/
+	entitydata->boss    = this->boss;
 }
 
 void GameLogic::textureInit()

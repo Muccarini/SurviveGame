@@ -7,6 +7,7 @@
 #include "TextureHolder.h"
 #include "Enemy.h"
 #include "PlayerT.h"
+#include "Boss.h"
 #include "Pet.h"
 #include "Boost.h"
 #include <vector>
@@ -25,6 +26,7 @@ private:
 
 	void updatePlayer(std::shared_ptr<EntityData> entitydata);
 	void updateEnemies(std::shared_ptr<EntityData> entitydata);
+	void updateBoss(std::shared_ptr<EntityData> entitydata);
 	void updatePets(std::shared_ptr<EntityData> entitydata);
 	void updateBoost(std::shared_ptr<EntityData> entitydata);
 
@@ -34,6 +36,7 @@ private:
 
 	void renderEnemies();
 	void renderPlayer();
+	void renderBoss();
 	void renderPets();
 	void renderBoost();
 
@@ -51,6 +54,7 @@ private:
 
     std::vector<std::shared_ptr<Character>> * enemies;
 	std::shared_ptr<Character> player;
+	std::shared_ptr<Character> boss;
 
 	std::vector<std::shared_ptr<Character>> pets;
 	std::vector<std::shared_ptr<Entity>> boost;

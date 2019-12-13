@@ -97,7 +97,7 @@
       <Filter>Map</Filter>
     </ClCompile>
     <ClCompile Include="Pet.cpp">
-      <Filter>Map</Filter>
+      <Filter>Personaggi</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -168,10 +168,10 @@
       <Filter>Personaggi</Filter>
     </ClInclude>
     <ClInclude Include="boost.h">
-      <Filter>Game</Filter>
+      <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="Pet.h">
-      <Filter>Game</Filter>
+      <Filter>Personaggi</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

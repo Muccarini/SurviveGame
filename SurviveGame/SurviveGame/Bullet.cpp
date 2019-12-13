@@ -2,8 +2,9 @@
 
 
 
-Bullet::Bullet(sf::Texture txt)
+Bullet::Bullet(BulletOwner::Owner owner, sf::Texture txt)
 {
+	this->owner = owner;
 	this->texture = txt;
 	this->mov_speed = 1500;
 	collideEnemy = false;
@@ -26,7 +27,15 @@ void Bullet::update(std::shared_ptr<EntityData> entitydata)
 	this->sprite.move(this->dir.x * this->mov_speed * entitydata->deltaTime.asSeconds(), this->dir.y * this->mov_speed * entitydata->deltaTime.asSeconds());
 	hit_box.setPosition(sprite.getPosition());
 
-	collisionEnemies(*entitydata->enemies);
+	switch(this->owner)
+	{
+	case(BulletOwner::Allied):
+		collisionEnemies(*entitydata->enemies);
+		break;
+	case(BulletOwner::Enemy):
+		collisionPlayer(entitydata->player);
+		break;
+	}
 	collisionWalls(entitydata->walls);
 
 	float dX = sprite.getPosition().x - owner_pos.x;
@@ -79,6 +88,15 @@ void Bullet::collisionWalls(std::vector<sf::FloatRect> walls)
 		{
 			collideWall = true;
 		}
+	}
+}
+
+void Bullet::collisionPlayer(std::shared_ptr<Character> player)
+{
+	if (sat_test(hit_box.getGlobalBounds(), player->getHitBox().getGlobalBounds(), &out_mtv))
+	{
+		player->takeDamage();
+		collideEnemy = true;
 	}
 }
 

@@ -49,7 +49,7 @@ void Pet::updateBullets(std::shared_ptr<EntityData> entitydata)
 {
 	if (entitydata->player->isShooting(entitydata->deltaTime) && entitydata->player->getAmmo())
 	{
-		std::shared_ptr<Bullet>bullet(new Bullet(texture_bullet));
+		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Allied, texture_bullet));
 		bullets.emplace_back(bullet);
 		bullet->setDir(this->getPosition(), entitydata->mouse_pos_view);
 	}
