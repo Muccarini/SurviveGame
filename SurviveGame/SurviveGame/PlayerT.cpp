@@ -21,7 +21,6 @@ PlayerT::~PlayerT()
 
 void PlayerT::update(std::shared_ptr<EntityData> entitydata)
 {
-	updateCollision(entitydata);
 	updateMove(entitydata->deltaTime);
 	updateBullets(entitydata);
 	updateRotate(entitydata->mouse_pos_view);
@@ -77,7 +76,7 @@ void PlayerT::updateBullets(std::shared_ptr<EntityData> entitydata)
 
 	if (!bullets.empty())
 	{
-		for (int i = 0; i != bullets.size(); i++)
+		for (int i = 0; i < bullets.size(); i++)
 		{
 			bullets[i]->update(entitydata);
 			if (bullets[i]->isCollide())
@@ -159,7 +158,7 @@ void PlayerT::updateCollision(std::shared_ptr<EntityData> entitydata)
 	hit_box.setPosition(getPosition());
 	collision->resetOutMtv();
 
-	dir = this->collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->map->findWalls(sprite.getPosition().y, sprite.getPosition().x));
+	dir = this->collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->map->findWalls(sprite.getPosition().x, sprite.getPosition().y));
 
 	sprite.move(dir);
 	hit_box.setPosition(getPosition());

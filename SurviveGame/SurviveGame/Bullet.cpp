@@ -113,6 +113,7 @@ void Bullet::updateCollision(std::shared_ptr<EntityData> entitydata)
 			if (collision->isCollide())
 			{
 				enemies[i]->takeDamage();
+				collision->resetOutMtv();
 				continue;
 			}
 		}
@@ -120,9 +121,15 @@ void Bullet::updateCollision(std::shared_ptr<EntityData> entitydata)
 		{
 			collision->CollideWithEntity(this->hit_box.getGlobalBounds(), entitydata->boss->getHitBox().getGlobalBounds());
 			if (collision->isCollide())
+			{
 				entitydata->boss->takeDamage();
+				collision->resetOutMtv();
+			}
 			else //WALL CASE
-				collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->map->findWalls(sprite.getPosition().y, sprite.getPosition().x));
+			{
+				collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->map->findWalls(sprite.getPosition().x, sprite.getPosition().y));
+				collision->resetOutMtv();
+			}
 		}
 	}
 	//BOSS CASE
@@ -130,11 +137,16 @@ void Bullet::updateCollision(std::shared_ptr<EntityData> entitydata)
 	{
 		collision->CollideWithEntity(this->hit_box.getGlobalBounds(), entitydata->player->getHitBox().getGlobalBounds());
 		if (collision->isCollide())
+		{
 			entitydata->player->takeDamage();
+			collision->resetOutMtv();
+		}
 		else //WALL CASE
-			collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->map->findWalls(sprite.getPosition().y, sprite.getPosition().x));
+		{
+			collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->map->findWalls(sprite.getPosition().x, sprite.getPosition().y	));
+			collision->resetOutMtv();
+		}
 	}
-
 
 	this->collide = collision->isCollide();
 }

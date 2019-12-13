@@ -62,7 +62,7 @@ void Boss::updateBullets(std::shared_ptr<EntityData> entitydata)
 		bullet->setDir(entitydata->boss->getPosition(), entitydata->player->getPosition());
 	}
 
-	for (int i = 0; i != bullets.size(); i++)
+	for (int i = 0; i < bullets.size(); i++)
 	{
 		bullets[i]->update(entitydata);
 		if (bullets[i]->isCollide())
@@ -103,12 +103,16 @@ void Boss::updateHud()
 
 void Boss::updateCollision(std::shared_ptr<EntityData> entitydata)
 {
-	sf::Vector2f dir(0, 0);
-
-	dir = this->collision->CollideWithEntity(this->getHitBox().getGlobalBounds(), entitydata->player->getHitBox().getGlobalBounds());
-	dir += this->collision->CollideWithWalls(this->getHitBox().getGlobalBounds(), entitydata->map->findWalls(sprite.getPosition().x, sprite.getPosition().y));
-
-	sprite.move((dir.x * this->mov_speed* entitydata->deltaTime.asSeconds()), dir.y * this->mov_speed* entitydata->deltaTime.asSeconds());
+	sf::Vector2f dir(0.f, 0.f);
+	sf::Vector2f ent(0.f, 0.f);
+	ent = this->collision->CollideWithEntity(this->getHitBox().getGlobalBounds(), entitydata->player->getHitBox().getGlobalBounds());
+	sprite.move(ent);
+	if (ent != sf::Vector2f(0.f, 0.f))
+		collision->resetOutMtv();
+	dir = this->collision->CollideWithWalls(this->getHitBox().getGlobalBounds(), entitydata->map->findWalls(sprite.getPosition().x, sprite.getPosition().y));
+	sprite.move(dir);
+	if (dir != sf::Vector2f(0.f, 0.f))
+		collision->resetOutMtv();
 }
 
 bool Boss::isShooting(std::shared_ptr<EntityData> entitydata)
@@ -148,21 +152,21 @@ void Boss::initVar()
 	mov_speed_max = 150;
 	mov_speed = mov_speed_max;
 
-	hp_max = 1000;
+	hp_max = 20;
 	hp = hp_max;
 
 	reload = sf::seconds(1.f); //DA SCEGLIERE
 	reload_clock = reload;
 
-	ammo_max = 200;  // DA SCEGLIERE
+	ammo_max = 50;  // DA SCEGLIERE
 	ammo = ammo_max;
 
-	ratio = sf::seconds(1.f / 16.666f); //DA SCEGLIERE
+	ratio = sf::seconds(1.f); //DA SCEGLIERE
 	ratio_clock = ratio;
 
 	reloading = false;
 	allied = false;
-	range = 200;
+	range = 300;
 }
 
 void Boss::initSprite()

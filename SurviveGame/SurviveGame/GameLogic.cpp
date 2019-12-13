@@ -74,7 +74,7 @@ void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
 			enemies_alive++;
 		}
 
-		for (int i = 0; i != enemies->size(); i++)
+		for (int i = 0; i < enemies->size(); i++)
 		{
 			(*enemies)[i]->update(entitydata);
 

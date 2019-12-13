@@ -23,9 +23,9 @@ sf::Vector2f CollisionManager::CollideWithWalls(const sf::FloatRect & rectSp1, c
 		{
 			std::cout << "collide!\n" << out_mtv.x;
 			this->collide = true;
-		}
+		}/*
 		if (collide == true)
-			break;
+			break;*/
 	}
 	dir = out_mtv;
 	if (dir.x == 0 && dir.y == 0)
