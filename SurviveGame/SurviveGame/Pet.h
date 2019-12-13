@@ -18,6 +18,7 @@ private:
 	void updateMove(std::shared_ptr<Character> target, sf::Time deltaTime);
 	void updateBullets(std::shared_ptr<EntityData> entitydata);
 	void updateHud();
+	void updateCollision(std::shared_ptr<EntityData> entitydata);
 
 	void initVar();
 	void initSprite(sf::Vector2f spawn_pos);

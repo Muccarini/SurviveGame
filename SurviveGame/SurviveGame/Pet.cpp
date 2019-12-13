@@ -22,6 +22,7 @@ void Pet::update(std::shared_ptr<EntityData> entitydata)
 	updateMove(entitydata->player, entitydata->deltaTime);
 	updateBullets(entitydata);
 	updateHud();
+	updateCollision(entitydata);
 }
 
 void Pet::takeDamage()
@@ -67,6 +68,19 @@ void Pet::updateHud()
 	hud.updateText(hp, getPosition());
 }
 
+void Pet::updateCollision(std::shared_ptr<EntityData> entitydata)
+{ //PLAYER
+	sf::Vector2f ent(0, 0);
+	sf::Vector2f dir(0, 0);
+
+	ent = this->collision->CollideWithEntity(entitydata->player->getHitBox().getGlobalBounds(), this->getHitBox().getGlobalBounds());
+	sprite.move(-ent);
+	if (ent.x != 0 || ent.y != 0)
+		entitydata->player->takeDamage();
+	//hit_box.setPosition(getPosition());
+	collision->resetOutMtv();
+}
+
 void Pet::initVar()
 {
 	mov_speed_default = 1.f;
@@ -88,11 +102,11 @@ void Pet::initSprite(sf::Vector2f spawn_pos)
 
 void Pet::initHitbox()
 {
-	hit_box.setSize(sf::Vector2f(100.f, 100.f));     //SIZE
+	hit_box.setSize(sf::Vector2f(80, 80));     //SIZE
 	hit_box.setOutlineColor(sf::Color::Red); //COLOR
 	hit_box.setOutlineThickness(3.f);
 	hit_box.setFillColor(sf::Color::Transparent);
-	hit_box.setScale(sprite.getScale());             //SCALE
+	/*hit_box.setScale(sprite.getScale()); */            //SCALE
 	hit_box.setPosition(getPosition());              //POS
-	hit_box.setOrigin(0, 0);                       //ORIGIN
+	hit_box.setOrigin(40, 40);                       //ORIGIN
 }
