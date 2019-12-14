@@ -22,7 +22,8 @@ void GameLogic::update(sf::Time deltaTime)
 
 	updatePlayer(entitydata);
 	updateEnemies(entitydata);
-	updatePets(entitydata);
+	updatePet(entitydata);
+
 	updateBoost(entitydata);
 
 	updateGameView(deltaTime);
@@ -37,13 +38,9 @@ void GameLogic::render()
 		renderBoost();
 
 	renderPlayer();
-	renderPets();
-
-	if (!round.isLoading() && !round.isBossRound())
-		renderEnemies();
-	else
-		if (round.isBossRound())
-			renderBoss();
+	renderPet();
+	renderEnemies();
+	renderBoss();
 
 	hud.renderTextsHud(window);
 }
@@ -67,8 +64,10 @@ void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
 		round.reset();
 		round.increase();
 
-		//INIT PET
-		pets.emplace_back(new Pet(textures.get(Textures::HP), textures.get(Textures::Proiettile), player->getPosition()));
+		if (!pet_alive) {
+			this->pet = std::make_shared<Pet>(textures.get(Textures::HP), textures.get(Textures::Proiettile), player->getPosition());
+			this->pet_alive = true;
+		}
 
 		if (round.getCounter() % 3 == 0)
 			round.setBossRound(true);
@@ -102,6 +101,13 @@ void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
 		round.startCountdown(this->entitydata->deltaTime);
 		if(!round.isLoading() && round.isBossRound())
 		{
+			if (!boss_alive)
+			{
+				std::shared_ptr<Character>boss(new Boss(textures.get(Textures::Boss), textures.get(Textures::Proiettile)));
+				this->boss = boss;
+				entitydata->boss = this->boss;
+				this->boss_alive = true;
+			}
 			updateBoss(entitydata);
 		}
 	}
@@ -109,19 +115,22 @@ void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
 
 void GameLogic::updateBoss(std::shared_ptr<EntityData> entitydata)
 {
-	boss->update(entitydata);
-	if ((boss->getHp() <= 0))
-	{
-		/*delete boss;*/
-		round.setBossRound(false);
-	}
+		boss->update(entitydata);
+		if ((boss->getHp() <= 0))
+		{
+			boss.reset();
+			entitydata->boss.reset();
+			entitydata->boss = nullptr;
+			round.setBossRound(false);
+			this->boss_alive = false;
+		}
 }
 
-void GameLogic::updatePets(std::shared_ptr<EntityData> entitydata)
+void GameLogic::updatePet(std::shared_ptr<EntityData> entitydata)
 {
-	for (int i = 0; i != pets.size(); i++)
+	if (pet_alive)
 	{
-		pets[i]->update(entitydata);
+		pet->update(entitydata);
 	}
 }
 
@@ -177,18 +186,21 @@ void GameLogic::renderPlayer()
 
 void GameLogic::renderBoss()
 {
-	boss->renderHud(window);
-	boss->render(window);
-	boss->renderBullets(window);
+	if (boss_alive)
+	{
+			boss->renderHud(window);
+			boss->render(window);
+			boss->renderBullets(window);
+	}
 }
 
-void GameLogic::renderPets()
+void GameLogic::renderPet()
 {
-	for (int i = 0; i != pets.size(); i++)
+	if (pet_alive)
 	{
-		pets[i]->renderHud(window);
-		pets[i]->render(window);
-		pets[i]->renderBullets(window);
+		pet->renderHud(window);
+		pet->render(window);
+		pet->renderBullets(window);
 	}
 }
 
@@ -202,10 +214,13 @@ void GameLogic::renderBoost()
 
 void GameLogic::renderEnemies()
 {
-	for (auto i = enemies->begin(); i != enemies->end(); i++)
+	if (!round.isLoading() && !round.isBossRound())
 	{
-		(*i)->render(window);
-		(*i)->renderHud(window);
+		for (auto i = enemies->begin(); i != enemies->end(); i++)
+		{
+			(*i)->render(window);
+			(*i)->renderHud(window);
+		}
 	}
 }
 
@@ -215,7 +230,6 @@ void GameLogic::entitiesInit()
 
 	this->enemies = new std::vector<std::shared_ptr<Character>>;
 	this->player = std::make_shared<PlayerT>(textures.get(Textures::Personaggio), textures.get(Textures::Proiettile), textures.get(Textures::PersonaggioMS));
-	this->boss = std::make_shared<Boss>(textures.get(Textures::Boss), textures.get(Textures::Proiettile));
 }
 
 void GameLogic::gameViewInit()
@@ -227,6 +241,9 @@ void GameLogic::varInit()
 {
 	this->max_enemies = 1;
 	this->enemies_alive = 0;
+	this->boss_alive = false;
+	this->pet_alive = false;
+
 	this->kill_counter = 0;
 	this->game_view_speed = 4.5f;
 	this->rand_time = sf::seconds((rand() % 10) +5);
@@ -240,7 +257,7 @@ void GameLogic::entitydataInit()
 	entitydata->enemies        = this->enemies;
 	entitydata->map            = std::make_shared<TileMap>(this->tile_map);
 	entitydata->player         = this->player;
-	entitydata->boss           = this->boss;
+	entitydata->boss           = nullptr;
 }
 
 void GameLogic::textureInit()

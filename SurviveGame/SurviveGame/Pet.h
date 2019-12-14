@@ -5,7 +5,8 @@ class Pet :
 	public Character
 {
 public:
-	Pet(sf::Texture txt_p, sf::Texture txt_b, sf::Vector2f spawn_pos);
+	explicit Pet(sf::Texture txt_p, sf::Texture txt_b, sf::Vector2f spawn_pos);
+	Pet();
 	virtual ~Pet();
 
 	void update(std::shared_ptr<EntityData> entitydata);

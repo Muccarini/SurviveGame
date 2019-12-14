@@ -27,7 +27,7 @@ private:
 	void updatePlayer(std::shared_ptr<EntityData> entitydata);
 	void updateEnemies(std::shared_ptr<EntityData> entitydata);
 	void updateBoss(std::shared_ptr<EntityData> entitydata);
-	void updatePets(std::shared_ptr<EntityData> entitydata);
+	void updatePet(std::shared_ptr<EntityData> entitydata);
 	void updateBoost(std::shared_ptr<EntityData> entitydata);
 
 	void updateGameView(sf::Time deltaTime);
@@ -37,7 +37,7 @@ private:
 	void renderEnemies();
 	void renderPlayer();
 	void renderBoss();
-	void renderPets();
+	void renderPet();
 	void renderBoost();
 
 	void entitiesInit();
@@ -56,7 +56,7 @@ private:
 	std::shared_ptr<Character> player;
 	std::shared_ptr<Character> boss;
 
-	std::vector<std::shared_ptr<Character>> pets;
+	std::shared_ptr<Character> pet;
 	std::vector<std::shared_ptr<Entity>> boost;
 
 	std::shared_ptr<EntityData> entitydata;
@@ -64,6 +64,9 @@ private:
 
 	int max_enemies;
 	int enemies_alive;
+	bool boss_alive;
+	bool pet_alive;
+
 	int kill_counter;
 
 	float game_view_speed;

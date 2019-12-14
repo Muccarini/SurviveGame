@@ -46,6 +46,7 @@ public:
 	void render(std::shared_ptr<sf::RenderWindow> target);
 
 	bool isAlive();
+	void setAlive(bool boolean);
 
 	bool isCollide(); 
 

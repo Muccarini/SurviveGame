@@ -162,7 +162,7 @@ void Boss::initVar()
 	mov_speed_default = 150;
 	mov_speed = mov_speed_default;
 
-	hp_max = 1000;
+	hp_max = 10;
 	hp = hp_max;
 
 	reload_cd = sf::seconds(1.f); //DA SCEGLIERE

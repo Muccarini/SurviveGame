@@ -31,7 +31,7 @@ void Game::run()
 			processEvents();
 			if (!this->states.empty())
 			{
-				if (this->window->hasFocus())
+				/*if (this->window->hasFocus())*/
 				{
 					this->states.top()->update(TimePerFrame);
 

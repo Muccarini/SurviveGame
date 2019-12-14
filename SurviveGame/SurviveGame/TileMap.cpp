@@ -101,37 +101,46 @@ std::vector<sf::FloatRect> TileMap::findWalls(int x, int y)
 	sf::Vector2i pos(x / grid_size_f, y / grid_size_f);
 	std::vector<sf::FloatRect> wallvect;
 	/*if(map[y][x]->type_tile)*/
-	if (pos.y > 0)
+	if (pos.y <= 20 && pos.y >= 0)
 	{
-		if (map[pos.y - 1][pos.x]->type_tile == 9)
-			wallvect.push_back(map[pos.y - 1][pos.x]->shape.getGlobalBounds());
-		if (pos.x < max_size.x - 1)
-			if (map[pos.y - 1][pos.x + 1]->type_tile == 9)
-				wallvect.push_back(map[pos.y - 1][pos.x + 1]->shape.getGlobalBounds());
-		if(pos.x > 0)
-			if (map[pos.y - 1][pos.x - 1]->type_tile == 9)
-				wallvect.push_back(map[pos.y - 1][pos.x - 1]->shape.getGlobalBounds());
-	}
-	if (pos.y < max_size.y - 1)
-	{
-		if (map[pos.y + 1][pos.x]->type_tile == 9)
-			wallvect.push_back(map[pos.y + 1][pos.x]->shape.getGlobalBounds());
-		if(pos.x < max_size.x - 1)
-			if (map[pos.y + 1][pos.x + 1]->type_tile == 9)
-				wallvect.push_back(map[pos.y + 1][pos.x + 1]->shape.getGlobalBounds());
-		if (pos.x > 0)
-			if (map[pos.y + 1][pos.x - 1]->type_tile == 9)
-				wallvect.push_back(map[pos.y + 1][pos.x - 1]->shape.getGlobalBounds());
-	}
-	if (pos.x > 0)
-	{
-		if (map[pos.y][pos.x - 1]->type_tile == 9)
-			wallvect.push_back(map[pos.y][pos.x - 1]->shape.getGlobalBounds());
-	}
-	if (pos.x < max_size.x - 1)
-	{
-		if (map[pos.y][pos.x + 1]->type_tile == 9)
-			wallvect.push_back(map[pos.y][pos.x + 1]->shape.getGlobalBounds());
+		if (pos.x <= 20 && pos.x >= 0)
+		{
+			if (pos.y > 0)
+			{
+				if (map[pos.y - 1][pos.x]->type_tile == 9)
+					wallvect.push_back(map[pos.y - 1][pos.x]->shape.getGlobalBounds());
+				if (pos.x < max_size.x - 1)
+					if (map[pos.y - 1][pos.x + 1]->type_tile == 9)
+						wallvect.push_back(map[pos.y - 1][pos.x + 1]->shape.getGlobalBounds());
+				if (pos.x > 0)
+					if (map[pos.y - 1][pos.x - 1]->type_tile == 9)
+						wallvect.push_back(map[pos.y - 1][pos.x - 1]->shape.getGlobalBounds());
+			}
+			if (pos.y < max_size.y - 1)
+			{
+				if (map[pos.y + 1][pos.x]->type_tile == 9)
+					wallvect.push_back(map[pos.y + 1][pos.x]->shape.getGlobalBounds());
+				if (pos.x < max_size.x - 1)
+					if (map[pos.y + 1][pos.x + 1]->type_tile == 9)
+						wallvect.push_back(map[pos.y + 1][pos.x + 1]->shape.getGlobalBounds());
+				if (pos.x > 0)
+					if (map[pos.y + 1][pos.x - 1]->type_tile == 9)
+						wallvect.push_back(map[pos.y + 1][pos.x - 1]->shape.getGlobalBounds());
+			}
+			if (pos.x > 0)
+			{
+				if (map[pos.y][pos.x - 1]->type_tile == 9)
+					wallvect.push_back(map[pos.y][pos.x - 1]->shape.getGlobalBounds());
+			}
+			if (0 <= pos.x <= 20)
+			{
+				if (pos.x < max_size.x - 1)
+				{
+					if (map[pos.y][pos.x + 1]->type_tile == 9)
+						wallvect.push_back(map[pos.y][pos.x + 1]->shape.getGlobalBounds());
+				}
+			}
+		}
 	}
 	return wallvect;
 }

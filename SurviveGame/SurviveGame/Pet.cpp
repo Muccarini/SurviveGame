@@ -12,6 +12,10 @@ Pet::Pet(sf::Texture txt_p, sf::Texture txt_b, sf::Vector2f spawn_pos)
 	initHitbox();
 }
 
+Pet::Pet()
+{
+}
+
 
 Pet::~Pet()
 {
@@ -75,9 +79,7 @@ void Pet::updateCollision(std::shared_ptr<EntityData> entitydata)
 
 	ent = this->collision->CollideWithEntity(entitydata->player->getHitBox().getGlobalBounds(), this->getHitBox().getGlobalBounds());
 	sprite.move(-ent);
-	if (ent.x != 0 || ent.y != 0)
-		entitydata->player->takeDamage();
-	//hit_box.setPosition(getPosition());
+	
 	collision->resetOutMtv();
 }
 

@@ -25,6 +25,11 @@ bool Entity::isAlive()
 		this->alive;
 }
 
+void Entity::setAlive(bool boolean)
+{
+	this->alive = boolean;
+}
+
 
 bool Entity::isCollide()
 {

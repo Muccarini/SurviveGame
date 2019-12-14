@@ -98,12 +98,15 @@ void Bullet::updateAlliedCollision(std::shared_ptr<EntityData> entitydata)
 	}
 	if (!collision->isCollide())
 	{
-		collision->CollideWithEntity(this->hit_box.getGlobalBounds(), entitydata->boss->getHitBox().getGlobalBounds());
-		if (collision->isCollide())
+		if (entitydata->boss)
 		{
-			entitydata->boss->takeDamage();
-			collision->resetOutMtv();
-		}
+			collision->CollideWithEntity(this->hit_box.getGlobalBounds(), entitydata->boss->getHitBox().getGlobalBounds());
+			if (collision->isCollide())
+			{
+				entitydata->boss->takeDamage();
+				collision->resetOutMtv();
+			}
+		}		
 		//WALLS
 		else
 			updateWallsCollision(entitydata);
