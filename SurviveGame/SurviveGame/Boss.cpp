@@ -1,9 +1,10 @@
 #include "Boss.h"
 
-Boss::Boss(sf::Texture texture_character, sf::Texture texture_bullet)
+Boss::Boss(std::shared_ptr<TextureHolder> textures)
 {
-	this->texture = texture_character;
-	this->texture_bullet = texture_bullet;
+	this->textures = textures;
+	this->texture = textures->get(Textures::Boss);
+	this->texture_bullet = textures->get(Textures::Proiettile);
 
 	initVar();
 	initSprite();
@@ -20,12 +21,12 @@ Boss::~Boss()
 
 void Boss::update(std::shared_ptr<EntityData> entitydata)
 {
-	if (!isInRange(entitydata->boss->getPosition(), entitydata->player->getPosition()))
-	{
+	/*if (!isInRange(entitydata->boss->getPosition(), entitydata->player->getPosition()))
+	{*/
 		updateMove(entitydata->deltaTime, entitydata->player);
-	}
 	updateRotate(entitydata->player);
 	updateBullets(entitydata);
+	updateReload(entitydata->deltaTime);
 	updateHud();
 	updateCollision(entitydata);
 
@@ -58,7 +59,7 @@ void Boss::updateBullets(std::shared_ptr<EntityData> entitydata)
 
 	if (shooting && getAmmo())
 	{
-		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Enemy, texture_bullet));
+		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Boss, texture_bullet));
 		ammo--;
 		bullets.emplace_back(bullet);
 		bullet->setDir(entitydata->boss->getPosition(), entitydata->player->getPosition());
@@ -92,7 +93,7 @@ void Boss::updateReload(sf::Time deltaTime)
 		if (reload_clock < sf::seconds(0.f))
 		{
 			ammo = ammo_max;
-			reload_clock = sf::seconds(1.f);
+			reload_clock = reload_cd;
 			reloading = false;
 		}
 	}
@@ -162,20 +163,21 @@ void Boss::initVar()
 	mov_speed_default = 150;
 	mov_speed = mov_speed_default;
 
-	hp_max = 10;
+	hp_max = 200;
 	hp = hp_max;
 
-	reload_cd = sf::seconds(1.f); //DA SCEGLIERE
+	reload_cd = sf::seconds(2.f); //DA SCEGLIERE
 	reload_clock = reload_cd;
 
 	ammo_max = 200;  // DA SCEGLIERE
 	ammo = ammo_max;
 
-	ratio_cd = sf::seconds(1.f / 16.666f); //DA SCEGLIERE
+	ratio_cd = sf::seconds(1.f / 5.f); //DA SCEGLIERE
 	ratio_clock = ratio_cd;
 
 	reloading = false;
-	range = 200;
+
+	range = 400;
 }
 
 void Boss::initSprite()

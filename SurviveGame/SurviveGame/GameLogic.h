@@ -50,7 +50,7 @@ private:
 	sf::View game_view;
 	Hud hud;
 	RoundManager round;
-	TextureHolder textures;
+	std::shared_ptr<TextureHolder> textures;
 
     std::vector<std::shared_ptr<Character>> * enemies;
 	std::shared_ptr<Character> player;
@@ -62,14 +62,14 @@ private:
 	std::shared_ptr<EntityData> entitydata;
 	std::shared_ptr<BoostPos> boost_pos;
 
-	int max_enemies;
+	const int max_enemies = 5;
 	int enemies_alive;
 	bool boss_alive;
 	bool pet_alive;
 
 	int kill_counter;
 
-	float game_view_speed;
+	const float game_view_speed = 4.5f;
 	sf::Clock boost_time;
 	sf::Time rand_time;
 

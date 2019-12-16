@@ -9,7 +9,7 @@ class CollisionManager;
 
 namespace BulletOwner
 {
-	enum Owner { Allied, Enemy };
+	enum Owner { Player, Boss, Pet };
 }
 
 class EntityData
@@ -20,8 +20,10 @@ public:
 	sf::Time deltaTime;
 	sf::Vector2f mouse_pos_view;
 	std::shared_ptr<TileMap> map;
+	std::shared_ptr<TextureHolder> textures;
     std::vector<std::shared_ptr<Character>> * enemies;
 	std::shared_ptr<Character> player;
+	std::shared_ptr<Character> pet;
 	std::shared_ptr<Character> boss;
 };
 
@@ -61,6 +63,7 @@ protected:
 	sf::Texture texture;
 	sf::RectangleShape hit_box;
 	std::shared_ptr<CollisionManager> collision;
+	std::shared_ptr<TextureHolder> textures;
 
 	sf::Vector2f vec;
 

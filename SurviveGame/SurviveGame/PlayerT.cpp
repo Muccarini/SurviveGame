@@ -1,10 +1,11 @@
 #include "PlayerT.h"
 
-PlayerT::PlayerT(sf::Texture txt_p, sf::Texture txt_b, sf::Texture txt_ms)
+PlayerT::PlayerT(std::shared_ptr<TextureHolder> textures)
 {
-	this->texture = txt_p;
-	this->texture_bullet = txt_b;
-	this->texture_movspeed = txt_ms;
+	this->textures = textures;
+	this->texture = this->textures->get(Textures::Personaggio);
+	this->texture_bullet = this->textures->get(Textures::Proiettile);
+	this->texture_movspeed = this->textures->get(Textures::PersonaggioMS);
 
 	initVar();
 	initSprite();
@@ -72,7 +73,7 @@ void PlayerT::updateBullets(std::shared_ptr<EntityData> entitydata)
 
 	if (shooting && getAmmo())
 	{
-		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Allied, texture_bullet));
+		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Player, texture_bullet));
 		ammo--;
 		bullets.emplace_back(bullet);
 		bullet->setDir(entitydata->player->getPosition(), entitydata->mouse_pos_view);

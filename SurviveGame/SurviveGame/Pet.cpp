@@ -2,13 +2,14 @@
 
 
 
-Pet::Pet(sf::Texture txt_p, sf::Texture txt_b, sf::Vector2f spawn_pos)
+Pet::Pet(const std::shared_ptr<EntityData> entitydata)
 {
-	this->texture = txt_p;
-	this->texture_bullet = txt_b;
+	this->textures = entitydata->textures;
+	this->texture = textures->get(Textures::Pet);
+	this->texture_bullet = textures->get(Textures::Proiettile);
 
 	initVar();
-	initSprite(spawn_pos);
+	initSprite(entitydata->boss->getPosition());
 	initHitbox();
 }
 
@@ -24,6 +25,7 @@ Pet::~Pet()
 void Pet::update(std::shared_ptr<EntityData> entitydata)
 {
 	updateMove(entitydata->player, entitydata->deltaTime);
+	updateRotate(entitydata->mouse_pos_view);
 	updateBullets(entitydata);
 	updateHud();
 	updateCollision(entitydata);
@@ -50,11 +52,21 @@ void Pet::updateMove(std::shared_ptr<Character> target, sf::Time deltaTime)
 	hit_box.setPosition(getPosition());
 }
 
+void Pet::updateRotate(sf::Vector2f mouse_pos)
+{
+	float dX = mouse_pos.x - getPosition().x;
+	float dY = mouse_pos.y - getPosition().y;
+	const float PI = 3.14159265f;
+	float deg = atan2(dY, dX) * 180.f / PI;
+
+	this->sprite.setRotation(deg + 270.f);
+}
+
 void Pet::updateBullets(std::shared_ptr<EntityData> entitydata)
 {
 	if (entitydata->player->isShooting() && entitydata->player->getAmmo())
 	{
-		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Allied, texture_bullet));
+		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Pet, texture_bullet));
 		bullets.emplace_back(bullet);
 		bullet->setDir(this->getPosition(), entitydata->mouse_pos_view);
 	}
@@ -97,18 +109,18 @@ void Pet::initVar()
 void Pet::initSprite(sf::Vector2f spawn_pos)
 {
 	sprite.setTexture(texture);     //TEXTURE
-	sprite.setScale(0.01, 0.01);      //SCALE
+	sprite.setScale(0.1, 0.1);      //SCALE
 	sprite.setPosition(spawn_pos);  //POS
-	sprite.setOrigin(92, 120);      //ORIGIN
+	sprite.setOrigin(222.f, 188.f);      //ORIGIN
 }
 
 void Pet::initHitbox()
 {
-	hit_box.setSize(sf::Vector2f(80, 80));     //SIZE
-	hit_box.setOutlineColor(sf::Color::Red); //COLOR
+	hit_box.setSize(sf::Vector2f(445, 377));     //SIZE
+	hit_box.setOutlineColor(sf::Color::Transparent); //COLOR
 	hit_box.setOutlineThickness(3.f);
 	hit_box.setFillColor(sf::Color::Transparent);
-	/*hit_box.setScale(sprite.getScale()); */            //SCALE
+	hit_box.setScale(sprite.getScale());           //SCALE
 	hit_box.setPosition(getPosition());              //POS
-	hit_box.setOrigin(40, 40);                       //ORIGIN
+	hit_box.setOrigin(222.f, 188.f);                       //ORIGIN
 }

@@ -12,7 +12,7 @@ class Boost :
 	public Entity
 {
 public:
-	Boost(std::shared_ptr<BoostPos> boost_pos, sf::Texture hp, sf::Texture ms);
+	Boost(const std::shared_ptr<BoostPos> boost_pos, const std::shared_ptr<TextureHolder> textures);
 	virtual ~Boost();
 
 private:

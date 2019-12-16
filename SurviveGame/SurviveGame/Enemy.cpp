@@ -1,9 +1,9 @@
 #include "Enemy.h"
 
 
-Enemy::Enemy(sf::Texture txt_e)
+Enemy::Enemy(const std::shared_ptr<TextureHolder> textures)
 {
-	this->texture = txt_e;
+	this->texture = textures->get(Textures::Enemy);
 	initVar();
 	initSprite();
 	initHitBox();
@@ -51,13 +51,24 @@ void Enemy::updateCollision(std::shared_ptr<EntityData> entitydata)
 	sf::Vector2f ent(0, 0);
 	sf::Vector2f dir(0, 0);
 
+	//PLAYER
 	ent = this->collision->CollideWithEntity(entitydata->player->getHitBox().getGlobalBounds(), this->getHitBox().getGlobalBounds());
 	sprite.move(-ent);
 	if (ent.x != 0 || ent.y != 0)
 		entitydata->player->takeDamage();
-	//hit_box.setPosition(getPosition());
 	collision->resetOutMtv();
 
+	//PET
+	if (entitydata->pet)
+	{
+		ent = this->collision->CollideWithEntity(entitydata->pet->getHitBox().getGlobalBounds(), this->getHitBox().getGlobalBounds());
+		sprite.move(-ent);
+		if (ent.x != 0 || ent.y != 0)
+			entitydata->pet->takeDamage();
+		collision->resetOutMtv();
+	}
+
+	//WALLS
 	dir = this->collision->CollideWithWalls(this->getHitBox().getGlobalBounds(), entitydata->map->findWalls(sprite.getPosition().x, sprite.getPosition().y));
  	sprite.move(dir);
 	hit_box.setPosition(getPosition());

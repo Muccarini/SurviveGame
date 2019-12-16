@@ -5,7 +5,7 @@ class PlayerT :
 	public Character
 {
 public:
-	PlayerT(sf::Texture texture_player, sf::Texture texture_bullet, sf::Texture texture_player_movspeed);
+	explicit PlayerT(std::shared_ptr<TextureHolder> textures);
 
 	PlayerT();
 	virtual ~PlayerT();

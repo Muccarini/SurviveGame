@@ -4,14 +4,10 @@
 #include "Bullet.h"
 #include <math.h>
 
-namespace PlayerType
-{
-	enum Type { Type1, Type2, Type3 };
-}
 
-namespace EnemyType
+namespace CharacterType
 {
-	enum Type { Melee, Ranged };
+	enum Type { Melee, Ranged, Boss, Player};
 }
 
 class Character :
@@ -41,6 +37,7 @@ public:
 
 protected:
 	Hud hud;
+	CharacterType::Type type;
 
 	sf::Time reload_cd;
 	sf::Time reload_clock;

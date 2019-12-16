@@ -5,7 +5,7 @@ class Boss :
 	public Character
 {
 public:
-	Boss(sf::Texture texture_character, sf::Texture texture_bullet);
+	explicit Boss(std::shared_ptr<TextureHolder> textures);
 	Boss();
 	virtual ~Boss();
 

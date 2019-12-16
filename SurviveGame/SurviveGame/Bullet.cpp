@@ -8,9 +8,20 @@ Bullet::Bullet(BulletOwner::Owner owner, sf::Texture txt)
 	this->texture = txt;
 
 	this->mov_speed = 1500;
-
-	initSprite();
-	initHitBox();
+	switch(owner)
+	{
+	case(BulletOwner::Player):
+		initSprite();
+		initHitBox();
+		break;
+	case(BulletOwner::Boss):
+		initSprite();
+		initHitBox();
+		break;
+	case(BulletOwner::Pet):
+		initSpritePet();
+		initHitBox();
+	}
 }
 
 Bullet::Bullet()
@@ -27,10 +38,15 @@ void Bullet::update(std::shared_ptr<EntityData> entitydata)
 
 	switch(this->owner)
 	{
-	case(BulletOwner::Allied):
+	case(BulletOwner::Player):
 		updateAlliedCollision(entitydata);
 		break;
-	case(BulletOwner::Enemy):
+
+	case(BulletOwner::Pet):
+		updateAlliedCollision(entitydata);
+		break;
+
+	case(BulletOwner::Boss):
 		updateEnemyCollision(entitydata);
 		break;
 	}
@@ -55,6 +71,13 @@ void Bullet::setDir(sf::Vector2f owner_pos, sf::Vector2f target)
 	sf::Vector2f normVect(dX / lenght, dY / lenght);
 
 	this->dir = normVect;
+}
+
+void Bullet::initSpritePet()
+{
+	sprite.setTexture(texture);
+	sprite.setScale(0.013f, 0.013f);
+	sprite.setOrigin(-500, 0);
 }
 
 void Bullet::initSprite()
@@ -86,18 +109,21 @@ void Bullet::updateAlliedCollision(std::shared_ptr<EntityData> entitydata)
 	std::vector<std::shared_ptr<Character>> enemies;
 	enemies = *entitydata->enemies;
 
-	for (int i = 0; i != enemies.size(); i++)
+	if (!enemies.empty())
 	{
-		collision->CollideWithEntity(this->hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds());
-		if (collision->isCollide())
+		for (int i = 0; i != enemies.size(); i++)
 		{
-			enemies[i]->takeDamage();
-			collision->resetOutMtv();
-			continue;
+			collision->CollideWithEntity(this->hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds());
+			if (collision->isCollide())
+			{
+				enemies[i]->takeDamage();
+				collision->resetOutMtv();
+				this->collide = true;
+				return;
+			}
 		}
 	}
-	if (!collision->isCollide())
-	{
+
 		if (entitydata->boss)
 		{
 			collision->CollideWithEntity(this->hit_box.getGlobalBounds(), entitydata->boss->getHitBox().getGlobalBounds());
@@ -105,27 +131,46 @@ void Bullet::updateAlliedCollision(std::shared_ptr<EntityData> entitydata)
 			{
 				entitydata->boss->takeDamage();
 				collision->resetOutMtv();
+				this->collide = true;
+				return;
 			}
-		}		
+		}
+
 		//WALLS
-		else
-			updateWallsCollision(entitydata);
-	}
+
+	updateWallsCollision(entitydata);
 
 	this->collide = collision->isCollide();
 }
 
 void Bullet::updateEnemyCollision(std::shared_ptr<EntityData> entitydata)
 {
-	//BOSS
+	//PLAYER
 	collision->CollideWithEntity(this->hit_box.getGlobalBounds(), entitydata->player->getHitBox().getGlobalBounds());
 	if (collision->isCollide())
 	{
 		entitydata->player->takeDamage();
 		collision->resetOutMtv();
+		this->collide = true;
+		return;
 	}
+
+	//PET
+	if (entitydata->pet)
+	{
+		collision->CollideWithEntity(this->hit_box.getGlobalBounds(), entitydata->pet->getHitBox().getGlobalBounds());
+		if (collision->isCollide())
+		{
+			entitydata->pet->takeDamage();
+			collision->resetOutMtv();
+			this->collide = true;
+			return;
+		}
+	}
+
 	//WALLS
-	else updateWallsCollision(entitydata);
+
+	updateWallsCollision(entitydata);
 
 	this->collide = collision->isCollide();
 }
@@ -135,6 +180,7 @@ void Bullet::updateWallsCollision(std::shared_ptr<EntityData> entitydata)
 	//WALLS
 	collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->map->findWalls(sprite.getPosition().x, sprite.getPosition().y));
 	collision->resetOutMtv();
+
 }
 
 void Bullet::updateRotate(sf::Vector2f vec_dir)

@@ -7,7 +7,7 @@ class Enemy :
 {
 
 public:
-	Enemy(sf::Texture textures_enemy);
+	explicit Enemy(const std::shared_ptr<TextureHolder> textures);
 
 	Enemy();
 	virtual ~Enemy();

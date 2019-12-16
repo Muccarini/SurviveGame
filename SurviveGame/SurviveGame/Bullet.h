@@ -21,7 +21,8 @@ private:
 	void updateWallsCollision(std::shared_ptr<EntityData> entitydata);
 
 	void updateRotate(sf::Vector2f vec_dir);
-
+	
+	void initSpritePet();
 	void initSprite();
 	void initHitBox();
 

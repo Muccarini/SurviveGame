@@ -1,6 +1,6 @@
 #include "Boost.h"
 
-Boost::Boost(std::shared_ptr<BoostPos> boost_pos, sf::Texture hp, sf::Texture ms)
+Boost::Boost(const std::shared_ptr<BoostPos> boost_pos, const std::shared_ptr<TextureHolder> textures)
 {
 	this->boost_pos = boost_pos;
 	this->alive = true;
@@ -9,12 +9,12 @@ Boost::Boost(std::shared_ptr<BoostPos> boost_pos, sf::Texture hp, sf::Texture ms
 	switch (int i = rand() % 2)
 	{
 	case 0: this->type = HP;
-		this->texture = hp;
+		this->texture = textures->get(Textures::HP);
 		initHp();
 		break;
 
 	case 1: this->type = MS;
-		this->texture = ms;
+		this->texture = textures->get(Textures::MS);
 		initMs();
 		break;
 	}

@@ -5,7 +5,7 @@ class Pet :
 	public Character
 {
 public:
-	explicit Pet(sf::Texture txt_p, sf::Texture txt_b, sf::Vector2f spawn_pos);
+	explicit Pet(const std::shared_ptr<EntityData> entitydata);
 	Pet();
 	virtual ~Pet();
 
@@ -17,6 +17,7 @@ private:
 	void takeDamage();
 
 	void updateMove(std::shared_ptr<Character> target, sf::Time deltaTime);
+	void updateRotate(sf::Vector2f mouse_pos);
 	void updateBullets(std::shared_ptr<EntityData> entitydata);
 	void updateHud();
 	void updateCollision(std::shared_ptr<EntityData> entitydata);
