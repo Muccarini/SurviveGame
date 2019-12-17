@@ -67,10 +67,6 @@ void Game::processEvents()
 	{
 		switch (event.type)
 		{
-		case sf::Event::KeyPressed:
-			if (event.key.code == sf::Keyboard::Escape)
-				this->states.top()->endState();
-			break;
 		case sf::Event::Closed:
 			window->close();
 			break;

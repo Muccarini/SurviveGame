@@ -1,15 +1,13 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 #include "State.h"
-#include "GameLogic.h"
 #include "Button.h"
 
-class MainMenu : 
+class PauseMenu :
 	public State
 {
 public:
-	MainMenu();
-	virtual ~MainMenu();
+	PauseMenu();
+	virtual ~PauseMenu();
 
 	void update(sf::Time deltaTime);
 	void render();
@@ -23,8 +21,9 @@ private:
 	sf::Texture background_txt;
 	sf::Sprite background;
 
-	Button new_game;
-	Button settings;
-	Button exit;
+	Button resume;
+	Button exit_game;
+
+
 };
 

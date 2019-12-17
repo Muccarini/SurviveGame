@@ -7,19 +7,19 @@ class Enemy :
 {
 
 public:
-	explicit Enemy(const std::shared_ptr<TextureHolder> textures);
+	explicit Enemy(const std::shared_ptr<EntityData> entitydata);
 
 	Enemy();
 	virtual ~Enemy();
 
 private:
-	virtual void update(std::shared_ptr<EntityData> entitydata);
+	virtual void update();
 	virtual void renderBullets(std::shared_ptr<sf::RenderWindow> target);
 
-	void updateMove(sf::Time deltaTime, const std::shared_ptr<Character> target);
-	void updateRotate(const std::shared_ptr<Character> target);
+	void updateMove();
+	void updateRotate();
 	void updateHud();
-	void updateCollision(std::shared_ptr<EntityData> entitydata);
+	void updateCollision();
 
 	void initVar();
 	void initSprite();

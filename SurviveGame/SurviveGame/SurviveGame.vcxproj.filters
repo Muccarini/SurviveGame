@@ -102,6 +102,9 @@
     <ClCompile Include="CollisionManager.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="PauseMenu.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnemyStrategyMove.h">
@@ -178,6 +181,9 @@
     </ClInclude>
     <ClInclude Include="CollisionManager.h">
       <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseMenu.h">
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

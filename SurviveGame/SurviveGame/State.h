@@ -12,6 +12,7 @@ public:
 	virtual void render() = 0;
 
 	void endState();
+
 	bool getQuit();
 
 	std::stack<State*>* states;

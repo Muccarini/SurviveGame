@@ -18,8 +18,8 @@ void GameLogic::update(sf::Time deltaTime)
 {
 	updateMousePos();
 	updateEntityData(deltaTime);
-	updateHud();
 
+	updateHud();
 	updatePlayer(entitydata);
 	updateEnemies(entitydata);
 	updatePet(entitydata);
@@ -27,6 +27,8 @@ void GameLogic::update(sf::Time deltaTime)
 	updateBoost(entitydata);
 
 	updateGameView(deltaTime);
+
+	updateState();
 }
 
 
@@ -43,6 +45,25 @@ void GameLogic::render()
 	renderBoss();
 
 	hud.renderTextsHud(window);
+}
+
+void GameLogic::updateState()
+{
+	//GAMEOVER
+	if(player)
+		if(player->getHp() < 0)
+		{
+			this->states->top()->endState();
+		}
+
+	//PAUSE MENU
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+	{
+		this->states->push(new PauseMenu());
+		this->states->top()->window = this->window;
+		this->states->top()->states = this->states;
+		return;
+	}
 }
 
 void GameLogic::updateHud()
@@ -74,13 +95,13 @@ void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
 	{
 		while (enemies_alive != max_enemies)
 		{
-			this->enemies->emplace_back(new Enemy(textures));
+			this->enemies->emplace_back(new Enemy(this->entitydata));
 			enemies_alive++;
 		}
 
 		for (int i = 0; i < enemies->size(); i++)
 		{
-			(*enemies)[i]->update(entitydata);
+			(*enemies)[i]->update();
 
 			if (((*enemies)[i]->getHp() <= 0))
 			{
@@ -99,19 +120,19 @@ void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
 		{
 			if (!boss_alive)
 			{
-				std::shared_ptr<Character>boss(new Boss(textures));
+				std::shared_ptr<Character>boss(new Boss(this->entitydata));
 				this->boss = boss;
 				entitydata->boss = this->boss;
 				this->boss_alive = true;
 			}
-			updateBoss(entitydata);
+			updateBoss();
 		}
 	}
 }
 
-void GameLogic::updateBoss(std::shared_ptr<EntityData> entitydata)
+void GameLogic::updateBoss()
 {
-		boss->update(entitydata);
+		boss->update();
 
 		//BOSS DEATH
 		if ((boss->getHp() <= 0))
@@ -119,7 +140,7 @@ void GameLogic::updateBoss(std::shared_ptr<EntityData> entitydata)
 			//SPAWN PET
 			if (!pet_alive)
 			{
-				this->pet = std::make_shared<Pet>(entitydata);
+				this->pet = std::make_shared<Pet>(this->entitydata);
 				entitydata->pet = this->pet;
 				this->pet_alive = true;
 			}
@@ -140,7 +161,7 @@ void GameLogic::updatePet(std::shared_ptr<EntityData> entitydata)
 {
 	if (pet_alive)
 	{
-		pet->update(entitydata);
+		pet->update();
 
 		//PET DEATH
 		if(pet->getHp() <= 0)
@@ -159,7 +180,7 @@ void GameLogic::updateBoost(std::shared_ptr<EntityData> entitydata)
 	{
 		if (boost_time.getElapsedTime() > rand_time)
 		{
-			this->boost.emplace_back(new Boost(boost_pos, textures));
+			this->boost.emplace_back(new Boost(boost_pos, this->entitydata));
 			this->boost_time.restart();
 			this->rand_time = sf::seconds((rand() % 10)+ 5);
 		}
@@ -168,7 +189,7 @@ void GameLogic::updateBoost(std::shared_ptr<EntityData> entitydata)
 	{
 		for (int i = 0; i < boost.size(); i++)
 		{
-			boost[i]->update(entitydata);
+			boost[i]->update();
 
 			if (!boost[i]->isAlive())
 				boost.erase(boost.begin() + i);
@@ -178,12 +199,7 @@ void GameLogic::updateBoost(std::shared_ptr<EntityData> entitydata)
 
 void GameLogic::updatePlayer(const std::shared_ptr<EntityData> entitydata)
 {
-	player->update(entitydata);
-
-	if(player->getHp() <=0)
-	{
-		//states->top()->endState(); //GAMEOVER
-	}
+	player->update();
 }
 
 void GameLogic::updateGameView(sf::Time deltaTime)
@@ -250,8 +266,9 @@ void GameLogic::entitiesInit()
 {  
 	entitydata = std::make_shared<EntityData>();
 
+	this->entitydata->textures = this->textures;
 	this->enemies = new std::vector<std::shared_ptr<Character>>;
-	this->player = std::make_shared<PlayerT>(textures);
+	this->player = std::make_shared<PlayerT>(this->entitydata);
 }
 
 void GameLogic::gameViewInit()
@@ -274,7 +291,6 @@ void GameLogic::varInit()
 
 void GameLogic::entitydataInit()
 {
-	entitydata->textures       = this->textures;
 	entitydata->enemies        = this->enemies;
 	entitydata->map            = std::make_shared<TileMap>(this->tile_map);
 	entitydata->player         = this->player;
@@ -284,6 +300,7 @@ void GameLogic::entitydataInit()
 void GameLogic::textureInit()
 {
 	this->textures = std::make_shared<TextureHolder>();
+
 	textures->load(Textures::Enemy, "Sources/zombie1.png");
 	textures->load(Textures::Proiettile, "Sources/bullets/bullet1.png");
 	textures->load(Textures::Boss, "Sources/boss/boss.png");

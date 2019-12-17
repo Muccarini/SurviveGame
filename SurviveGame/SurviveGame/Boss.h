@@ -5,22 +5,22 @@ class Boss :
 	public Character
 {
 public:
-	explicit Boss(std::shared_ptr<TextureHolder> textures);
+	explicit Boss(const std::shared_ptr<EntityData> entitydata);
 	Boss();
 	virtual ~Boss();
 
 private:
-	virtual void update(std::shared_ptr<EntityData> entitydata);
+	virtual void update();
 	virtual void renderBullets(std::shared_ptr<sf::RenderWindow> target);
 
-	void updateMove(sf::Time deltaTime, std::shared_ptr<Character> target);
-	void updateBullets(std::shared_ptr<EntityData> entitydata);
-	void updateRotate(std::shared_ptr<Character> target);
-	void updateReload(sf::Time deltaTime);
+	void updateMove();
+	void updateBullets();
+	void updateRotate();
+	void updateReload();
 	void updateHud();
-	void updateCollision(std::shared_ptr<EntityData> entitydata);
+	void updateCollision();
 
-	void updateShooting(std::shared_ptr<EntityData> entitydata);
+	void updateShooting();
 
 	bool isInRange(sf::Vector2f obj1, sf::Vector2f obj2);
 	void takeDamage();

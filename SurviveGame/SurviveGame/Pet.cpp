@@ -4,12 +4,10 @@
 
 Pet::Pet(const std::shared_ptr<EntityData> entitydata)
 {
-	this->textures = entitydata->textures;
-	this->texture = textures->get(Textures::Pet);
-	this->texture_bullet = textures->get(Textures::Proiettile);
+	this->entitydata = entitydata;
 
 	initVar();
-	initSprite(entitydata->boss->getPosition());
+	initSprite();
 	initHitbox();
 }
 
@@ -22,13 +20,13 @@ Pet::~Pet()
 {
 }
 
-void Pet::update(std::shared_ptr<EntityData> entitydata)
+void Pet::update()
 {
-	updateMove(entitydata->player, entitydata->deltaTime);
-	updateRotate(entitydata->mouse_pos_view);
-	updateBullets(entitydata);
+	updateMove();
+	updateRotate();
+	updateBullets();
 	updateHud();
-	updateCollision(entitydata);
+	updateCollision();
 }
 
 void Pet::takeDamage()
@@ -44,36 +42,36 @@ void Pet::renderBullets(const std::shared_ptr<sf::RenderWindow> window)
 	}
 }
 
-void Pet::updateMove(std::shared_ptr<Character> target, sf::Time deltaTime)
+void Pet::updateMove()
 {
-	sf::Vector2f dir = target->getPosition() - this->getPosition();
+	sf::Vector2f dir = entitydata->player->getPosition() - this->getPosition();
 
-	this->sprite.move((dir.x * this->mov_speed * deltaTime.asSeconds()), (dir.y * this->mov_speed * deltaTime.asSeconds()));
+	this->sprite.move((dir.x * this->mov_speed * entitydata->deltaTime.asSeconds()), (dir.y * this->mov_speed * entitydata->deltaTime.asSeconds()));
 	hit_box.setPosition(getPosition());
 }
 
-void Pet::updateRotate(sf::Vector2f mouse_pos)
+void Pet::updateRotate()
 {
-	float dX = mouse_pos.x - getPosition().x;
-	float dY = mouse_pos.y - getPosition().y;
+	float dX = entitydata->mouse_pos_view.x - getPosition().x;
+	float dY = entitydata->mouse_pos_view.y - getPosition().y;
 	const float PI = 3.14159265f;
 	float deg = atan2(dY, dX) * 180.f / PI;
 
 	this->sprite.setRotation(deg + 270.f);
 }
 
-void Pet::updateBullets(std::shared_ptr<EntityData> entitydata)
+void Pet::updateBullets()
 {
 	if (entitydata->player->isShooting() && entitydata->player->getAmmo())
 	{
-		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Pet, texture_bullet));
+		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Pet, entitydata));
 		bullets.emplace_back(bullet);
-		bullet->setDir(this->getPosition(), entitydata->mouse_pos_view);
+		bullet->setDir();
 	}
 
 	for (int i = 0; i < bullets.size(); i++)
 	{
-		bullets[i]->update(entitydata);
+		bullets[i]->update();
 		if (bullets[i]->isCollide())
 			bullets.erase(bullets.begin() + i);
 	}
@@ -84,7 +82,7 @@ void Pet::updateHud()
 	hud.updateText(hp, getPosition());
 }
 
-void Pet::updateCollision(std::shared_ptr<EntityData> entitydata)
+void Pet::updateCollision()
 { //PLAYER
 	sf::Vector2f ent(0, 0);
 	sf::Vector2f dir(0, 0);
@@ -106,11 +104,11 @@ void Pet::initVar()
 	range = 50;
 }
 
-void Pet::initSprite(sf::Vector2f spawn_pos)
+void Pet::initSprite()
 {
-	sprite.setTexture(texture);     //TEXTURE
+	sprite.setTexture(entitydata->textures->get(Textures::Pet));     //TEXTURE
 	sprite.setScale(0.1, 0.1);      //SCALE
-	sprite.setPosition(spawn_pos);  //POS
+	sprite.setPosition(entitydata->boss->getPosition());  //POS
 	sprite.setOrigin(222.f, 188.f);      //ORIGIN
 }
 

@@ -2,25 +2,27 @@
 
 
 
-Bullet::Bullet(BulletOwner::Owner owner, sf::Texture txt)
+Bullet::Bullet(BulletOwner::Owner owner, std::shared_ptr<EntityData> entitydata)
 {
 	this->owner = owner;
-	this->texture = txt;
+	this->entitydata = entitydata;
 
 	this->mov_speed = 1500;
+
 	switch(owner)
 	{
 	case(BulletOwner::Player):
-		initSprite();
+		initSpritePlayer();
 		initHitBox();
 		break;
 	case(BulletOwner::Boss):
-		initSprite();
+		initSpriteBoss();
 		initHitBox();
 		break;
 	case(BulletOwner::Pet):
 		initSpritePet();
 		initHitBox();
+		break;
 	}
 }
 
@@ -32,22 +34,22 @@ Bullet::~Bullet()
 {
 }
 
-void Bullet::update(std::shared_ptr<EntityData> entitydata)
+void Bullet::update()
 {
-	updateMove(entitydata);
+	updateMove();
 
 	switch(this->owner)
 	{
 	case(BulletOwner::Player):
-		updateAlliedCollision(entitydata);
+		updateAlliedCollision();
 		break;
 
 	case(BulletOwner::Pet):
-		updateAlliedCollision(entitydata);
+		updateAlliedCollision();
 		break;
 
 	case(BulletOwner::Boss):
-		updateEnemyCollision(entitydata);
+		updateEnemyCollision();
 		break;
 	}
 
@@ -58,33 +60,59 @@ void Bullet::update(std::shared_ptr<EntityData> entitydata)
 	updateRotate(dir);
 }
 
-void Bullet::setDir(sf::Vector2f owner_pos, sf::Vector2f target)
+void Bullet::setDir()
 {
-	this->owner_pos = owner_pos;
+	float dx;
+	float dy;
 
-	this->sprite.setPosition(owner_pos);
-	float dX = target.x - owner_pos.x;
-	float dY = target.y - owner_pos.y;
+	switch(this->owner)
+	{
+	case(BulletOwner::Player):
+		dx = entitydata->mouse_pos_view.x - entitydata->player->getPosition().x;
+		dy = entitydata->mouse_pos_view.y - entitydata->player->getPosition().y;
+		sprite.setPosition(entitydata->player->getPosition());
+		break;
 
-	float lenght = sqrt(pow(dX, 2) + pow(dY, 2));
+	case(BulletOwner::Pet):
+		dx = entitydata->mouse_pos_view.x - entitydata->pet->getPosition().x;
+	    dy = entitydata->mouse_pos_view.y - entitydata->pet->getPosition().y;
+		sprite.setPosition(entitydata->pet->getPosition());
+		break;
+	case(BulletOwner::Boss):
+		dx = entitydata->player->getPosition().x - entitydata->boss->getPosition().x;
+		dy = entitydata->player->getPosition().y - entitydata->boss->getPosition().y;
+		sprite.setPosition(entitydata->boss->getPosition());
+		break;
+	}
+	float lenght = sqrt(pow(dx, 2) + pow(dy, 2));
 
-	sf::Vector2f normVect(dX / lenght, dY / lenght);
+	sf::Vector2f normVect(dx / lenght, dy / lenght);
 
 	this->dir = normVect;
 }
 
 void Bullet::initSpritePet()
 {
-	sprite.setTexture(texture);
+	sprite.setTexture(entitydata->textures->get(Textures::Proiettile));
+	sprite.setPosition(entitydata->pet->getPosition());
 	sprite.setScale(0.013f, 0.013f);
-	sprite.setOrigin(-500, 0);
+	this->sprite.setOrigin(-500, 0);
 }
 
-void Bullet::initSprite()
+void Bullet::initSpriteBoss()
 {
-	sprite.setTexture(texture);
+	sprite.setTexture(entitydata->textures->get(Textures::Proiettile));
+	sprite.setPosition(entitydata->boss->getPosition());
 	sprite.setScale(0.013f, 0.013f);
-	sprite.setOrigin(-3500, -562);
+	this->sprite.setOrigin(-3500, -562);
+}
+
+void Bullet::initSpritePlayer()
+{
+	sprite.setTexture(entitydata->textures->get(Textures::Proiettile));
+	sprite.setPosition(entitydata->player->getPosition());
+	sprite.setScale(0.013f, 0.013f);
+	this->sprite.setOrigin(-3500, -562);
 }
 
 void Bullet::initHitBox()
@@ -93,17 +121,18 @@ void Bullet::initHitBox()
 	hit_box.setOutlineColor(sf::Color::Transparent);
 	hit_box.setOutlineThickness(3.f);
 	hit_box.setFillColor(sf::Color::Transparent);
+	hit_box.setPosition(this->getPosition());
 	hit_box.setScale(sprite.getScale());
 	hit_box.setOrigin(sprite.getOrigin());
 }
 
-void Bullet::updateMove(std::shared_ptr<EntityData> entitydata)
+void Bullet::updateMove()
 {
 	this->sprite.move(this->dir.x * this->mov_speed * entitydata->deltaTime.asSeconds(), this->dir.y * this->mov_speed * entitydata->deltaTime.asSeconds());
 	hit_box.setPosition(sprite.getPosition());
 }
 
-void Bullet::updateAlliedCollision(std::shared_ptr<EntityData> entitydata)
+void Bullet::updateAlliedCollision()
 {
 	//ALLIED CASE
 	std::vector<std::shared_ptr<Character>> enemies;
@@ -138,12 +167,12 @@ void Bullet::updateAlliedCollision(std::shared_ptr<EntityData> entitydata)
 
 		//WALLS
 
-	updateWallsCollision(entitydata);
+	updateWallsCollision();
 
 	this->collide = collision->isCollide();
 }
 
-void Bullet::updateEnemyCollision(std::shared_ptr<EntityData> entitydata)
+void Bullet::updateEnemyCollision()
 {
 	//PLAYER
 	collision->CollideWithEntity(this->hit_box.getGlobalBounds(), entitydata->player->getHitBox().getGlobalBounds());
@@ -170,12 +199,12 @@ void Bullet::updateEnemyCollision(std::shared_ptr<EntityData> entitydata)
 
 	//WALLS
 
-	updateWallsCollision(entitydata);
+	updateWallsCollision();
 
 	this->collide = collision->isCollide();
 }
 
-void Bullet::updateWallsCollision(std::shared_ptr<EntityData> entitydata)
+void Bullet::updateWallsCollision()
 {
 	//WALLS
 	collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->map->findWalls(sprite.getPosition().x, sprite.getPosition().y));

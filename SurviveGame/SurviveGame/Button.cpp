@@ -50,7 +50,7 @@ bool Button::isActive(const sf::Vector2f mouse_pos_view)
 		return false;
 }
 
-void Button::buttonAnimation()  //TODO FIX IT!
+void Button::buttonAnimation()
 {
 	if (right_color == this->text.getFillColor() || right_scale == this->text.getScale())
 	{
@@ -69,5 +69,5 @@ void Button::setStandard()
 void Button::draw(std::shared_ptr<sf::RenderWindow> target)
 {
 	target->draw(this->text);
-	//target->draw(this->box);
+	/*target->draw(this->box);*/
 }

@@ -5,28 +5,28 @@ class Bullet :
 	public Entity
 {
 public:
-	Bullet(BulletOwner::Owner owner, sf::Texture texture);
+	Bullet(BulletOwner::Owner owner, std::shared_ptr<EntityData> entitydata);
 	Bullet();
 	virtual ~Bullet();
 
-	void update(std::shared_ptr<EntityData> entitydata);
+	void update();
 
-	void setDir(const sf::Vector2f owner_pos, const sf::Vector2f target);
+	void setDir();
 
 private:
-	void updateMove(std::shared_ptr<EntityData> entitydata);
+	void updateMove();
 
-	void updateAlliedCollision(std::shared_ptr<EntityData> entitydata);
-	void updateEnemyCollision(std::shared_ptr<EntityData> entitydata);
-	void updateWallsCollision(std::shared_ptr<EntityData> entitydata);
+	void updateAlliedCollision();
+	void updateEnemyCollision();
+	void updateWallsCollision();
 
 	void updateRotate(sf::Vector2f vec_dir);
 	
+	void initSpritePlayer();
 	void initSpritePet();
-	void initSprite();
+	void initSpriteBoss();
 	void initHitBox();
 
-	sf::Vector2f owner_pos;
 	sf::Vector2f dir;
 
 	BulletOwner::Owner owner;

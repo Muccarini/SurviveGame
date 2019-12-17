@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "State.h"
+#include "PauseMenu.h"
 #include "RoundManager.h"
 #include "Hud.h"
 #include "TileMap.h"
@@ -24,9 +25,11 @@ private:
 	void update(sf::Time deltaTime);
 	void render();
 
+	void updateState();
+
 	void updatePlayer(std::shared_ptr<EntityData> entitydata);
 	void updateEnemies(std::shared_ptr<EntityData> entitydata);
-	void updateBoss(std::shared_ptr<EntityData> entitydata);
+	void updateBoss();
 	void updatePet(std::shared_ptr<EntityData> entitydata);
 	void updateBoost(std::shared_ptr<EntityData> entitydata);
 

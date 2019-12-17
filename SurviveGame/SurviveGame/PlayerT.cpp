@@ -1,11 +1,8 @@
 #include "PlayerT.h"
 
-PlayerT::PlayerT(std::shared_ptr<TextureHolder> textures)
+PlayerT::PlayerT(const std::shared_ptr<EntityData> entitydata)
 {
-	this->textures = textures;
-	this->texture = this->textures->get(Textures::Personaggio);
-	this->texture_bullet = this->textures->get(Textures::Proiettile);
-	this->texture_movspeed = this->textures->get(Textures::PersonaggioMS);
+	this->entitydata = entitydata;
 
 	initVar();
 	initSprite();
@@ -21,17 +18,17 @@ PlayerT::~PlayerT()
 {
 }
 
-void PlayerT::update(std::shared_ptr<EntityData> entitydata)
+void PlayerT::update()
 {
-	updateMove(entitydata->deltaTime);
-	updateBullets(entitydata);
-	updateRotate(entitydata->mouse_pos_view);
-	updateReload(entitydata->deltaTime);
+	updateMove();
+	updateBullets();
+	updateRotate();
+	updateReload();
 	updateHud();
-	updateCollision(entitydata);
+	updateCollision();
 }
 
-void PlayerT::updateMove(sf::Time deltaTime)
+void PlayerT::updateMove()
 {
 	sf::Vector2f dir(0, 0);
 
@@ -60,47 +57,48 @@ void PlayerT::updateMove(sf::Time deltaTime)
 		dir.x = +1;
 	}
 
-	updateDash(dir, deltaTime);
-	updateMovSpeed(deltaTime);
+	updateDash(dir);
+	updateMovSpeed();
 
-	this->sprite.move((dir.x * this->mov_speed* deltaTime.asSeconds()) , dir.y * this->mov_speed* deltaTime.asSeconds());
-	hit_box.setPosition(getPosition());
+	hit_box.setPosition(getPosition() + sf::Vector2f((dir.x * this->mov_speed* entitydata->deltaTime.asSeconds()), dir.y * this->mov_speed* entitydata->deltaTime.asSeconds()));
+	updateCollision();
+	this->sprite.move((dir.x * this->mov_speed* entitydata->deltaTime.asSeconds()) , dir.y * this->mov_speed* entitydata->deltaTime.asSeconds());
 }
 
-void PlayerT::updateBullets(std::shared_ptr<EntityData> entitydata)
+void PlayerT::updateBullets()
 {
-	updateShooting(entitydata->deltaTime);
+	updateShooting();
 
 	if (shooting && getAmmo())
 	{
-		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Player, texture_bullet));
+		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Player, this->entitydata));
 		ammo--;
 		bullets.emplace_back(bullet);
-		bullet->setDir(entitydata->player->getPosition(), entitydata->mouse_pos_view);
+		bullet->setDir();
 	}
 
 	if (!bullets.empty())
 	{
-		for (int i = 0; i < bullets.size(); i++)
+		for (unsigned int i = 0; i < bullets.size(); i++)
 		{
-			bullets[i]->update(entitydata);
+			bullets[i]->update();
 			if (bullets[i]->isCollide())
 				bullets.erase(bullets.begin() + i);
 		}
 	}
 }
 
-void PlayerT::updateRotate(sf::Vector2f mousePosView)
+void PlayerT::updateRotate()
 {
-	float dX = mousePosView.x - getPosition().x;
-	float dY = mousePosView.y - getPosition().y;
+	float dX = entitydata->mouse_pos_view.x - getPosition().x;
+	float dY = entitydata->mouse_pos_view.y - getPosition().y;
 	const float PI = 3.14159265f;
 	float deg = atan2(dY, dX) * 180.f / PI;
 
 	this->sprite.setRotation(deg + 360.f);
 }
 
-void PlayerT::updateReload(sf::Time deltaTime)
+void PlayerT::updateReload()
 {
 	if (!reloading)
 	{
@@ -110,7 +108,7 @@ void PlayerT::updateReload(sf::Time deltaTime)
 
 	if (ammo == 0 || reloading)
 	{
-		reload_clock -= deltaTime;
+		reload_clock -= entitydata->deltaTime;
 		if (reload_clock < sf::seconds(0.f))
 		{
 			ammo = ammo_max;
@@ -120,18 +118,26 @@ void PlayerT::updateReload(sf::Time deltaTime)
 	}
 }
 
-void PlayerT::updateDash(sf::Vector2f dir, sf::Time deltaTime)
+void PlayerT::updateDash(sf::Vector2f dir)
 {
 	bool space_is_pressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
 
 	if (space_is_pressed && !is_dashing)
 	{
-		sprite.setPosition(getPosition().x + (dir.x * 160), (dir.y * 160) + getPosition().y);
-		is_dashing = true;
+		hit_box.setPosition(getPosition().x + (dir.x * 160), (dir.y * 160) + getPosition().y);
+		collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->map->findWalls(static_cast<int>(hit_box.getGlobalBounds().left), static_cast<int>(hit_box.getGlobalBounds().top)));
+		if (!this->collision->isCollide())
+		{
+			is_dashing = true;
+			this->sprite.setPosition(hit_box.getGlobalBounds().left, hit_box.getGlobalBounds().top);
+			
+		}
+		else
+			hit_box.setPosition(getPosition());
 	}
 	if (is_dashing && dash_clock > 0)
 	{
-		dash_clock -= deltaTime.asSeconds();
+		dash_clock -= entitydata->deltaTime.asSeconds();
 		if (dash_clock < 0)
 		{
 			is_dashing = false;
@@ -140,19 +146,19 @@ void PlayerT::updateDash(sf::Vector2f dir, sf::Time deltaTime)
 	}
 }
 
-void PlayerT::updateMovSpeed(sf::Time deltaTime)
+void PlayerT::updateMovSpeed()
 {
 	if (this->mov_speed != this->mov_speed_default)
 	{
-		this->sprite.setTexture(this->texture_movspeed);
-		this->ms_clock -= deltaTime.asSeconds();
+		this->sprite.setTexture(this->entitydata->textures->get(Textures::PersonaggioMS));
+		this->ms_clock -= entitydata->deltaTime.asSeconds();
 	}
 
 	if (ms_clock < 0.f)
 	{
 		this->ms_clock = this->ms_cd;
 		this->mov_speed = this->mov_speed_default;
-		this->sprite.setTexture(this->texture);
+		this->sprite.setTexture(this->entitydata->textures->get(Textures::Personaggio));
 	}
 		
 }
@@ -162,7 +168,7 @@ void PlayerT::updateHud()
 	hud.updateText(getAmmo(), getHp(), this->dash_clock, getPosition());
 }
 
-void PlayerT::updateCollision(std::shared_ptr<EntityData> entitydata)
+void PlayerT::updateCollision()
 {
 	sf::Vector2f dir(0, 0);
 	sf::Vector2f ent(0, 0);
@@ -180,18 +186,20 @@ void PlayerT::updateCollision(std::shared_ptr<EntityData> entitydata)
 	hit_box.setPosition(getPosition());
 	collision->resetOutMtv();
 
-	dir = this->collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->map->findWalls(sprite.getPosition().x, sprite.getPosition().y));
+	//WALLS
+	dir = this->collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->map->findWalls(static_cast<int>(getPosition().x), static_cast<int>(getPosition().y)));
 
+	this->collision->setPreMtv(this->collision->getOutMtv());
 	sprite.move(dir);
 	hit_box.setPosition(getPosition());
 	collision->resetOutMtv();
 }
 
-void PlayerT::updateShooting(sf::Time deltaTime)
+void PlayerT::updateShooting()
 {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !reloading)
 	{
-		ratio_clock -= deltaTime;
+		ratio_clock -= entitydata->deltaTime;
 
 		if (ratio_clock < sf::seconds(0.f))
 		{
@@ -230,8 +238,6 @@ void PlayerT::initVar()
 	ratio_cd = sf::seconds(1.f / 16.666f);
 	ratio_clock = ratio_cd;
 
-
-
 	this->dash_speed = 1000;
 	this->dash_cd = 10.f;
 	this->dash_clock = dash_cd;
@@ -243,8 +249,8 @@ void PlayerT::initVar()
 
 void PlayerT::initSprite()
 {
-	sprite.setTexture(texture);       //TEXTURE
-	sprite.setScale(0.3, 0.3);        //SCALE
+	sprite.setTexture(this->entitydata->textures->get(Textures::Personaggio));       //TEXTURE
+	sprite.setScale(0.3f, 0.3f);        //SCALE
 	sprite.setPosition(600.f, 600.f); //POS
 	sprite.setOrigin(92, 120);        //ORIGIN
 }
@@ -252,8 +258,8 @@ void PlayerT::initSprite()
 void PlayerT::initHitBox()
 {
 	hit_box.setSize(sf::Vector2f(100.f, 100.f));     //SIZE
-	hit_box.setOutlineColor(sf::Color::Red); //COLOR
-	//hit_box.setOutlineThickness(3.f);
+	hit_box.setOutlineColor(sf::Color::Transparent); //COLOR
+	hit_box.setOutlineThickness(3.f);
 	hit_box.setFillColor(sf::Color::Transparent);
 	hit_box.setScale(sprite.getScale());             //SCALE
 	hit_box.setPosition(getPosition());              //POS

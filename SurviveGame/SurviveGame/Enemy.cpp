@@ -1,9 +1,10 @@
 #include "Enemy.h"
 
 
-Enemy::Enemy(const std::shared_ptr<TextureHolder> textures)
+Enemy::Enemy(const std::shared_ptr<EntityData> entitydata)
 {
-	this->texture = textures->get(Textures::Enemy);
+	this->entitydata = entitydata;
+
 	initVar();
 	initSprite();
 	initHitBox();
@@ -18,23 +19,23 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::updateMove(sf::Time deltaTime, const std::shared_ptr<Character> target)
+void Enemy::updateMove()
 {
-	float dx = target->getPosition().x - this->sprite.getPosition().x;
-	float dy = target->getPosition().y - this->sprite.getPosition().y;
+	float dx = entitydata->player->getPosition().x - this->sprite.getPosition().x;
+	float dy = entitydata->player->getPosition().y - this->sprite.getPosition().y;
 
 	float lenght = sqrt(pow(dx, 2) + pow(dy, 2));
 
 	sf::Vector2f normVect(dx / lenght, dy / lenght);
 
-	this->sprite.move((normVect.x * this->mov_speed * deltaTime.asSeconds()), (normVect.y * this->mov_speed * deltaTime.asSeconds()));
+	this->sprite.move((normVect.x * this->mov_speed * entitydata->deltaTime.asSeconds()), (normVect.y * this->mov_speed * entitydata->deltaTime.asSeconds()));
 	hit_box.setPosition(getPosition());
 }
 
-void Enemy::updateRotate(const std::shared_ptr<Character> target)
+void Enemy::updateRotate()
 {
-	float dX = target->getPosition().x - this->sprite.getPosition().x;
-	float dY = target->getPosition().y - this->sprite.getPosition().y;
+	float dX = entitydata->player->getPosition().x - this->sprite.getPosition().x;
+	float dY = entitydata->player->getPosition().y - this->sprite.getPosition().y;
 	const float PI = 3.14159265f;
 	float deg = atan2(dY, dX) * 180.f / PI;
 
@@ -46,7 +47,7 @@ void Enemy::updateHud()
 	hud.updateText(hp, getPosition());
 }
 
-void Enemy::updateCollision(std::shared_ptr<EntityData> entitydata)
+void Enemy::updateCollision()
 {
 	sf::Vector2f ent(0, 0);
 	sf::Vector2f dir(0, 0);
@@ -68,6 +69,17 @@ void Enemy::updateCollision(std::shared_ptr<EntityData> entitydata)
 		collision->resetOutMtv();
 	}
 
+	//OTHER ENEMY
+	std::vector<std::shared_ptr<Character>> enemies;
+	enemies = *entitydata->enemies;
+
+	for(int i = 0; i < enemies.size(); i++)
+	{
+		ent = this->collision->CollideWithEntity(enemies[i]->getHitBox().getGlobalBounds(), this->getHitBox().getGlobalBounds());
+		sprite.move(-ent);
+		collision->resetOutMtv();
+	}
+
 	//WALLS
 	dir = this->collision->CollideWithWalls(this->getHitBox().getGlobalBounds(), entitydata->map->findWalls(sprite.getPosition().x, sprite.getPosition().y));
  	sprite.move(dir);
@@ -75,12 +87,12 @@ void Enemy::updateCollision(std::shared_ptr<EntityData> entitydata)
 	collision->resetOutMtv();
 }
 
-void Enemy::update(std::shared_ptr<EntityData> entitydata)
+void Enemy::update()
 {
-	updateMove(entitydata->deltaTime, entitydata->player);
-	updateRotate(entitydata->player);
+	updateMove();
+	updateRotate();
 	updateHud();
-	updateCollision(entitydata);
+	updateCollision();
 }
 
 void Enemy::renderBullets(std::shared_ptr<sf::RenderWindow> target)
@@ -98,7 +110,7 @@ void Enemy::initVar()
 
 void Enemy::initSprite()
 {
-	sprite.setTexture(texture);
+	sprite.setTexture(entitydata->textures->get(Textures::Enemy));
 	sprite.setScale(0.9f, 0.9f);
 	sprite.setPosition(rand() % 400 + 500.f , rand() % 400 + 500.f);
 	sprite.setOrigin(+34.f, +34.f);
@@ -114,29 +126,6 @@ void Enemy::initHitBox()
 	this->hit_box.setPosition(getPosition());
 	this->hit_box.setOrigin(30, 30);
 }
-
-//void Enemy::collisionWalls(std::vector<sf::FloatRect> walls)
-//{
-//	for (int i = 0; i != walls.size(); i++)
-//	{
-//		if (sat_test(hit_box.getGlobalBounds(), walls[i], &out_mtv))
-//		{
-//			sprite.move(out_mtv);
-//		}
-//	}
-//}
-//
-//void Enemy::collisionEnemies(std::vector<std::shared_ptr<Character>> enemies)
-//{
-//	for (int i = 0; i != enemies.size(); i++)
-//	{
-//		if (enemies[i]->getHitBox().getGlobalBounds() != this->hit_box.getGlobalBounds())
-//			if (sat_test(hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds(), &out_mtv))
-//			{
-//				sprite.move(out_mtv);
-//			}
-//	}
-//}
 
 void Enemy::takeDamage()
 {// a seconda del tipo di proiettile da cui viene colpito take dmg

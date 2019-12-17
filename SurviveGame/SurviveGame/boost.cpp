@@ -1,7 +1,9 @@
 #include "Boost.h"
 
-Boost::Boost(const std::shared_ptr<BoostPos> boost_pos, const std::shared_ptr<TextureHolder> textures)
+Boost::Boost(const std::shared_ptr<BoostPos> boost_pos, const std::shared_ptr<EntityData> entitydata)
 {
+	this->entitydata = entitydata;
+
 	this->boost_pos = boost_pos;
 	this->alive = true;
 	this->pos = sf::Vector2f(0, 0);
@@ -9,12 +11,10 @@ Boost::Boost(const std::shared_ptr<BoostPos> boost_pos, const std::shared_ptr<Te
 	switch (int i = rand() % 2)
 	{
 	case 0: this->type = HP;
-		this->texture = textures->get(Textures::HP);
 		initHp();
 		break;
 
 	case 1: this->type = MS;
-		this->texture = textures->get(Textures::MS);
 		initMs();
 		break;
 	}
@@ -25,7 +25,7 @@ Boost::~Boost()
 {
 }
 
-void Boost::update(std::shared_ptr<EntityData> entitydata)
+void Boost::update()
 {
 	if (sat_test(entitydata->player->getHitBox().getGlobalBounds(), getHitBox().getGlobalBounds(), &vec))
 	{
@@ -141,7 +141,7 @@ void Boost::initPos()
 
 void Boost::initSpriteHp()
 {
-	sprite.setTexture(texture);    //TEXTURE
+	sprite.setTexture(entitydata->textures->get(Textures::HP));    //TEXTURE
 	sprite.setScale(0.1, 0.1);     //SCALE
 	sprite.setPosition(this->pos); //POS
 	sprite.setOrigin(0, 0);        //ORIGIN
@@ -160,7 +160,7 @@ void Boost::initHitBoxHp()
 
 void Boost::initSpriteMs()
 {
-	sprite.setTexture(texture);    //TEXTURE
+	sprite.setTexture(entitydata->textures->get(Textures::MS));    //TEXTURE
 	sprite.setScale(0.05, 0.05);     //SCALE
 	sprite.setPosition(this->pos); //POS
 	sprite.setOrigin(0, 0);        //ORIGIN

@@ -4,18 +4,15 @@
 
 MainMenu::MainMenu()
 {
-	initMainMenu();
+	initButtons();
+	initBackground();
 }
 
 MainMenu::~MainMenu()
 {
 }
 
-void MainMenu::initMainMenu()
-{
-	initButtons();
-	initBackground();
-}
+
 
 void MainMenu::initButtons()
 {

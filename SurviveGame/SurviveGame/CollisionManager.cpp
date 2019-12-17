@@ -23,28 +23,35 @@ sf::Vector2f CollisionManager::CollideWithWalls(const sf::FloatRect & rectSp1, c
 		{
 			std::cout << "collide!\n" << out_mtv.x;
 			this->collide = true;
-		}/*
-		if (collide == true)
-			break;*/
+			if((premtv.x == 0 && out_mtv.x == 0) || (premtv.y == 0 && out_mtv.y == 0))
+			{
+				dir += out_mtv;
+			}
+		}
 	}
-	dir = out_mtv;
 	if (dir.x == 0 && dir.y == 0)
 	{
 		this->collide = false;
+		out_mtv = sf::Vector2f(0, 0);
+		return
+			sf::Vector2f(0, 0);
 	}
-	
-	return dir;
+	else
+		return dir;
 }
 
 sf::Vector2f CollisionManager::CollideWithEntity(const sf::FloatRect & rectSp1, const sf::FloatRect & rectSp2)
 {
-	if (sat_test(rectSp1, rectSp2))
+	if (rectSp1 != rectSp2)
 	{
- 		collide = true;
-		return out_mtv;
+		if (sat_test(rectSp1, rectSp2))
+		{
+			collide = true;
+			return out_mtv;
+		}
+		collide = false;
+		return out_mtv = sf::Vector2f(0.f, 0.f);
 	}
-	collide = false;
-	return out_mtv = sf::Vector2f(0.f, 0.f);
 }
 
 void CollisionManager::resetOutMtv()
@@ -56,6 +63,17 @@ bool CollisionManager::isCollide()
 {
 	return
 		this->collide;
+}
+
+void CollisionManager::setPreMtv(sf::Vector2f vec)
+{
+	this->premtv = vec;
+}
+
+sf::Vector2f CollisionManager::getOutMtv()
+{
+	return
+		this->out_mtv;
 }
 
 bool CollisionManager::sat_test(const sf::FloatRect & rectSp1, const sf::FloatRect & rectSp2)

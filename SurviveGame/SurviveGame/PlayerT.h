@@ -5,24 +5,24 @@ class PlayerT :
 	public Character
 {
 public:
-	explicit PlayerT(std::shared_ptr<TextureHolder> textures);
+	explicit PlayerT(const std::shared_ptr<EntityData> entitydata);
 
 	PlayerT();
 	virtual ~PlayerT();
 
-	virtual void update(std::shared_ptr<EntityData> entitydata);
+	virtual void update();
 	virtual void renderBullets(std::shared_ptr<sf::RenderWindow> target);
 
-	void updateMove(sf::Time deltaTime);
-	void updateBullets(std::shared_ptr<EntityData> entitydata);
-	void updateRotate(sf::Vector2f mousePosView);
-	void updateReload(sf::Time deltaTime);
-	void updateDash(sf::Vector2f dir, sf::Time deltaTime);
-	void updateMovSpeed(sf::Time deltaTime);
+	void updateMove();
+	void updateBullets();
+	void updateRotate();
+	void updateReload();
+	void updateDash(sf::Vector2f dir);
+	void updateMovSpeed();
 	void updateHud();
-	void updateCollision(std::shared_ptr<EntityData> entitydata);
+	void updateCollision();
 
-	void updateShooting(sf::Time deltaTime);
+	void updateShooting();
 
 
 	void initVar();

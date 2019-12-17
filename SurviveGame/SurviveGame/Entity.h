@@ -44,7 +44,7 @@ public:
 	Entity();
 	virtual ~Entity();
 
-	virtual void update(std::shared_ptr<EntityData> entitydata) = 0;
+	virtual void update() = 0;
 	void render(std::shared_ptr<sf::RenderWindow> target);
 
 	bool isAlive();
@@ -60,10 +60,10 @@ protected:
 	bool sat_test(const sf::FloatRect &rectSp1, const sf::FloatRect &rectSp2, sf::Vector2f *vec);
 
 	sf::Sprite sprite;
-	sf::Texture texture;
 	sf::RectangleShape hit_box;
 	std::shared_ptr<CollisionManager> collision;
-	std::shared_ptr<TextureHolder> textures;
+
+	std::shared_ptr<EntityData> entitydata;
 
 	sf::Vector2f vec;
 

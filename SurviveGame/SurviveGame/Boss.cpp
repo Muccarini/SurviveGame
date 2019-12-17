@@ -1,10 +1,8 @@
 #include "Boss.h"
 
-Boss::Boss(std::shared_ptr<TextureHolder> textures)
+Boss::Boss(std::shared_ptr<EntityData> entitydata)
 {
-	this->textures = textures;
-	this->texture = textures->get(Textures::Boss);
-	this->texture_bullet = textures->get(Textures::Proiettile);
+	this->entitydata = entitydata;
 
 	initVar();
 	initSprite();
@@ -19,16 +17,17 @@ Boss::~Boss()
 {
 }
 
-void Boss::update(std::shared_ptr<EntityData> entitydata)
+void Boss::update()
 {
-	/*if (!isInRange(entitydata->boss->getPosition(), entitydata->player->getPosition()))
-	{*/
-		updateMove(entitydata->deltaTime, entitydata->player);
-	updateRotate(entitydata->player);
-	updateBullets(entitydata);
-	updateReload(entitydata->deltaTime);
+	if (!isInRange(entitydata->boss->getPosition(), entitydata->player->getPosition()))
+{
+	updateMove();
+}
+	updateRotate();
+	updateBullets();
+	updateReload();
 	updateHud();
-	updateCollision(entitydata);
+	updateCollision();
 
 }
 
@@ -40,55 +39,55 @@ void Boss::renderBullets(std::shared_ptr<sf::RenderWindow> target)
 	}
 }
 
-void Boss::updateMove(sf::Time deltaTime, std::shared_ptr<Character> target)
+void Boss::updateMove()
 {
-	float dX = target->getPosition().x - this->sprite.getPosition().x;
-	float dY = target->getPosition().y - this->sprite.getPosition().y;
+	float dX = entitydata->player->getPosition().x - this->sprite.getPosition().x;
+	float dY = entitydata->player->getPosition().y - this->sprite.getPosition().y;
 
 	float lenght = sqrt(pow(dX, 2) + pow(dY, 2));
 
 	sf::Vector2f normVect(dX / lenght, dY / lenght);
 
-	this->sprite.move(normVect.x * this->mov_speed * deltaTime.asSeconds(), normVect.y * this->mov_speed * deltaTime.asSeconds());
+	this->sprite.move(normVect.x * this->mov_speed * entitydata->deltaTime.asSeconds(), normVect.y * this->mov_speed * entitydata->deltaTime.asSeconds());
 	hit_box.setPosition(getPosition());
 }
 
-void Boss::updateBullets(std::shared_ptr<EntityData> entitydata)
+void Boss::updateBullets()
 {
-	updateShooting(entitydata);
+	updateShooting();
 
 	if (shooting && getAmmo())
 	{
-		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Boss, texture_bullet));
+		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Boss, entitydata));
 		ammo--;
 		bullets.emplace_back(bullet);
-		bullet->setDir(entitydata->boss->getPosition(), entitydata->player->getPosition());
+		bullet->setDir();
 	}
 
 	for (int i = 0; i < bullets.size(); i++)
 	{
-		bullets[i]->update(entitydata);
+		bullets[i]->update();
 		if (bullets[i]->isCollide())
 			bullets.erase(bullets.begin() + i);
 	}
 }
 
-void Boss::updateRotate(std::shared_ptr<Character> target)
+void Boss::updateRotate()
 {
-	float dX = target->getPosition().x - this->sprite.getPosition().x;
-	float dY = target->getPosition().y - this->sprite.getPosition().y;
+	float dX = entitydata->player->getPosition().x - this->sprite.getPosition().x;
+	float dY = entitydata->player->getPosition().y - this->sprite.getPosition().y;
 	const float PI = 3.14159265f;
 	float deg = atan2(dY, dX) * 180.f / PI;
 
 	this->sprite.setRotation(deg);
 }
 
-void Boss::updateReload(sf::Time deltaTime)
+void Boss::updateReload()
 {
 	if (ammo == 0)
 	{
 		reloading = true;
-		reload_clock -= deltaTime;
+		reload_clock -= entitydata->deltaTime;
 
 		if (reload_clock < sf::seconds(0.f))
 		{
@@ -104,7 +103,7 @@ void Boss::updateHud()
 	hud.updateText(hp, getPosition());
 }
 
-void Boss::updateCollision(std::shared_ptr<EntityData> entitydata)
+void Boss::updateCollision()
 {
 	sf::Vector2f dir(0.f, 0.f);
 	sf::Vector2f ent(0.f, 0.f);
@@ -123,7 +122,7 @@ void Boss::updateCollision(std::shared_ptr<EntityData> entitydata)
 }
 
 
-void Boss::updateShooting(std::shared_ptr<EntityData> entitydata)
+void Boss::updateShooting()
 {
 	ratio_clock -= entitydata->deltaTime;
 
@@ -172,17 +171,17 @@ void Boss::initVar()
 	ammo_max = 200;  // DA SCEGLIERE
 	ammo = ammo_max;
 
-	ratio_cd = sf::seconds(1.f / 5.f); //DA SCEGLIERE
+	ratio_cd = sf::seconds(1.f / 7.f); //DA SCEGLIERE
 	ratio_clock = ratio_cd;
 
 	reloading = false;
 
-	range = 400;
+	range = 300;
 }
 
 void Boss::initSprite()
 {
-	sprite.setTexture(texture);
+	sprite.setTexture(entitydata->textures->get(Textures::Boss));
 	sprite.setScale(1.5, 1.5);
 	sprite.setPosition(600.f, 600.f);
 	sprite.setOrigin(+18, +16);
