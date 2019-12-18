@@ -74,9 +74,9 @@ void GameLogic::updateHud()
 void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
 {
 	//RESET ROUND
-	if (kill_counter == 5)
+	if (kill_counter == 10)
 	{
-		for (int i = 0; i < enemies->size(); i++)
+		for (unsigned int i = 0; i < enemies->size(); i++)
 		{
 			enemies->erase(enemies->begin(), enemies->end());
 		}
@@ -86,7 +86,7 @@ void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
 		round.reset();
 		round.increase();
 
-		if (round.getCounter() % 3 == 0)
+		if (round.getCounter() % 4 == 0)
 			round.setBossRound(true);
 	}
 
@@ -99,7 +99,7 @@ void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
 			enemies_alive++;
 		}
 
-		for (int i = 0; i < enemies->size(); i++)
+		for (unsigned int i = 0; i < enemies->size(); i++)
 		{
 			(*enemies)[i]->update();
 
@@ -144,6 +144,8 @@ void GameLogic::updateBoss()
 				entitydata->pet = this->pet;
 				this->pet_alive = true;
 			}
+			else
+				pet->boostHeal();
 
 			//RESET BOSS AND ROUND
 			boss.reset();
@@ -182,12 +184,12 @@ void GameLogic::updateBoost(std::shared_ptr<EntityData> entitydata)
 		{
 			this->boost.emplace_back(new Boost(boost_pos, this->entitydata));
 			this->boost_time.restart();
-			this->rand_time = sf::seconds((rand() % 10)+ 5);
+			this->rand_time = sf::seconds((rand() % 10)+ 5.f);
 		}
 	}
 	if (!boost.empty())
 	{
-		for (int i = 0; i < boost.size(); i++)
+		for (unsigned int i = 0; i < boost.size(); i++)
 		{
 			boost[i]->update();
 
@@ -283,7 +285,7 @@ void GameLogic::varInit()
 	this->pet_alive = false;
 
 	this->kill_counter = 0;
-	this->rand_time = sf::seconds((rand() % 10) +5);
+	this->rand_time = sf::seconds((rand() % 10) +5.f);
 
 	boost_pos = std::make_shared<BoostPos>();
 	entitydataInit();

@@ -104,7 +104,7 @@ void Enemy::renderBullets(std::shared_ptr<sf::RenderWindow> target)
 
 void Enemy::initVar()
 {
-	mov_speed = 150;
+	mov_speed = 100;
 	hp = 10;
 }
 
