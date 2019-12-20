@@ -1,11 +1,18 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <list>
+#include "Subject.h"
 
-class RoundManager
+class RoundManager : public Subject
 {
 public:
 	RoundManager();
-	~RoundManager();
+	virtual ~RoundManager();
+
+	virtual void subscribe(Observer* obs);
+	virtual void unsubscribe(Observer* obs);
+
+	virtual void notify();
 
 	void increase();
 	void reset();
@@ -15,16 +22,23 @@ public:
 
 	sf::Time getCountdown();
 	bool isLoading();
-	int getCounter();
+	int getCounterRound();
 	void setBossRound(bool boolean);
+
+	int getKillsPerRound();
+	int getRoundPerBoss();
 
 
 private:
 	sf::Time countdown;
 	bool loading;
-	int counter;
 
-	int boss_ratio;
+	const int kills_per_round = 10;
+	const int round_per_boss = 4;
+
+	int counter_round;
 	bool boss;
+
+	std::list<Observer *> observers;
 };
 

@@ -195,6 +195,10 @@ void PlayerT::updateCollision()
 	collision->resetOutMtv();
 }
 
+void PlayerT::updateDataPlayer()
+{
+}
+
 void PlayerT::updateShooting()
 {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !reloading)

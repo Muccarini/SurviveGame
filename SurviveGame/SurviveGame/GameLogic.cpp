@@ -20,11 +20,11 @@ void GameLogic::update(sf::Time deltaTime)
 	updateEntityData(deltaTime);
 
 	updateHud();
-	updatePlayer(entitydata);
-	updateEnemies(entitydata);
-	updatePet(entitydata);
+	updatePlayer();
+	updateEnemies();
+	updatePet();
 
-	updateBoost(entitydata);
+	updateBoost();
 
 	updateGameView(deltaTime);
 
@@ -45,6 +45,9 @@ void GameLogic::render()
 	renderBoss();
 
 	hud.renderTextsHud(window);
+
+	if (achievement.getAlive())
+		renderAchievement();
 }
 
 void GameLogic::updateState()
@@ -68,13 +71,13 @@ void GameLogic::updateState()
 
 void GameLogic::updateHud()
 {
-	hud.updateText(kill_counter, round.getCountdown().asSeconds(), round.getCounter(), game_view);
+	hud.updateText(kill_counter, round.getCountdown().asSeconds(), round.getCounterRound(), game_view);
 }
 
-void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
+void GameLogic::updateEnemies()
 {
 	//RESET ROUND
-	if (kill_counter == 10)
+	if (kill_counter == round.getKillsPerRound)
 	{
 		for (unsigned int i = 0; i < enemies->size(); i++)
 		{
@@ -86,7 +89,7 @@ void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
 		round.reset();
 		round.increase();
 
-		if (round.getCounter() % 4 == 0)
+		if (round.getCounterRound() % round.getRoundPerBoss() == 0)
 			round.setBossRound(true);
 	}
 
@@ -159,7 +162,7 @@ void GameLogic::updateBoss()
 		}
 }
 
-void GameLogic::updatePet(std::shared_ptr<EntityData> entitydata)
+void GameLogic::updatePet()
 {
 	if (pet_alive)
 	{
@@ -175,7 +178,7 @@ void GameLogic::updatePet(std::shared_ptr<EntityData> entitydata)
 	}
 }
 
-void GameLogic::updateBoost(std::shared_ptr<EntityData> entitydata)
+void GameLogic::updateBoost()
 {
 	//SPAWN BOOST
 	if (boost.size() < 4)
@@ -199,7 +202,7 @@ void GameLogic::updateBoost(std::shared_ptr<EntityData> entitydata)
 	}
 }
 
-void GameLogic::updatePlayer(const std::shared_ptr<EntityData> entitydata)
+void GameLogic::updatePlayer()
 {
 	player->update();
 }
@@ -249,6 +252,22 @@ void GameLogic::renderBoost()
 	for(int i = 0; i != boost.size(); i++)
 	{
 		boost[i]->render(window);
+	}
+}
+
+void GameLogic::renderAchievement()
+{
+	if (this->achievement.getRound() == 1 || this->achievement.getRound() % 5 == 0)
+	{
+		achievement.renderRoundBadge(this->window, this->game_view);
+	}
+	if (this->achievement.getKills() == 1 || this->achievement.getKills() % 15 == 0)
+	{
+		achievement.renderKillsBadge(this->window, this->game_view);
+	}
+	if (this->achievement.getKillsBoss() == 1 || this->achievement.getKillsBoss() % 3 == 0)
+	{
+		achievement.renderBossBadge(this->window, this->game_view);
 	}
 }
 

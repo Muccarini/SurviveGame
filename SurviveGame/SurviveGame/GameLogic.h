@@ -1,8 +1,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "State.h"
+#include "Observer.h"
 #include "PauseMenu.h"
 #include "RoundManager.h"
+#include "Achievement.h"
 #include "Hud.h"
 #include "TileMap.h"
 #include "TextureHolder.h"
@@ -11,10 +13,10 @@
 #include "Boss.h"
 #include "Pet.h"
 #include "Boost.h"
+
 #include <vector>
 
-class GameLogic :
-	public State
+class GameLogic : public State
 {
 public:
     GameLogic();
@@ -27,11 +29,11 @@ private:
 
 	void updateState();
 
-	void updatePlayer(std::shared_ptr<EntityData> entitydata);
-	void updateEnemies(std::shared_ptr<EntityData> entitydata);
+	void updatePlayer();
+	void updateEnemies();
 	void updateBoss();
-	void updatePet(std::shared_ptr<EntityData> entitydata);
-	void updateBoost(std::shared_ptr<EntityData> entitydata);
+	void updatePet();
+	void updateBoost();
 
 	void updateGameView(sf::Time deltaTime);
 	void updateEntityData(sf::Time deltaTime);
@@ -42,6 +44,7 @@ private:
 	void renderBoss();
 	void renderPet();
 	void renderBoost();
+	void renderAchievement();
 
 	void entitiesInit();
 	void gameViewInit();
@@ -52,7 +55,10 @@ private:
 	TileMap tile_map;
 	sf::View game_view;
 	Hud hud;
+
 	RoundManager round;
+	Achievement achievement;
+
 	std::shared_ptr<TextureHolder> textures;
 
     std::vector<std::shared_ptr<Character>> * enemies;

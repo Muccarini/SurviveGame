@@ -1,8 +1,7 @@
 #pragma once
 #include "Character.h"
 
-class PlayerT :
-	public Character
+class PlayerT : public Character
 {
 public:
 	explicit PlayerT(const std::shared_ptr<EntityData> entitydata);
@@ -21,6 +20,7 @@ public:
 	void updateMovSpeed();
 	void updateHud();
 	void updateCollision();
+	void updateDataPlayer();
 
 	void updateShooting();
 
@@ -44,5 +44,9 @@ public:
 	float ms_clock;
 
 	bool is_dashing;
+
+	int kills;
+	int kills_boss;
+
 };
 

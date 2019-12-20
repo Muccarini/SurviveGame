@@ -105,6 +105,15 @@
     <ClCompile Include="PauseMenu.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="Achievement.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Observer.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnemyStrategyMove.h">
@@ -183,6 +192,15 @@
       <Filter>Resource Files</Filter>
     </ClInclude>
     <ClInclude Include="PauseMenu.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Achievement.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
       <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>

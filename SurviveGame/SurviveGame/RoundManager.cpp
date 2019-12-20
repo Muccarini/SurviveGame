@@ -7,8 +7,7 @@ RoundManager::RoundManager()
 	countdown = sf::seconds(6.f);
 	loading = true;
 	boss = false;
-	counter = 1;
-	boss_ratio = 3;
+	counter_round = 1;
 }
 
 
@@ -16,9 +15,27 @@ RoundManager::~RoundManager()
 {
 }
 
+void RoundManager::subscribe(Observer* obs)
+{
+	this->observers.push_back(obs);
+}
+
+void RoundManager::unsubscribe(Observer* obs)
+{
+	this->observers.remove(obs);
+}
+
+void RoundManager::notify()
+{
+	for (auto itr = std::begin(observers); itr != std::end(observers); itr++)
+	{//PULL O PUSH DECIDERE SE SALVARE I DATI QUI SU ROUND MANAGER O SU ACHIEVEMENT
+		(*itr)->update();
+	}
+}
+
 void RoundManager::increase()
 {
-	this->counter++;
+	this->counter_round++;
 }
 
 void RoundManager::reset()
@@ -50,13 +67,25 @@ bool RoundManager::isLoading()
 	return this->loading;
 }
 
-int RoundManager::getCounter()
+int RoundManager::getCounterRound()
 {
 	return
-		this->counter;
+		this->counter_round;
 }
 
 void RoundManager::setBossRound(bool boolean)
 {
 	this->boss = boolean;
+}
+
+int RoundManager::getKillsPerRound()
+{
+	return
+		this->kills_per_round;
+}
+
+int RoundManager::getRoundPerBoss()
+{
+	return
+		this->round_per_boss;
 }
