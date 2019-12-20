@@ -36,7 +36,7 @@ void Pet::takeDamage()
 
 void Pet::renderBullets(const std::shared_ptr<sf::RenderWindow> window)
 {
-	for (int i = 0; i < bullets.size(); i++)
+	for (unsigned int i = 0; i < bullets.size(); i++)
 	{
 		bullets[i]->render(window);
 	}
@@ -69,7 +69,7 @@ void Pet::updateBullets()
 		bullet->setDir();
 	}
 
-	for (int i = 0; i < bullets.size(); i++)
+	for (unsigned int i = 0; i < bullets.size(); i++)
 	{
 		bullets[i]->update();
 		if (bullets[i]->isCollide())
@@ -95,7 +95,7 @@ void Pet::updateCollision()
 
 void Pet::initVar()
 {
-	mov_speed_default = 1.f;
+	mov_speed_default = 1;
 	mov_speed = mov_speed_default;
 
 	hp_max = 25;
@@ -107,7 +107,7 @@ void Pet::initVar()
 void Pet::initSprite()
 {
 	sprite.setTexture(entitydata->textures->get(Textures::Pet));     //TEXTURE
-	sprite.setScale(0.1, 0.1);      //SCALE
+	sprite.setScale(0.1f, 0.1f);      //SCALE
 	sprite.setPosition(entitydata->boss->getPosition());  //POS
 	sprite.setOrigin(222.f, 188.f);      //ORIGIN
 }

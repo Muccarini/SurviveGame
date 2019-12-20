@@ -64,7 +64,7 @@ void Boss::updateBullets()
 		bullet->setDir();
 	}
 
-	for (int i = 0; i < bullets.size(); i++)
+	for (unsigned int i = 0; i < bullets.size(); i++)
 	{
 		bullets[i]->update();
 		if (bullets[i]->isCollide())
@@ -114,7 +114,7 @@ void Boss::updateCollision()
 	if (ent != sf::Vector2f(0.f, 0.f))
 		collision->resetOutMtv();
 
-	dir = this->collision->CollideWithWalls(this->getHitBox().getGlobalBounds(), entitydata->map->findWalls(sprite.getPosition().x, sprite.getPosition().y));
+	dir = this->collision->CollideWithWalls(this->getHitBox().getGlobalBounds(), entitydata->map->findWalls(static_cast<int>(sprite.getPosition().x), static_cast<int>(sprite.getPosition().y)));
 	sprite.move(dir);
 
 	if (dir != sf::Vector2f(0.f, 0.f))

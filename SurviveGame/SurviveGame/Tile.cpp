@@ -34,7 +34,7 @@ Tile::Tile(float x, float y, float gride_size_f, sf::Texture& txt, int t_type) :
 	if (i >= 1)
 		j -= 1;
 
-	pos_in_texture = sf::Vector2u(j * gride_size_f, i * gride_size_f);
+	pos_in_texture = sf::Vector2u(static_cast<unsigned int>(j * gride_size_f), static_cast<unsigned int>(i * gride_size_f));
 	this->shape.setTextureRect(sf::IntRect(pos_in_texture.x, pos_in_texture.y, 64, 64));
 }
 

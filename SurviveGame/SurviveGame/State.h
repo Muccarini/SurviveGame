@@ -15,7 +15,7 @@ public:
 
 	bool getQuit();
 
-	std::stack<State*>* states;
+	std::stack<State*> *states;
 	std::shared_ptr<sf::RenderWindow> window;
 
 protected:

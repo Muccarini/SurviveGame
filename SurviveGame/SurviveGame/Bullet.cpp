@@ -207,7 +207,7 @@ void Bullet::updateEnemyCollision()
 void Bullet::updateWallsCollision()
 {
 	//WALLS
-	collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->map->findWalls(sprite.getPosition().x, sprite.getPosition().y));
+	collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->map->findWalls(static_cast<int>(sprite.getPosition().x), static_cast<int>(sprite.getPosition().y)));
 	collision->resetOutMtv();
 
 }

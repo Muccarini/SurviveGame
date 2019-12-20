@@ -17,7 +17,7 @@ void Button::setText(const std::string path, const std::string string, sf::Color
 	this->text.setFont(this->font);
 	this->text.setString(string);
 	this->text.setFillColor(color);
-	this->text.setCharacterSize(character_size);
+	this->text.setCharacterSize(static_cast<unsigned int>(character_size));
 	this->text.setPosition(pos);
 
 	right_scale.x = this->text.getScale().x, 
@@ -54,7 +54,7 @@ void Button::buttonAnimation()
 {
 	if (right_color == this->text.getFillColor() || right_scale == this->text.getScale())
 	{
-		text.setScale(text.getScale().x * 1.1, text.getScale().y * 1.1);
+		text.setScale(text.getScale().x * 1.1f, text.getScale().y * 1.1f);
 		text.setFillColor(sf::Color::White);
 	}
 }

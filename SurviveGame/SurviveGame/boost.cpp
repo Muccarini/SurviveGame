@@ -89,8 +89,6 @@ void Boost::initMs()
 
 void Boost::initPos()
 {
-	srand(time(NULL));
-
 	sf::Vector2f vec1_1(327, 327);  //TOP_LEFT
 	sf::Vector2f vec1_2(903, 327);  //TOP_RIGHT
 	sf::Vector2f vec2_1(327, 903);  //DOWN_LEFT
@@ -142,7 +140,7 @@ void Boost::initPos()
 void Boost::initSpriteHp()
 {
 	sprite.setTexture(entitydata->textures->get(Textures::HP));    //TEXTURE
-	sprite.setScale(0.1, 0.1);     //SCALE
+	sprite.setScale(0.1f, 0.1f);     //SCALE
 	sprite.setPosition(this->pos); //POS
 	sprite.setOrigin(0, 0);        //ORIGIN
 }
@@ -161,7 +159,7 @@ void Boost::initHitBoxHp()
 void Boost::initSpriteMs()
 {
 	sprite.setTexture(entitydata->textures->get(Textures::MS));    //TEXTURE
-	sprite.setScale(0.05, 0.05);     //SCALE
+	sprite.setScale(0.05f, 0.05f);     //SCALE
 	sprite.setPosition(this->pos); //POS
 	sprite.setOrigin(0, 0);        //ORIGIN
 }

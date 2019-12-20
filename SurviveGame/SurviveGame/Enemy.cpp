@@ -73,7 +73,7 @@ void Enemy::updateCollision()
 	std::vector<std::shared_ptr<Character>> enemies;
 	enemies = *entitydata->enemies;
 
-	for(int i = 0; i < enemies.size(); i++)
+	for(unsigned int i = 0; i < enemies.size(); i++)
 	{
 		ent = this->collision->CollideWithEntity(enemies[i]->getHitBox().getGlobalBounds(), this->getHitBox().getGlobalBounds());
 		sprite.move(-ent);
@@ -81,7 +81,7 @@ void Enemy::updateCollision()
 	}
 
 	//WALLS
-	dir = this->collision->CollideWithWalls(this->getHitBox().getGlobalBounds(), entitydata->map->findWalls(sprite.getPosition().x, sprite.getPosition().y));
+	dir = this->collision->CollideWithWalls(this->getHitBox().getGlobalBounds(), entitydata->map->findWalls(static_cast<int>(sprite.getPosition().x), static_cast<int>(sprite.getPosition().y)));
  	sprite.move(dir);
 	hit_box.setPosition(getPosition());
 	collision->resetOutMtv();

@@ -11,7 +11,7 @@ GameLogic::GameLogic() : game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 
 
 GameLogic::~GameLogic()
 { 
-	//delete enemies;
+
 }
 
 void GameLogic::update(sf::Time deltaTime)

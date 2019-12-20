@@ -20,14 +20,14 @@ TileMap::TileMap()
 	{
 		while (!openfile.eof())
 		{
-			this->map.resize(this->max_size.y, std::vector<Tile*> ());
+			this->map.resize(static_cast<unsigned int>(this->max_size.y), std::vector<Tile*> ());
 			int y = 0;
 			while (y < this->max_size.y)
 			{
 				int x = 0;
 				while (x < this->max_size.x)
 				{
-					this->map[y].resize(this->max_size.x, NULL);
+					this->map[y].resize(static_cast<unsigned int>(this->max_size.x), NULL);
 
 					std::string str, value;
 					std::getline(openfile, str);
@@ -98,7 +98,7 @@ void TileMap::render(std::shared_ptr<sf::RenderTarget> target)
 
 std::vector<sf::FloatRect> TileMap::findWalls(int x, int y)
 {
-	sf::Vector2i pos(x / grid_size_f, y / grid_size_f);
+	sf::Vector2i pos(static_cast<int>(x / grid_size_f), static_cast<int>(y / grid_size_f));
 	std::vector<sf::FloatRect> wallvect;
 	
 	if (pos.y < 20 && pos.y >= 0)
@@ -136,7 +136,7 @@ std::vector<sf::FloatRect> TileMap::findWalls(int x, int y)
 				if (map[pos.y][pos.x - 1]->type_tile == 9)
 					wallvect.push_back(map[pos.y][pos.x - 1]->shape.getGlobalBounds());
 			}
-			if (0 <= pos.x <= 20)
+			if (pos.x <= 20 && pos.x >=0)
 			{
 				if (pos.x < max_size.x - 1)
 				{

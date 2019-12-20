@@ -52,6 +52,8 @@ sf::Vector2f CollisionManager::CollideWithEntity(const sf::FloatRect & rectSp1, 
 		collide = false;
 		return out_mtv = sf::Vector2f(0.f, 0.f);
 	}
+	else 
+		return out_mtv = sf::Vector2f(0.f, 0.f);
 }
 
 void CollisionManager::resetOutMtv()
