@@ -27,7 +27,9 @@ public:
 	void setBossRound(bool boolean);
 
 	void setKills(int kills);
+
 	int getKills();
+	int getTotalKills();
 	int getKillsPerRound();
 	int getRoundPerBoss();
 
@@ -37,6 +39,8 @@ private:
 	bool loading;
 
 	int kill_counter;
+	int total_kills;
+
 	const int kills_per_round = 10;
 	const int round_per_boss = 4;
 

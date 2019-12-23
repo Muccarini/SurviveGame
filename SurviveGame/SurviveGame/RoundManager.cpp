@@ -43,6 +43,8 @@ void RoundManager::increaseRound()
 void RoundManager::increaseKills()
 {
 	this->kill_counter++;
+	this->total_kills++;
+
 	notify();
 }
 
@@ -95,6 +97,12 @@ int RoundManager::getKills()
 {
 	return
 		this->kill_counter;
+}
+
+int RoundManager::getTotalKills()
+{
+	return
+		this->total_kills;
 }
 
 int RoundManager::getKillsPerRound()

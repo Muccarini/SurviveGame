@@ -42,7 +42,7 @@ Achievement::~Achievement()
 void Achievement::update()
 {
 	this->round = this->subject->getCounterRound() - 1;
-	this->kills += this->subject->getKills();
+	this->kills = this->subject->getTotalKills();
 	if ((this->round + 1) % (this->subject->getRoundPerBoss()+1) == 0)
 		this->kills_boss ++;
 }
@@ -80,7 +80,7 @@ void Achievement::renderRoundBadge(std::shared_ptr<sf::RenderWindow> window, sf:
 	this->text.setString("New Achievement ROUND :");
 	this->text.setPosition(view.getCenter().x - 350, view.getCenter().y - 330);
 
-	this->round_t.setString(std::to_string(kills));
+	this->round_t.setString(std::to_string(round));
 	this->round_t.setPosition(view.getCenter().x + 250, view.getCenter().y - 350);
 
 	window->draw(this->text);
@@ -104,7 +104,7 @@ void Achievement::renderBossBadge(std::shared_ptr<sf::RenderWindow> window, sf::
 	this->text.setString("New Achievement BOSS :");
 	this->text.setPosition(view.getCenter().x - 350, view.getCenter().y - 330);
 
-	this->kills_boss_t.setString(std::to_string(kills));
+	this->kills_boss_t.setString(std::to_string(kills_boss));
 	this->kills_boss_t.setPosition(view.getCenter().x + 250, view.getCenter().y - 350);
 
 	window->draw(this->text);
