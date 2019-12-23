@@ -2,6 +2,7 @@
 class Observer
 {
 public:
+	Observer() = default;
 	virtual ~Observer();
 
 	virtual void update() = 0;

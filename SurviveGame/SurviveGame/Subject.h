@@ -4,6 +4,7 @@
 class Subject
 {
 public:
+	Subject() = default;
 	virtual ~Subject();
 
 	virtual void subscribe(Observer* obs) = 0;

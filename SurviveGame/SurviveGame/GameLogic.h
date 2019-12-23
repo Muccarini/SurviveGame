@@ -57,7 +57,7 @@ private:
 	Hud hud;
 
 	RoundManager round;
-	Achievement achievement;
+	Achievement * achievement;
 
 	std::shared_ptr<TextureHolder> textures;
 
@@ -75,8 +75,6 @@ private:
 	int enemies_alive;
 	bool boss_alive;
 	bool pet_alive;
-
-	int kill_counter;
 
 	const float game_view_speed = 4.5f;
 	sf::Clock boost_time;

@@ -7,15 +7,15 @@
 class Achievement : public Observer
 {
 public:
-	Achievement();
+
+	Achievement() = default;
+	Achievement(RoundManager * subject);
 	virtual ~Achievement();
 
 	virtual void update();
 
 	virtual void attach();
 	virtual void detach();
-
-	bool getAlive();
 
 	int getKills();
 	int getKillsBoss();
@@ -27,7 +27,7 @@ public:
 
 private:
 
-	std::shared_ptr<RoundManager> subject;
+	RoundManager * subject;
 
 	int kills;
 	int kills_boss;
@@ -44,7 +44,5 @@ private:
 	sf::Texture frame;
 
 	float clock;
-
-	bool alive;
 };
 

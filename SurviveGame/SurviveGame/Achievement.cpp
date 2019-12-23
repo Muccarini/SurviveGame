@@ -2,35 +2,48 @@
 
 
 
-Achievement::Achievement()
+Achievement::Achievement(RoundManager * subject)
 {
+	this->subject = subject;
 	this->round = 0;
 	this->kills = 0;
 	this->kills_boss = 0;
 
-	bool alive = false;
-
 	//TESTO
-	this->font.loadFromFile("Sources/04B_30__");
+	this->font.loadFromFile("Sources/04B_30__.ttf");
 	this->text.setFont(this->font);
 	this->text.setFillColor(sf::Color::White);
-	this->text.setCharacterSize(20);
+	this->text.setCharacterSize(30);
 
-	//NUMERO
+	//KILLS
+	this->kills_t.setFont(this->font);
 	this->kills_t.setFillColor(sf::Color::White);
-	this->kills_t.setCharacterSize(20);
+	this->kills_t.setCharacterSize(60);
+
+	//ROUND
+	this->round_t.setFont(this->font);
+	this->round_t.setFillColor(sf::Color::White);
+	this->round_t.setCharacterSize(60);
+
+	//BOSS
+	this->kills_boss_t.setFont(this->font);
+	this->kills_boss_t.setFillColor(sf::Color::White);
+	this->kills_boss_t.setCharacterSize(60);
+
+	attach();
 }
 
 
 Achievement::~Achievement()
 {
+	detach();
 }
 
 void Achievement::update()
 {
-	this->round = this->subject->getCounterRound();
-	this->kills = this->round * this->subject->getKillsPerRound();
-	if (this->round % this->subject->getRoundPerBoss() == 0)
+	this->round = this->subject->getCounterRound() - 1;
+	this->kills += this->subject->getKills();
+	if ((this->round + 1) % (this->subject->getRoundPerBoss()+1) == 0)
 		this->kills_boss ++;
 }
 
@@ -42,12 +55,6 @@ void Achievement::attach()
 void Achievement::detach()
 {
 	this->subject->unsubscribe(this);
-}
-
-bool Achievement::getAlive()
-{
-	return
-		this->alive;
 }
 
 int Achievement::getKills()
@@ -70,27 +77,36 @@ int Achievement::getRound()
 
 void Achievement::renderRoundBadge(std::shared_ptr<sf::RenderWindow> window, sf::View view)
 {//DA SETTARE POS
-	this->text.setString("New Achievement KILLS :");
-	this->text.setPosition(view.getCenter().x - 540, view.getCenter().y - 330);
+	this->text.setString("New Achievement ROUND :");
+	this->text.setPosition(view.getCenter().x - 350, view.getCenter().y - 330);
 
-	this->kills_t.setString(std::to_string(kills));
-	this->kills_t.setPosition(view.getCenter().x - 540, view.getCenter().y - 330);
+	this->round_t.setString(std::to_string(kills));
+	this->round_t.setPosition(view.getCenter().x + 250, view.getCenter().y - 350);
+
+	window->draw(this->text);
+	window->draw(this->round_t);
 }
 
 void Achievement::renderKillsBadge(std::shared_ptr<sf::RenderWindow> window, sf::View view)
 {//DA SETTARE POS
 	this->text.setString("New Achievement KILLS :");
-	this->text.setPosition(view.getCenter().x - 540, view.getCenter().y - 330);
+	this->text.setPosition(view.getCenter().x - 350, view.getCenter().y - 330);
 
 	this->kills_t.setString(std::to_string(kills));
-	this->kills_t.setPosition(view.getCenter().x - 540, view.getCenter().y - 330);
+	this->kills_t.setPosition(view.getCenter().x + 250, view.getCenter().y - 350);
+
+	window->draw(this->text);
+	window->draw(this->kills_t);
 }
 
 void Achievement::renderBossBadge(std::shared_ptr<sf::RenderWindow> window, sf::View view)
 {//DA SETTARE POS
-	this->text.setString("New Achievement KILLS :");
-	this->text.setPosition(view.getCenter().x - 540, view.getCenter().y - 330);
+	this->text.setString("New Achievement BOSS :");
+	this->text.setPosition(view.getCenter().x - 350, view.getCenter().y - 330);
 
-	this->kills_t.setString(std::to_string(kills));
-	this->kills_t.setPosition(view.getCenter().x - 540, view.getCenter().y - 330);
+	this->kills_boss_t.setString(std::to_string(kills));
+	this->kills_boss_t.setPosition(view.getCenter().x + 250, view.getCenter().y - 350);
+
+	window->draw(this->text);
+	window->draw(this->kills_boss_t);
 }

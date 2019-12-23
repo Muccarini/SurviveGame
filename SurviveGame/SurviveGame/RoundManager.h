@@ -14,7 +14,8 @@ public:
 
 	virtual void notify();
 
-	void increase();
+	void increaseRound();
+	void increaseKills();
 	void reset();
 	void startCountdown(sf::Time deltaTime);
 
@@ -25,6 +26,8 @@ public:
 	int getCounterRound();
 	void setBossRound(bool boolean);
 
+	void setKills(int kills);
+	int getKills();
 	int getKillsPerRound();
 	int getRoundPerBoss();
 
@@ -33,6 +36,7 @@ private:
 	sf::Time countdown;
 	bool loading;
 
+	int kill_counter;
 	const int kills_per_round = 10;
 	const int round_per_boss = 4;
 

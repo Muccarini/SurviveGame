@@ -7,6 +7,7 @@ GameLogic::GameLogic() : game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 
 	entitiesInit();
 	varInit();
 	gameViewInit();
+	achievement = new Achievement(&round);
 }
 
 GameLogic::~GameLogic()
@@ -46,8 +47,7 @@ void GameLogic::render()
 
 	hud.renderTextsHud(window);
 
-	if (achievement.getAlive())
-		renderAchievement();
+	renderAchievement();
 }
 
 void GameLogic::updateState()
@@ -71,13 +71,13 @@ void GameLogic::updateState()
 
 void GameLogic::updateHud()
 {
-	hud.updateText(kill_counter, round.getCountdown().asSeconds(), round.getCounterRound(), game_view);
+	hud.updateText(round.getKills(), round.getCountdown().asSeconds(), round.getCounterRound(), game_view);
 }
 
 void GameLogic::updateEnemies()
 {
 	//RESET ROUND
-	if (kill_counter == round.getKillsPerRound)
+	if (round.getKills() == round.getKillsPerRound())
 	{
 		for (unsigned int i = 0; i < enemies->size(); i++)
 		{
@@ -85,9 +85,9 @@ void GameLogic::updateEnemies()
 		}
 
 		enemies_alive = 0;
-		kill_counter = 0;
+		round.setKills(0);
 		round.reset();
-		round.increase();
+		round.increaseRound();
 
 		if (round.getCounterRound() % round.getRoundPerBoss() == 0)
 			round.setBossRound(true);
@@ -110,7 +110,7 @@ void GameLogic::updateEnemies()
 			{
 				enemies->erase(enemies->begin() + i);
 				enemies_alive--;
-				kill_counter++;
+				round.increaseKills();
 			}
 		}
 	}
@@ -156,9 +156,9 @@ void GameLogic::updateBoss()
 
 			round.setBossRound(false);
 			this->boss_alive = false;
-			kill_counter = 0;
+			round.setKills(0);
 			round.reset();
-			round.increase();
+			round.increaseRound();
 		}
 }
 
@@ -257,17 +257,17 @@ void GameLogic::renderBoost()
 
 void GameLogic::renderAchievement()
 {
-	if (this->achievement.getRound() == 1 || this->achievement.getRound() % 5 == 0)
+	if (this->achievement->getRound() == 1 || (this->achievement->getRound() + 1) % 5 == 0) //DA AGGIUNGERE AD OGNUNO DI ESSI CD
 	{
-		achievement.renderRoundBadge(this->window, this->game_view);
+		achievement->renderRoundBadge(this->window, this->game_view);
 	}
-	if (this->achievement.getKills() == 1 || this->achievement.getKills() % 15 == 0)
+	if (this->achievement->getKills() == 1 || (this->achievement->getKills() +1) % 15 == 0) //DA AGGIUNGERE AD OGNUNO DI ESSI CD
 	{
-		achievement.renderKillsBadge(this->window, this->game_view);
+		achievement->renderKillsBadge(this->window, this->game_view);
 	}
-	if (this->achievement.getKillsBoss() == 1 || this->achievement.getKillsBoss() % 3 == 0)
+	if (this->achievement->getKillsBoss() == 1 || (this->achievement->getKillsBoss() +1) % 3 == 0) //DA AGGIUNGERE AD OGNUNO DI ESSI CD
 	{
-		achievement.renderBossBadge(this->window, this->game_view);
+		achievement->renderBossBadge(this->window, this->game_view);
 	}
 }
 
@@ -302,8 +302,6 @@ void GameLogic::varInit()
 	this->enemies_alive = 0;
 	this->boss_alive = false;
 	this->pet_alive = false;
-
-	this->kill_counter = 0;
 	this->rand_time = sf::seconds((rand() % 10) +5.f);
 
 	boost_pos = std::make_shared<BoostPos>();
