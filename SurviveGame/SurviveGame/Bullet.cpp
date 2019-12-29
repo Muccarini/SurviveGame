@@ -1,7 +1,5 @@
 #include "Bullet.h"
 
-
-
 Bullet::Bullet(BulletOwner::Owner owner, std::shared_ptr<EntityData> entitydata)
 {
 	this->owner = owner;
@@ -60,19 +58,40 @@ void Bullet::update()
 	updateRotate(dir);
 }
 
-void Bullet::setDir()
+void Bullet::setDir(float nrshot)
 {
 	float dx;
 	float dy;
-
+	float lenght;
+	sf::Vector2f normVect;
 	switch(this->owner)
 	{
 	case(BulletOwner::Player):
-		dx = entitydata->mouse_pos_view.x - entitydata->player->getPosition().x;
-		dy = entitydata->mouse_pos_view.y - entitydata->player->getPosition().y;
-		sprite.setPosition(entitydata->player->getPosition());
-		break;
+		switch (this->entitydata->player->getType())
+		{
+		case(CharacterType::Shotgun):
+			dx = entitydata->mouse_pos_view.x - entitydata->player->getPosition().x;
+			dy = entitydata->mouse_pos_view.y - entitydata->player->getPosition().y;
+			sprite.setPosition(entitydata->player->getPosition());
 
+			lenght = sqrt(pow(dx, 2) + pow(dy, 2));
+			normVect = sf::Vector2f(dx / lenght, dy / lenght);
+
+			this->dir = abs(normVect.x) < abs(normVect.y) ? sf::Vector2f(normVect.x + nrshot, normVect.y) : sf::Vector2f(normVect.x, normVect.y + nrshot);
+			return;
+			break;
+		case(CharacterType::Rifle):
+			dx = entitydata->mouse_pos_view.x - entitydata->player->getPosition().x;
+			dy = entitydata->mouse_pos_view.y - entitydata->player->getPosition().y;
+			sprite.setPosition(entitydata->player->getPosition());
+			break;
+		case(CharacterType::Knife):
+			dx = entitydata->mouse_pos_view.x - entitydata->player->getPosition().x;
+			dy = entitydata->mouse_pos_view.y - entitydata->player->getPosition().y;
+			sprite.setPosition(entitydata->player->getPosition());
+			break;
+		}
+		break;
 	case(BulletOwner::Pet):
 		dx = entitydata->mouse_pos_view.x - entitydata->pet->getPosition().x;
 	    dy = entitydata->mouse_pos_view.y - entitydata->pet->getPosition().y;
@@ -84,9 +103,9 @@ void Bullet::setDir()
 		sprite.setPosition(entitydata->boss->getPosition());
 		break;
 	}
-	float lenght = sqrt(pow(dx, 2) + pow(dy, 2));
+	lenght = sqrt(pow(dx, 2) + pow(dy, 2));
 
-	sf::Vector2f normVect(dx / lenght, dy / lenght);
+	normVect = sf::Vector2f(dx / lenght, dy / lenght);
 
 	this->dir = normVect;
 }

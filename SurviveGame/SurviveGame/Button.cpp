@@ -25,13 +25,27 @@ void Button::setText(const std::string path, const std::string string, sf::Color
 	right_color   = this->text.getFillColor();
 }
 
-void Button::setBox(const sf::Vector2f size, const sf::Color outline_color, const float thickness, const sf::Color fill_color, const sf::Vector2f pos)
+void Button::setBox(const sf::Vector2f size, const sf::Color outline_color, const float thickness, const sf::Color fill_color, const sf::Vector2f pos, sf::Texture* txt)
 {
 	this->box.setSize(size);
 	this->box.setOutlineColor(outline_color);
 	this->box.setOutlineThickness(thickness);
-	this->box.setFillColor(fill_color);
+	if (txt == NULL)
+		this->box.setFillColor(fill_color);
 	this->box.setPosition(pos);
+	this->box.setTexture(txt);
+}
+
+sf::RectangleShape Button::getBox()
+{
+	return this->box;
+}
+
+void Button::setBoxTxt(sf::Texture & txt, sf::IntRect rect)
+{
+	this->box.setTextureRect(rect);
+	this->box.setTexture(&txt);	
+
 }
 
 bool Button::isHover(const sf::Vector2f mouse_pos_view)
@@ -69,5 +83,5 @@ void Button::setStandard()
 void Button::draw(std::shared_ptr<sf::RenderWindow> target)
 {
 	target->draw(this->text);
-	/*target->draw(this->box);*/
+	target->draw(this->box);
 }

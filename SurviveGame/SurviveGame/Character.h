@@ -7,7 +7,7 @@
 
 namespace CharacterType
 {
-	enum Type { Melee, Ranged, Boss, Player};
+	enum Type { Shotgun, Rifle, Knife, Player};
 }
 
 class Character :
@@ -31,6 +31,11 @@ public:
 	int getMovSpeedDef();
 
 	int getAmmo();
+
+	void setRatioCd(sf::Time ratio);
+	const sf::Time getRatioCd();
+
+	CharacterType::Type getType();
 
 	bool isReloading();
 	bool isShooting();

@@ -22,6 +22,15 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
+    <Filter Include="Strategy">
+      <UniqueIdentifier>{a5b10bc5-8f3c-4f98-9217-2a393fe2346f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Strategy\move">
+      <UniqueIdentifier>{4aa74dd6-69a5-4317-9a7b-8b890b166f89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Strategy\Fight">
+      <UniqueIdentifier>{7455a912-d422-4c86-a831-9b45a33e91d2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TileMap.cpp">
@@ -32,21 +41,6 @@
     </ClCompile>
     <ClCompile Include="TileMap.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyStrategyMove.cpp">
-      <Filter>Personaggi\Nemici</Filter>
-    </ClCompile>
-    <ClCompile Include="Player1.cpp">
-      <Filter>Personaggi\Giocatore</Filter>
-    </ClCompile>
-    <ClCompile Include="Player2.cpp">
-      <Filter>Personaggi\Giocatore</Filter>
-    </ClCompile>
-    <ClCompile Include="Player3.cpp">
-      <Filter>Personaggi\Giocatore</Filter>
-    </ClCompile>
-    <ClCompile Include="StrategyMove.cpp">
-      <Filter>Personaggi\Nemici</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Game</Filter>
@@ -103,25 +97,25 @@
       <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="PauseMenu.cpp">
-      <Filter>Map</Filter>
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectionCharacter.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStrategyMove.cpp">
+      <Filter>Strategy\move</Filter>
+    </ClCompile>
+    <ClCompile Include="StrategyMove.cpp">
+      <Filter>Strategy\move</Filter>
+    </ClCompile>
+    <ClCompile Include="StShotgunPlayerFight.cpp">
+      <Filter>Strategy\Fight</Filter>
+    </ClCompile>
+    <ClCompile Include="StRiflePlayerFight.cpp">
+      <Filter>Strategy\Fight</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EnemyStrategyMove.h">
-      <Filter>Personaggi\Nemici</Filter>
-    </ClInclude>
-    <ClInclude Include="Player1.h">
-      <Filter>Personaggi\Giocatore</Filter>
-    </ClInclude>
-    <ClInclude Include="Player2.h">
-      <Filter>Personaggi\Giocatore</Filter>
-    </ClInclude>
-    <ClInclude Include="Player3.h">
-      <Filter>Personaggi\Giocatore</Filter>
-    </ClInclude>
-    <ClInclude Include="StrategyMove.h">
-      <Filter>Personaggi\Nemici</Filter>
-    </ClInclude>
     <ClInclude Include="TextureHolder.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
@@ -184,6 +178,24 @@
     </ClInclude>
     <ClInclude Include="PauseMenu.h">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectionCharacter.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStrategyMove.h">
+      <Filter>Strategy\move</Filter>
+    </ClInclude>
+    <ClInclude Include="StrategyMove.h">
+      <Filter>Strategy\move</Filter>
+    </ClInclude>
+    <ClInclude Include="StrategyFight.h">
+      <Filter>Strategy\Fight</Filter>
+    </ClInclude>
+    <ClInclude Include="StShotgunPlayerFight.h">
+      <Filter>Strategy\Fight</Filter>
+    </ClInclude>
+    <ClInclude Include="StRiflePlayerFight.h">
+      <Filter>Strategy\Fight</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

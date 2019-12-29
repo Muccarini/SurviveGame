@@ -1,9 +1,10 @@
 #include "PlayerT.h"
 
-PlayerT::PlayerT(const std::shared_ptr<EntityData> entitydata)
+PlayerT::PlayerT(const std::shared_ptr<EntityData> entitydata, Textures::ID id, StrategyFight* stf) : id(id)
 {
 	this->entitydata = entitydata;
-
+	setStrategyFight(stf);
+	setType();
 	initVar();
 	initSprite();
 	initHitBox();
@@ -71,10 +72,8 @@ void PlayerT::updateBullets()
 
 	if (shooting && getAmmo())
 	{
-		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Player, this->entitydata));
+		this->stf->shot(bullets, this->entitydata);
 		ammo--;
-		bullets.emplace_back(bullet);
-		bullet->setDir();
 	}
 
 	if (!bullets.empty())
@@ -158,7 +157,7 @@ void PlayerT::updateMovSpeed()
 	{
 		this->ms_clock = this->ms_cd;
 		this->mov_speed = this->mov_speed_default;
-		this->sprite.setTexture(this->entitydata->textures->get(Textures::Personaggio));
+		this->sprite.setTexture(this->entitydata->textures->get(this->id));
 	}
 		
 }
@@ -213,6 +212,11 @@ void PlayerT::updateShooting()
 		shooting = false;
 }
 
+void PlayerT::setStrategyFight(StrategyFight* stf)
+{
+	this->stf = stf;
+}
+
 void PlayerT::renderBullets(std::shared_ptr<sf::RenderWindow> target)
 {
 	for (int i=0; i != bullets.size(); i++)
@@ -235,7 +239,8 @@ void PlayerT::initVar()
 	ammo_max = 200;
 	ammo = ammo_max;
 
-	ratio_cd = sf::seconds(1.f / 16.666f);
+	//ratio_cd = sf::seconds(1.f / 16.666f);
+	ratio_cd = this->stf->getRatio();
 	ratio_clock = ratio_cd;
 
 	this->dash_speed = 1000;
@@ -249,7 +254,7 @@ void PlayerT::initVar()
 
 void PlayerT::initSprite()
 {
-	sprite.setTexture(this->entitydata->textures->get(Textures::Personaggio));       //TEXTURE
+	sprite.setTexture(this->entitydata->textures->get(this->id));       //TEXTURE
 	sprite.setScale(0.3f, 0.3f);        //SCALE
 	sprite.setPosition(600.f, 600.f); //POS
 	sprite.setOrigin(92, 120);        //ORIGIN
@@ -269,4 +274,20 @@ void PlayerT::initHitBox()
 void PlayerT::takeDamage()
 {
 	this->hp--;
+}
+
+void PlayerT::setType()
+{
+	switch (this->id)
+	{
+	case(Textures::ShotgunP):
+		this->type = CharacterType::Shotgun;
+		break;
+	case(Textures::RifleP):
+		this->type = CharacterType::Rifle;
+		break;
+	case(Textures::KnifeP):
+		this->type = CharacterType::Knife;
+		break;
+	}
 }

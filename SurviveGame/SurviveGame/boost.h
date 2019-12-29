@@ -2,7 +2,7 @@
 #include "Character.h"
 #include <ctime>
 
-class BoostPos;
+struct BoostPos;
 
 enum Type {HP, MS};
 

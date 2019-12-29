@@ -12,7 +12,7 @@ namespace BulletOwner
 	enum Owner { Player, Boss, Pet };
 }
 
-class EntityData
+struct EntityData
 {
 public:
 	EntityData() {};
@@ -27,7 +27,7 @@ public:
 	std::shared_ptr<Character> boss;
 };
 
-class BoostPos {
+struct BoostPos {
 
 public:
 	BoostPos() { pos1_1 = false; pos1_2 = false; pos2_1 = false; pos2_2 = false; };

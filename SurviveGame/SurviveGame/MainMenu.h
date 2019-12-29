@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "State.h"
 #include "GameLogic.h"
+#include "SelectionCharacter.h"
 #include "Button.h"
 
 class MainMenu : 

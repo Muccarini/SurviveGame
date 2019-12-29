@@ -1,10 +1,10 @@
 #include "GameLogic.h"
 
 
-GameLogic::GameLogic() : game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f))
+GameLogic::GameLogic(Textures::ID id, StrategyFight* stf) : game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f)), id(id)
 {
 	textureInit();
-	entitiesInit();
+	entitiesInit(stf);
 	varInit();
 	gameViewInit();
 }
@@ -264,13 +264,13 @@ void GameLogic::renderEnemies()
 	}
 }
 
-void GameLogic::entitiesInit()
+void GameLogic::entitiesInit(StrategyFight* stf)
 {  
 	entitydata = std::make_shared<EntityData>();
 
 	this->entitydata->textures = this->textures;
 	this->enemies = new std::vector<std::shared_ptr<Character>>;
-	this->player = std::make_shared<PlayerT>(this->entitydata);
+	this->player = std::make_shared<PlayerT>(this->entitydata, id, stf);
 }
 
 void GameLogic::gameViewInit()
@@ -307,6 +307,9 @@ void GameLogic::textureInit()
 	textures->load(Textures::Proiettile, "Sources/bullets/bullet1.png");
 	textures->load(Textures::Boss, "Sources/boss/boss.png");
 	textures->load(Textures::Personaggio, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
+	textures->load(Textures::ShotgunP, "Sources/Top_Down_Survivor/shotgun/move/survivor-move_shotgun_0.png");
+	textures->load(Textures::RifleP, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
+	textures->load(Textures::KnifeP, "Sources/Top_Down_Survivor/knife/move/survivor-move_knife_0.png");
 	textures->load(Textures::PersonaggioMS, "Sources/player_boost_speed.png");
 	textures->load(Textures::Pet, "Sources/pet.png");
 	textures->load(Textures::HP, "Sources/hp.png");

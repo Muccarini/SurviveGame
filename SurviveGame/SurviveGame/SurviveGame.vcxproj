@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -145,13 +145,13 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Pet.cpp" />
-    <ClCompile Include="Player1.cpp" />
-    <ClCompile Include="Player2.cpp" />
-    <ClCompile Include="Player3.cpp" />
     <ClCompile Include="PlayerT.cpp" />
     <ClCompile Include="RoundManager.cpp" />
+    <ClCompile Include="SelectionCharacter.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StrategyMove.cpp" />
+    <ClCompile Include="StRiflePlayerFight.cpp" />
+    <ClCompile Include="StShotgunPlayerFight.cpp" />
     <ClCompile Include="TextureHolder.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileMap.cpp" />
@@ -172,13 +172,14 @@
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Pet.h" />
-    <ClInclude Include="Player1.h" />
-    <ClInclude Include="Player2.h" />
-    <ClInclude Include="Player3.h" />
     <ClInclude Include="PlayerT.h" />
     <ClInclude Include="RoundManager.h" />
+    <ClInclude Include="SelectionCharacter.h" />
     <ClInclude Include="State.h" />
+    <ClInclude Include="StrategyFight.h" />
     <ClInclude Include="StrategyMove.h" />
+    <ClInclude Include="StRiflePlayerFight.h" />
+    <ClInclude Include="StShotgunPlayerFight.h" />
     <ClInclude Include="TextureHolder.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileMap.h" />

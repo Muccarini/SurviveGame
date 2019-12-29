@@ -58,6 +58,21 @@ int Character::getAmmo()
 		this->ammo;
 }
 
+void Character::setRatioCd(sf::Time ratio)
+{
+	this->ratio_cd = ratio;
+}
+
+const sf::Time Character::getRatioCd()
+{
+	return this->ratio_cd;
+}
+
+CharacterType::Type Character::getType()
+{
+	return this->type;
+}
+
 bool Character::isReloading()
 {
 	return

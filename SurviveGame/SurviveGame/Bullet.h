@@ -11,7 +11,7 @@ public:
 
 	void update();
 
-	void setDir();
+	void setDir(float nrshot = 0);
 
 private:
 	void updateMove();

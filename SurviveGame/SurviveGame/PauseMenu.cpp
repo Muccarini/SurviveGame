@@ -70,8 +70,8 @@ void PauseMenu::updateButtons()
 void PauseMenu::initButtons()
 {
 	resume.setText("Sources/edunline.ttf", "RESUME", sf::Color::Black, 100.f, sf::Vector2f(660.f, 200.f));
-	resume.setBox(sf::Vector2f(355, 70.f), sf::Color::Magenta, 3.f, sf::Color::Transparent, sf::Vector2f(660.f, 230.f));
+	resume.setBox(sf::Vector2f(355, 70.f), sf::Color::Transparent, 0.f, sf::Color::Transparent, sf::Vector2f(660.f, 230.f));
 
 	exit_game.setText("Sources/edunline.ttf", "Exit Game", sf::Color::Black, 70.f, sf::Vector2f(900.f, 600.f));
-	exit_game.setBox(sf::Vector2f(355.f, 50.f), sf::Color::Magenta, 3.f, sf::Color::Transparent, sf::Vector2f(900.f, 620.f));
+	exit_game.setBox(sf::Vector2f(355.f, 50.f), sf::Color::Transparent, 0.f, sf::Color::Transparent, sf::Vector2f(900.f, 620.f));
 }

@@ -1,11 +1,12 @@
 #pragma once
 #include "Character.h"
+#include "StrategyFight.h"
 
 class PlayerT :
 	public Character
 {
 public:
-	explicit PlayerT(const std::shared_ptr<EntityData> entitydata);
+	explicit PlayerT(const std::shared_ptr<EntityData> entitydata, Textures::ID id, StrategyFight* stf);
 
 	PlayerT();
 	virtual ~PlayerT();
@@ -23,7 +24,7 @@ public:
 	void updateCollision();
 
 	void updateShooting();
-
+	void setStrategyFight(StrategyFight* stf);
 
 	void initVar();
 	void initSprite();
@@ -35,6 +36,7 @@ public:
 
 	sf::Texture texture_movspeed;
 	sf::Texture texture_bullet;
+	Textures::ID id;
 
 	float dash_speed;
 	float dash_cd;
@@ -44,5 +46,8 @@ public:
 	float ms_clock;
 
 	bool is_dashing;
+protected:
+	StrategyFight* stf;
+	void setType();
 };
 

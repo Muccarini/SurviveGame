@@ -11,13 +11,14 @@
 #include "Boss.h"
 #include "Pet.h"
 #include "Boost.h"
+#include "StrategyFight.h"
 #include <vector>
 
 class GameLogic :
 	public State
 {
 public:
-    GameLogic();
+    GameLogic(Textures::ID id, StrategyFight* stf);
 	virtual ~GameLogic();
 
 
@@ -43,7 +44,7 @@ private:
 	void renderPet();
 	void renderBoost();
 
-	void entitiesInit();
+	void entitiesInit(StrategyFight* stf);
 	void gameViewInit();
 	void textureInit();
 	void varInit();
@@ -64,6 +65,7 @@ private:
 
 	std::shared_ptr<EntityData> entitydata;
 	std::shared_ptr<BoostPos> boost_pos;
+	Textures::ID id;
 
 	const int max_enemies = 5;
 	int enemies_alive;
