@@ -19,6 +19,7 @@ void GameLogic::update(sf::Time deltaTime)
 {
 	updateMousePos();
 	updateEntityData(deltaTime);
+	achievement->updateBadge(deltaTime);
 
 	updateHud();
 	updatePlayer();
@@ -156,6 +157,7 @@ void GameLogic::updateBoss()
 
 			round.setBossRound(false);
 			this->boss_alive = false;
+			round.increaseBoss();
 			round.setKills(0);
 			round.reset();
 			round.increaseRound();
@@ -257,17 +259,20 @@ void GameLogic::renderBoost()
 
 void GameLogic::renderAchievement()
 {
-	if (this->achievement->getRound() == 1 || (this->achievement->getRound() + 1) % 5 == 0) //DA AGGIUNGERE AD OGNUNO DI ESSI CD
-	{
-		achievement->renderRoundBadge(this->window, this->game_view);
-	}
-	if (this->achievement->getKills() == 1 || (this->achievement->getKills() +1) % 15 == 0) //DA AGGIUNGERE AD OGNUNO DI ESSI CD
+	if (achievement->isKillsOn())
 	{
 		achievement->renderKillsBadge(this->window, this->game_view);
 	}
-	if (this->achievement->getKillsBoss() == 1 || (this->achievement->getKillsBoss() +1) % 3 == 0) //DA AGGIUNGERE AD OGNUNO DI ESSI CD
+
+	if (achievement->isRoundOn())
+	{
+	    achievement->renderRoundBadge(this->window, this->game_view);
+	}
+
+	if (this->achievement->isBossOn())
 	{
 		achievement->renderBossBadge(this->window, this->game_view);
+
 	}
 }
 

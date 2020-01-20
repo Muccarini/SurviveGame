@@ -9,6 +9,7 @@ RoundManager::RoundManager()
 	boss = false;
 	counter_round = 1;
 	kill_counter = 0;
+	boss_counter = 0;
 }
 
 
@@ -48,6 +49,12 @@ void RoundManager::increaseKills()
 	notify();
 }
 
+void RoundManager::increaseBoss()
+{
+	this->boss_counter++;
+	notify();
+}
+
 void RoundManager::reset()
 {
 	loading = true;
@@ -81,6 +88,12 @@ int RoundManager::getCounterRound()
 {
 	return
 		this->counter_round;
+}
+
+int RoundManager::getCounterBoss()
+{
+	return
+		this->boss_counter;
 }
 
 void RoundManager::setBossRound(bool boolean)
