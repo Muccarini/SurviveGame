@@ -286,8 +286,8 @@ void PlayerT::setType()
 	case(Textures::RifleP):
 		this->type = CharacterType::Rifle;
 		break;
-	case(Textures::KnifeP):
-		this->type = CharacterType::Knife;
+	case(Textures::HandgunP):
+		this->type = CharacterType::Handgun;
 		break;
 	}
 }

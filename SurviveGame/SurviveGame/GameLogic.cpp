@@ -309,7 +309,7 @@ void GameLogic::textureInit()
 	textures->load(Textures::Personaggio, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
 	textures->load(Textures::ShotgunP, "Sources/Top_Down_Survivor/shotgun/move/survivor-move_shotgun_0.png");
 	textures->load(Textures::RifleP, "Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
-	textures->load(Textures::KnifeP, "Sources/Top_Down_Survivor/knife/move/survivor-move_knife_0.png");
+	textures->load(Textures::HandgunP, "Sources/Top_Down_Survivor/handgun/move/survivor-move_handgun_0.png");
 	textures->load(Textures::PersonaggioMS, "Sources/player_boost_speed.png");
 	textures->load(Textures::Pet, "Sources/pet.png");
 	textures->load(Textures::HP, "Sources/hp.png");

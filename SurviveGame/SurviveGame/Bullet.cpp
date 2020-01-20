@@ -85,7 +85,7 @@ void Bullet::setDir(float nrshot)
 			dy = entitydata->mouse_pos_view.y - entitydata->player->getPosition().y;
 			sprite.setPosition(entitydata->player->getPosition());
 			break;
-		case(CharacterType::Knife):
+		case(CharacterType::Handgun):
 			dx = entitydata->mouse_pos_view.x - entitydata->player->getPosition().x;
 			dy = entitydata->mouse_pos_view.y - entitydata->player->getPosition().y;
 			sprite.setPosition(entitydata->player->getPosition());

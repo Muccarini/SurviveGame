@@ -7,7 +7,7 @@
 
 namespace CharacterType
 {
-	enum Type { Shotgun, Rifle, Knife, Player};
+	enum Type { Shotgun, Rifle, Handgun, Player};
 }
 
 class Character :
