@@ -108,6 +108,9 @@
     <ClCompile Include="GridNode.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="implementation.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnemyStrategyMove.h">
@@ -189,7 +192,7 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="GridNode.h">
-      <Filter>Game</Filter>
+      <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

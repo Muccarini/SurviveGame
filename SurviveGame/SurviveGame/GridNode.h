@@ -1,6 +1,6 @@
 #pragma once
 #include <queue>
-#include <unordered_set>
+#include <unordered_map>
 #include <array>
 
 struct GridLocation
@@ -8,7 +8,14 @@ struct GridLocation
 	int x, y;
 	bool walkable = true;
 
-	inline bool operator==()
+	inline bool isEqual(const GridLocation& second)
+	{
+		return (this->x == second.x && this->y == second.y && this->walkable == second.walkable);
+	}
+
+	inline bool operator<(const GridLocation& sc)
+	{
+	}
 };
 
 namespace std {
@@ -33,6 +40,8 @@ public:
 	std::vector< std::vector<GridLocation> > getGrid();
 
 	std::vector<GridLocation> neighbors(GridLocation id) const;
+
+	int cost(GridLocation start, GridLocation goal);
 	
 protected:
 

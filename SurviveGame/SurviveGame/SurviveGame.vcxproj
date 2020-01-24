@@ -142,6 +142,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="GridNode.cpp" />
     <ClCompile Include="Hud.cpp" />
+    <ClCompile Include="implementation.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PauseMenu.cpp" />

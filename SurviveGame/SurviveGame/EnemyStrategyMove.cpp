@@ -1,4 +1,7 @@
 #include "EnemyStrategyMove.h"
+#include <functional>
+#include <utility>
+//#include <C:/Users/Federico/source/Repos/SurviveGame/SurviveGame/SurviveGame/implementation.cpp>
 
 template<typename T, typename priority_t>
 struct PriorityQueue {
@@ -14,7 +17,8 @@ struct PriorityQueue {
 		elements.emplace(priority, item);
 	}
 
-	T get() {
+	inline T get() 
+	{
 		T best_item = elements.top().second;
 		elements.pop();
 		return best_item;
@@ -36,20 +40,22 @@ void EnemyStrategyMove::move(sf::Time deltatime, sf::Sprite & _sprite, const flo
 
 }
 
-bool EnemyStrategyMove::pathFinder(GridNode grid, GridLocation start, GridLocation goal, std::unordered_map<GridLocation, GridLocation>& came_from, std::unordered_map<GridLocation, double>& cost_so_far)
+bool EnemyStrategyMove::pathFinder(GridNode grid, GridLocation start, 
+	GridLocation goal, std::unordered_map<GridLocation, GridLocation>& came_from,
+	std::unordered_map<GridLocation, double>& cost_so_far)
 {
 	
   PriorityQueue<GridLocation, double> frontier;
   frontier.put(start, 0);
 
-  came_from[start] = start;
+  /*came_from[start] = start;
   cost_so_far[start] = 0;
   
   while (!frontier.empty()) {
-	  GridLocation current = frontier.get();
+	GridLocation current = frontier.get();
 
-    if (current == goal) {
-      break;
+    if (current.isEqual(goal)) {
+      return true;
     }
 
     for (GridLocation next : grid.neighbors(current)) {
@@ -62,5 +68,8 @@ bool EnemyStrategyMove::pathFinder(GridNode grid, GridLocation start, GridLocati
         came_from[next] = current;
       }
     }
-  }
+  }*/
+
+  return false;
+
 }

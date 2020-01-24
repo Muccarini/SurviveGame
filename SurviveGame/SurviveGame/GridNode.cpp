@@ -48,6 +48,11 @@ std::vector<GridLocation> GridNode::neighbors(GridLocation id) const
 	return results;
 }
 
+int GridNode::cost(GridLocation start, GridLocation goal)
+{
+	return abs(start.x - goal.x) + abs(start.y - goal.y);
+}
+
 bool GridNode::in_bounds(GridLocation id) const
 {
 	return 0 <= id.x && id.x < width
