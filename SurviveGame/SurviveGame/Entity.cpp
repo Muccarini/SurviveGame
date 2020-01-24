@@ -49,6 +49,18 @@ sf::RectangleShape Entity::getHitBox()
 		this->hit_box;
 }
 
+GridLocation Entity::getGridPos()
+{
+	return this->gridpos;
+}
+
+void Entity::setGridPosition(float tilesize)
+{
+	this->gridpos.x = static_cast<int>(this->sprite.getPosition().x / tilesize);
+	this->gridpos.y = static_cast<int>(this->sprite.getPosition().y / tilesize);
+	this->gridpos.walkable = false;
+}
+
 bool Entity::sat_test(const sf::FloatRect &rectSp1, const sf::FloatRect &rectSp2, sf::Vector2f *out_mtv)
 {
 	float proj_x, proj_y, overlap_x, overlap_y;

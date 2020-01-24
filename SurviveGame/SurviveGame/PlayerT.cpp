@@ -193,6 +193,7 @@ void PlayerT::updateCollision()
 	sprite.move(dir);
 	hit_box.setPosition(getPosition());
 	collision->resetOutMtv();
+	setGridPosition(entitydata->map->getGridSize());
 }
 
 void PlayerT::updateShooting()

@@ -85,6 +85,8 @@ void Enemy::updateCollision()
  	sprite.move(dir);
 	hit_box.setPosition(getPosition());
 	collision->resetOutMtv();
+
+	setGridPosition(this->entitydata->map->getGridSize());
 }
 
 void Enemy::update()

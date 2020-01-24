@@ -11,6 +11,7 @@
 #include "Boss.h"
 #include "Pet.h"
 #include "Boost.h"
+#include "GridNode.h"
 #include <vector>
 
 class GameLogic :
@@ -50,6 +51,7 @@ private:
 	void entitydataInit();
 
 	TileMap tile_map;
+	GridNode grid;
 	sf::View game_view;
 	Hud hud;
 	RoundManager round;

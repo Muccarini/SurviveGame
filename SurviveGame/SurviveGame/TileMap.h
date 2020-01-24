@@ -2,16 +2,17 @@
 #include "Tile.h"
 #include <fstream>
 #include <sstream>
+#include "GridNode.h"
 
 class TileMap
 {
 public:
-	TileMap();
+	TileMap(sf::Vector2i map_size);
 	virtual ~TileMap();
 
 private:
 	float grid_size_f;
-	sf::Vector2f max_size;
+	sf::Vector2i max_size;
 	unsigned int layers;
 	int tile_type;
 
@@ -35,5 +36,9 @@ public:
 	void render(std::shared_ptr<sf::RenderTarget> target);
 
 	std::vector<sf::FloatRect> findWalls(int x, int y);
+
+	std::vector<GridLocation> getObstacle();
+
+	float getGridSize();
 };
 

@@ -9,6 +9,15 @@
 #include "SFML/Window.hpp"
 #include "SFML/Graphics.hpp"
 
+struct Node 
+{
+	int x;
+	int y;
+	float G;
+	float H;
+	float F;
+	std::shared_ptr<Node> parent;
+};
 
 class Tile
 {
@@ -30,7 +39,6 @@ public:
 
 	sf::RectangleShape shape;
 	int type_tile;
-	void update();
 	void render(std::shared_ptr<sf::RenderTarget> target);
 
 };

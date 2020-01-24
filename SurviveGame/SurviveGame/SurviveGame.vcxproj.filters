@@ -105,6 +105,9 @@
     <ClCompile Include="PauseMenu.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="GridNode.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnemyStrategyMove.h">
@@ -183,6 +186,9 @@
       <Filter>Resource Files</Filter>
     </ClInclude>
     <ClInclude Include="PauseMenu.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="GridNode.h">
       <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
