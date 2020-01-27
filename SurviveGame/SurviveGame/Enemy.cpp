@@ -23,6 +23,7 @@ void Enemy::updateMove()
 {
 	float dx = entitydata->player->getPosition().x - this->sprite.getPosition().x;
 	float dy = entitydata->player->getPosition().y - this->sprite.getPosition().y;
+	sf::Vector2i mv;
 
 	float lenght = sqrt(pow(dx, 2) + pow(dy, 2));
 
