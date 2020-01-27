@@ -33,16 +33,16 @@ void Enemy::updateMove()
 	{
 		if (!move_vect.empty())
 			move_vect.clear();
-		move(deltaTime, sf::Vector2f(target1.x, target1.y), map);
-		this->prev_pos = _sprite.getPosition();
-		this->target.x = target1.x;
-		this->target.y = target1.y;
+		this->_m.move(this->entitydata->deltaTime, this->sprite, this->entitydata->player->getPosition());
+		this->prev_pos = this->sprite.getPosition();
+		this->target.x = this->entitydata->player->getPosition().x;
+		this->target.y = this->entitydata->player->getPosition().y;
 	}
 
 	if (!move_vect.empty())
 	{
 		mv = sf::Vector2i(move_vect.front());
-		spostamento = static_cast <sf::Vector2f> (mv) * this->mov_speed * deltaTime.asSeconds();
+		spostamento = static_cast <sf::Vector2f> (mv) * this->mov_speed * this->entitydata->deltaTime.asSeconds();
 		distance = sqrt(pow(spostamento.x, 2) + pow(spostamento.y, 2));
 		max_distance -= distance;
 		if (max_distance <= 0)
@@ -68,12 +68,12 @@ void Enemy::updateMove()
 				spostamento.y = -max_distance;
 				spostamento.x = 0;
 			}
-			this->_sprite.move(spostamento);
+			this->sprite.move(spostamento);
 			max_distance = 64;
 		}
 		else
 		{
-			this->_sprite.move(spostamento);
+			this->sprite.move(spostamento);
 		}
 		if (max_distance == 64)
 		{

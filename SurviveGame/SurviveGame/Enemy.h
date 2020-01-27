@@ -29,6 +29,10 @@ private:
 
 	float distance;
 	float max_distance;
+	sf::Vector2f prev_pos;
+	std::list <sf::Vector2i> move_vect;
+	sf::Vector2f target;
+	sf::Vector2f spostamento;
 
 	EnemyStrategyMove _m;
 };
