@@ -12,11 +12,7 @@ public:
 	EnemyStrategyMove(GridNode grid);
 	virtual ~EnemyStrategyMove();
 
-	void move(sf::Time deltatime, sf::Sprite& _sprite, sf::Vector2f target);
-
-	bool pathFinder(GridNode grid, GridLocation start, GridLocation goal,
-		std::unordered_map<GridLocation, GridLocation>& came_from,
-		std::unordered_map<GridLocation, double>& cost_so_far) {return true;};
+	void move(sf::Time deltatime, sf::Sprite& _sprite, sf::Vector2f target, std::list<sf::Vector2i> &movevect);
 
 protected:
 	std::unordered_map<GridLocation, GridLocation> came_from;
@@ -32,7 +28,7 @@ void a_star_search
 	Location start,
 	Location goal,
 	std::unordered_map<Location, Location>& came_from,
-	std::unordered_map<Location, double>& cost_so_far)
+	std::unordered_map<Location, double>& cost_so_far, std::list<sf::Vector2i> &movevect)
 {
 	PriorityQueue<Location, double> frontier;
 	frontier.put(start, 0);
@@ -60,6 +56,15 @@ void a_star_search
 		}
 	}
 
-	reconstruct_path(start, goal, came_from);
+	std::vector<GridLocation> path = reconstruct_path(start, goal, came_from);
+
+	for (int i = 0; i < path.size(); i++)
+	{
+		sf::Vector2i move = sf::Vector2i(path.back().x / path.back().x, 
+			path.back().y / path.back().y);
+		movevect.push_back(move);
+		std::cout << "{ " << path[i].x << ", " << path[i].y << "}";
+	}
+
 }
 
