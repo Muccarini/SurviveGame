@@ -28,10 +28,60 @@ void Enemy::updateMove()
 
 	sf::Vector2f normVect(dx / lenght, dy / lenght);
 
-	this->sprite.move((normVect.x * this->mov_speed * entitydata->deltaTime.asSeconds()), (normVect.y * this->mov_speed * entitydata->deltaTime.asSeconds()));
-	hit_box.setPosition(getPosition());
+	/*this->sprite.move((normVect.x * this->mov_speed * entitydata->deltaTime.asSeconds()), (normVect.y * this->mov_speed * entitydata->deltaTime.asSeconds()));*/
+	if (max_distance == 64 && collide == false)
+	{
+		if (!move_vect.empty())
+			move_vect.clear();
+		move(deltaTime, sf::Vector2f(target1.x, target1.y), map);
+		this->prev_pos = _sprite.getPosition();
+		this->target.x = target1.x;
+		this->target.y = target1.y;
+	}
 
+	if (!move_vect.empty())
+	{
+		mv = sf::Vector2i(move_vect.front());
+		spostamento = static_cast <sf::Vector2f> (mv) * this->mov_speed * deltaTime.asSeconds();
+		distance = sqrt(pow(spostamento.x, 2) + pow(spostamento.y, 2));
+		max_distance -= distance;
+		if (max_distance <= 0)
+		{
+			max_distance += distance;
+			if (mv.x == 1)
+			{
+				spostamento.x = max_distance;
+				spostamento.y = 0;
+			}
+			else if (mv.y == 1)
+			{
+				spostamento.y = max_distance;
+				spostamento.x = 0;
+			}
+			else if (mv.x == -1)
+			{
+				spostamento.x = -max_distance;
+				spostamento.y = 0;
+			}
+			else if (mv.y == -1)
+			{
+				spostamento.y = -max_distance;
+				spostamento.x = 0;
+			}
+			this->_sprite.move(spostamento);
+			max_distance = 64;
+		}
+		else
+		{
+			this->_sprite.move(spostamento);
+		}
+		if (max_distance == 64)
+		{
+			move_vect.pop_front();
+		}
+	}
 	this->_m.move(this->entitydata->deltaTime, this->sprite, entitydata->player->getPosition());
+	hit_box.setPosition(getPosition());
 }
 
 void Enemy::updateRotate()

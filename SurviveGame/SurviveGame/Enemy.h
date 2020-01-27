@@ -27,6 +27,9 @@ private:
 
 	void takeDamage(/*tipo di danno*/);
 
+	float distance;
+	float max_distance;
+
 	EnemyStrategyMove _m;
 };
 
