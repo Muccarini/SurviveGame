@@ -43,7 +43,7 @@ void Enemy::updateMove()
 	if (!move_vect.empty())
 	{
 		mv = sf::Vector2i(move_vect.front());
-		spostamento = static_cast <sf::Vector2f> (mv) * this->mov_speed * this->entitydata->deltaTime.asSeconds();
+		spostamento = static_cast <sf::Vector2f> (mv) * static_cast<float>(this->mov_speed) * this->entitydata->deltaTime.asSeconds();
 		distance = sqrt(pow(spostamento.x, 2) + pow(spostamento.y, 2));
 		max_distance -= distance;
 		if (max_distance <= 0)
@@ -81,7 +81,7 @@ void Enemy::updateMove()
 			move_vect.pop_front();
 		}
 	}
-	this->_m.move(this->entitydata->deltaTime, this->sprite, entitydata->player->getPosition());
+
 	hit_box.setPosition(getPosition());
 }
 
