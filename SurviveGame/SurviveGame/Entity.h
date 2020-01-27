@@ -25,6 +25,7 @@ public:
 	std::shared_ptr<Character> player;
 	std::shared_ptr<Character> pet;
 	std::shared_ptr<Character> boss;
+	std::shared_ptr<GridNode> grid;
 };
 
 class BoostPos {

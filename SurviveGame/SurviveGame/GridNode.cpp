@@ -8,7 +8,7 @@ GridNode::GridNode(int width, int height) : width(width), height(height)
 void GridNode::initGrid(std::vector<GridLocation> obstacles)
 {
 	this->grid.resize(this->height, std::vector<GridLocation>());
-	for (int i = 0; i < grid.size(); i++)
+	for (auto i = 0; i < grid.size(); i++)
 	{
 		this->grid[i].resize(this->width);
 		for (size_t j = 0; j < grid.size(); j++)

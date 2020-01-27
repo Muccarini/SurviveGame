@@ -2,7 +2,7 @@
 
 
 GameLogic::GameLogic() : game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f)), 
-tile_map(sf::Vector2i(20., 20)), grid(20, 20)
+tile_map(sf::Vector2i(20, 20)), grid(20, 20)
 {
 	textureInit();
 	entitiesInit();
@@ -307,6 +307,7 @@ void GameLogic::entitydataInit()
 	entitydata->map            = std::make_shared<TileMap>(this->tile_map);
 	entitydata->player         = this->player;
 	entitydata->boss           = nullptr;
+	entitydata->grid		   = std::make_shared<GridNode>(20, 20);
 }
 
 void GameLogic::textureInit()

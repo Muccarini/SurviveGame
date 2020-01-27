@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
 
-Enemy::Enemy(const std::shared_ptr<EntityData> entitydata)
+Enemy::Enemy(const std::shared_ptr<EntityData> entitydata) : _m(*entitydata->grid)
 {
 	this->entitydata = entitydata;
 
@@ -10,7 +10,7 @@ Enemy::Enemy(const std::shared_ptr<EntityData> entitydata)
 	initHitBox();
 }
 
-Enemy::Enemy()
+Enemy::Enemy() : _m(*this->entitydata->grid)
 {
 }
 
@@ -30,6 +30,8 @@ void Enemy::updateMove()
 
 	this->sprite.move((normVect.x * this->mov_speed * entitydata->deltaTime.asSeconds()), (normVect.y * this->mov_speed * entitydata->deltaTime.asSeconds()));
 	hit_box.setPosition(getPosition());
+
+	this->_m.move(this->entitydata->deltaTime, this->sprite, entitydata->player->getPosition());
 }
 
 void Enemy::updateRotate()
