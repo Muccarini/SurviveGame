@@ -278,7 +278,8 @@ void GameLogic::entitiesInit()
 	{
 		for (int j = 0; j < grid.getGrid()[i].size(); j++)
 		{
-			std::cout << "{" << grid.getGrid()[i][j].x << " , " << grid.getGrid()[i][j].y << "}\n";
+			std::cout << "{" << grid.getGrid()[i][j].x << " , " << grid.getGrid()[i][j].y << " , " <<
+				grid.getGrid()[i][j].walkable << "}\n";
 		}
 	}
 }

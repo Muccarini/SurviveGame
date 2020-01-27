@@ -58,11 +58,11 @@ void a_star_search
 
 	std::vector<GridLocation> path = reconstruct_path(start, goal, came_from);
 
-	for (int i = 0; i < path.size(); i++)
+	for (int i = 0; i < path.size() - 1; i++)
 	{
-		sf::Vector2i move = sf::Vector2i(path.back().x / path.back().x, 
-			path.back().y / path.back().y);
-		movevect.push_back(move);
+		sf::Vector2i move = sf::Vector2i(path[i].x - path[i + 1].x,
+			path[i].y - path[i + 1].y);
+		movevect.push_back(-move);
 		std::cout << "{ " << path[i].x << ", " << path[i].y << "}";
 	}
 
