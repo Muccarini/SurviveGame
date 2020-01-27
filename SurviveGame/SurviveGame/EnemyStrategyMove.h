@@ -17,8 +17,8 @@ public:
 protected:
 	std::unordered_map<GridLocation, GridLocation> came_from;
 	std::unordered_map<GridLocation, double> cost_so_far;
-	GridLocation start{ 1, 4 };
-	GridLocation goal{ 8, 5 };
+	GridLocation start;
+	GridLocation goal;
 	GridNode grid;
 };
 
