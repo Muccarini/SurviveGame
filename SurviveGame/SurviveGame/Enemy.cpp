@@ -161,6 +161,7 @@ void Enemy::initVar()
 {
 	mov_speed = 100;
 	hp = 10;
+	max_distance = 64;
 }
 
 void Enemy::initSprite()
