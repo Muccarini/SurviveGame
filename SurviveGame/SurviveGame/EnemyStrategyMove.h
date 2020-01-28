@@ -39,7 +39,8 @@ void a_star_search
 	while (!frontier.empty()) {
 		Location current = frontier.get();
 
-		if (current == goal) {
+		if (current == goal) 
+		{
 			break;
 		}
 
@@ -53,7 +54,7 @@ void a_star_search
 				frontier.put(next, priority);
 				came_from[next] = current;
 			}
-		}
+		}	
 	}
 
 	std::vector<GridLocation> path = reconstruct_path(start, goal, came_from);

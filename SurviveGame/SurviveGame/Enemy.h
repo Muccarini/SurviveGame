@@ -29,11 +29,15 @@ private:
 
 	float distance;
 	float max_distance;
-	sf::Vector2f prev_pos;
 	std::list <sf::Vector2i> move_vect;
 	sf::Vector2f target;
 	sf::Vector2f spostamento;
 
 	EnemyStrategyMove _m;
+	std::list<GridLocation> DIRS =
+	{ GridLocation{4, 3}, GridLocation{16,4}, GridLocation{16, 3}, GridLocation{16, 5},
+	  GridLocation{12, 6}, GridLocation{4, 6}, GridLocation{7, 6}, GridLocation{3, 12},
+	  GridLocation{3, 13}, GridLocation{3, 14}, GridLocation{3, 15}, GridLocation{12, 12},
+	  GridLocation{12, 13}, GridLocation{12, 14}, GridLocation{12, 15}, GridLocation{16, 15}};
 };
 

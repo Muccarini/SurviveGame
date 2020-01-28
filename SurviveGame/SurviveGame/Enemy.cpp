@@ -30,12 +30,11 @@ void Enemy::updateMove()
 	sf::Vector2f normVect(dx / lenght, dy / lenght);
 
 	/*this->sprite.move((normVect.x * this->mov_speed * entitydata->deltaTime.asSeconds()), (normVect.y * this->mov_speed * entitydata->deltaTime.asSeconds()));*/
-	if (max_distance == 64 && collide == false)
+	if (max_distance == 64 && this->target != this->entitydata->player->getPosition())
 	{
 		if (!move_vect.empty())
 			move_vect.clear();
 		this->_m.move(this->entitydata->deltaTime, this->sprite, this->entitydata->player->getPosition(), move_vect);
-		this->prev_pos = this->sprite.getPosition();
 		this->target.x = this->entitydata->player->getPosition().x;
 		this->target.y = this->entitydata->player->getPosition().y;
 	}
@@ -83,6 +82,7 @@ void Enemy::updateMove()
 	}
 
 	hit_box.setPosition(getPosition());
+	setGridPosition(this->entitydata->map->getGridSize());
 }
 
 void Enemy::updateRotate()
@@ -144,10 +144,11 @@ void Enemy::updateCollision()
 
 void Enemy::update()
 {
-	updateMove();
+	updateCollision();
+	if (this->entitydata->grid->getGrid()[gridpos.y][gridpos.x].walkable)
+		updateMove();
 	updateRotate();
 	updateHud();
-	updateCollision();
 }
 
 void Enemy::renderBullets(std::shared_ptr<sf::RenderWindow> target)
@@ -168,7 +169,15 @@ void Enemy::initSprite()
 {
 	sprite.setTexture(entitydata->textures->get(Textures::Enemy));
 	sprite.setScale(0.9f, 0.9f);
-	sprite.setPosition(rand() % 400 + 500.f , rand() % 400 + 500.f);
+	int k = /*7;*/rand() % 17 + 1;//max 1920
+	int j = /*6;*/rand() % 13 + 1;//max 1080
+	GridLocation pos = { k , j };
+	while (!this->entitydata->grid->getGrid()[j][k].walkable)
+	{
+		j++;
+		k++;
+	}
+	sprite.setPosition(32 + k * 64, 32 + j * 64);
 	sprite.setOrigin(+34.f, +34.f);
 	sprite.setTextureRect(sf::IntRect(0, 0, 68, 68));
 }
@@ -181,6 +190,7 @@ void Enemy::initHitBox()
 	this->hit_box.setScale(sprite.getScale());
 	this->hit_box.setPosition(getPosition());
 	this->hit_box.setOrigin(30, 30);
+	setGridPosition(this->entitydata->map->getGridSize());
 }
 
 void Enemy::takeDamage()

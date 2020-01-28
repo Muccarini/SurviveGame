@@ -96,7 +96,8 @@ public:
 	std::vector<GridLocation> neighbors(GridLocation id) const;
 
 	int cost(GridLocation start, GridLocation goal);
-	
+
+	void setGrid(std::vector< std::vector<GridLocation> > grid);
 protected:
 
 	std::vector< std::vector<GridLocation> > grid;

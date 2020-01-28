@@ -1,7 +1,7 @@
 #include "GameLogic.h"
 
 
-GameLogic::GameLogic() : game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f)), 
+GameLogic::GameLogic() : game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1920.f/*1280.f*/, 1280/*720.f*/)), 
 tile_map(sf::Vector2i(20, 20)), grid(20, 20)
 {
 	textureInit();
@@ -278,8 +278,11 @@ void GameLogic::entitiesInit()
 	{
 		for (int j = 0; j < grid.getGrid()[i].size(); j++)
 		{
-			std::cout << "{" << grid.getGrid()[i][j].x << " , " << grid.getGrid()[i][j].y << " , " <<
-				grid.getGrid()[i][j].walkable << "}\n";
+			std::cout << "{" << grid.getGrid()[i][j].x << " , " << grid.getGrid()[i][j].y << " , ";
+			if (grid.getGrid()[i][j].walkable)
+				std::cout << "walkable" << "}\n";
+			else
+				std::cout << "UNwalkable" << "}\n";
 		}
 	}
 }
@@ -309,6 +312,7 @@ void GameLogic::entitydataInit()
 	entitydata->player         = this->player;
 	entitydata->boss           = nullptr;
 	entitydata->grid		   = std::make_shared<GridNode>(20, 20);
+	entitydata->grid->initGrid(entitydata->map->getObstacle());
 }
 
 void GameLogic::textureInit()
