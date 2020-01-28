@@ -87,12 +87,40 @@ void Enemy::updateCollision()
 	collision->resetOutMtv();
 }
 
+void Enemy::calculateDir()
+{
+}
+
+bool Enemy::gonnaHitWalls()
+{
+	//float zX = this->sprite.getPosition().x;
+	//float zY = this->sprite.getPosition().y;
+
+	//float vecX = fabs(entitydata->player->getPosition().x - this->sprite.getPosition().x);
+	//float vecY = fabs(entitydata->player->getPosition().y - this->sprite.getPosition().y);
+
+	//std::vector<sf::FloatRect> walls;
+	//walls = entitydata->map->getWalls();
+
+	//float y0 = walls[i].top;
+	//float y1 = +walls[i].height;
+
+	//float x0 = walls[i].left;
+	//float x1 = walls[i].left + walls[i].width;
+
+	//for (int i = 0; walls.size(); i++)
+	//{
+	//	if(zX > x0 && zX <x1)
+	//}
+}
+
 void Enemy::update()
 {
 	updateMove();
 	updateRotate();
 	updateHud();
 	updateCollision();
+	gonnaHitWalls();
 }
 
 void Enemy::renderBullets(std::shared_ptr<sf::RenderWindow> target)
