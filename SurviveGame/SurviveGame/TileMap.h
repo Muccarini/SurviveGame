@@ -23,15 +23,12 @@ private:
 	/*sf::RectangleShape creating_wall_block(std::vector<sf::RectangleShape> walls_rect);*/
 
 	std::vector<sf::FloatRect> wall_block;
-	std::vector<sf::Vector2f> walkable;
 
 
 
 public:
 
 	std::vector<sf::FloatRect> getWalls();
-
-	std::vector<sf::Vector2f> getWalkable();
 
 	void loadFromFile(const std::string file_name);
 

@@ -21,9 +21,6 @@ private:
 	void updateHud();
 	void updateCollision();
 
-	void calculateDir();
-	bool gonnaHitWalls();
-
 	void initVar();
 	void initSprite();
 	void initHitBox();

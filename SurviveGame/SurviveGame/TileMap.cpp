@@ -47,10 +47,6 @@ TileMap::TileMap()
 							walls.push_back(wall);
 							wall_counter++;
 						}
-						else
-						{
-							walkable.push_back(sf::Vector2f(x * grid_size_f + 32.f, y * grid_size_f + 32.f));
-						}
 
 						this->map[y][x] = new Tile(x * this->grid_size_f, y * grid_size_f, this->grid_size_f, tileset, tile_type);
 						x++;
@@ -78,11 +74,6 @@ std::vector<sf::FloatRect> TileMap::getWalls()
 	}
 
 	return wall_block;
-}
-
-std::vector<sf::Vector2f> TileMap::getWalkable()
-{
-	return walkable;
 }
 
 void TileMap::loadFromFile(const std::string file_name)
