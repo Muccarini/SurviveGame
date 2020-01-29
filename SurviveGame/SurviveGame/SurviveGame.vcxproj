@@ -147,9 +147,6 @@
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Pet.cpp" />
-    <ClCompile Include="Player1.cpp" />
-    <ClCompile Include="Player2.cpp" />
-    <ClCompile Include="Player3.cpp" />
     <ClCompile Include="PlayerT.cpp" />
     <ClCompile Include="RoundManager.cpp" />
     <ClCompile Include="SelectionCharacter.cpp" />
@@ -180,9 +177,6 @@
     <ClInclude Include="Observer.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Pet.h" />
-    <ClInclude Include="Player1.h" />
-    <ClInclude Include="Player2.h" />
-    <ClInclude Include="Player3.h" />
     <ClInclude Include="PlayerT.h" />
     <ClInclude Include="RoundManager.h" />
     <ClInclude Include="SelectionCharacter.h" />

@@ -45,15 +45,6 @@
     <ClCompile Include="EnemyStrategyMove.cpp">
       <Filter>Personaggi\Nemici</Filter>
     </ClCompile>
-    <ClCompile Include="Player1.cpp">
-      <Filter>Personaggi\Giocatore</Filter>
-    </ClCompile>
-    <ClCompile Include="Player2.cpp">
-      <Filter>Personaggi\Giocatore</Filter>
-    </ClCompile>
-    <ClCompile Include="Player3.cpp">
-      <Filter>Personaggi\Giocatore</Filter>
-    </ClCompile>
     <ClCompile Include="StrategyMove.cpp">
       <Filter>Personaggi\Nemici</Filter>
     </ClCompile>
@@ -142,15 +133,6 @@
   <ItemGroup>
     <ClInclude Include="EnemyStrategyMove.h">
       <Filter>Personaggi\Nemici</Filter>
-    </ClInclude>
-    <ClInclude Include="Player1.h">
-      <Filter>Personaggi\Giocatore</Filter>
-    </ClInclude>
-    <ClInclude Include="Player2.h">
-      <Filter>Personaggi\Giocatore</Filter>
-    </ClInclude>
-    <ClInclude Include="Player3.h">
-      <Filter>Personaggi\Giocatore</Filter>
     </ClInclude>
     <ClInclude Include="StrategyMove.h">
       <Filter>Personaggi\Nemici</Filter>
