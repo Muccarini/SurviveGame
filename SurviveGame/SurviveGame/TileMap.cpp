@@ -2,11 +2,11 @@
 
 
 
-TileMap::TileMap()
+TileMap::TileMap(sf::Vector2i map_size)
 {
 	this->grid_size_f = 64.f;
-	this->max_size.x = 20;
-	this->max_size.y = 20;
+	this->max_size.x = map_size.x;
+	this->max_size.y = map_size.y;
 
 	if(!tileset.loadFromFile("Sources/tileSheet/tilesheet.png"))
 	{//THROW
@@ -147,4 +147,30 @@ std::vector<sf::FloatRect> TileMap::findWalls(int x, int y)
 		}
 	}
 	return wallvect;
+}
+
+std::vector<GridLocation> TileMap::getObstacle()
+{
+	std::vector<GridLocation> obstacles;
+
+	for (int i = 0; i < max_size.y; i++)
+	{
+		for (int j = 0; j < max_size.x; j++)
+		{
+			if (map[i][j]->type_tile == 9)
+			{
+				GridLocation node;
+				node.walkable = false;
+				node.x = j;
+				node.y = i;
+				obstacles.push_back(node);
+			}
+		}
+	}
+	return obstacles;
+}
+
+float TileMap::getGridSize()
+{
+	return this->grid_size_f;
 }

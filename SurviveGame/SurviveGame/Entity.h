@@ -25,6 +25,7 @@ public:
 	std::shared_ptr<Character> player;
 	std::shared_ptr<Character> pet;
 	std::shared_ptr<Character> boss;
+	std::shared_ptr<GridNode> grid;
 };
 
 struct BoostPos {
@@ -55,6 +56,9 @@ public:
 	sf::Vector2f getPosition();
 	sf::RectangleShape getHitBox();
 
+	GridLocation getGridPos();
+	void setGridPosition(float tilesize);
+
 protected:
 
 	bool sat_test(const sf::FloatRect &rectSp1, const sf::FloatRect &rectSp2, sf::Vector2f *vec);
@@ -70,6 +74,8 @@ protected:
 	bool alive;
 
 	bool collide;
+
+	GridLocation gridpos;
 
 	int mov_speed;
 	int mov_speed_default;

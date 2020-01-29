@@ -119,6 +119,8 @@ void Boss::updateCollision()
 
 	if (dir != sf::Vector2f(0.f, 0.f))
 		collision->resetOutMtv();
+
+	setGridPosition(this->entitydata->map->getGridSize());
 }
 
 

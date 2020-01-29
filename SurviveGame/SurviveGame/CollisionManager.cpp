@@ -16,12 +16,11 @@ CollisionManager::~CollisionManager()
 sf::Vector2f CollisionManager::CollideWithWalls(const sf::FloatRect & rectSp1, const std::vector<sf::FloatRect> walls)
 {
 	sf::Vector2f dir(0, 0);
-
 	for (int i = 0; i != walls.size(); i++)
 	{
 		if (sat_test(rectSp1, walls[i]))
 		{
-			std::cout << "collide!\n" << out_mtv.x;
+			std::cout << "collide! [" << out_mtv.x << "] ; [" << out_mtv.y << "]\n";
 			this->collide = true;
 			if((premtv.x == 0 && out_mtv.x == 0) || (premtv.y == 0 && out_mtv.y == 0))
 			{

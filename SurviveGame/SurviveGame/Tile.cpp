@@ -44,13 +44,6 @@ Tile::~Tile()
 }
 
 
-
-void Tile::update()
-{
-}
-
-
-
 void Tile::render(std::shared_ptr<sf::RenderTarget> target)
 {
 	target->draw(shape);

@@ -141,7 +141,9 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="GridNode.cpp" />
     <ClCompile Include="Hud.cpp" />
+    <ClCompile Include="implementation.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Observer.cpp" />
@@ -172,6 +174,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameLogic.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="GridNode.h" />
     <ClInclude Include="Hud.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Observer.h" />

@@ -1,7 +1,8 @@
 #include "GameLogic.h"
 
 
-GameLogic::GameLogic(Textures::ID id, StrategyFight* stf) : game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f)), id(id)
+GameLogic::GameLogic() : game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1920.f/*1280.f*/, 1280/*720.f*/)), 
+tile_map(sf::Vector2i(20, 20)), grid(20, 20)
 {
 	textureInit();
 	entitiesInit(stf);
@@ -295,6 +296,19 @@ void GameLogic::entitiesInit(StrategyFight* stf)
 	this->entitydata->textures = this->textures;
 	this->enemies = new std::vector<std::shared_ptr<Character>>;
 	this->player = std::make_shared<PlayerT>(this->entitydata, id, stf);
+
+	this->grid.initGrid(tile_map.getObstacle());
+	for (int i = 0; i < grid.getGrid().size(); i++)
+	{
+		for (int j = 0; j < grid.getGrid()[i].size(); j++)
+		{
+			std::cout << "{" << grid.getGrid()[i][j].x << " , " << grid.getGrid()[i][j].y << " , ";
+			if (grid.getGrid()[i][j].walkable)
+				std::cout << "walkable" << "}\n";
+			else
+				std::cout << "UNwalkable" << "}\n";
+		}
+	}
 }
 
 void GameLogic::gameViewInit()
@@ -319,6 +333,8 @@ void GameLogic::entitydataInit()
 	entitydata->map            = std::make_shared<TileMap>(this->tile_map);
 	entitydata->player         = this->player;
 	entitydata->boss           = nullptr;
+	entitydata->grid		   = std::make_shared<GridNode>(20, 20);
+	entitydata->grid->initGrid(entitydata->map->getObstacle());
 }
 
 void GameLogic::textureInit()
