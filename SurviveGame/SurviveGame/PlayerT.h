@@ -2,8 +2,7 @@
 #include "Character.h"
 #include "StrategyFight.h"
 
-class PlayerT :
-	public Character
+class PlayerT : public Character
 {
 public:
 	explicit PlayerT(const std::shared_ptr<EntityData> entitydata, Textures::ID id, StrategyFight* stf);
@@ -22,6 +21,7 @@ public:
 	void updateMovSpeed();
 	void updateHud();
 	void updateCollision();
+	void updateDataPlayer();
 
 	void updateShooting();
 	void setStrategyFight(StrategyFight* stf);
@@ -49,5 +49,9 @@ public:
 protected:
 	StrategyFight* stf;
 	void setType();
+
+	int kills;
+	int kills_boss;
+
 };
 

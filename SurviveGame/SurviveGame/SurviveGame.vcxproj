@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Achievement.cpp" />
     <ClCompile Include="boost.cpp" />
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Bullet.cpp" />
@@ -143,13 +144,18 @@
     <ClCompile Include="Hud.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Observer.cpp" />
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Pet.cpp" />
+    <ClCompile Include="Player1.cpp" />
+    <ClCompile Include="Player2.cpp" />
+    <ClCompile Include="Player3.cpp" />
     <ClCompile Include="PlayerT.cpp" />
     <ClCompile Include="RoundManager.cpp" />
     <ClCompile Include="SelectionCharacter.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StrategyMove.cpp" />
+    <ClCompile Include="Subject.cpp" />
     <ClCompile Include="StRiflePlayerFight.cpp" />
     <ClCompile Include="StShotgunPlayerFight.cpp" />
     <ClCompile Include="TextureHolder.cpp" />
@@ -157,6 +163,7 @@
     <ClCompile Include="TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Achievement.h" />
     <ClInclude Include="boost.h" />
     <ClInclude Include="Boss.h" />
     <ClInclude Include="Bullet.h" />
@@ -170,8 +177,12 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Hud.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="Observer.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Pet.h" />
+    <ClInclude Include="Player1.h" />
+    <ClInclude Include="Player2.h" />
+    <ClInclude Include="Player3.h" />
     <ClInclude Include="PlayerT.h" />
     <ClInclude Include="RoundManager.h" />
     <ClInclude Include="SelectionCharacter.h" />
@@ -180,6 +191,7 @@
     <ClInclude Include="StrategyMove.h" />
     <ClInclude Include="StRiflePlayerFight.h" />
     <ClInclude Include="StShotgunPlayerFight.h" />
+    <ClInclude Include="Subject.h" />
     <ClInclude Include="TextureHolder.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileMap.h" />

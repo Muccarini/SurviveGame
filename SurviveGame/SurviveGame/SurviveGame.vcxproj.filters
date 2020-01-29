@@ -42,6 +42,21 @@
     <ClCompile Include="TileMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyStrategyMove.cpp">
+      <Filter>Personaggi\Nemici</Filter>
+    </ClCompile>
+    <ClCompile Include="Player1.cpp">
+      <Filter>Personaggi\Giocatore</Filter>
+    </ClCompile>
+    <ClCompile Include="Player2.cpp">
+      <Filter>Personaggi\Giocatore</Filter>
+    </ClCompile>
+    <ClCompile Include="Player3.cpp">
+      <Filter>Personaggi\Giocatore</Filter>
+    </ClCompile>
+    <ClCompile Include="StrategyMove.cpp">
+      <Filter>Personaggi\Nemici</Filter>
+    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Game</Filter>
     </ClCompile>
@@ -114,8 +129,32 @@
     <ClCompile Include="StRiflePlayerFight.cpp">
       <Filter>Strategy\Fight</Filter>
     </ClCompile>
+    <ClCompile Include="Achievement.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Observer.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EnemyStrategyMove.h">
+      <Filter>Personaggi\Nemici</Filter>
+    </ClInclude>
+    <ClInclude Include="Player1.h">
+      <Filter>Personaggi\Giocatore</Filter>
+    </ClInclude>
+    <ClInclude Include="Player2.h">
+      <Filter>Personaggi\Giocatore</Filter>
+    </ClInclude>
+    <ClInclude Include="Player3.h">
+      <Filter>Personaggi\Giocatore</Filter>
+    </ClInclude>
+    <ClInclude Include="StrategyMove.h">
+      <Filter>Personaggi\Nemici</Filter>
+    </ClInclude>
     <ClInclude Include="TextureHolder.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
@@ -180,6 +219,15 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="SelectionCharacter.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Achievement.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="EnemyStrategyMove.h">

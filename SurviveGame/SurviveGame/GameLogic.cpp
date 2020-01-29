@@ -7,6 +7,7 @@ GameLogic::GameLogic(Textures::ID id, StrategyFight* stf) : game_view(sf::Vector
 	entitiesInit(stf);
 	varInit();
 	gameViewInit();
+	achievement = new Achievement(&round);
 }
 
 GameLogic::~GameLogic()
@@ -18,13 +19,14 @@ void GameLogic::update(sf::Time deltaTime)
 {
 	updateMousePos();
 	updateEntityData(deltaTime);
+	achievement->updateBadge(deltaTime);
 
 	updateHud();
-	updatePlayer(entitydata);
-	updateEnemies(entitydata);
-	updatePet(entitydata);
+	updatePlayer();
+	updateEnemies();
+	updatePet();
 
-	updateBoost(entitydata);
+	updateBoost();
 
 	updateGameView(deltaTime);
 
@@ -45,6 +47,8 @@ void GameLogic::render()
 	renderBoss();
 
 	hud.renderTextsHud(window);
+
+	renderAchievement();
 }
 
 void GameLogic::updateState()
@@ -68,13 +72,13 @@ void GameLogic::updateState()
 
 void GameLogic::updateHud()
 {
-	hud.updateText(kill_counter, round.getCountdown().asSeconds(), round.getCounter(), game_view);
+	hud.updateText(round.getKills(), round.getCountdown().asSeconds(), round.getCounterRound(), game_view);
 }
 
-void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
+void GameLogic::updateEnemies()
 {
 	//RESET ROUND
-	if (kill_counter == 10)
+	if (round.getKills() == round.getKillsPerRound())
 	{
 		for (unsigned int i = 0; i < enemies->size(); i++)
 		{
@@ -82,11 +86,11 @@ void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
 		}
 
 		enemies_alive = 0;
-		kill_counter = 0;
+		round.setKills(0);
 		round.reset();
-		round.increase();
+		round.increaseRound();
 
-		if (round.getCounter() % 4 == 0)
+		if (round.getCounterRound() % round.getRoundPerBoss() == 0)
 			round.setBossRound(true);
 	}
 
@@ -107,7 +111,7 @@ void GameLogic::updateEnemies(const std::shared_ptr<EntityData> entitydata)
 			{
 				enemies->erase(enemies->begin() + i);
 				enemies_alive--;
-				kill_counter++;
+				round.increaseKills();
 			}
 		}
 	}
@@ -153,13 +157,14 @@ void GameLogic::updateBoss()
 
 			round.setBossRound(false);
 			this->boss_alive = false;
-			kill_counter = 0;
+			round.increaseBoss();
+			round.setKills(0);
 			round.reset();
-			round.increase();
+			round.increaseRound();
 		}
 }
 
-void GameLogic::updatePet(std::shared_ptr<EntityData> entitydata)
+void GameLogic::updatePet()
 {
 	if (pet_alive)
 	{
@@ -175,7 +180,7 @@ void GameLogic::updatePet(std::shared_ptr<EntityData> entitydata)
 	}
 }
 
-void GameLogic::updateBoost(std::shared_ptr<EntityData> entitydata)
+void GameLogic::updateBoost()
 {
 	//SPAWN BOOST
 	if (boost.size() < 4)
@@ -199,7 +204,7 @@ void GameLogic::updateBoost(std::shared_ptr<EntityData> entitydata)
 	}
 }
 
-void GameLogic::updatePlayer(const std::shared_ptr<EntityData> entitydata)
+void GameLogic::updatePlayer()
 {
 	player->update();
 }
@@ -252,6 +257,25 @@ void GameLogic::renderBoost()
 	}
 }
 
+void GameLogic::renderAchievement()
+{
+	if (achievement->isKillsOn())
+	{
+		achievement->renderKillsBadge(this->window, this->game_view);
+	}
+
+	if (achievement->isRoundOn())
+	{
+	    achievement->renderRoundBadge(this->window, this->game_view);
+	}
+
+	if (this->achievement->isBossOn())
+	{
+		achievement->renderBossBadge(this->window, this->game_view);
+
+	}
+}
+
 void GameLogic::renderEnemies()
 {
 	if (!round.isLoading() && !round.isBossRound())
@@ -283,8 +307,6 @@ void GameLogic::varInit()
 	this->enemies_alive = 0;
 	this->boss_alive = false;
 	this->pet_alive = false;
-
-	this->kill_counter = 0;
 	this->rand_time = sf::seconds((rand() % 10) +5.f);
 
 	boost_pos = std::make_shared<BoostPos>();
