@@ -1,7 +1,7 @@
 #include "GameLogic.h"
 
 
-GameLogic::GameLogic() : game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1920.f/*1280.f*/, 1280/*720.f*/)), 
+GameLogic::GameLogic(Textures::ID id, StrategyFight* stf) : game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1920.f/*1280.f*/, 1280/*720.f*/)), 
 tile_map(sf::Vector2i(20, 20)), grid(20, 20)
 {
 	textureInit();
