@@ -285,13 +285,13 @@ void PlayerT::setType()
 {
 	switch (this->id)
 	{
-	case(Textures::ShotgunP):
+	case(Textures::ID::ShotgunP):
 		this->type = CharacterType::Shotgun;
 		break;
-	case(Textures::RifleP):
+	case(Textures::ID::RifleP):
 		this->type = CharacterType::Rifle;
 		break;
-	case(Textures::HandgunP):
+	case(Textures::ID::HandgunP):
 		this->type = CharacterType::Handgun;
 		break;
 	}

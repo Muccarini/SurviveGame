@@ -47,7 +47,7 @@ private:
 	void renderBoost();
 	void renderAchievement();
 
-	void entitiesInit(StrategyFight* stf);
+	void entitiesInit(Textures::ID id, StrategyFight* stf);
 	void gameViewInit();
 	void textureInit();
 	void varInit();

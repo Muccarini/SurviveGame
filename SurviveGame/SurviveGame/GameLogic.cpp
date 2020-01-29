@@ -1,11 +1,11 @@
 #include "GameLogic.h"
 
 
-GameLogic::GameLogic(Textures::ID id, StrategyFight* stf) : game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1920.f/*1280.f*/, 1280/*720.f*/)), 
+GameLogic::GameLogic(Textures::ID id, StrategyFight* stf) : game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f)), 
 tile_map(sf::Vector2i(20, 20)), grid(20, 20)
 {
 	textureInit();
-	entitiesInit(stf);
+	entitiesInit(id, stf);
 	varInit();
 	gameViewInit();
 	achievement = new Achievement(&round);
@@ -289,10 +289,11 @@ void GameLogic::renderEnemies()
 	}
 }
 
-void GameLogic::entitiesInit(StrategyFight* stf)
+void GameLogic::entitiesInit(Textures::ID id, StrategyFight* stf)
 {  
 	entitydata = std::make_shared<EntityData>();
 
+	this->id = id;
 	this->entitydata->textures = this->textures;
 	this->enemies = new std::vector<std::shared_ptr<Character>>;
 	this->player = std::make_shared<PlayerT>(this->entitydata, id, stf);
