@@ -87,24 +87,6 @@ void Achievement::detach()
 	this->subject->unsubscribe(this);
 }
 
-int Achievement::getKills()
-{
-	return
-		this->kills;
-}
-
-int Achievement::getKillsBoss()
-{
-	return
-		this->kills_boss;
-}
-
-int Achievement::getRound()
-{
-	return
-		this->round;
-}
-
 float Achievement::getClockKills()
 {
 	return this->clock_kills;
