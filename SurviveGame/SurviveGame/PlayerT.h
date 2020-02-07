@@ -1,7 +1,6 @@
 #pragma once
 #include "Character.h"
 #include "StrategyFight.h"
-#include <stack>
 
 class PlayerT : public Character
 {

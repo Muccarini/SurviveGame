@@ -11,6 +11,7 @@ public:
 	virtual void shot(std::vector<std::shared_ptr<Bullet>>& bullets,
 		const std::shared_ptr<EntityData> entitydata);
 	virtual const sf::Time getRatio();
+
 protected:
 	sf::Time ratio;
 };
