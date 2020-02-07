@@ -1,4 +1,8 @@
 #include "PlayerT.h"
+#include "SelectionCharacter.h"
+#include "StShotgunPlayerFight.h"
+#include "StRiflePlayerFight.h"
+
 
 PlayerT::PlayerT(const std::shared_ptr<EntityData> entitydata, Textures::ID id, StrategyFight* stf) : id(id)
 {
@@ -73,7 +77,7 @@ void PlayerT::updateBullets()
 	if (shooting && getAmmo())
 	{
 		this->stf->shot(bullets, this->entitydata);
-		ammo--;
+		ammo -= this->stf->nrshot;
 	}
 
 	if (!bullets.empty())
@@ -99,11 +103,11 @@ void PlayerT::updateRotate()
 
 void PlayerT::updateReload()
 {
-	if (!reloading)
+	/*if (!reloading)
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) && ammo != ammo_max)
 			reloading = true;
-	}
+	}*/
 
 	if (ammo == 0 || reloading)
 	{
@@ -112,6 +116,34 @@ void PlayerT::updateReload()
 		{
 			ammo = ammo_max;
 			reload_clock = reload_cd;
+			switch (this->id)
+			{
+			case(Textures::ID::ShotgunP):
+			{
+				this->type = CharacterType::Rifle;
+				this->id = Textures::ID::RifleP;
+				this->stf = new StRiflePlayerFight();
+				break;
+			}
+			case(Textures::ID::RifleP):
+			{
+				this->type = CharacterType::Handgun;
+				this->id = Textures::ID::HandgunP;
+				this->stf = new StShotgunPlayerFight();
+				break;
+			}
+			case(Textures::ID::HandgunP):
+			{
+				this->type = CharacterType::Shotgun;
+				this->id = Textures::ID::ShotgunP;
+				this->stf = new StShotgunPlayerFight();
+				break;
+			}
+			}
+			setRatioCd(stf->getRatio());
+			sprite.setTexture(this->entitydata->textures->get(this->id));
+
+
 			reloading = false;
 		}
 	}
@@ -245,7 +277,7 @@ void PlayerT::initVar()
 	ammo = ammo_max;
 
 	//ratio_cd = sf::seconds(1.f / 16.666f);
-	ratio_cd = this->stf->getRatio();
+	setRatioCd(stf->getRatio());
 	ratio_clock = ratio_cd;
 
 	this->dash_speed = 1000;

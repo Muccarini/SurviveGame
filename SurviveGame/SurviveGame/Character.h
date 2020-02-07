@@ -58,7 +58,7 @@ protected:
 	int ammo;
 	int ammo_max;
 
-	bool reloading;
+	bool reloading = false;
 	bool shooting;
 };
 
