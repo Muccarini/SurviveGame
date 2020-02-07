@@ -17,10 +17,6 @@ public:
 	virtual void attach();
 	virtual void detach();
 
-	int getKills();
-	int getKillsBoss();
-	int getRound();
-
 	float getClockKills();
 
 	bool isRoundOn();

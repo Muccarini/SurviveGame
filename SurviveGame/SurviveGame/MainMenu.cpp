@@ -48,11 +48,6 @@ void MainMenu::updateButtons()
 		this->states->top()->window = this->window;
 		this->states->top()->states = this->states;
 		return;
-
-		/*this->states->push(new GameLogic(Textures::ID::ShotgunP));
-		this->states->top()->window = this->window;
-		this->states->top()->states = this->states;
-		return;*/
 	}
 
 
