@@ -3,6 +3,7 @@
 StRiflePlayerFight::StRiflePlayerFight()
 {
 	this->ratio = sf::seconds(1.f / 16.66667f);
+	nrshot = 1;
 }
 
 void StRiflePlayerFight::shot(std::vector<std::shared_ptr<Bullet>>& bullets, const std::shared_ptr<EntityData> entitydata)

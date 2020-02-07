@@ -4,11 +4,11 @@
 StShotgunPlayerFight::StShotgunPlayerFight()
 {
 	this->ratio = sf::seconds(1.f / 2.f);
+	nrshot = 4; //deve essere pari
 }
 
 void StShotgunPlayerFight::shot(std::vector<std::shared_ptr<Bullet>>& bullets, const std::shared_ptr<EntityData> entitydata)
 {
-	int nrshot = 6;
 	float dir = 180.f / (nrshot * 360.f);
 	int count = 0;
 	if (nrshot % 2 == 0)
