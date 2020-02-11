@@ -248,7 +248,7 @@ void Boss::initSprite()
 		j++;
 		k++;
 	}
-	sprite.setPosition(32 + k * 64, 32 + j * 64);
+	sprite.setPosition(32 + k * 64.f, 32 + j * 64.f);
 	sprite.setOrigin(+18, +16);
 }
 

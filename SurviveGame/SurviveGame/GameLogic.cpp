@@ -299,9 +299,9 @@ void GameLogic::entitiesInit(Textures::ID id, StrategyFight* stf)
 	this->player = std::make_shared<PlayerT>(this->entitydata, id, stf);
 
 	this->grid.initGrid(tile_map.getObstacle());
-	for (int i = 0; i < grid.getGrid().size(); i++)
+	for (unsigned int i = 0; i < grid.getGrid().size(); i++)
 	{
-		for (int j = 0; j < grid.getGrid()[i].size(); j++)
+		for (unsigned int j = 0; j < grid.getGrid()[i].size(); j++)
 		{
 			std::cout << "{" << grid.getGrid()[i][j].x << " , " << grid.getGrid()[i][j].y << " , ";
 			if (grid.getGrid()[i][j].walkable)

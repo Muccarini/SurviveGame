@@ -51,10 +51,6 @@ void Bullet::update()
 		break;
 	}
 
-	/*float dX = sprite.getPosition().x - owner_pos.x;
-	float dY = sprite.getPosition().y - owner_pos.y;
-	float distance = sqrt(pow(dX, 2) + pow(dY, 2));*/
-
 	updateRotate(dir);
 }
 
