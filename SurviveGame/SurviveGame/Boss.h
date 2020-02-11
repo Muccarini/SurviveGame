@@ -1,6 +1,6 @@
 #pragma once
 #include "Character.h"
-
+#include "EnemyStrategyMove.h"
 class Boss :
 	public Character
 {
@@ -31,5 +31,14 @@ private:
 
 	std::vector<std::shared_ptr<Bullet>> bullets;
 	sf::Texture texture_bullet;
+
+	//movimento
+	float distance;
+	float max_distance;
+	std::list <sf::Vector2i> move_vect;
+	sf::Vector2f target;
+	sf::Vector2f spostamento;
+
+	EnemyStrategyMove* _m;
 };
 

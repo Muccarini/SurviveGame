@@ -273,7 +273,7 @@ void PlayerT::initVar()
 	reload_cd = sf::seconds(1.f);
 	reload_clock = reload_cd;
 
-	ammo_max = 200;
+	ammo_max = 100;
 	ammo = ammo_max;
 
 	//ratio_cd = sf::seconds(1.f / 16.666f);

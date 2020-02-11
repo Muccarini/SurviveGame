@@ -1,6 +1,6 @@
 #include "Boss.h"
 
-Boss::Boss(std::shared_ptr<EntityData> entitydata)
+Boss::Boss(std::shared_ptr<EntityData> entitydata) : _m(new EnemyStrategyMove(*entitydata->grid))
 {
 	this->entitydata = entitydata;
 
@@ -41,15 +41,68 @@ void Boss::renderBullets(std::shared_ptr<sf::RenderWindow> target)
 
 void Boss::updateMove()
 {
-	float dX = entitydata->player->getPosition().x - this->sprite.getPosition().x;
-	float dY = entitydata->player->getPosition().y - this->sprite.getPosition().y;
+	float dx = entitydata->player->getPosition().x - this->sprite.getPosition().x;
+	float dy = entitydata->player->getPosition().y - this->sprite.getPosition().y;
+	sf::Vector2i mv;
 
-	float lenght = sqrt(pow(dX, 2) + pow(dY, 2));
+	float lenght = sqrt(pow(dx, 2) + pow(dy, 2));
 
-	sf::Vector2f normVect(dX / lenght, dY / lenght);
+	sf::Vector2f normVect(dx / lenght, dy / lenght);
 
-	this->sprite.move(normVect.x * this->mov_speed * entitydata->deltaTime.asSeconds(), normVect.y * this->mov_speed * entitydata->deltaTime.asSeconds());
+	/*this->sprite.move((normVect.x * this->mov_speed * entitydata->deltaTime.asSeconds()), (normVect.y * this->mov_speed * entitydata->deltaTime.asSeconds()));*/
+	if (max_distance == 64 && this->target != this->entitydata->player->getPosition())
+	{
+		if (!move_vect.empty())
+			move_vect.clear();
+		this->_m->move(this->entitydata->deltaTime, this->sprite, this->entitydata->player->getPosition(), move_vect);
+		this->target.x = this->entitydata->player->getPosition().x;
+		this->target.y = this->entitydata->player->getPosition().y;
+	}
+
+	if (!move_vect.empty())
+	{
+		mv = sf::Vector2i(move_vect.front());
+		spostamento = static_cast <sf::Vector2f> (mv) * static_cast<float>(this->mov_speed) * this->entitydata->deltaTime.asSeconds();
+		distance = sqrt(pow(spostamento.x, 2) + pow(spostamento.y, 2));
+		max_distance -= distance;
+		if (max_distance <= 0)
+		{
+			max_distance += distance;
+			if (mv.x == 1)
+			{
+				spostamento.x = max_distance;
+				spostamento.y = 0;
+			}
+			else if (mv.y == 1)
+			{
+				spostamento.y = max_distance;
+				spostamento.x = 0;
+			}
+			else if (mv.x == -1)
+			{
+				spostamento.x = -max_distance;
+				spostamento.y = 0;
+			}
+			else if (mv.y == -1)
+			{
+				spostamento.y = -max_distance;
+				spostamento.x = 0;
+			}
+			this->sprite.move(spostamento);
+			max_distance = 64;
+		}
+		else
+		{
+			this->sprite.move(spostamento);
+		}
+		if (max_distance == 64)
+		{
+			move_vect.pop_front();
+		}
+	}
+
 	hit_box.setPosition(getPosition());
+	setGridPosition(this->entitydata->map->getGridSize());
 }
 
 void Boss::updateBullets()
@@ -164,6 +217,8 @@ void Boss::initVar()
 	mov_speed_default = 150;
 	mov_speed = mov_speed_default;
 
+	max_distance = 64;
+
 	hp_max = 200;
 	hp = hp_max;
 
@@ -185,7 +240,15 @@ void Boss::initSprite()
 {
 	sprite.setTexture(entitydata->textures->get(Textures::Boss));
 	sprite.setScale(1.5, 1.5);
-	sprite.setPosition(600.f, 600.f);
+	int k = /*7;*/rand() % 17 + 1;//max 1920
+	int j = /*6;*/rand() % 13 + 1;//max 1080
+	GridLocation pos = { k , j };
+	while (!this->entitydata->grid->getGrid()[j][k].walkable)
+	{
+		j++;
+		k++;
+	}
+	sprite.setPosition(32 + k * 64, 32 + j * 64);
 	sprite.setOrigin(+18, +16);
 }
 

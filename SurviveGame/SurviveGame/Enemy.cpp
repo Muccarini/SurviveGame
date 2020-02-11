@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
 
-Enemy::Enemy(const std::shared_ptr<EntityData> entitydata) : _m(*entitydata->grid)
+Enemy::Enemy(const std::shared_ptr<EntityData> entitydata) : _m(new EnemyStrategyMove(*entitydata->grid))
 {
 	this->entitydata = entitydata;
 
@@ -10,7 +10,7 @@ Enemy::Enemy(const std::shared_ptr<EntityData> entitydata) : _m(*entitydata->gri
 	initHitBox();
 }
 
-Enemy::Enemy() : _m(*this->entitydata->grid)
+Enemy::Enemy() : _m(new EnemyStrategyMove(*entitydata->grid))
 {
 }
 
@@ -34,7 +34,7 @@ void Enemy::updateMove()
 	{
 		if (!move_vect.empty())
 			move_vect.clear();
-		this->_m.move(this->entitydata->deltaTime, this->sprite, this->entitydata->player->getPosition(), move_vect);
+		this->_m->move(this->entitydata->deltaTime, this->sprite, this->entitydata->player->getPosition(), move_vect);
 		this->target.x = this->entitydata->player->getPosition().x;
 		this->target.y = this->entitydata->player->getPosition().y;
 	}
@@ -122,8 +122,8 @@ void Enemy::updateCollision()
 		collision->resetOutMtv();
 	}
 
-	//OTHER ENEMY
-	/*std::vector<std::shared_ptr<Character>> enemies;
+	/*//OTHER ENEMY
+	std::vector<std::shared_ptr<Character>> enemies;
 	enemies = *entitydata->enemies;
 
 	for(unsigned int i = 0; i < enemies.size(); i++)
@@ -132,7 +132,7 @@ void Enemy::updateCollision()
 		sprite.move(-ent);
 		collision->resetOutMtv();
 	}
-*/
+	*/
 	//WALLS
 	dir = this->collision->CollideWithWalls(this->getHitBox().getGlobalBounds(), entitydata->map->findWalls(static_cast<int>(sprite.getPosition().x), static_cast<int>(sprite.getPosition().y)));
  	sprite.move(dir);
@@ -177,7 +177,7 @@ void Enemy::initSprite()
 		j++;
 		k++;
 	}
-	sprite.setPosition(32 + k * 64, 32 + j * 64);
+	sprite.setPosition(32 + k * 64.f, 32 + j * 64.f);
 	sprite.setOrigin(+34.f, +34.f);
 	sprite.setTextureRect(sf::IntRect(0, 0, 68, 68));
 }
