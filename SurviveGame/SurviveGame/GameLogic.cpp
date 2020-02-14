@@ -297,19 +297,7 @@ void GameLogic::entitiesInit(Textures::ID id, StrategyFight* stf)
 	this->entitydata->textures = this->textures;
 	this->enemies = new std::vector<std::shared_ptr<Character>>;
 	this->player = std::make_shared<PlayerT>(this->entitydata, id, stf);
-
 	this->grid.initGrid(tile_map.getObstacle());
-	for (unsigned int i = 0; i < grid.getGrid().size(); i++)
-	{
-		for (unsigned int j = 0; j < grid.getGrid()[i].size(); j++)
-		{
-			std::cout << "{" << grid.getGrid()[i][j].x << " , " << grid.getGrid()[i][j].y << " , ";
-			if (grid.getGrid()[i][j].walkable)
-				std::cout << "walkable" << "}\n";
-			else
-				std::cout << "UNwalkable" << "}\n";
-		}
-	}
 }
 
 void GameLogic::gameViewInit()

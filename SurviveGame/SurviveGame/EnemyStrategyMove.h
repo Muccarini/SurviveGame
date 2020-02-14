@@ -64,7 +64,6 @@ void a_star_search
 		sf::Vector2i move = sf::Vector2i(path[i].x - path[i + 1].x,
 			path[i].y - path[i + 1].y);
 		movevect.push_back(-move);
-		std::cout << "{ " << path[i].x << ", " << path[i].y << "}";
 	}
 
 }

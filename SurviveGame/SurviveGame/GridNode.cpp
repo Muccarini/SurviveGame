@@ -47,12 +47,6 @@ std::vector<GridLocation> GridNode::neighbors(GridLocation id) const
 			}
 		}
 	}
-
-	//if ((id.x + id.y) % 2 == 0) {
-	//	// aesthetic improvement on square grids
-	//	std::reverse(results.begin(), results.end());
-	//}
-
 	return results;
 }
 

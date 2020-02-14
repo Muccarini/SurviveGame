@@ -1,7 +1,5 @@
 #include "EnemyStrategyMove.h"
 
-//#include <C:/Users/Federico/source/Repos/SurviveGame/SurviveGame/SurviveGame/implementation.cpp>
-
 inline double heuristic(GridLocation a, GridLocation b) 
 {
 	return std::abs(a.x - b.x) + std::abs(a.y - b.y);
@@ -24,5 +22,4 @@ void EnemyStrategyMove::move(sf::Time deltatime, sf::Sprite & _sprite, sf::Vecto
 	a_star_search(this->grid, this->start, this->goal, this->came_from, this->cost_so_far, movevect);
 	this->came_from.clear();
 	this->cost_so_far.clear();
-	std::cout << "\n";
 }
