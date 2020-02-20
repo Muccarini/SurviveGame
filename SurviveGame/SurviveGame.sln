@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.757
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SurviveGame", "SurviveGame\SurviveGame.vcxproj", "{ADF6EE2B-86F1-44FA-BF83-5C3775B09370}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test", "Test\Test.vcxproj", "{41B6590A-1F3B-44AC-82ED-111DB06F7660}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{ADF6EE2B-86F1-44FA-BF83-5C3775B09370}.Release|x64.Build.0 = Release|x64
 		{ADF6EE2B-86F1-44FA-BF83-5C3775B09370}.Release|x86.ActiveCfg = Release|Win32
 		{ADF6EE2B-86F1-44FA-BF83-5C3775B09370}.Release|x86.Build.0 = Release|Win32
+		{41B6590A-1F3B-44AC-82ED-111DB06F7660}.Debug|x64.ActiveCfg = Debug|x64
+		{41B6590A-1F3B-44AC-82ED-111DB06F7660}.Debug|x64.Build.0 = Debug|x64
+		{41B6590A-1F3B-44AC-82ED-111DB06F7660}.Debug|x86.ActiveCfg = Debug|Win32
+		{41B6590A-1F3B-44AC-82ED-111DB06F7660}.Debug|x86.Build.0 = Debug|Win32
+		{41B6590A-1F3B-44AC-82ED-111DB06F7660}.Release|x64.ActiveCfg = Release|x64
+		{41B6590A-1F3B-44AC-82ED-111DB06F7660}.Release|x64.Build.0 = Release|x64
+		{41B6590A-1F3B-44AC-82ED-111DB06F7660}.Release|x86.ActiveCfg = Release|Win32
+		{41B6590A-1F3B-44AC-82ED-111DB06F7660}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

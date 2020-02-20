@@ -18,7 +18,6 @@ public:
 
 private:
 	bool sat_test(const sf::FloatRect &rectSp1, const sf::FloatRect &rectSp2);
-	//sf::Vector2f sat_test1(const sf::FloatRect &rectSp1, const std::vector<sf::FloatRect>&rectSp2);
 
 	bool collide;
 	sf::Vector2f out_mtv;
