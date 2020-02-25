@@ -49,10 +49,10 @@ namespace Test
 			//SET UP YOUR SECOND RECT
 			sf::FloatRect rectSp2;
 
-			rectSp2.top = 32;
-			rectSp2.left = 0;
-			rectSp2.height = 64;
-			rectSp2.width = 64;
+			rectSp1.top = 32;
+			rectSp1.left = 0;
+			rectSp1.height = 64;
+			rectSp1.width = 64;
 
 			//TESTING UP
 			collision_manager.CollideWithEntity(rectSp1, rectSp2);

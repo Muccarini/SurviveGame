@@ -33,9 +33,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TileMap.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>Map</Filter>
     </ClCompile>
@@ -130,6 +127,9 @@
       <Filter>Map</Filter>
     </ClCompile>
     <ClCompile Include="Subject.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMap.cpp">
       <Filter>Map</Filter>
     </ClCompile>
   </ItemGroup>
