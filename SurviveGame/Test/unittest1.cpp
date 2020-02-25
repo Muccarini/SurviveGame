@@ -23,6 +23,7 @@ namespace Test
 
 		TEST_METHOD(TestMethod1)
 		{
+			sf::Vector2f up1(0, -1);
 			CollisionManager collision_manager;
 
 			sf::Vector2f up(0, -1);    //out_mtv going up
