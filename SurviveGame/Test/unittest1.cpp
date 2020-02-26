@@ -13,17 +13,8 @@ namespace Test
 	{
 	public:
 
-		bool isequal(float a, float b)
+		TEST_METHOD(CollideWithEntity)
 		{
-			if (fabs(a - b) < 0.01)
-				return true;
-			else
-				return false;
-		};
-
-		TEST_METHOD(TestMethod1)
-		{
-			sf::Vector2f up1(0, -1);
 			CollisionManager collision_manager;
 
 			sf::Vector2f up(0, -1);    //out_mtv going up
@@ -56,39 +47,39 @@ namespace Test
 
 			//TESTING UP
 			collision_manager.CollideWithEntity(rectSp1, rectSp2);
-			if (isequal(collision_manager.getOutMtv().x, up.x) && isequal(collision_manager.getOutMtv().y, up.y))
+			if (collision_manager.getOutMtv().x == 0 && collision_manager.getOutMtv().y < 0)
 				is_up = true;
 			collision_manager.resetOutMtv();
 
 			//TESTING LEFT
 			collision_manager.CollideWithEntity(rectSp1, rectSp2);
-			if (collision_manager.getOutMtv() == left)
+			if (collision_manager.getOutMtv().x < 0 && collision_manager.getOutMtv().y == 0)
 				is_left = true;
 			collision_manager.resetOutMtv();
 
 			//TESTING DOWN
 			collision_manager.CollideWithEntity(rectSp1, rectSp2);
-			if (isequal(collision_manager.getOutMtv().x, down.x) && isequal(collision_manager.getOutMtv().y, down.y))
+			if (collision_manager.getOutMtv().x == 0 && collision_manager.getOutMtv().y > 0)
 				is_down = true;
 			collision_manager.resetOutMtv();
 
 			//TESTING RIGHT
 			collision_manager.CollideWithEntity(rectSp1, rectSp2);
-			if (isequal(collision_manager.getOutMtv().x, right.x) && isequal(collision_manager.getOutMtv().y, right.y))
+			if (collision_manager.getOutMtv().x > 0 && collision_manager.getOutMtv().y == 0)
 				is_right = true;
 			collision_manager.resetOutMtv();
 
 			//TESTING NULL
 			collision_manager.CollideWithEntity(rectSp1, rectSp1);
-			if (isequal(collision_manager.getOutMtv().x, null.x) && isequal(collision_manager.getOutMtv().y, null.y))
+			if (collision_manager.getOutMtv().x == 0 && collision_manager.getOutMtv().y == 0)
 				is_null = true;
 			collision_manager.resetOutMtv();
 
-			Assert::AreEqual(true, is_up);
-			/*Assert::AreEqual(false, is_left);
-			Assert::AreEqual(false, is_down);
-			Assert::AreEqual(false, is_right);
-			Assert::AreEqual(false, is_null);*/
+			Assert::IsTrue(is_up);
+			/*Assert::IsFalse(is_left);
+			Assert::IsFalse(is_down);
+			Assert::IsFalse(is_right);
+			Assert::IsFalse(is_null);*/
 		}
 
 	};

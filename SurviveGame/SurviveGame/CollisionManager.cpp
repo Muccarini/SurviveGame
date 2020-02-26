@@ -16,6 +16,7 @@ CollisionManager::~CollisionManager()
 sf::Vector2f CollisionManager::CollideWithWalls(const sf::FloatRect & rectSp1, const std::vector<sf::FloatRect> walls)
 {
 	sf::Vector2f dir(0, 0);
+
 	for (int i = 0; i != walls.size(); i++)
 	{
 		if (sat_test(rectSp1, walls[i]))
