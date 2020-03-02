@@ -76,10 +76,6 @@ namespace Test
 			collision_manager.resetOutMtv();
 
 			Assert::IsTrue(is_up);
-			/*Assert::IsFalse(is_left);
-			Assert::IsFalse(is_down);
-			Assert::IsFalse(is_right);
-			Assert::IsFalse(is_null);*/
 		}
 
 	};
