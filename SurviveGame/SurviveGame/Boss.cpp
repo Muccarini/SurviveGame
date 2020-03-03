@@ -19,16 +19,12 @@ Boss::~Boss()
 
 void Boss::update()
 {
-	if (!isInRange(entitydata->boss->getPosition(), entitydata->player->getPosition()))
-{
 	updateMove();
-}
 	updateRotate();
 	updateBullets();
 	updateReload();
 	updateHud();
 	updateCollision();
-
 }
 
 void Boss::renderBullets(std::shared_ptr<sf::RenderWindow> target)
@@ -43,13 +39,13 @@ void Boss::updateMove()
 {
 	float dx = entitydata->player->getPosition().x - this->sprite.getPosition().x;
 	float dy = entitydata->player->getPosition().y - this->sprite.getPosition().y;
+
 	sf::Vector2i mv;
 
 	float lenght = sqrt(pow(dx, 2) + pow(dy, 2));
 
 	sf::Vector2f normVect(dx / lenght, dy / lenght);
 
-	/*this->sprite.move((normVect.x * this->mov_speed * entitydata->deltaTime.asSeconds()), (normVect.y * this->mov_speed * entitydata->deltaTime.asSeconds()));*/
 	if (max_distance == 64 && this->target != this->entitydata->player->getPosition())
 	{
 		if (!move_vect.empty())
@@ -254,11 +250,11 @@ void Boss::initSprite()
 
 void Boss::initHitBox()
 {
-	hit_box.setSize(sf::Vector2f(25.f, 25.f));
+	hit_box.setSize(sf::Vector2f(36.f, 36.f));
 	hit_box.setOutlineColor(sf::Color::Transparent);
-	hit_box.setOutlineThickness(10.f);
+	hit_box.setOutlineThickness(0.1f);
 	hit_box.setFillColor(sf::Color::Transparent);
 	hit_box.setScale(sprite.getScale());
 	hit_box.setPosition(getPosition());
-	hit_box.setOrigin(+18, +13);
+	hit_box.setOrigin(18, 16);
 }

@@ -46,7 +46,7 @@ private:
 	int boss_counter;
 
 	const int kills_per_round = 10;
-	const int round_per_boss = 4;
+	const int round_per_boss = 2;
 
 	int counter_round;
 	bool boss;
