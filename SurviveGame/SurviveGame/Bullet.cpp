@@ -54,56 +54,35 @@ void Bullet::update()
 	updateRotate(dir);
 }
 
-void Bullet::setDir(float nrshot)
+void Bullet::calculateDir(float nrshot)
 {
 	float dx;
 	float dy;
 	float lenght;
 	sf::Vector2f normVect;
-	switch(this->owner)
+	switch (this->owner)
 	{
-	case(BulletOwner::Player):
-		switch (this->entitydata->player->getType())
-		{
-		case(CharacterType::Shotgun):
-			dx = entitydata->mouse_pos_view.x - entitydata->player->getPosition().x;
-			dy = entitydata->mouse_pos_view.y - entitydata->player->getPosition().y;
-			sprite.setPosition(entitydata->player->getPosition());
-
-			lenght = sqrt(pow(dx, 2) + pow(dy, 2));
-			normVect = sf::Vector2f(dx / lenght, dy / lenght);
-
-			this->dir = abs(normVect.x) < abs(normVect.y) ? sf::Vector2f(normVect.x + nrshot, normVect.y) : sf::Vector2f(normVect.x, normVect.y + nrshot);
-			return;
-			break;
-		case(CharacterType::Rifle):
-			dx = entitydata->mouse_pos_view.x - entitydata->player->getPosition().x;
-			dy = entitydata->mouse_pos_view.y - entitydata->player->getPosition().y;
-			sprite.setPosition(entitydata->player->getPosition());
-			break;
-		case(CharacterType::Handgun):
-			dx = entitydata->mouse_pos_view.x - entitydata->player->getPosition().x;
-			dy = entitydata->mouse_pos_view.y - entitydata->player->getPosition().y;
-			sprite.setPosition(entitydata->player->getPosition());
-			break;
-		}
-		break;
 	case(BulletOwner::Pet):
 		dx = entitydata->mouse_pos_view.x - entitydata->pet->getPosition().x;
-	    dy = entitydata->mouse_pos_view.y - entitydata->pet->getPosition().y;
+		dy = entitydata->mouse_pos_view.y - entitydata->pet->getPosition().y;
 		sprite.setPosition(entitydata->pet->getPosition());
+		hit_box.setPosition(sprite.getPosition());
 		break;
 	case(BulletOwner::Boss):
 		dx = entitydata->player->getPosition().x - entitydata->boss->getPosition().x;
 		dy = entitydata->player->getPosition().y - entitydata->boss->getPosition().y;
 		sprite.setPosition(entitydata->boss->getPosition());
+		hit_box.setPosition(sprite.getPosition());
 		break;
 	}
 	lenght = sqrt(pow(dx, 2) + pow(dy, 2));
-
 	normVect = sf::Vector2f(dx / lenght, dy / lenght);
-
 	this->dir = normVect;
+}
+
+void Bullet::setDir(sf::Vector2f dir)
+{
+	this->dir = dir;
 }
 
 void Bullet::initSpritePet()
@@ -168,19 +147,19 @@ void Bullet::updateAlliedCollision()
 		}
 	}
 
-		if (entitydata->boss)
+	if (entitydata->boss)
+	{
+		collision->CollideWithEntity(this->hit_box.getGlobalBounds(), entitydata->boss->getHitBox().getGlobalBounds());
+		if (collision->isCollide())
 		{
-			collision->CollideWithEntity(this->hit_box.getGlobalBounds(), entitydata->boss->getHitBox().getGlobalBounds());
-			if (collision->isCollide())
-			{
-				entitydata->boss->takeDamage();
-				collision->resetOutMtv();
-				this->collide = true;
-				return;
-			}
+			entitydata->boss->takeDamage();
+			collision->resetOutMtv();
+			this->collide = true;
+			return;
 		}
+	}
 
-		//WALLS
+	//WALLS
 
 	updateWallsCollision();
 

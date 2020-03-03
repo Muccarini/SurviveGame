@@ -1,6 +1,7 @@
 #include "SelectionCharacter.h"
 #include "StShotgunPlayerFight.h"
 #include "StRiflePlayerFight.h"
+#include "StGunPlayerFight.h"
 
 SelectionCharacter::SelectionCharacter()
 {
@@ -21,7 +22,7 @@ void SelectionCharacter::render()
 	window->draw(background);
 	shotgun.draw(window);
 	rifle.draw(window);
-	knife.draw(window);
+	gun.draw(window);
 }
 
 void SelectionCharacter::initButtons()
@@ -32,8 +33,8 @@ void SelectionCharacter::initButtons()
 	this->rifletxt.loadFromFile("Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
 	rifle.setBox(sf::Vector2f(313.f, 206.f), sf::Color::White, 2, sf::Color::Transparent, sf::Vector2f(759, 320.f), &rifletxt);
 
-	this->knifetxt.loadFromFile("Sources/Top_Down_Survivor/handgun/move/survivor-move_handgun_0.png");
-	knife.setBox(sf::Vector2f(313.f, 206.f), sf::Color::White, 2, sf::Color::Transparent, sf::Vector2f(1200, 320), &knifetxt);
+	this->guntxt.loadFromFile("Sources/Top_Down_Survivor/handgun/move/survivor-move_handgun_0.png");
+	gun.setBox(sf::Vector2f(313.f, 206.f), sf::Color::White, 2, sf::Color::Transparent, sf::Vector2f(1200, 320), &guntxt);
 }
 
 void SelectionCharacter::initBackground()
@@ -65,9 +66,9 @@ void SelectionCharacter::updateButtons()
 	}
 
 	//KNIFE
-	if (knife.isActive(mouse_pos_view))
+	if (gun.isActive(mouse_pos_view))
 	{
-		StrategyFight* stf = new StShotgunPlayerFight();
+		StrategyFight* stf = new StGunPlayerFight();
 		this->states->push(new GameLogic(Textures::ID::HandgunP, stf));
 		this->states->top()->window = this->window;
 		this->states->top()->states = this->states;

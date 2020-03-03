@@ -2,6 +2,7 @@
 #include "SelectionCharacter.h"
 #include "StShotgunPlayerFight.h"
 #include "StRiflePlayerFight.h"
+#include "StGunPlayerFight.h"
 
 
 PlayerT::PlayerT(const std::shared_ptr<EntityData> entitydata, Textures::ID id, StrategyFight* stf) : id(id)
@@ -78,6 +79,8 @@ void PlayerT::updateBullets()
 	{
 		this->stf->shot(bullets, this->entitydata);
 		ammo -= this->stf->nrshot;
+		if ((ammo - this->stf->nrshot) < 0)
+			this->stf->nrshot = ammo;
 	}
 
 	if (!bullets.empty())
@@ -103,12 +106,6 @@ void PlayerT::updateRotate()
 
 void PlayerT::updateReload()
 {
-	/*if (!reloading)
-	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) && ammo != ammo_max)
-			reloading = true;
-	}*/
-
 	if (ammo == 0 || reloading)
 	{
 		reload_clock -= entitydata->deltaTime;
@@ -129,7 +126,7 @@ void PlayerT::updateReload()
 			{
 				this->type = CharacterType::Handgun;
 				this->id = Textures::ID::HandgunP;
-				this->stf = new StShotgunPlayerFight();
+				this->stf = new StGunPlayerFight();
 				break;
 			}
 			case(Textures::ID::HandgunP):

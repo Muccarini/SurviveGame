@@ -36,13 +36,7 @@
     <ClCompile Include="Tile.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="TileMap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyStrategyMove.cpp">
-      <Filter>Personaggi\Nemici</Filter>
-    </ClCompile>
-    <ClCompile Include="StrategyMove.cpp">
       <Filter>Personaggi\Nemici</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
@@ -50,9 +44,6 @@
     </ClCompile>
     <ClCompile Include="TextureHolder.cpp">
       <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Personaggi\Giocatore</Filter>
     </ClCompile>
     <ClCompile Include="GameLogic.cpp">
       <Filter>Game</Filter>
@@ -132,6 +123,15 @@
     <ClCompile Include="TileMap.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Personaggi</Filter>
+    </ClCompile>
+    <ClCompile Include="StGunPlayerFight.cpp">
+      <Filter>Strategy\Fight</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnemyStrategyMove.h">
@@ -167,16 +167,10 @@
     <ClInclude Include="Hud.h">
       <Filter>Personaggi</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>Personaggi\Giocatore</Filter>
-    </ClInclude>
     <ClInclude Include="Boss.h">
       <Filter>Personaggi\Nemici</Filter>
     </ClInclude>
     <ClInclude Include="RoundManager.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Button.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
     <ClInclude Include="PlayerT.h">
@@ -232,6 +226,18 @@
     </ClInclude>
     <ClInclude Include="GridNode.h">
       <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Personaggi</Filter>
+    </ClInclude>
+    <ClInclude Include="StGunPlayerFight.h">
+      <Filter>Strategy\Fight</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StrategyMove.h">
+      <Filter>Strategy\move</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

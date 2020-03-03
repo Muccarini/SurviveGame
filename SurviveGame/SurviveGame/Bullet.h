@@ -11,7 +11,8 @@ public:
 
 	void update();
 
-	void setDir(float nrshot = 0);
+	void calculateDir(float nrshot = 0);
+	void setDir(sf::Vector2f dir);
 
 private:
 	void updateMove();
@@ -30,7 +31,5 @@ private:
 	sf::Vector2f dir;
 
 	BulletOwner::Owner owner;
-
-
 };
 

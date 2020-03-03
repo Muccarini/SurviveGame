@@ -73,7 +73,7 @@ private:
 	std::shared_ptr<BoostPos> boost_pos;
 	Textures::ID id;
 
-	const int max_enemies = 5;
+	const int max_enemies = 1;
 	int enemies_alive;
 	bool boss_alive;
 	bool pet_alive;

@@ -13,7 +13,7 @@ namespace Test
 	{
 	public:
 
-		TEST_METHOD(CollideWithEntity)
+		TEST_METHOD(CollideUpWithEntity)
 		{
 			CollisionManager collision_manager;
 
@@ -51,11 +51,36 @@ namespace Test
 				is_up = true;
 			collision_manager.resetOutMtv();
 
-			//TESTING LEFT
-			collision_manager.CollideWithEntity(rectSp1, rectSp2);
-			if (collision_manager.getOutMtv().x < 0 && collision_manager.getOutMtv().y == 0)
-				is_left = true;
-			collision_manager.resetOutMtv();
+			Assert::IsTrue(is_up);
+			/*Assert::IsFalse(is_left);
+			Assert::IsFalse(is_down);
+			Assert::IsFalse(is_right);
+			Assert::IsFalse(is_null);*/
+		}
+
+		TEST_METHOD(CollideDownWithEntity)
+		{
+			CollisionManager collision_manager;
+
+			sf::Vector2f down(0, 1); //out_mtv going down
+
+			bool is_down = false;
+
+			//SET UP YOUR FIRST RECT
+			sf::FloatRect rectSp1;
+
+			rectSp1.top = 32;
+			rectSp1.left = 0;
+			rectSp1.height = 64;
+			rectSp1.width = 64;
+
+			//SET UP YOUR SECOND RECT
+			sf::FloatRect rectSp2;
+
+			rectSp2.top = 0;
+			rectSp2.left = 0;
+			rectSp2.height = 64;
+			rectSp2.width = 64;
 
 			//TESTING DOWN
 			collision_manager.CollideWithEntity(rectSp1, rectSp2);
@@ -63,23 +88,7 @@ namespace Test
 				is_down = true;
 			collision_manager.resetOutMtv();
 
-			//TESTING RIGHT
-			collision_manager.CollideWithEntity(rectSp1, rectSp2);
-			if (collision_manager.getOutMtv().x > 0 && collision_manager.getOutMtv().y == 0)
-				is_right = true;
-			collision_manager.resetOutMtv();
-
-			//TESTING NULL
-			collision_manager.CollideWithEntity(rectSp1, rectSp1);
-			if (collision_manager.getOutMtv().x == 0 && collision_manager.getOutMtv().y == 0)
-				is_null = true;
-			collision_manager.resetOutMtv();
-
-			Assert::IsTrue(is_up);
-			/*Assert::IsFalse(is_left);
-			Assert::IsFalse(is_down);
-			Assert::IsFalse(is_right);
-			Assert::IsFalse(is_null);*/
+			Assert::IsTrue(is_down);
 		}
 
 	};

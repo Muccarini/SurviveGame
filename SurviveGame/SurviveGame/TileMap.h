@@ -25,20 +25,18 @@ private:
 
 	std::vector<sf::FloatRect> wall_block;
 
-
+	void loadFromFile(const std::string file_name);
 
 public:
 
 	std::vector<sf::FloatRect> getWalls();
-
-	void loadFromFile(const std::string file_name);
 
 	void render(std::shared_ptr<sf::RenderTarget> target);
 
 	std::vector<sf::FloatRect> findWalls(int x, int y);
 
 	std::vector<GridLocation> getObstacle();
-
+	
 	float getGridSize();
 };
 

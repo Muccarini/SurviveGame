@@ -40,13 +40,13 @@ int Character::getHpMax()
 		this->hp_max;
 }
 
-int Character::getMovSpeed()
+float Character::getMovSpeed()
 {
 	return
 		this->mov_speed;
 }
 
-int Character::getMovSpeedDef()
+float Character::getMovSpeedDef()
 {
 	return
 		this->mov_speed_default;

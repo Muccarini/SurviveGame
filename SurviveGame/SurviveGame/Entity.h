@@ -77,6 +77,6 @@ protected:
 
 	GridLocation gridpos;
 
-	int mov_speed;
-	int mov_speed_default;
+	float mov_speed;
+	float mov_speed_default;
 };

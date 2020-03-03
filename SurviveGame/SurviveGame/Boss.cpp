@@ -54,7 +54,7 @@ void Boss::updateMove()
 	{
 		if (!move_vect.empty())
 			move_vect.clear();
-		this->_m->move(this->entitydata->deltaTime, this->sprite, this->entitydata->player->getPosition(), move_vect);
+		this->_m->move(this->entitydata->deltaTime, this->sprite, this->entitydata->player->getPosition(), move_vect, mov_speed);
 		this->target.x = this->entitydata->player->getPosition().x;
 		this->target.y = this->entitydata->player->getPosition().y;
 	}
@@ -114,7 +114,7 @@ void Boss::updateBullets()
 		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Boss, entitydata));
 		ammo--;
 		bullets.emplace_back(bullet);
-		bullet->setDir();
+		bullet->calculateDir();
 	}
 
 	for (unsigned int i = 0; i < bullets.size(); i++)

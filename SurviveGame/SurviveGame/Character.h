@@ -27,8 +27,8 @@ public:
 	int getHp();
 	int getHpMax();
 
-	int getMovSpeed();
-	int getMovSpeedDef();
+	float getMovSpeed();
+	float getMovSpeedDef();
 
 	int getAmmo();
 

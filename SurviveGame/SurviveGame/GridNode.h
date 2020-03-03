@@ -55,28 +55,12 @@ struct PriorityQueue {
 	}
 };
 
-template<typename Location>
-std::vector<Location> reconstruct_path(
-	Location start, Location goal,
-	std::unordered_map<Location, Location> came_from
-) {
-	std::vector<Location> path;
-	Location current = goal;
-	while (current != start) {
-		path.push_back(current);
-		current = came_from[current];
-	}
-	path.push_back(start); // optional
-	std::reverse(path.begin(), path.end());
-	return path;
-}
-
 namespace std {
 	/* implement hash function so we can put GridLocation into an unordered_set */
 	template <> struct hash<GridLocation> {
 		typedef GridLocation argument_type;
 		typedef std::size_t result_type;
-		std::size_t operator()(const GridLocation& id) const noexcept {
+		std::size_t operator()(const GridLocation& id) const {
 			return std::hash<int>()(id.x ^ (id.y << 4));
 		}
 	};

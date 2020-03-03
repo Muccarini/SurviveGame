@@ -34,7 +34,7 @@ void Enemy::updateMove()
 	{
 		if (!move_vect.empty())
 			move_vect.clear();
-		this->_m->move(this->entitydata->deltaTime, this->sprite, this->entitydata->player->getPosition(), move_vect);
+		this->_m->move(this->entitydata->deltaTime, this->sprite, this->entitydata->player->getPosition(), move_vect, mov_speed);
 		this->target.x = this->entitydata->player->getPosition().x;
 		this->target.y = this->entitydata->player->getPosition().y;
 	}

@@ -35,7 +35,7 @@ private:
 	//movimento
 	float distance;
 	float max_distance;
-	std::list <sf::Vector2i> move_vect;
+	std::list <sf::Vector2f> move_vect;
 	sf::Vector2f target;
 	sf::Vector2f spostamento;
 

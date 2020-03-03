@@ -24,10 +24,10 @@ private:
 
 	sf::Texture shotguntxt;
 	sf::Texture rifletxt;
-	sf::Texture knifetxt;
+	sf::Texture guntxt;
 
 
 	Button shotgun;
 	Button rifle;
-	Button knife;
+	Button gun;
 };

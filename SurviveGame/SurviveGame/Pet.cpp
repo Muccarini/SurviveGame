@@ -66,7 +66,7 @@ void Pet::updateBullets()
 	{
 		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Pet, entitydata));
 		bullets.emplace_back(bullet);
-		bullet->setDir();
+		bullet->calculateDir();
 	}
 
 	for (unsigned int i = 0; i < bullets.size(); i++)
