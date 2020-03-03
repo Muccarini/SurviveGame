@@ -178,7 +178,6 @@ void PlayerT::updateMovSpeed()
 {
 	if (this->mov_speed != this->mov_speed_default)
 	{
-		this->sprite.setTexture(this->entitydata->textures->get(Textures::PersonaggioMS));
 		this->ms_clock -= entitydata->deltaTime.asSeconds();
 	}
 
@@ -186,7 +185,6 @@ void PlayerT::updateMovSpeed()
 	{
 		this->ms_clock = this->ms_cd;
 		this->mov_speed = this->mov_speed_default;
-		this->sprite.setTexture(this->entitydata->textures->get(this->id));
 	}
 		
 }
@@ -204,15 +202,29 @@ void PlayerT::updateCollision()
 	std::vector<std::shared_ptr<Character>> enemies;
 	enemies = *entitydata->enemies;
 
-	for(int i = 0; i != enemies.size(); i++)
+	//ENEMIES
+	if (!enemies.empty())
 	{
-	ent = this->collision->CollideWithEntity(this->hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds());
-	if (ent.x != 0 || ent.y != 0)
-		takeDamage();
+		for (int i = 0; i != enemies.size(); i++)
+		{
+			ent = this->collision->CollideWithEntity(this->hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds());
+			sprite.move(ent);
+			if (ent.x != 0 || ent.y != 0)
+				takeDamage();
+		}
+		hit_box.setPosition(getPosition());
+		collision->resetOutMtv();
 	}
-	sprite.move(ent);
-	hit_box.setPosition(getPosition());
-	collision->resetOutMtv();
+
+	//BOSS
+	if (entitydata->boss)
+	{
+		ent = this->collision->CollideWithEntity(this->hit_box.getGlobalBounds(), entitydata->boss->getHitBox().getGlobalBounds());
+		sprite.move(ent);
+
+		hit_box.setPosition(getPosition());
+		collision->resetOutMtv();
+	}
 
 	//WALLS
 	dir = this->collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->map->findWalls(static_cast<int>(getPosition().x), static_cast<int>(getPosition().y)));
@@ -273,7 +285,6 @@ void PlayerT::initVar()
 	ammo_max = 100;
 	ammo = ammo_max;
 
-	//ratio_cd = sf::seconds(1.f / 16.666f);
 	setRatioCd(stf->getRatio());
 	ratio_clock = ratio_cd;
 

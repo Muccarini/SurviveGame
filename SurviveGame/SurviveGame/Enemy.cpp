@@ -108,8 +108,6 @@ void Enemy::updateCollision()
 	//PLAYER
 	ent = this->collision->CollideWithEntity(entitydata->player->getHitBox().getGlobalBounds(), this->getHitBox().getGlobalBounds());
 	sprite.move(-ent);
-	if (ent.x != 0 || ent.y != 0)
-		entitydata->player->takeDamage();
 	collision->resetOutMtv();
 
 	//PET
