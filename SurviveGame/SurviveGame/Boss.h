@@ -1,6 +1,6 @@
 #pragma once
 #include "Character.h"
-#include "EnemyStrategyMove.h"
+#include "Astar.h"
 class Boss :
 	public Character
 {
@@ -39,6 +39,6 @@ private:
 	sf::Vector2f target;
 	sf::Vector2f spostamento;
 
-	EnemyStrategyMove* _m;
+	AStar _m;
 };
 

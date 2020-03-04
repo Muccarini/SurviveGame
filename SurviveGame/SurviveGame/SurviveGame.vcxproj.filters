@@ -36,9 +36,6 @@
     <ClCompile Include="Tile.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyStrategyMove.cpp">
-      <Filter>Personaggi\Nemici</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Game</Filter>
     </ClCompile>
@@ -99,9 +96,6 @@
     <ClCompile Include="EnemyStrategyMove.cpp">
       <Filter>Strategy\move</Filter>
     </ClCompile>
-    <ClCompile Include="StrategyMove.cpp">
-      <Filter>Strategy\move</Filter>
-    </ClCompile>
     <ClCompile Include="StShotgunPlayerFight.cpp">
       <Filter>Strategy\Fight</Filter>
     </ClCompile>
@@ -132,11 +126,11 @@
     <ClCompile Include="StGunPlayerFight.cpp">
       <Filter>Strategy\Fight</Filter>
     </ClCompile>
+    <ClCompile Include="AStar.cpp">
+      <Filter>Personaggi\Nemici</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EnemyStrategyMove.h">
-      <Filter>Personaggi\Nemici</Filter>
-    </ClInclude>
     <ClInclude Include="StrategyMove.h">
       <Filter>Personaggi\Nemici</Filter>
     </ClInclude>
@@ -238,6 +232,9 @@
     </ClInclude>
     <ClInclude Include="StrategyMove.h">
       <Filter>Strategy\move</Filter>
+    </ClInclude>
+    <ClInclude Include="AStar.h">
+      <Filter>Personaggi\Nemici</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,19 +1,21 @@
 #pragma once
-#include "StrategyMove.h"
 #include "GridNode.h"
+#include "SFML/Graphics.hpp"
 #include <unordered_map>
 #include <functional>
 #include <utility>
 
-class EnemyStrategyMove :
-	public StrategyMove
+class AStar
 {
 public:
-	EnemyStrategyMove(GridNode grid);
-	virtual ~EnemyStrategyMove();
+	AStar(GridNode grid, sf::Vector2f target, float max_d, float dist);
+	virtual ~AStar();
 
-	void move(sf::Time deltatime, sf::Sprite& _sprite, sf::Vector2f target,
-		std::list<sf::Vector2f> &movevect, const float mov_speed) override;
+	void move(sf::Time deltatime, sf::Sprite* _sprite, sf::Vector2f target,
+		std::list<sf::Vector2f> &movevect, const float mov_speed);
+	void setMaxDist(float m_distance);
+	void setDist(float dist);
+	void setTarget(sf::Vector2f target);
 private:
 	void a_star_search(GridNode graph, GridLocation start, GridLocation goal,
 		std::unordered_map<GridLocation, GridLocation>& came_from,
@@ -24,9 +26,11 @@ private:
 protected:
 	std::unordered_map<GridLocation, GridLocation> came_from;
 	std::unordered_map<GridLocation, double> cost_so_far;
-	GridLocation start;
-	GridLocation goal;
 	GridNode grid; 
+	float max_distance;
+	float distance;
+	sf::Vector2f target;
+	sf::Vector2f spostamento;
 };
 
 

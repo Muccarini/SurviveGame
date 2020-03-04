@@ -1,6 +1,6 @@
 #pragma once
 #include "Character.h"
-#include "EnemyStrategyMove.h"
+#include "AStar.h"
 
 class Enemy :
 	public Character
@@ -33,7 +33,7 @@ private:
 	sf::Vector2f target;
 	sf::Vector2f spostamento;
 
-	EnemyStrategyMove* _m;
+	AStar _m;
 	std::list<GridLocation> DIRS =
 	{ GridLocation{4, 3}, GridLocation{16,4}, GridLocation{16, 3}, GridLocation{16, 5},
 	  GridLocation{12, 6}, GridLocation{4, 6}, GridLocation{7, 6}, GridLocation{3, 12},
