@@ -107,7 +107,7 @@ namespace Test
 
 		TEST_METHOD(CollideRightWithEntity)
 		{
-			sf::Vector2f right(+1, 0); //out_mtv going up
+			sf::Vector2f right(+1, 0); //out_mtv going right
 
 			//SET UP YOUR FIRST RECT
 
@@ -134,7 +134,7 @@ namespace Test
 
 		TEST_METHOD(CollideNULLWithEntity)
 		{
-			sf::Vector2f null(0, 0); //out_mtv going up
+			sf::Vector2f null(0, 0); //out_mtv going null
 
 			//SET UP YOUR FIRST RECT
 

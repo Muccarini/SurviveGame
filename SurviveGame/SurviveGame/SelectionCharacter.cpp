@@ -28,13 +28,13 @@ void SelectionCharacter::render()
 void SelectionCharacter::initButtons()
 {
 	this->shotguntxt.loadFromFile("Sources/Top_Down_Survivor/shotgun/move/survivor-move_shotgun_0.png");
-	shotgun.setBox(sf::Vector2f(313.f, 206.f), sf::Color::White, 2, sf::Color::Transparent, sf::Vector2f(300, 320), &shotguntxt);
+	shotgun.setBox(sf::Vector2f(313.f, 206.f), sf::Color::White, 4, sf::Color::Transparent, sf::Vector2f(300, 320), &shotguntxt);
 
 	this->rifletxt.loadFromFile("Sources/Top_Down_Survivor/rifle/move/survivor-move_rifle_0.png");
-	rifle.setBox(sf::Vector2f(313.f, 206.f), sf::Color::White, 2, sf::Color::Transparent, sf::Vector2f(759, 320.f), &rifletxt);
+	rifle.setBox(sf::Vector2f(313.f, 206.f), sf::Color::White, 4, sf::Color::Transparent, sf::Vector2f(759, 320.f), &rifletxt);
 
 	this->guntxt.loadFromFile("Sources/Top_Down_Survivor/handgun/move/survivor-move_handgun_0.png");
-	gun.setBox(sf::Vector2f(313.f, 206.f), sf::Color::White, 2, sf::Color::Transparent, sf::Vector2f(1200, 320), &guntxt);
+	gun.setBox(sf::Vector2f(313.f, 206.f), sf::Color::White, 4, sf::Color::Transparent, sf::Vector2f(1200, 320), &guntxt);
 }
 
 void SelectionCharacter::initBackground()
