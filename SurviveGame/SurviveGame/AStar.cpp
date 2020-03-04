@@ -17,7 +17,7 @@ AStar::~AStar()
 {
 }
 
-void AStar::move(sf::Time deltatime, sf::Sprite* _sprite, sf::Vector2f target,
+sf::Vector2f AStar::move(sf::Time deltatime, sf::Sprite* _sprite, sf::Vector2f target,
 	std::list<sf::Vector2f> &movevect, const float mov_speed)
 {
 	sf::Vector2i mv; 
@@ -64,14 +64,11 @@ void AStar::move(sf::Time deltatime, sf::Sprite* _sprite, sf::Vector2f target,
 			_sprite->move(spostamento);
 			max_distance = 64;
 		}
-		else
-		{
-			_sprite->move(spostamento);
-		}
 		if (max_distance == 64)
 		{
 			movevect.pop_front();
 		}
+		return spostamento;
 	}
 }
 

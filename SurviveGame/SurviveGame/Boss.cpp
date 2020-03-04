@@ -40,7 +40,7 @@ void Boss::renderBullets(std::shared_ptr<sf::RenderWindow> target)
 
 void Boss::updateMove()
 {
-	this->_m.move(this->entitydata->deltaTime, &(this->sprite), entitydata->player->getPosition(), move_vect, mov_speed);
+	this->sprite.move(_m.move(this->entitydata->deltaTime, &(this->sprite), this->entitydata->player->getPosition(), move_vect, mov_speed));
 	this->target.x = this->entitydata->player->getPosition().x;
 	this->target.y = this->entitydata->player->getPosition().y;
 

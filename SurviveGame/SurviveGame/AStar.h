@@ -11,7 +11,7 @@ public:
 	AStar(GridNode grid, sf::Vector2f target, float max_d, float dist);
 	virtual ~AStar();
 
-	void move(sf::Time deltatime, sf::Sprite* _sprite, sf::Vector2f target,
+	sf::Vector2f move(sf::Time deltatime, sf::Sprite* _sprite, sf::Vector2f target,
 		std::list<sf::Vector2f> &movevect, const float mov_speed);
 	void setMaxDist(float m_distance);
 	void setDist(float dist);
