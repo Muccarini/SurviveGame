@@ -5,25 +5,24 @@
 class PlayerT : public Character
 {
 public:
-	explicit PlayerT(const std::shared_ptr<EntityData> entitydata, Textures::ID id, StrategyFight* stf);
+	explicit PlayerT(Textures::ID id, StrategyFight* stf);
 
 	PlayerT();
 	virtual ~PlayerT();
 
-	virtual void update();
 	virtual void renderBullets(std::shared_ptr<sf::RenderWindow> target);
 
-	void updateMove();
-	void updateBullets();
+	void updateMove(sf::Time deltaTime);
+	void updateBullets(sf::Time deltaTime, sf::Vector2f target);
 	void updateRotate();
-	void updateReload();
+	bool updateReload();
 	void updateDash(sf::Vector2f dir);
-	void updateMovSpeed();
+	void updateMovSpeed(sf::Time deltaTime);
 	void updateHud();
 	void updateCollision();
 	void updateDataPlayer();
 
-	void updateShooting();
+	void updateShooting(sf::Time deltaTime);
 	void setStrategyFight(StrategyFight* stf);
 
 	void initVar();
@@ -34,9 +33,11 @@ public:
 
 	virtual void takeDamage();
 
+	Textures::ID getId();
+	void setTexturesSprite(std::shared_ptr<TextureHolder> textures);
+
 	sf::Texture texture_movspeed;
 	sf::Texture texture_bullet;
-	Textures::ID id;
 
 	float dash_speed;
 	float dash_cd;
@@ -46,7 +47,9 @@ public:
 	float ms_clock;
 
 	bool is_dashing;
-protected:
+private:
+
+	Textures::ID id;
 	StrategyFight* stf;
 	void setType();
 

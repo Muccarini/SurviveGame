@@ -5,7 +5,7 @@ class Bullet :
 	public Entity
 {
 public:
-	Bullet(BulletOwner::Owner owner, std::shared_ptr<EntityData> entitydata);
+	Bullet(BulletOwner::Owner owner, sf::Vector2f owner_pos);
 	Bullet();
 	virtual ~Bullet();
 

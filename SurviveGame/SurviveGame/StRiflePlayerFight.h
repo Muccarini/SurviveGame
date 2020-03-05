@@ -9,6 +9,6 @@ public:
 	virtual ~StRiflePlayerFight() = default;
 
 	virtual void shot(std::vector<std::shared_ptr<Bullet>>& bullets,
-		const std::shared_ptr<EntityData> entitydata);
+		sf::Vector2f owner_pos, sf::Vector2f target_pos);
 };
 

@@ -7,23 +7,23 @@ class Enemy :
 {
 
 public:
-	explicit Enemy(const std::shared_ptr<EntityData> entitydata);
+	explicit Enemy(sf::Texture texture, GridNode* grid, float grid_size);
 
 	Enemy();
 	virtual ~Enemy();
+
+	void updateMove(sf::Time deltaTime, sf::Vector2f target, float grid_size);
+	void updateRotate(sf::Vector2f target);
+	void updateHud();
+	void updateCollision(sf::FloatRect player, sf::FloatRect pet, std::vector<sf::FloatRect> walls);
 
 private:
 	virtual void update();
 	virtual void renderBullets(std::shared_ptr<sf::RenderWindow> target);
 
-	void updateMove();
-	void updateRotate();
-	void updateHud();
-	void updateCollision();
-
 	void initVar();
-	void initSprite();
-	void initHitBox();
+	void initSprite(GridNode* grid, sf::Texture texture);
+	void initHitBox(float grid_size);
 
 	void takeDamage(/*tipo di danno*/);
 

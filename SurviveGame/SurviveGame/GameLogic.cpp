@@ -23,8 +23,13 @@ void GameLogic::update(sf::Time deltaTime)
 	achievement->updateBadge(deltaTime);
 
 	updateHud();
-	updatePlayer();
-	updateEnemies();
+	updatePlayer(deltaTime);
+	updateRound();
+	if (!round.isLoading() && !round.isBossRound())
+		spawnZombies(deltaTime);
+	else
+		spawnBoss();
+
 	updatePet();
 
 	updateBoost();
@@ -76,37 +81,17 @@ void GameLogic::updateHud()
 	hud.updateText(round.getKills(), round.getCountdown().asSeconds(), round.getCounterRound(), game_view);
 }
 
-void GameLogic::updateEnemies()
+void GameLogic::spawnZombies(sf::Time deltaTime)
 {
-	//RESET ROUND
-	if (round.getKills() == round.getKillsPerRound())
-	{
-		for (unsigned int i = 0; i < enemies->size(); i++)
-		{
-			enemies->erase(enemies->begin(), enemies->end());
-		}
-
-		enemies_alive = 0;
-		round.setKills(0);
-		round.reset();
-		round.increaseRound();
-
-		if (round.getCounterRound() % round.getRoundPerBoss() == 0)
-			round.setBossRound(true);
-	}
-
-	//ZOMBIE SPAWN
-	if (!round.isLoading() && !round.isBossRound())
-	{
 		while (enemies_alive != max_enemies)
 		{
-			this->enemies->emplace_back(new Enemy(this->entitydata));
+			this->enemies->emplace_back(new Enemy(textures->get(Textures::Enemy), &grid, tile_map.getGridSize()));
 			enemies_alive++;
 		}
 
 		for (unsigned int i = 0; i < enemies->size(); i++)
 		{
-			(*enemies)[i]->update();
+			updateZombie(deltaTime, i);
 
 			if (((*enemies)[i]->getHp() <= 0))
 			{
@@ -115,42 +100,35 @@ void GameLogic::updateEnemies()
 				round.increaseKills();
 			}
 		}
-	}
-
-	else
-		//BOSS SPAWN
-	{
-		round.startCountdown(this->entitydata->deltaTime);
-		if(!round.isLoading() && round.isBossRound())
-		{
-			if (!boss_alive)
-			{
-				std::shared_ptr<Character>boss(new Boss(this->entitydata));
-				this->boss = boss;
-				entitydata->boss = this->boss;
-				this->boss_alive = true;
-			}
-			updateBoss();
-		}
-	}
 }
 
-void GameLogic::updateBoss()
+void GameLogic::updateZombie(sf::Time deltaTime, int i)
 {
-		boss->update();
+	(*enemies)[i]->updateMove(deltaTime, player->getPosition(), tile_map.getGridSize());
+	(*enemies)[i]->updateRotate(player->getPosition());
+	(*enemies)[i]->updateHud();
+	(*enemies)[i]->updateCollision(player->getHitBox().getGlobalBounds(), 
+		pet->getHitBox().getGlobalBounds(), tile_map.findWalls(static_cast<int>((*enemies)[i]->getPosition().x), static_cast<int>((*enemies)[i]->getPosition().y)));
+}
 
-		//BOSS DEATH
+void GameLogic::spawnBoss()
+{
+	round.startCountdown(this->entitydata->deltaTime);
+	if (!round.isLoading() && round.isBossRound())
+	{
+		if (!boss_alive)
+		{
+			std::shared_ptr<Character>boss(new Boss(this->entitydata));
+			this->boss = boss;
+			entitydata->boss = this->boss;
+			this->boss_alive = true;
+		}
+
+		updateBoss();
+
 		if ((boss->getHp() <= 0))
 		{
-			//SPAWN PET
-			if (!pet_alive)
-			{
-				this->pet = std::make_shared<Pet>(this->entitydata);
-				entitydata->pet = this->pet;
-				this->pet_alive = true;
-			}
-			else
-				pet->boostHeal();
+			spawnPet();
 
 			//RESET BOSS AND ROUND
 			boss.reset();
@@ -163,6 +141,33 @@ void GameLogic::updateBoss()
 			round.reset();
 			round.increaseRound();
 		}
+	}
+}
+
+void GameLogic::updateBoss()
+{
+
+	boss->updateMove();
+	boss->updateBullets();
+	boss->updateRotate();
+	boss->updateReload();
+	boss->updateHud();
+	boss->updateCollision();
+
+	boss->updateShooting();
+}
+
+void GameLogic::spawnPet()
+{
+	//SPAWN PET
+	if (!pet_alive)
+	{
+		this->pet = std::make_shared<Pet>(this->entitydata);
+		entitydata->pet = this->pet;
+		this->pet_alive = true;
+	}
+	else
+		pet->boostHeal();
 }
 
 void GameLogic::updatePet()
@@ -206,23 +211,42 @@ void GameLogic::updateBoost()
 	}
 }
 
-void GameLogic::updatePlayer()
+void GameLogic::updatePlayer(sf::Time deltaTime)
 {
-	player->updateMove();
-	player->updateMovSpeed();
-	set_pos;
+	player->updateMove(deltaTime);
+	player->updateMovSpeed(deltaTime);
 	player->updateCollision();
 
 
-	player->updateBullets();
-	player->updateShooting();
+	player->updateBullets(deltaTime, mouse_pos_view);
+	player->updateShooting(deltaTime);
 
 	player->updateRotate();
 
-	player->updateReload();
+	if (player->updateReload())
+		player->setTexturesSprite(this->textures);
 
 	player->updateHud();
 
+}
+
+void GameLogic::updateRound()
+{
+	if (round.getKills() == round.getKillsPerRound())
+	{
+		for (unsigned int i = 0; i < enemies->size(); i++)
+		{
+			enemies->erase(enemies->begin(), enemies->end());
+		}
+
+		enemies_alive = 0;
+		round.setKills(0);
+		round.reset();
+		round.increaseRound();
+
+		if (round.getCounterRound() % round.getRoundPerBoss() == 0)
+			round.setBossRound(true);
+	}
 }
 
 void GameLogic::updateGameView(sf::Time deltaTime)

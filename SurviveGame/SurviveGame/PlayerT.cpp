@@ -5,7 +5,7 @@
 #include "StGunPlayerFight.h"
 
 
-PlayerT::PlayerT(const std::shared_ptr<EntityData> entitydata, Textures::ID id, StrategyFight* stf) : id(id)
+PlayerT::PlayerT(Textures::ID id, StrategyFight* stf) : id(id)
 {
 	setStrategyFight(stf);
 	setType();
@@ -23,17 +23,7 @@ PlayerT::~PlayerT()
 {
 }
 
-void PlayerT::update()
-{
-	updateMove();
-	updateBullets();
-	updateRotate();
-	updateReload();
-	updateHud();
-	updateCollision();
-}
-
-void PlayerT::updateMove()
+void PlayerT::updateMove(sf::Time deltaTime)
 {
 	sf::Vector2f dir(0, 0);
 
@@ -63,20 +53,20 @@ void PlayerT::updateMove()
 	}
 
 	updateDash(dir);
-	updateMovSpeed();
+	updateMovSpeed(deltaTime);
 
-	hit_box.setPosition(getPosition() + sf::Vector2f((dir.x * this->mov_speed* entitydata->deltaTime.asSeconds()), dir.y * this->mov_speed* entitydata->deltaTime.asSeconds()));
+	hit_box.setPosition(getPosition() + sf::Vector2f((dir.x * this->mov_speed* deltaTime.asSeconds()), dir.y * this->mov_speed* deltaTime.asSeconds()));
 	updateCollision();
 	this->sprite.move((dir.x * this->mov_speed* entitydata->deltaTime.asSeconds()) , dir.y * this->mov_speed* entitydata->deltaTime.asSeconds());
 }
 
-void PlayerT::updateBullets()
+void PlayerT::updateBullets(sf::Time deltaTime, sf::Vector2f target)
 {
-	updateShooting();
+	updateShooting(deltaTime);
 
 	if (shooting && getAmmo())
 	{
-		this->stf->shot(bullets, this->entitydata);
+		this->stf->shot(bullets, getPosition(), target);
 		ammo -= this->stf->nrshot;
 		if ((ammo - this->stf->nrshot) < 0)
 			this->stf->nrshot = ammo;
@@ -103,7 +93,7 @@ void PlayerT::updateRotate()
 	this->sprite.setRotation(deg + 360.f);
 }
 
-void PlayerT::updateReload()
+bool PlayerT::updateReload()
 {
 	if (ammo == 0 || reloading)
 	{
@@ -137,12 +127,12 @@ void PlayerT::updateReload()
 			}
 			}
 			setRatioCd(stf->getRatio());
-			sprite.setTexture(this->entitydata->textures->get(this->id));
-
-
 			reloading = false;
+			return true;
 		}
+		return false;
 	}
+	return false;
 }
 
 void PlayerT::updateDash(sf::Vector2f dir)
@@ -173,11 +163,11 @@ void PlayerT::updateDash(sf::Vector2f dir)
 	}
 }
 
-void PlayerT::updateMovSpeed()
+void PlayerT::updateMovSpeed(sf::Time deltaTime)
 {
 	if (this->mov_speed != this->mov_speed_default)
 	{
-		this->ms_clock -= entitydata->deltaTime.asSeconds();
+		this->ms_clock -= deltaTime.asSeconds();
 	}
 
 	if (ms_clock < 0.f)
@@ -235,11 +225,11 @@ void PlayerT::updateCollision()
 	setGridPosition(entitydata->map->getGridSize());
 }
 
-void PlayerT::updateShooting()
+void PlayerT::updateShooting(sf::Time deltaTime)
 {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !reloading)
 	{
-		ratio_clock -= entitydata->deltaTime;
+		ratio_clock -= deltaTime;
 
 		if (ratio_clock < sf::seconds(0.f))
 		{
@@ -314,6 +304,18 @@ void PlayerT::initHitBox()
 void PlayerT::takeDamage()
 {
 	this->hp--;
+}
+
+Textures::ID PlayerT::getId()
+{
+	return 
+		this->id;
+}
+
+void PlayerT::setTexturesSprite(std::shared_ptr<TextureHolder> textures)
+{
+	sprite.setTexture(textures->get(this->id));
+
 }
 
 void PlayerT::setType()

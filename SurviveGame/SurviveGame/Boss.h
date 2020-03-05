@@ -9,9 +9,6 @@ public:
 	Boss();
 	virtual ~Boss();
 
-private:
-	virtual void update();
-	virtual void renderBullets(std::shared_ptr<sf::RenderWindow> target);
 
 	void updateMove();
 	void updateBullets();
@@ -21,6 +18,9 @@ private:
 	void updateCollision();
 
 	void updateShooting();
+
+private:
+	virtual void update();virtual void renderBullets(std::shared_ptr<sf::RenderWindow> target);
 
 	bool isInRange(sf::Vector2f obj1, sf::Vector2f obj2);
 	void takeDamage();

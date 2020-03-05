@@ -6,7 +6,7 @@ StShotgunPlayerFight::StShotgunPlayerFight()
 	nrshot = 8;//deve essere pari
 }
 
-void StShotgunPlayerFight::shot(std::vector<std::shared_ptr<Bullet>>& bullets, const std::shared_ptr<EntityData> entitydata)
+void StShotgunPlayerFight::shot(std::vector<std::shared_ptr<Bullet>>& bullets, sf::Vector2f owner_pos, sf::Vector2f target_pos)
 {
 	float dir = 180.f / (nrshot * 360.f);
 	int count = 0;
@@ -17,8 +17,8 @@ void StShotgunPlayerFight::shot(std::vector<std::shared_ptr<Bullet>>& bullets, c
 		{
 			std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Player, entitydata));
 
-			float dx = entitydata->mouse_pos_view.x - entitydata->player->getPosition().x;
-			float dy = entitydata->mouse_pos_view.y - entitydata->player->getPosition().y;
+			float dx = target_pos.x - owner_pos.x;
+			float dy = target_pos.y - owner_pos.y;
 
 			float lenght = sqrt(pow(dx, 2) + pow(dy, 2));
 			sf::Vector2f normVect = sf::Vector2f(dx / lenght, dy / lenght);

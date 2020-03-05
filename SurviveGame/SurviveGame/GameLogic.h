@@ -30,10 +30,18 @@ private:
 
 	void updateState();
 
-	void updatePlayer();
-	void updateEnemies();
+	void updatePlayer(sf::Time deltaTime);
+	void updateRound();
+
+	void spawnZombies(sf::Time deltaTime);
+	void updateZombie(sf::Time deltaTime, int i);
+
+	void spawnBoss();
 	void updateBoss();
+
+	void spawnPet();
 	void updatePet();
+
 	void updateBoost();
 
 	void updateGameView(sf::Time deltaTime);
@@ -62,9 +70,9 @@ private:
 
 	std::shared_ptr<TextureHolder> textures;
 
-    std::vector<std::shared_ptr<Character>> * enemies;
+    std::vector<std::shared_ptr<Enemy>> * enemies;
 	std::shared_ptr<PlayerT> player;
-	std::shared_ptr<Character> boss;
+	std::shared_ptr<Boss> boss;
 
 	std::shared_ptr<Character> pet;
 	std::vector<std::shared_ptr<Boost>> boost;

@@ -6,13 +6,13 @@ StGunPlayerFight::StGunPlayerFight()
 	nrshot = 5;//deve essere pari
 }
 
-void StGunPlayerFight::shot(std::vector<std::shared_ptr<Bullet>>& bullets, const std::shared_ptr<EntityData> entitydata)
+void StGunPlayerFight::shot(std::vector<std::shared_ptr<Bullet>>& bullets, sf::Vector2f owner_pos, sf::Vector2f target_pos)
 {
 	for (int i = 0; i < nrshot; i++)
 	{
-		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Player, entitydata));
-		float dx = entitydata->mouse_pos_view.x - entitydata->player->getPosition().x;
-		float dy = entitydata->mouse_pos_view.y - entitydata->player->getPosition().y;
+		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Player, owner_pos));
+		float dx = target_pos.x - owner_pos.x;
+		float dy = target_pos.y - owner_pos.y;
 		float lenght = sqrt(pow(dx, 2) + pow(dy, 2));
 		sf::Vector2f normVect = sf::Vector2f(dx / lenght, dy / lenght);
 		bullet->setDir(normVect);
