@@ -11,7 +11,7 @@ public:
 
 	void update();
 
-	void calculateDir(float nrshot = 0);
+	void calculateDir();
 	void setDir(sf::Vector2f dir);
 
 private:

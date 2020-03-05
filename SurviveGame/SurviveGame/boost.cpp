@@ -1,9 +1,7 @@
 #include "Boost.h"
 
-Boost::Boost(const std::shared_ptr<BoostPos> boost_pos, const std::shared_ptr<EntityData> entitydata)
+Boost::Boost(const std::shared_ptr<BoostPos> boost_pos)
 {
-	this->entitydata = entitydata;
-
 	this->boost_pos = boost_pos;
 	this->alive = true;
 	this->pos = sf::Vector2f(0, 0);
@@ -25,51 +23,53 @@ Boost::~Boost()
 {
 }
 
-void Boost::update()
+bool Boost::checkCollide(sf::FloatRect character)
 {
-	if (sat_test(entitydata->player->getHitBox().getGlobalBounds(), getHitBox().getGlobalBounds(), &vec))
+	return(sat_test(character, getHitBox().getGlobalBounds(), &vec));
+}
+
+void Boost::boostSubject(std::shared_ptr<Character> character)
+{
+	switch (type)
 	{
-		switch (type)
+	case HP:
+		if (character->getHp() < character->getHpMax())
 		{
-		case HP:
-			if (entitydata->player->getHp() < entitydata->player->getHpMax())
-			{
-				entitydata->player->boostHeal();
-				this->alive = false;
+			character->boostHeal();
+			this->alive = false;
 
-				switch (this->position)
-				{
-				case TOP_LEFT: boost_pos->pos1_1 = false;
-					break;
-				case TOP_RIGHT: boost_pos->pos1_2 = false;
-					break;
-				case DOWN_LEFT: boost_pos->pos2_1 = false;
-					break;
-				case DOWN_RIGHT: boost_pos->pos2_2 = false;
-					break;
-				}
-			}
-			break;
-		case MS:
-			if (entitydata->player->getMovSpeed() == entitydata->player->getMovSpeedDef())
+			switch (this->position)
 			{
-				entitydata->player->boostMovSpeed();
-				this->alive = false;
-
-				switch (this->position)
-				{
-				case TOP_LEFT: boost_pos->pos1_1 = false;
-					break;
-				case TOP_RIGHT: boost_pos->pos1_2 = false;
-					break;
-				case DOWN_LEFT: boost_pos->pos2_1 = false;
-					break;
-				case DOWN_RIGHT: boost_pos->pos2_2 = false;
-					break;
-				}
+			case TOP_LEFT: boost_pos->pos1_1 = false;
+				break;
+			case TOP_RIGHT: boost_pos->pos1_2 = false;
+				break;
+			case DOWN_LEFT: boost_pos->pos2_1 = false;
+				break;
+			case DOWN_RIGHT: boost_pos->pos2_2 = false;
+				break;
 			}
-			break;
 		}
+		break;
+	case MS:
+		if (character->getMovSpeed() == character->getMovSpeedDef())
+		{
+			character->boostMovSpeed();
+			this->alive = false;
+
+			switch (this->position)
+			{
+			case TOP_LEFT: boost_pos->pos1_1 = false;
+				break;
+			case TOP_RIGHT: boost_pos->pos1_2 = false;
+				break;
+			case DOWN_LEFT: boost_pos->pos2_1 = false;
+				break;
+			case DOWN_RIGHT: boost_pos->pos2_2 = false;
+				break;
+			}
+		}
+		break;
 	}
 }
 

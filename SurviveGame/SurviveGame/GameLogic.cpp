@@ -197,7 +197,8 @@ void GameLogic::updateBoost()
 	{
 		for (unsigned int i = 0; i < boost.size(); i++)
 		{
-			boost[i]->update();
+			if (boost[i]->checkCollide(player->getHitBox().getGlobalBounds()))
+				boost[i]->boostSubject(player);
 
 			if (!boost[i]->isAlive())
 				boost.erase(boost.begin() + i);
@@ -207,7 +208,21 @@ void GameLogic::updateBoost()
 
 void GameLogic::updatePlayer()
 {
-	player->update();
+	player->updateMove();
+	player->updateMovSpeed();
+	set_pos;
+	player->updateCollision();
+
+
+	player->updateBullets();
+	player->updateShooting();
+
+	player->updateRotate();
+
+	player->updateReload();
+
+	player->updateHud();
+
 }
 
 void GameLogic::updateGameView(sf::Time deltaTime)

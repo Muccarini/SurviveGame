@@ -25,9 +25,6 @@
     <Filter Include="Strategy">
       <UniqueIdentifier>{a5b10bc5-8f3c-4f98-9217-2a393fe2346f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Strategy\move">
-      <UniqueIdentifier>{4aa74dd6-69a5-4317-9a7b-8b890b166f89}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Strategy\Fight">
       <UniqueIdentifier>{7455a912-d422-4c86-a831-9b45a33e91d2}</UniqueIdentifier>
     </Filter>
@@ -93,17 +90,11 @@
     <ClCompile Include="SelectionCharacter.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyStrategyMove.cpp">
-      <Filter>Strategy\move</Filter>
-    </ClCompile>
     <ClCompile Include="StShotgunPlayerFight.cpp">
       <Filter>Strategy\Fight</Filter>
     </ClCompile>
     <ClCompile Include="StRiflePlayerFight.cpp">
       <Filter>Strategy\Fight</Filter>
-    </ClCompile>
-    <ClCompile Include="Achievement.cpp">
-      <Filter>Map</Filter>
     </ClCompile>
     <ClCompile Include="Observer.cpp">
       <Filter>Map</Filter>
@@ -129,11 +120,11 @@
     <ClCompile Include="AStar.cpp">
       <Filter>Personaggi\Nemici</Filter>
     </ClCompile>
+    <ClCompile Include="Achievement.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="StrategyMove.h">
-      <Filter>Personaggi\Nemici</Filter>
-    </ClInclude>
     <ClInclude Include="TextureHolder.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
@@ -202,9 +193,6 @@
     </ClInclude>
     <ClInclude Include="Subject.h">
       <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyStrategyMove.h">
-      <Filter>Strategy\move</Filter>
     </ClInclude>
     <ClInclude Include="StrategyMove.h">
       <Filter>Strategy\move</Filter>

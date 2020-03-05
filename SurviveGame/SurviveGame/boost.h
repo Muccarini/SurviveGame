@@ -12,12 +12,13 @@ class Boost :
 	public Entity
 {
 public:
-	Boost(const std::shared_ptr<BoostPos> boost_pos, const std::shared_ptr<EntityData> entitydata);
+	Boost(const std::shared_ptr<BoostPos> boost_pos);
 	virtual ~Boost();
 
-private:
-	void update();
+	bool checkCollide(sf::FloatRect character);
+	void boostSubject(std::shared_ptr<Character> character);
 
+private:
 	void initHp();
 	void initMs();
 

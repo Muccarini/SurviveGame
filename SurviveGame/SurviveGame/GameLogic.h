@@ -63,11 +63,11 @@ private:
 	std::shared_ptr<TextureHolder> textures;
 
     std::vector<std::shared_ptr<Character>> * enemies;
-	std::shared_ptr<Character> player;
+	std::shared_ptr<PlayerT> player;
 	std::shared_ptr<Character> boss;
 
 	std::shared_ptr<Character> pet;
-	std::vector<std::shared_ptr<Entity>> boost;
+	std::vector<std::shared_ptr<Boost>> boost;
 
 	std::shared_ptr<EntityData> entitydata;
 	std::shared_ptr<BoostPos> boost_pos;

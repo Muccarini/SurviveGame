@@ -167,6 +167,7 @@
     <ClCompile Include="unittest1.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)\SurviveGame;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <ClCompile Include="unittest2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SurviveGame\SurviveGame.vcxproj">

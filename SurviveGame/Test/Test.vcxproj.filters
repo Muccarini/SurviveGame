@@ -29,5 +29,8 @@
     <ClCompile Include="unittest1.cpp">
       <Filter>File di risorse</Filter>
     </ClCompile>
+    <ClCompile Include="unittest2.cpp">
+      <Filter>File di risorse</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

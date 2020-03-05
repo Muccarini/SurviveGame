@@ -54,7 +54,7 @@ void Bullet::update()
 	updateRotate(dir);
 }
 
-void Bullet::calculateDir(float nrshot)
+void Bullet::calculateDir()
 {
 	float dx;
 	float dy;

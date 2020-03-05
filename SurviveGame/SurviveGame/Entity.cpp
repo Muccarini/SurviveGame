@@ -30,6 +30,11 @@ void Entity::setAlive(bool boolean)
 	this->alive = boolean;
 }
 
+void Entity::initPosSprite(float x, float y)
+{
+	sprite.setPosition(x, y);
+}
+
 
 bool Entity::isCollide()
 {

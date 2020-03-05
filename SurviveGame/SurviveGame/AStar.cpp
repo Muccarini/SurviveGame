@@ -61,15 +61,14 @@ sf::Vector2f AStar::move(sf::Time deltatime, sf::Sprite* _sprite, sf::Vector2f t
 				spostamento.y = -max_distance;
 				spostamento.x = 0;
 			}
-			_sprite->move(spostamento);
 			max_distance = 64;
 		}
 		if (max_distance == 64)
 		{
 			movevect.pop_front();
 		}
-		return spostamento;
 	}
+	return spostamento;
 }
 
 void AStar::setMaxDist(float m_distance)

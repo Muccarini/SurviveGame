@@ -45,7 +45,6 @@ public:
 	Entity();
 	virtual ~Entity();
 
-	virtual void update() = 0;
 	void render(std::shared_ptr<sf::RenderWindow> target);
 
 	bool isAlive();

@@ -7,7 +7,6 @@
 
 PlayerT::PlayerT(const std::shared_ptr<EntityData> entitydata, Textures::ID id, StrategyFight* stf) : id(id)
 {
-	this->entitydata = entitydata;
 	setStrategyFight(stf);
 	setType();
 	initVar();
@@ -234,10 +233,6 @@ void PlayerT::updateCollision()
 	hit_box.setPosition(getPosition());
 	collision->resetOutMtv();
 	setGridPosition(entitydata->map->getGridSize());
-}
-
-void PlayerT::updateDataPlayer()
-{
 }
 
 void PlayerT::updateShooting()

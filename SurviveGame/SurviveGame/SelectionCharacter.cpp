@@ -65,7 +65,7 @@ void SelectionCharacter::updateButtons()
 		return;
 	}
 
-	//KNIFE
+	//HANDGUN
 	if (gun.isActive(mouse_pos_view))
 	{
 		StrategyFight* stf = new StGunPlayerFight();
