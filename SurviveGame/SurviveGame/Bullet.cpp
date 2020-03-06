@@ -1,24 +1,23 @@
 #include "Bullet.h"
 
-Bullet::Bullet(BulletOwner::Owner owner, std::shared_ptr<EntityData> entitydata)
+Bullet::Bullet(BulletOwner::Owner owner, sf::Vector2f owner_pos, sf::Texture texture)
 {
 	this->owner = owner;
-	this->entitydata = entitydata;
 
 	this->mov_speed = 1500;
 
 	switch(owner)
 	{
 	case(BulletOwner::Player):
-		initSpritePlayer();
+		initSpritePlayer(owner_pos, texture);
 		initHitBox();
 		break;
 	case(BulletOwner::Boss):
-		initSpriteBoss();
+		initSpriteBoss(owner_pos, texture);
 		initHitBox();
 		break;
 	case(BulletOwner::Pet):
-		initSpritePet();
+		initSpritePet(owner_pos, texture);
 		initHitBox();
 		break;
 	}
@@ -32,9 +31,9 @@ Bullet::~Bullet()
 {
 }
 
-void Bullet::update()
+void Bullet::update(sf::Time deltaTime)
 {
-	updateMove();
+	updateMove(deltaTime);
 
 	switch(this->owner)
 	{
@@ -54,7 +53,7 @@ void Bullet::update()
 	updateRotate(dir);
 }
 
-void Bullet::calculateDir()
+void Bullet::calculateDir(sf::Vector2f owner_pos, sf::Vector2f target)
 {
 	float dx;
 	float dy;
@@ -63,15 +62,15 @@ void Bullet::calculateDir()
 	switch (this->owner)
 	{
 	case(BulletOwner::Pet):
-		dx = entitydata->mouse_pos_view.x - entitydata->pet->getPosition().x;
-		dy = entitydata->mouse_pos_view.y - entitydata->pet->getPosition().y;
-		sprite.setPosition(entitydata->pet->getPosition());
+		dx = target.x - owner_pos.x;
+		dy = target.y - owner_pos.y;
+		sprite.setPosition(owner_pos);
 		hit_box.setPosition(sprite.getPosition());
 		break;
 	case(BulletOwner::Boss):
-		dx = entitydata->player->getPosition().x - entitydata->boss->getPosition().x;
-		dy = entitydata->player->getPosition().y - entitydata->boss->getPosition().y;
-		sprite.setPosition(entitydata->boss->getPosition());
+		dx = target.x - owner_pos.x;
+		dy = target.y - owner_pos.y;
+		sprite.setPosition(owner_pos);
 		hit_box.setPosition(sprite.getPosition());
 		break;
 	}
@@ -85,26 +84,26 @@ void Bullet::setDir(sf::Vector2f dir)
 	this->dir = dir;
 }
 
-void Bullet::initSpritePet()
+void Bullet::initSpritePet(sf::Vector2f owner_pos, sf::Texture texture)
 {
-	sprite.setTexture(entitydata->textures->get(Textures::Proiettile));
-	sprite.setPosition(entitydata->pet->getPosition());
+	sprite.setTexture(texture);
+	sprite.setPosition(owner_pos);
 	sprite.setScale(0.013f, 0.013f);
 	this->sprite.setOrigin(-500, 0);
 }
 
-void Bullet::initSpriteBoss()
+void Bullet::initSpriteBoss(sf::Vector2f owner_pos, sf::Texture texture)
 {
-	sprite.setTexture(entitydata->textures->get(Textures::Proiettile));
-	sprite.setPosition(entitydata->boss->getPosition());
+	sprite.setTexture(texture);
+	sprite.setPosition(owner_pos);
 	sprite.setScale(0.013f, 0.013f);
 	this->sprite.setOrigin(-3500, -562);
 }
 
-void Bullet::initSpritePlayer()
+void Bullet::initSpritePlayer(sf::Vector2f owner_pos, sf::Texture texture)
 {
-	sprite.setTexture(entitydata->textures->get(Textures::Proiettile));
-	sprite.setPosition(entitydata->player->getPosition());
+	sprite.setTexture(texture);
+	sprite.setPosition(owner_pos);
 	sprite.setScale(0.013f, 0.013f);
 	this->sprite.setOrigin(-3500, -562);
 }
@@ -120,9 +119,9 @@ void Bullet::initHitBox()
 	hit_box.setOrigin(sprite.getOrigin());
 }
 
-void Bullet::updateMove()
+void Bullet::updateMove(sf::Time deltaTime)
 {
-	this->sprite.move(this->dir.x * this->mov_speed * entitydata->deltaTime.asSeconds(), this->dir.y * this->mov_speed * entitydata->deltaTime.asSeconds());
+	this->sprite.move(this->dir.x * this->mov_speed * deltaTime.asSeconds(), this->dir.y * this->mov_speed * deltaTime.asSeconds());
 	hit_box.setPosition(sprite.getPosition());
 }
 
@@ -203,7 +202,6 @@ void Bullet::updateWallsCollision()
 	//WALLS
 	collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->map->findWalls(static_cast<int>(sprite.getPosition().x), static_cast<int>(sprite.getPosition().y)));
 	collision->resetOutMtv();
-
 }
 
 void Bullet::updateRotate(sf::Vector2f vec_dir)

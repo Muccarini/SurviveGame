@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
 
-Enemy::Enemy(sf::Texture texture, GridNode* grid, float grid_size) : _m(*grid, target, max_distance, distance)
+Enemy::Enemy(sf::Texture texture, GridNode grid, float grid_size) : _m(grid, max_distance, distance)
 {
 	initVar();
 	initSprite(grid, texture);
@@ -10,7 +10,7 @@ Enemy::Enemy(sf::Texture texture, GridNode* grid, float grid_size) : _m(*grid, t
 	_m.setMaxDist(max_distance);
 }
 
-Enemy::Enemy() : _m(*entitydata->grid, target, max_distance, distance)
+Enemy::Enemy() : _m(*entitydata->grid, max_distance, distance)
 {
 }
 
@@ -42,7 +42,7 @@ void Enemy::updateHud()
 	hud.updateText(hp, getPosition());
 }
 
-void Enemy::updateCollision(sf::FloatRect player, sf::FloatRect pet, std::vector<sf::FloatRect> walls)
+void Enemy::updateCollision(sf::FloatRect player, sf::FloatRect pet, std::vector<sf::FloatRect> walls, float grid_size)
 {
 	sf::Vector2f ent(0, 0);
 	sf::Vector2f dir(0, 0);
@@ -68,7 +68,11 @@ void Enemy::updateCollision(sf::FloatRect player, sf::FloatRect pet, std::vector
 	hit_box.setPosition(getPosition());
 	collision->resetOutMtv();
 
-	setGridPosition(this->entitydata->map->getGridSize());
+	setGridPosition(grid_size);
+}
+
+void Enemy::renderBullets(std::shared_ptr<sf::RenderWindow> target)
+{
 }
 
 void Enemy::initVar()
@@ -78,14 +82,14 @@ void Enemy::initVar()
 	max_distance = 64;
 }
 
-void Enemy::initSprite(GridNode *grid, sf::Texture texture)
+void Enemy::initSprite(GridNode grid, sf::Texture texture)
 {
 	sprite.setTexture(texture);
 	sprite.setScale(0.9f, 0.9f);
 	int k = /*7;*/rand() % 17 + 1;//max 1920
 	int j = /*6;*/rand() % 13 + 1;//max 1080
 	GridLocation pos = { k , j };
-	while (grid->getGrid()[j][k].walkable)
+	while (grid.getGrid()[j][k].walkable)
 	{
 		j++;
 		k++;

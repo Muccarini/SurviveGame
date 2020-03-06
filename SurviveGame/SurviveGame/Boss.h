@@ -5,38 +5,35 @@ class Boss :
 	public Character
 {
 public:
-	explicit Boss(const std::shared_ptr<EntityData> entitydata);
+	explicit Boss(GridNode grid, sf::Texture texture);
 	Boss();
 	virtual ~Boss();
 
-
-	void updateMove();
-	void updateBullets();
-	void updateRotate();
-	void updateReload();
+	void updateMove(sf::Time deltaTime, sf::Vector2f target, float grid_size);
+	void updateBullets(sf::Time deltaTime, sf::Vector2f target, sf::Texture bullet_txt);
+	void updateRotate(sf::Vector2f target);
+	void updateReload(sf::Time deltaTime);
 	void updateHud();
-	void updateCollision();
+	void updateCollision(sf::Vector2f target, std::vector<sf::FloatRect> walls, float grid_size);
 
-	void updateShooting();
+	void updateShooting(sf::Time deltaTime, sf::Vector2f target);
 
+	virtual void renderBullets(std::shared_ptr<sf::RenderWindow> target);
 private:
-	virtual void update();virtual void renderBullets(std::shared_ptr<sf::RenderWindow> target);
 
 	bool isInRange(sf::Vector2f obj1, sf::Vector2f obj2);
 	void takeDamage();
 
 	void initVar();
-	void initSprite();
+	void initSprite(GridNode grid, sf::Texture texture);
 	void initHitBox();
 
 	std::vector<std::shared_ptr<Bullet>> bullets;
-	sf::Texture texture_bullet;
 
 	//movimento
 	float distance;
 	float max_distance;
 	std::list <sf::Vector2f> move_vect;
-	sf::Vector2f target;
 	sf::Vector2f spostamento;
 
 	AStar _m;

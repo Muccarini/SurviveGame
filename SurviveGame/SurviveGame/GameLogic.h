@@ -36,30 +36,28 @@ private:
 	void spawnZombies(sf::Time deltaTime);
 	void updateZombie(sf::Time deltaTime, int i);
 
-	void spawnBoss();
-	void updateBoss();
+	void spawnBoss(sf::Time deltaTime);
+	void updateBoss(sf::Time deltaTime);
 
 	void spawnPet();
-	void updatePet();
+	void updatePet(sf::Time deltaTime);
 
 	void updateBoost();
 
 	void updateGameView(sf::Time deltaTime);
-	void updateEntityData(sf::Time deltaTime);
 	void updateHud();
 
 	void renderEnemies();
 	void renderPlayer();
 	void renderBoss();
 	void renderPet();
-	void renderBoost();
+	void renderBoosts();
 	void renderAchievement();
 
 	void entitiesInit(Textures::ID id, StrategyFight* stf);
 	void gameViewInit();
 	void textureInit();
 	void varInit();
-	void entitydataInit();
 
 	TileMap tile_map;
 	GridNode grid;
@@ -70,16 +68,14 @@ private:
 
 	std::shared_ptr<TextureHolder> textures;
 
-    std::vector<std::shared_ptr<Enemy>> * enemies;
+    std::vector<std::shared_ptr<Enemy>> enemies;
 	std::shared_ptr<PlayerT> player;
 	std::shared_ptr<Boss> boss;
 
-	std::shared_ptr<Character> pet;
-	std::vector<std::shared_ptr<Boost>> boost;
+	std::shared_ptr<Pet> pet;
+	std::vector<std::shared_ptr<Boost>> boosts;
 
-	std::shared_ptr<EntityData> entitydata;
 	std::shared_ptr<BoostPos> boost_pos;
-	Textures::ID id;
 
 	const int max_enemies = 5;
 	int enemies_alive;

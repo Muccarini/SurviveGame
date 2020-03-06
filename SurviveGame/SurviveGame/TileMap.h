@@ -21,7 +21,6 @@ private:
 
 	sf::RectangleShape wall;
 	std::vector<sf::RectangleShape> walls;
-	/*sf::RectangleShape creating_wall_block(std::vector<sf::RectangleShape> walls_rect);*/
 
 	std::vector<sf::FloatRect> wall_block;
 

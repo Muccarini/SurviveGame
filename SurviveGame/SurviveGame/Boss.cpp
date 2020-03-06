@@ -1,33 +1,21 @@
 #include "Boss.h"
 
-Boss::Boss(std::shared_ptr<EntityData> entitydata) :
-	_m(*entitydata->grid, target, max_distance, distance)
+Boss::Boss(GridNode grid, sf::Texture texture) :
+	_m(grid, max_distance, distance)
 {
-	this->entitydata = entitydata;
-
 	initVar();
-	initSprite();
+	initSprite(grid, texture);
 	initHitBox();
 	_m.setDist(distance);
 	_m.setMaxDist(max_distance);
 }
 
-Boss::Boss() : _m(*entitydata->grid, target, max_distance, distance)
+Boss::Boss() : _m(*entitydata->grid, max_distance, distance)
 {
 }
 
 Boss::~Boss()
 {
-}
-
-void Boss::update()
-{
-	updateMove();
-	updateRotate();
-	updateBullets();
-	updateReload();
-	updateHud();
-	updateCollision();
 }
 
 void Boss::renderBullets(std::shared_ptr<sf::RenderWindow> target)
@@ -38,26 +26,24 @@ void Boss::renderBullets(std::shared_ptr<sf::RenderWindow> target)
 	}
 }
 
-void Boss::updateMove()
+void Boss::updateMove(sf::Time deltaTime, sf::Vector2f target, float grid_size)
 {
-	this->sprite.move(_m.move(this->entitydata->deltaTime, &(this->sprite), this->entitydata->player->getPosition(), move_vect, mov_speed));
-	this->target.x = this->entitydata->player->getPosition().x;
-	this->target.y = this->entitydata->player->getPosition().y;
+	this->sprite.move(_m.move(deltaTime, &(this->sprite), target, move_vect, mov_speed));
 
 	hit_box.setPosition(getPosition());
-	setGridPosition(this->entitydata->map->getGridSize());
+	setGridPosition(grid_size);
 }
 
-void Boss::updateBullets()
+void Boss::updateBullets(sf::Time deltaTime, sf::Vector2f target, sf::Texture bullet_txt)
 {
-	updateShooting();
+	updateShooting(deltaTime, target);
 
 	if (shooting && getAmmo())
 	{
-		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Boss, entitydata));
+		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Boss, getPosition(), bullet_txt));
 		ammo--;
 		bullets.emplace_back(bullet);
-		bullet->calculateDir();
+		bullet->calculateDir(getPosition(), target);
 	}
 
 	for (unsigned int i = 0; i < bullets.size(); i++)
@@ -68,22 +54,22 @@ void Boss::updateBullets()
 	}
 }
 
-void Boss::updateRotate()
+void Boss::updateRotate(sf::Vector2f target)
 {
-	float dX = entitydata->player->getPosition().x - this->sprite.getPosition().x;
-	float dY = entitydata->player->getPosition().y - this->sprite.getPosition().y;
+	float dX = target.x - this->sprite.getPosition().x;
+	float dY = target.y - this->sprite.getPosition().y;
 	const float PI = 3.14159265f;
 	float deg = atan2(dY, dX) * 180.f / PI;
 
 	this->sprite.setRotation(deg);
 }
 
-void Boss::updateReload()
+void Boss::updateReload(sf::Time deltaTime)
 {
 	if (ammo == 0)
 	{
 		reloading = true;
-		reload_clock -= entitydata->deltaTime;
+		reload_clock -= deltaTime;
 
 		if (reload_clock < sf::seconds(0.f))
 		{
@@ -99,7 +85,7 @@ void Boss::updateHud()
 	hud.updateText(hp, getPosition());
 }
 
-void Boss::updateCollision()
+void Boss::updateCollision(sf::Vector2f target, std::vector<sf::FloatRect> walls, float grid_size)
 {
 	sf::Vector2f dir(0.f, 0.f);
 	sf::Vector2f ent(0.f, 0.f);
@@ -120,11 +106,11 @@ void Boss::updateCollision()
 }
 
 
-void Boss::updateShooting()
+void Boss::updateShooting(sf::Time deltaTime, sf::Vector2f target)
 {
-	ratio_clock -= entitydata->deltaTime;
+	ratio_clock -= deltaTime;
 
-	if (isInRange(entitydata->boss->getPosition(), entitydata->player->getPosition()) && !reloading)
+	if (isInRange(getPosition(), target) && !reloading)
 	{
 		if (ratio_clock < sf::seconds(0.f))
 		{
@@ -179,14 +165,14 @@ void Boss::initVar()
 	range = 300;
 }
 
-void Boss::initSprite()
+void Boss::initSprite(GridNode grid, sf::Texture texture)
 {
-	sprite.setTexture(entitydata->textures->get(Textures::Boss));
+	sprite.setTexture(texture);
 	sprite.setScale(1.5, 1.5);
 	int k = /*7;*/rand() % 17 + 1;//max 1920
 	int j = /*6;*/rand() % 13 + 1;//max 1080
 	GridLocation pos = { k , j };
-	while (!this->entitydata->grid->getGrid()[j][k].walkable)
+	while (!grid.getGrid()[j][k].walkable)
 	{
 		j++;
 		k++;

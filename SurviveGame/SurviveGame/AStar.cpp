@@ -6,11 +6,10 @@ inline double heuristic(GridLocation a, GridLocation b)
 }
 
 
-AStar::AStar(GridNode grid, sf::Vector2f target, float max_d, float dist) : grid(grid)
+AStar::AStar(GridNode grid, float max_d, float dist) : grid(grid)
 {
 	max_distance = max_d;
 	distance = dist;
-	this->target = target;
 }
 
 AStar::~AStar()

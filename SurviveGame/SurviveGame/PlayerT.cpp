@@ -52,21 +52,20 @@ void PlayerT::updateMove(sf::Time deltaTime)
 		dir.x = +1;
 	}
 
-	updateDash(dir);
 	updateMovSpeed(deltaTime);
+	this->mov_dir = dir;
 
 	hit_box.setPosition(getPosition() + sf::Vector2f((dir.x * this->mov_speed* deltaTime.asSeconds()), dir.y * this->mov_speed* deltaTime.asSeconds()));
-	updateCollision();
-	this->sprite.move((dir.x * this->mov_speed* entitydata->deltaTime.asSeconds()) , dir.y * this->mov_speed* entitydata->deltaTime.asSeconds());
+	this->sprite.move((dir.x * this->mov_speed* deltaTime.asSeconds()) , dir.y * this->mov_speed* deltaTime.asSeconds());
 }
 
-void PlayerT::updateBullets(sf::Time deltaTime, sf::Vector2f target)
+void PlayerT::updateBullets(sf::Time deltaTime, sf::Vector2f target, sf::Texture bullet_txt)
 {
 	updateShooting(deltaTime);
 
 	if (shooting && getAmmo())
 	{
-		this->stf->shot(bullets, getPosition(), target);
+		this->stf->shot(bullets, getPosition(), target, bullet_txt);
 		ammo -= this->stf->nrshot;
 		if ((ammo - this->stf->nrshot) < 0)
 			this->stf->nrshot = ammo;
@@ -76,28 +75,28 @@ void PlayerT::updateBullets(sf::Time deltaTime, sf::Vector2f target)
 	{
 		for (unsigned int i = 0; i < bullets.size(); i++)
 		{
-			bullets[i]->update();
+			bullets[i]->update(deltaTime);
 			if (bullets[i]->isCollide())
 				bullets.erase(bullets.begin() + i);
 		}
 	}
 }
 
-void PlayerT::updateRotate()
+void PlayerT::updateRotate(sf::Vector2f target)
 {
-	float dX = entitydata->mouse_pos_view.x - getPosition().x;
-	float dY = entitydata->mouse_pos_view.y - getPosition().y;
+	float dX = target.x - getPosition().x;
+	float dY = target.y - getPosition().y;
 	const float PI = 3.14159265f;
 	float deg = atan2(dY, dX) * 180.f / PI;
 
 	this->sprite.setRotation(deg + 360.f);
 }
 
-bool PlayerT::updateReload()
+bool PlayerT::updateReload(sf::Time deltaTime)
 {
 	if (ammo == 0 || reloading)
 	{
-		reload_clock -= entitydata->deltaTime;
+		reload_clock -= deltaTime;
 		if (reload_clock < sf::seconds(0.f))
 		{
 			ammo = ammo_max;
@@ -135,26 +134,25 @@ bool PlayerT::updateReload()
 	return false;
 }
 
-void PlayerT::updateDash(sf::Vector2f dir)
+void PlayerT::updateDash(sf::Time deltaTime, std::vector<sf::FloatRect> walls)
 {
 	bool space_is_pressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
 
 	if (space_is_pressed && !is_dashing)
 	{
-		hit_box.setPosition(getPosition().x + (dir.x * 160), (dir.y * 160) + getPosition().y);
-		collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->map->findWalls(static_cast<int>(hit_box.getGlobalBounds().left), static_cast<int>(hit_box.getGlobalBounds().top)));
+		hit_box.setPosition(getPosition().x + (this->mov_dir.x * 160), (this->mov_dir.y * 160) + getPosition().y);
+		collision->CollideWithWalls(this->hit_box.getGlobalBounds(), walls);
 		if (!this->collision->isCollide())
 		{
 			is_dashing = true;
 			this->sprite.setPosition(hit_box.getGlobalBounds().left, hit_box.getGlobalBounds().top);
-			
 		}
 		else
 			hit_box.setPosition(getPosition());
 	}
 	if (is_dashing && dash_clock > 0)
 	{
-		dash_clock -= entitydata->deltaTime.asSeconds();
+		dash_clock -= deltaTime.asSeconds();
 		if (dash_clock < 0)
 		{
 			is_dashing = false;
@@ -183,46 +181,43 @@ void PlayerT::updateHud()
 	hud.updateText(getAmmo(), getHp(), this->dash_clock, getPosition());
 }
 
-void PlayerT::updateCollision()
+void PlayerT::updateCollisionEnemies(std::vector<std::shared_ptr<Enemy>> enemies)
 {
-	sf::Vector2f dir(0, 0);
 	sf::Vector2f ent(0, 0);
 
-	std::vector<std::shared_ptr<Character>> enemies;
-	enemies = *entitydata->enemies;
-
-	//ENEMIES
-	if (!enemies.empty())
+	for (int i = 0; i != enemies.size(); i++)
 	{
-		for (int i = 0; i != enemies.size(); i++)
-		{
-			ent = this->collision->CollideWithEntity(this->hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds());
-			sprite.move(ent);
-			if (ent.x != 0 || ent.y != 0)
-				takeDamage();
-		}
-		hit_box.setPosition(getPosition());
-		collision->resetOutMtv();
-	}
-
-	//BOSS
-	if (entitydata->boss)
-	{
-		ent = this->collision->CollideWithEntity(this->hit_box.getGlobalBounds(), entitydata->boss->getHitBox().getGlobalBounds());
+		ent = this->collision->CollideWithEntity(this->hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds());
 		sprite.move(ent);
-
-		hit_box.setPosition(getPosition());
-		collision->resetOutMtv();
+		if (ent.x != 0 || ent.y != 0)
+			takeDamage();
 	}
+	hit_box.setPosition(getPosition());
+	collision->resetOutMtv();
+}
 
-	//WALLS
-	dir = this->collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->map->findWalls(static_cast<int>(getPosition().x), static_cast<int>(getPosition().y)));
+void PlayerT::updateCollisionBoss(sf::FloatRect boss_rect)
+{
+	sf::Vector2f ent(0, 0);
+
+	ent = this->collision->CollideWithEntity(this->hit_box.getGlobalBounds(), boss_rect);
+	sprite.move(ent);
+
+	hit_box.setPosition(getPosition());
+	collision->resetOutMtv();
+}
+
+void PlayerT::updateCollisionWalls(std::vector<sf::FloatRect> walls, float grid_size)
+{
+	sf::Vector2f dir(0, 0);
+
+	dir = this->collision->CollideWithWalls(this->hit_box.getGlobalBounds(), walls);
 
 	this->collision->setPreMtv(this->collision->getOutMtv());
 	sprite.move(dir);
 	hit_box.setPosition(getPosition());
 	collision->resetOutMtv();
-	setGridPosition(entitydata->map->getGridSize());
+	setGridPosition(grid_size);
 }
 
 void PlayerT::updateShooting(sf::Time deltaTime)
@@ -284,7 +279,6 @@ void PlayerT::initVar()
 
 void PlayerT::initSprite()
 {
-	sprite.setTexture(this->entitydata->textures->get(this->id));       //TEXTURE
 	sprite.setScale(0.3f, 0.3f);        //SCALE
 	sprite.setPosition(600.f, 600.f); //POS
 	sprite.setOrigin(92, 120);        //ORIGIN
@@ -312,10 +306,9 @@ Textures::ID PlayerT::getId()
 		this->id;
 }
 
-void PlayerT::setTexturesSprite(std::shared_ptr<TextureHolder> textures)
+void PlayerT::setTexturesSprite(sf::Texture texture)
 {
-	sprite.setTexture(textures->get(this->id));
-
+	sprite.setTexture(texture);
 }
 
 void PlayerT::setType()

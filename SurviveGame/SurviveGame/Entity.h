@@ -12,22 +12,6 @@ namespace BulletOwner
 	enum Owner { Player, Boss, Pet };
 }
 
-struct EntityData
-{
-public:
-	EntityData() {};
-
-	sf::Time deltaTime;
-	sf::Vector2f mouse_pos_view;
-	std::shared_ptr<TileMap> map;
-	std::shared_ptr<TextureHolder> textures;
-    std::vector<std::shared_ptr<Character>> * enemies;
-	std::shared_ptr<Character> player;
-	std::shared_ptr<Character> pet;
-	std::shared_ptr<Character> boss;
-	std::shared_ptr<GridNode> grid;
-};
-
 struct BoostPos {
 
 public:
@@ -65,8 +49,6 @@ protected:
 	sf::Sprite sprite;
 	sf::RectangleShape hit_box;
 	std::shared_ptr<CollisionManager> collision;
-
-	std::shared_ptr<EntityData> entitydata;
 
 	sf::Vector2f vec;
 

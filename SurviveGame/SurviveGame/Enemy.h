@@ -7,7 +7,7 @@ class Enemy :
 {
 
 public:
-	explicit Enemy(sf::Texture texture, GridNode* grid, float grid_size);
+	explicit Enemy(sf::Texture texture, GridNode grid, float grid_size);
 
 	Enemy();
 	virtual ~Enemy();
@@ -17,12 +17,11 @@ public:
 	void updateHud();
 	void updateCollision(sf::FloatRect player, sf::FloatRect pet, std::vector<sf::FloatRect> walls);
 
-private:
-	virtual void update();
 	virtual void renderBullets(std::shared_ptr<sf::RenderWindow> target);
 
+private:
 	void initVar();
-	void initSprite(GridNode* grid, sf::Texture texture);
+	void initSprite(GridNode grid, sf::Texture texture);
 	void initHitBox(float grid_size);
 
 	void takeDamage(/*tipo di danno*/);

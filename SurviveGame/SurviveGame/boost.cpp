@@ -73,6 +73,16 @@ void Boost::boostSubject(std::shared_ptr<Character> character)
 	}
 }
 
+Type Boost::getType()
+{
+	return this->type;
+}
+
+void Boost::setTexturesSprite(sf::Texture texture)
+{
+	sprite.setTexture(texture);
+}
+
 void Boost::initHp()
 {
 	initPos();
@@ -138,8 +148,7 @@ void Boost::initPos()
 }
 
 void Boost::initSpriteHp()
-{
-	sprite.setTexture(entitydata->textures->get(Textures::HP));    //TEXTURE
+{ 
 	sprite.setScale(0.1f, 0.1f);     //SCALE
 	sprite.setPosition(this->pos); //POS
 	sprite.setOrigin(0, 0);        //ORIGIN
@@ -158,7 +167,6 @@ void Boost::initHitBoxHp()
 
 void Boost::initSpriteMs()
 {
-	sprite.setTexture(entitydata->textures->get(Textures::MS));    //TEXTURE
 	sprite.setScale(0.05f, 0.05f);     //SCALE
 	sprite.setPosition(this->pos); //POS
 	sprite.setOrigin(0, 0);        //ORIGIN

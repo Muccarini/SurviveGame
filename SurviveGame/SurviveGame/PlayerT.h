@@ -13,14 +13,16 @@ public:
 	virtual void renderBullets(std::shared_ptr<sf::RenderWindow> target);
 
 	void updateMove(sf::Time deltaTime);
-	void updateBullets(sf::Time deltaTime, sf::Vector2f target);
-	void updateRotate();
-	bool updateReload();
-	void updateDash(sf::Vector2f dir);
+	void updateBullets(sf::Time deltaTime, sf::Vector2f target, sf::Texture bullet_txt);
+	void updateRotate(sf::Vector2f target);
+	bool updateReload(sf::Time deltaTime);
+	void updateDash(sf::Time deltaTime, std::vector<sf::FloatRect> walls);
 	void updateMovSpeed(sf::Time deltaTime);
 	void updateHud();
-	void updateCollision();
-	void updateDataPlayer();
+
+	void updateCollisionEnemies(std::vector<std::shared_ptr<Enemy>> enemies);
+	void updateCollisionBoss(sf::FloatRect boss_rect);
+	void updateCollisionWalls(std::vector<sf::FloatRect> walls, float grid_size);
 
 	void updateShooting(sf::Time deltaTime);
 	void setStrategyFight(StrategyFight* stf);
@@ -34,11 +36,12 @@ public:
 	virtual void takeDamage();
 
 	Textures::ID getId();
-	void setTexturesSprite(std::shared_ptr<TextureHolder> textures);
+	void setTexturesSprite(sf::Texture texture);
 
 	sf::Texture texture_movspeed;
 	sf::Texture texture_bullet;
 
+	sf::Vector2f mov_dir;
 	float dash_speed;
 	float dash_cd;
 	float dash_clock;

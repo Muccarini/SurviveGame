@@ -18,6 +18,9 @@ public:
 	bool checkCollide(sf::FloatRect character);
 	void boostSubject(std::shared_ptr<Character> character);
 
+	Type getType();
+	void setTexturesSprite(sf::Texture texture);
+
 private:
 	void initHp();
 	void initMs();
