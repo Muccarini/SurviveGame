@@ -32,6 +32,7 @@ public:
 	float getMovSpeedDef();
 
 	int getAmmo();
+	void setAmmo(int i);
 
 	void setRatioCd(sf::Time ratio);
 	const sf::Time getRatioCd();
@@ -60,6 +61,6 @@ protected:
 	int ammo_max;
 
 	bool reloading = false;
-	bool shooting;
+	bool shoot;
 };
 

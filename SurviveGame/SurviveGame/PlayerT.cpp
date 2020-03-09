@@ -59,29 +59,6 @@ void PlayerT::updateMove(sf::Time deltaTime)
 	this->sprite.move((dir.x * this->mov_speed* deltaTime.asSeconds()) , dir.y * this->mov_speed* deltaTime.asSeconds());
 }
 
-void PlayerT::updateBullets(sf::Time deltaTime, sf::Vector2f target, sf::Texture bullet_txt)
-{
-	updateShooting(deltaTime);
-
-	if (shooting && getAmmo())
-	{
-		this->stf->shot(bullets, getPosition(), target, bullet_txt);
-		ammo -= this->stf->nrshot;
-		if ((ammo - this->stf->nrshot) < 0)
-			this->stf->nrshot = ammo;
-	}
-
-	if (!bullets.empty())
-	{
-		for (unsigned int i = 0; i < bullets.size(); i++)
-		{
-			bullets[i]->update(deltaTime);
-			if (bullets[i]->isCollide())
-				bullets.erase(bullets.begin() + i);
-		}
-	}
-}
-
 void PlayerT::updateRotate(sf::Vector2f target)
 {
 	float dX = target.x - getPosition().x;
@@ -220,7 +197,7 @@ void PlayerT::updateCollisionWalls(std::vector<sf::FloatRect> walls, float grid_
 	setGridPosition(grid_size);
 }
 
-void PlayerT::updateShooting(sf::Time deltaTime)
+bool PlayerT::shooting(sf::Time deltaTime)
 {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !reloading)
 	{
@@ -229,13 +206,29 @@ void PlayerT::updateShooting(sf::Time deltaTime)
 		if (ratio_clock < sf::seconds(0.f))
 		{
 			ratio_clock = ratio_cd;
-			this->shooting = true;
+
+			if (this->ammo)
+			{
+				this->shoot = true;
+				return true;
+			}
+			else
+			{
+				shoot = false;
+				return false;
+			}
 		}
 		else
-			shooting = false;
+		{
+			shoot = false;
+			return shoot;
+		}
 	}
 	else
-		shooting = false;
+	{
+		shoot = false;
+		return shoot;
+	}
 }
 
 void PlayerT::setStrategyFight(StrategyFight* stf)
@@ -304,6 +297,11 @@ Textures::ID PlayerT::getId()
 {
 	return 
 		this->id;
+}
+
+StrategyFight * PlayerT::getStf()
+{
+	return this->stf;
 }
 
 void PlayerT::setTexturesSprite(sf::Texture texture)

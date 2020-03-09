@@ -30,6 +30,8 @@ private:
 
 	void updateState();
 
+	void updateAchievement(sf::Time deltaTim);
+
 	void updatePlayer(sf::Time deltaTime);
 	void updateRound();
 
@@ -41,6 +43,9 @@ private:
 
 	void spawnPet();
 	void updatePet(sf::Time deltaTime);
+
+	void spawnBullet(BulletOwner::Owner owner);
+	void updateBullet(sf::Time deltaTime);
 
 	void updateBoost();
 
@@ -74,6 +79,7 @@ private:
 
 	std::shared_ptr<Pet> pet;
 	std::vector<std::shared_ptr<Boost>> boosts;
+	std::vector<std::shared_ptr<Bullet>> bullets;
 
 	std::shared_ptr<BoostPos> boost_pos;
 

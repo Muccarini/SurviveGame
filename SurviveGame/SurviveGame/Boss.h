@@ -10,13 +10,14 @@ public:
 	virtual ~Boss();
 
 	void updateMove(sf::Time deltaTime, sf::Vector2f target, float grid_size);
-	void updateBullets(sf::Time deltaTime, sf::Vector2f target, sf::Texture bullet_txt);
+	bool shooting(sf::Time deltaTime, sf::Vector2f target);
 	void updateRotate(sf::Vector2f target);
 	void updateReload(sf::Time deltaTime);
 	void updateHud();
 	void updateCollision(sf::Vector2f target, std::vector<sf::FloatRect> walls, float grid_size);
 
-	void updateShooting(sf::Time deltaTime, sf::Vector2f target);
+	void setAmmo(int i);
+	int getAmmo();
 
 	virtual void renderBullets(std::shared_ptr<sf::RenderWindow> target);
 private:

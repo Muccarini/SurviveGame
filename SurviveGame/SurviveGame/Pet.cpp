@@ -57,13 +57,6 @@ void Pet::updateBullets(bool player_shooting, int player_ammo, sf::Vector2f bull
 		bullets.emplace_back(bullet);
 		bullet->calculateDir(getPosition(), target);
 	}
-
-	for (unsigned int i = 0; i < bullets.size(); i++)
-	{
-		bullets[i]->update();
-		if (bullets[i]->isCollide())
-			bullets.erase(bullets.begin() + i);
-	}
 }
 
 void Pet::updateHud()

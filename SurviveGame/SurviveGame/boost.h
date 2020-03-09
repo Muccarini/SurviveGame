@@ -4,8 +4,6 @@
 
 struct BoostPos;
 
-enum Type {HP, MS};
-
 enum Pos {TOP_LEFT , TOP_RIGHT, DOWN_LEFT, DOWN_RIGHT};
 
 class Boost :
@@ -18,7 +16,7 @@ public:
 	bool checkCollide(sf::FloatRect character);
 	void boostSubject(std::shared_ptr<Character> character);
 
-	Type getType();
+	Textures::ID getId();
 	void setTexturesSprite(sf::Texture texture);
 
 private:
@@ -32,7 +30,7 @@ private:
 	void initSpriteMs();
 	void initHitBoxMs();
 
-	Type type;
+	Textures::ID id;
 	Pos position;
 
 	sf::Vector2f pos;

@@ -19,11 +19,15 @@ GameLogic::~GameLogic()
 void GameLogic::update(sf::Time deltaTime)
 {
 	updateMousePos();
-	achievement->updateBadge(deltaTime);
+
+	updateAchievement(deltaTime);
 
 	updateHud();
+
 	updatePlayer(deltaTime);
+
 	updateRound();
+
 	if (!round.isLoading() && !round.isBossRound())
 		spawnZombies(deltaTime);
 	else
@@ -32,6 +36,8 @@ void GameLogic::update(sf::Time deltaTime)
 	updatePet(deltaTime);
 
 	updateBoost();
+
+	updateBullet(deltaTime);
 
 	updateGameView(deltaTime);
 
@@ -73,6 +79,11 @@ void GameLogic::updateState()
 		this->states->top()->states = this->states;
 		return;
 	}
+}
+
+void GameLogic::updateAchievement(sf::Time deltaTime)
+{
+	achievement->updateBadge(deltaTime);
 }
 
 void GameLogic::updateHud()
@@ -143,9 +154,11 @@ void GameLogic::spawnBoss(sf::Time deltaTime)
 
 void GameLogic::updateBoss(sf::Time deltaTime)
 {
-
 	boss->updateMove(deltaTime, player->getPosition(), tile_map.getGridSize());
-	boss->updateBullets(deltaTime, player->getPosition(), textures->get(Textures::Proiettile));
+
+	if (boss->shooting(deltaTime, player->getPosition()))
+		spawnBullet(BulletOwner::Boss);
+
 	boss->updateRotate(player->getPosition());
 	boss->updateReload(deltaTime);
 	boss->updateHud();
@@ -156,7 +169,6 @@ void GameLogic::updateBoss(sf::Time deltaTime)
 
 void GameLogic::spawnPet()
 {
-	//SPAWN PET
 	if (!pet_alive)
 	{
 		this->pet = std::make_shared<Pet>(textures->get(Textures::Pet), boss->getPosition());
@@ -172,7 +184,10 @@ void GameLogic::updatePet(sf::Time deltaTime)
 	{
 		pet->updateMove(deltaTime, player->getPosition());
 		pet->updateRotate(player->getPosition());
-		pet->updateBullets(player->isShooting(), player->getAmmo(), pet->getPosition(), textures->get(Textures::Proiettile), player->getPosition());
+
+		if (player->isShooting())
+			spawnBullet(BulletOwner::Pet);
+
 		pet->updateHud();
 		pet->updateCollision(player->getHitBox().getGlobalBounds());
 
@@ -185,6 +200,47 @@ void GameLogic::updatePet(sf::Time deltaTime)
 	}
 }
 
+void GameLogic::spawnBullet(BulletOwner::Owner owner)
+{
+	switch(owner)
+	{
+	case BulletOwner::Player:
+		player->getStf()->shot(bullets, player->getPosition(), mouse_pos_view, textures->get(Textures::Proiettile));
+		player->setAmmo(player->getAmmo() - player->getStf()->nrshot);
+		if ((player->getAmmo() - player->getStf()->nrshot) < 0)
+			player->getStf()->nrshot = player->getAmmo();
+		break;
+
+	case BulletOwner::Boss:
+
+		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Boss, boss->getPosition(), textures->get(Textures::Proiettile)));
+		boss->setAmmo(boss->getAmmo() - 1);
+		bullets.emplace_back(bullet);
+		bullet->calculateDir(boss->getPosition(), player->getPosition());
+		break;
+
+	case BulletOwner::Pet:
+
+		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Pet, pet->getPosition(), textures->get(Textures::Proiettile)));
+		bullets.emplace_back(bullet);
+		bullet->calculateDir(pet->getPosition(), mouse_pos_view);
+		break;
+	}
+}
+
+void GameLogic::updateBullet(sf::Time deltaTime)
+{
+	if (!bullets.empty())
+	{
+		for (unsigned int i = 0; i < bullets.size(); i++)
+		{
+			bullets[i]->update(deltaTime);
+			if (bullets[i]->isCollide())
+				bullets.erase(bullets.begin() + i);
+		}
+	}
+}
+
 void GameLogic::updateBoost()
 {
 	//SPAWN BOOST
@@ -193,7 +249,7 @@ void GameLogic::updateBoost()
 		if (boost_time.getElapsedTime() > rand_time)
 		{
 			std::shared_ptr<Boost> boost(new Boost(boost_pos));
-			boost->setTexturesSprite(textures->get(boost->getType));
+			boost->setTexturesSprite(textures->get(boost->getId()));
 
 			this->boosts.emplace_back(boost);
 			this->boost_time.restart();
@@ -227,8 +283,8 @@ void GameLogic::updatePlayer(sf::Time deltaTime)
 
 	player->updateMovSpeed(deltaTime);
 
-	player->updateBullets(deltaTime, mouse_pos_view, textures->get(Textures::Proiettile));
-	player->updateShooting(deltaTime);
+	if (player->shooting(deltaTime))
+		spawnBullet(BulletOwner::Player);
 
 	player->updateRotate(mouse_pos_view);
 

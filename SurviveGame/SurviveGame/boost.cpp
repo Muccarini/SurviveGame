@@ -30,9 +30,9 @@ bool Boost::checkCollide(sf::FloatRect character)
 
 void Boost::boostSubject(std::shared_ptr<Character> character)
 {
-	switch (type)
+	switch (id)
 	{
-	case HP:
+	case Textures::HP:
 		if (character->getHp() < character->getHpMax())
 		{
 			character->boostHeal();
@@ -51,7 +51,7 @@ void Boost::boostSubject(std::shared_ptr<Character> character)
 			}
 		}
 		break;
-	case MS:
+	case Textures::MS:
 		if (character->getMovSpeed() == character->getMovSpeedDef())
 		{
 			character->boostMovSpeed();
@@ -73,9 +73,9 @@ void Boost::boostSubject(std::shared_ptr<Character> character)
 	}
 }
 
-Type Boost::getType()
+Textures::ID Boost::getId()
 {
-	return this->type;
+	return this->id;
 }
 
 void Boost::setTexturesSprite(sf::Texture texture)

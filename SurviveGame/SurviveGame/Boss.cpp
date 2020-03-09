@@ -34,24 +34,26 @@ void Boss::updateMove(sf::Time deltaTime, sf::Vector2f target, float grid_size)
 	setGridPosition(grid_size);
 }
 
-void Boss::updateBullets(sf::Time deltaTime, sf::Vector2f target, sf::Texture bullet_txt)
+bool Boss::shooting(sf::Time deltaTime, sf::Vector2f target)
 {
-	updateShooting(deltaTime, target);
+	ratio_clock -= deltaTime;
 
-	if (shooting && getAmmo())
+	if (isInRange(getPosition(), target) && !reloading)
 	{
-		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Boss, getPosition(), bullet_txt));
-		ammo--;
-		bullets.emplace_back(bullet);
-		bullet->calculateDir(getPosition(), target);
+		if (ratio_clock < sf::seconds(0.f))
+		{
+			ratio_clock = ratio_cd;
+			shoot = true;
+			if (this->ammo)
+				return true;
+		}
+		else
+			shoot = false;
+		return shoot;
 	}
-
-	for (unsigned int i = 0; i < bullets.size(); i++)
-	{
-		bullets[i]->update();
-		if (bullets[i]->isCollide())
-			bullets.erase(bullets.begin() + i);
-	}
+	else
+		shoot = false;
+	return shoot;
 }
 
 void Boss::updateRotate(sf::Vector2f target)
@@ -103,25 +105,6 @@ void Boss::updateCollision(sf::Vector2f target, std::vector<sf::FloatRect> walls
 		collision->resetOutMtv();
 
 	setGridPosition(this->entitydata->map->getGridSize());
-}
-
-
-void Boss::updateShooting(sf::Time deltaTime, sf::Vector2f target)
-{
-	ratio_clock -= deltaTime;
-
-	if (isInRange(getPosition(), target) && !reloading)
-	{
-		if (ratio_clock < sf::seconds(0.f))
-		{
-			ratio_clock = ratio_cd;
-			shooting = true;
-		}
-		else
-			shooting = false;
-	}
-	else
-		shooting = false;
 }
 
 bool Boss::isInRange(sf::Vector2f obj1, sf::Vector2f obj2)
