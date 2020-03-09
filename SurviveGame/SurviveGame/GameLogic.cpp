@@ -202,30 +202,24 @@ void GameLogic::updatePet(sf::Time deltaTime)
 
 void GameLogic::spawnBullet(BulletOwner::Owner owner)
 {
-	switch(owner)
-	{
-	case BulletOwner::Player:
+		if(owner == BulletOwner::Player)
 		player->getStf()->shot(bullets, player->getPosition(), mouse_pos_view, textures->get(Textures::Proiettile));
 		player->setAmmo(player->getAmmo() - player->getStf()->nrshot);
 		if ((player->getAmmo() - player->getStf()->nrshot) < 0)
 			player->getStf()->nrshot = player->getAmmo();
-		break;
-
-	case BulletOwner::Boss:
-
-		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Boss, boss->getPosition(), textures->get(Textures::Proiettile)));
-		boss->setAmmo(boss->getAmmo() - 1);
-		bullets.emplace_back(bullet);
-		bullet->calculateDir(boss->getPosition(), player->getPosition());
-		break;
-
-	case BulletOwner::Pet:
-
-		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Pet, pet->getPosition(), textures->get(Textures::Proiettile)));
-		bullets.emplace_back(bullet);
-		bullet->calculateDir(pet->getPosition(), mouse_pos_view);
-		break;
-	}
+		if (owner == BulletOwner::Boss)
+		{
+			std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Boss, boss->getPosition(), textures->get(Textures::Proiettile)));
+			boss->setAmmo(boss->getAmmo() - 1);
+			bullets.emplace_back(bullet);
+			bullet->calculateDir(boss->getPosition(), player->getPosition());
+		}
+		if (owner == BulletOwner::Pet)
+		{
+			std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Pet, pet->getPosition(), textures->get(Textures::Proiettile)));
+			bullets.emplace_back(bullet);
+			bullet->calculateDir(pet->getPosition(), mouse_pos_view);
+		}
 }
 
 void GameLogic::updateBullet(sf::Time deltaTime)

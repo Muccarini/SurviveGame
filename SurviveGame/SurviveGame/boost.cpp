@@ -8,11 +8,13 @@ Boost::Boost(const std::shared_ptr<BoostPos> boost_pos)
 
 	switch (int i = rand() % 2)
 	{
-	case 0: this->type = HP;
+	case 0: 
+		this->id = Textures::HP;
 		initHp();
 		break;
 
-	case 1: this->type = MS;
+	case 1: 
+		this->id = Textures::MS;
 		initMs();
 		break;
 	}
@@ -149,7 +151,7 @@ void Boost::initPos()
 
 void Boost::initSpriteHp()
 { 
-	sprite.setScale(0.1f, 0.1f);     //SCALE
+	sprite.setScale(0.1f, 0.1f);   //SCALE
 	sprite.setPosition(this->pos); //POS
 	sprite.setOrigin(0, 0);        //ORIGIN
 }
@@ -157,7 +159,7 @@ void Boost::initSpriteHp()
 void Boost::initHitBoxHp()
 {
 	hit_box.setSize(sf::Vector2f(512 , 512));        //SIZE
-	hit_box.setOutlineColor(sf::Color::Transparent);         //COLOR
+	hit_box.setOutlineColor(sf::Color::Transparent); //COLOR
 	hit_box.setOutlineThickness(3.f);
 	hit_box.setFillColor(sf::Color::Transparent);
 	hit_box.setScale(sprite.getScale());             //SCALE
@@ -167,7 +169,7 @@ void Boost::initHitBoxHp()
 
 void Boost::initSpriteMs()
 {
-	sprite.setScale(0.05f, 0.05f);     //SCALE
+	sprite.setScale(0.05f, 0.05f); //SCALE
 	sprite.setPosition(this->pos); //POS
 	sprite.setOrigin(0, 0);        //ORIGIN
 }
