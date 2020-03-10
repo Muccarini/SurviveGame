@@ -33,7 +33,7 @@ public:
 	Textures::ID getId();
 	StrategyFight* getStf();
 
-	void setTexturesSprite(sf::Texture texture);
+	void setTexturesSprite(const sf::Texture & texture);
 
 	sf::Texture texture_movspeed;
 	sf::Texture texture_bullet;

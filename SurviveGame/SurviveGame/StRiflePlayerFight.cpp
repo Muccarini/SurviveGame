@@ -6,7 +6,7 @@ StRiflePlayerFight::StRiflePlayerFight()
 	nrshot = 1;
 }
 
-void StRiflePlayerFight::shot(std::vector<std::shared_ptr<Bullet>>& bullets, sf::Vector2f owner_pos, sf::Vector2f target_pos, sf::Texture texture)
+void StRiflePlayerFight::shot(std::vector<std::shared_ptr<Bullet>>& bullets, sf::Vector2f owner_pos, sf::Vector2f target_pos, const sf::Texture & texture)
 {
 	std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Player, owner_pos, texture));
 	float dx = target_pos.x - owner_pos.x;

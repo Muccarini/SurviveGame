@@ -2,7 +2,7 @@
 
 
 
-Pet::Pet(sf::Texture texture, sf::Vector2f spawn_pos)
+Pet::Pet(const sf::Texture & texture, sf::Vector2f spawn_pos)
 {
 	initVar();
 	initSprite(texture, spawn_pos);
@@ -68,7 +68,7 @@ void Pet::initVar()
 	range = 50;
 }
 
-void Pet::initSprite(sf::Texture texture, sf::Vector2f spawn_pos)
+void Pet::initSprite(const sf::Texture & texture, sf::Vector2f spawn_pos)
 {
 	sprite.setTexture(texture);     //TEXTURE
 	sprite.setScale(0.1f, 0.1f);      //SCALE

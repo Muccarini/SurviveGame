@@ -291,7 +291,7 @@ StrategyFight * PlayerT::getStf()
 	return this->stf;
 }
 
-void PlayerT::setTexturesSprite(sf::Texture texture)
+void PlayerT::setTexturesSprite(const sf::Texture & texture)
 {
 	sprite.setTexture(texture);
 }

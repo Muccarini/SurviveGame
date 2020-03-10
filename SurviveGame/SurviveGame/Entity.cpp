@@ -15,8 +15,8 @@ Entity::~Entity()
 
 void Entity::render(std::shared_ptr<sf::RenderWindow> target)
 {
-	target->draw(sprite);
 	target->draw(hit_box);
+	target->draw(sprite);
 }
 
 bool Entity::isAlive()

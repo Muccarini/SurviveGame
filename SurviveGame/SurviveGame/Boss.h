@@ -6,7 +6,7 @@ class Boss :
 	public Character
 {
 public:
-	explicit Boss(GridNode grid, sf::Texture texture);
+	explicit Boss(GridNode grid,const sf::Texture & texture);
 	Boss();
 
 	virtual ~Boss();
@@ -23,7 +23,7 @@ private:
 	bool isInRange(sf::Vector2f obj1, sf::Vector2f obj2);
 
 	void initVar();
-	void initSprite(GridNode grid, sf::Texture texture);
+	void initSprite(GridNode grid,const sf::Texture & texture);
 	void initHitBox();
 
 	float distance;

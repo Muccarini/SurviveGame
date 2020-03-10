@@ -12,7 +12,7 @@ class Enemy :
 {
 
 public:
-	explicit Enemy(sf::Texture texture, GridNode grid, float grid_size);
+	explicit Enemy(const sf::Texture& texture, GridNode grid, float grid_size);
 
 	Enemy();
 	virtual ~Enemy();
@@ -24,8 +24,8 @@ public:
 
 private:
 	void initVar();
-	void initSprite(GridNode grid, sf::Texture texture);
-	void initHitBox(float grid_size);
+	void initSprite(GridNode grid,const sf::Texture & texture);
+	void initHitBox(float grid_size); 
 
 	float distance;
 	float max_distance;

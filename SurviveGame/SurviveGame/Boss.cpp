@@ -1,6 +1,6 @@
 #include "Boss.h"
 
-Boss::Boss(GridNode grid, sf::Texture texture) :
+Boss::Boss(GridNode grid, const sf::Texture & texture) :
 	_m(grid, max_distance, distance)
 {
 	initVar();
@@ -135,7 +135,7 @@ void Boss::initVar()
 	range = 300;
 }
 
-void Boss::initSprite(GridNode grid, sf::Texture texture)
+void Boss::initSprite(GridNode grid,const sf::Texture & texture)
 {
 	sprite.setTexture(texture);
 	sprite.setScale(1.5, 1.5);

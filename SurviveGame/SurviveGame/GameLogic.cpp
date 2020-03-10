@@ -56,7 +56,7 @@ void GameLogic::render()
 	renderPet();
 	renderEnemies();
 	renderBoss();
-
+	renderBullets();
 	hud.renderTextsHud(window);
 
 	renderAchievement();

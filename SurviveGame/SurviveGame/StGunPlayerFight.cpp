@@ -6,7 +6,7 @@ StGunPlayerFight::StGunPlayerFight()
 	nrshot = 5;
 }
 
-void StGunPlayerFight::shot(std::vector<std::shared_ptr<Bullet>>& bullets, sf::Vector2f owner_pos, sf::Vector2f target_pos, sf::Texture texture)
+void StGunPlayerFight::shot(std::vector<std::shared_ptr<Bullet>>& bullets, sf::Vector2f owner_pos, sf::Vector2f target_pos, const sf::Texture & texture)
 {
 	for (int i = 0; i < nrshot; i++)
 	{

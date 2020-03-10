@@ -9,7 +9,7 @@ class Bullet :
 	public Entity
 {
 public:
-	Bullet(BulletOwner::Owner owner, sf::Vector2f owner_pos, sf::Texture texture);
+	Bullet(BulletOwner::Owner owner, sf::Vector2f owner_pos,const sf::Texture & texture);
 	Bullet();
 	virtual ~Bullet();
 
@@ -28,9 +28,9 @@ private:
 
 	void updateWallsCollision(std::vector<sf::FloatRect> walls);
 
-	void initSpritePlayer(sf::Vector2f owner_pos, sf::Texture texture);
-	void initSpritePet(sf::Vector2f owner_pos, sf::Texture texture);
-	void initSpriteBoss(sf::Vector2f owner_pos, sf::Texture texture);
+	void initSpritePlayer(sf::Vector2f owner_pos,const sf::Texture & texture);
+	void initSpritePet(sf::Vector2f owner_pos, const sf::Texture & texture);
+	void initSpriteBoss(sf::Vector2f owner_pos, const sf::Texture & texture);
 	void initHitBox();
 
 	sf::Vector2f dir;
