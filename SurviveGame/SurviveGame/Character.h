@@ -18,9 +18,6 @@ public:
 
 	void renderHud(std::shared_ptr<sf::RenderWindow> target);
 
-	virtual void renderBullets(std::shared_ptr<sf::RenderWindow> target) = 0;
-	virtual void takeDamage() = 0;
-
 	void boostHeal();
 	void boostMovSpeed();
 

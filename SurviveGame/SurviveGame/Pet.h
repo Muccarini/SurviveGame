@@ -24,7 +24,5 @@ private:
 	void initVar();
 	void initSprite(sf::Texture texture, sf::Vector2f spawn_pos);
 	void initHitbox();
-
-	std::vector<std::shared_ptr<Bullet>> bullets;
 };
 

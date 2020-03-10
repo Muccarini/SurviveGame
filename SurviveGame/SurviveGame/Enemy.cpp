@@ -14,7 +14,6 @@ Enemy::Enemy()
 {
 }
 
-
 Enemy::~Enemy()
 {
 }

@@ -10,8 +10,6 @@ public:
 	PlayerT();
 	virtual ~PlayerT();
 
-	virtual void renderBullets(std::shared_ptr<sf::RenderWindow> target);
-
 	void updateMove(sf::Time deltaTime);
 	void updateRotate(sf::Vector2f target);
 	bool updateReload(sf::Time deltaTime);
@@ -33,7 +31,7 @@ public:
 	virtual void takeDamage();
 
 	Textures::ID getId();
-	StrategyFight * getStf();
+	StrategyFight* getStf();
 
 	void setTexturesSprite(sf::Texture texture);
 

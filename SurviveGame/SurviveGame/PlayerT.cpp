@@ -236,14 +236,6 @@ void PlayerT::setStrategyFight(StrategyFight* stf)
 	this->stf = stf;
 }
 
-void PlayerT::renderBullets(std::shared_ptr<sf::RenderWindow> target)
-{
-	for (int i=0; i != bullets.size(); i++)
-	{
-		bullets[i]->render(target);
-	}
-}
-
 void PlayerT::initVar()
 {
 	mov_speed_default = 200;

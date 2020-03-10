@@ -161,7 +161,7 @@ void GameLogic::updateBoss(sf::Time deltaTime)
 	boss->updateRotate(player->getPosition());
 	boss->updateReload(deltaTime);
 	boss->updateHud();
-	boss->updateCollision(player->getPosition(), 
+	boss->updateCollision(player->getHitBox().getGlobalBounds(), 
 		tile_map.findWalls(static_cast<int>(boss->getPosition().x), static_cast<int>(boss->getPosition().y)),
 		tile_map.getGridSize());
 }
@@ -182,7 +182,7 @@ void GameLogic::updatePet(sf::Time deltaTime)
 	if (pet_alive)
 	{
 		pet->updateMove(deltaTime, player->getPosition());
-		pet->updateRotate(player->getPosition());
+		pet->updateRotate(mouse_pos_view);
 
 		if (player->isShooting())
 			spawnBullet(BulletOwner::Pet);
@@ -338,7 +338,6 @@ void GameLogic::renderPlayer()
 {
 	player->renderHud(window);
 	player->render(window);
-	player->renderBullets(window);
 }
 
 void GameLogic::renderBoss()
@@ -347,7 +346,6 @@ void GameLogic::renderBoss()
 	{
 			boss->renderHud(window);
 			boss->render(window);
-			boss->renderBullets(window);
 	}
 }
 
@@ -357,7 +355,14 @@ void GameLogic::renderPet()
 	{
 		pet->renderHud(window);
 		pet->render(window);
-		pet->renderBullets(window);
+	}
+}
+
+void GameLogic::renderBullets()
+{
+	for (int i = 0; i != bullets.size(); i++)
+	{
+		bullets[i]->render(this->window);
 	}
 }
 
@@ -402,7 +407,7 @@ void GameLogic::renderEnemies()
 
 void GameLogic::entitiesInit(Textures::ID id, StrategyFight* stf)
 {  
-	this->player = std::make_shared<PlayerT>(textures->get(id), stf);
+	this->player = std::make_shared<PlayerT>(id, stf);
 	player->setTexturesSprite(textures->get(id));
 
 	this->grid.initGrid(tile_map.getObstacle());

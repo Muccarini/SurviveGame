@@ -23,14 +23,6 @@ void Pet::takeDamage()
 	this->hp--;
 }
 
-void Pet::renderBullets(const std::shared_ptr<sf::RenderWindow> window)
-{
-	for (unsigned int i = 0; i < bullets.size(); i++)
-	{
-		bullets[i]->render(window);
-	}
-}
-
 void Pet::updateMove(sf::Time deltaTime, sf::Vector2f parent_pos)
 {
 	sf::Vector2f dir = parent_pos - this->getPosition();
@@ -41,22 +33,12 @@ void Pet::updateMove(sf::Time deltaTime, sf::Vector2f parent_pos)
 
 void Pet::updateRotate(sf::Vector2f target)
 {
-	float dX = entitydata->mouse_pos_view.x - getPosition().x;
-	float dY = entitydata->mouse_pos_view.y - getPosition().y;
+	float dX = target.x - getPosition().x;
+	float dY = target.y - getPosition().y;
 	const float PI = 3.14159265f;
 	float deg = atan2(dY, dX) * 180.f / PI;
 
 	this->sprite.setRotation(deg + 270.f);
-}
-
-void Pet::updateBullets(bool player_shooting, int player_ammo, sf::Vector2f bullet_pos, sf::Texture bullet_txt, sf::Vector2f target)
-{
-	if (player_shooting && player_ammo)
-	{
-		std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Pet, bullet_pos, bullet_txt));
-		bullets.emplace_back(bullet);
-		bullet->calculateDir(getPosition(), target);
-	}
 }
 
 void Pet::updateHud()

@@ -56,6 +56,7 @@ private:
 	void renderPlayer();
 	void renderBoss();
 	void renderPet();
+	void renderBullets();
 	void renderBoosts();
 	void renderAchievement();
 

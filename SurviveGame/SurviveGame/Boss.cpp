@@ -10,20 +10,12 @@ Boss::Boss(GridNode grid, sf::Texture texture) :
 	_m.setMaxDist(max_distance);
 }
 
-Boss::Boss() : _m(*entitydata->grid, max_distance, distance)
+Boss::Boss()
 {
 }
 
 Boss::~Boss()
 {
-}
-
-void Boss::renderBullets(std::shared_ptr<sf::RenderWindow> target)
-{
-	for (int i = 0; i != bullets.size(); i++)
-	{
-		bullets[i]->render(target);
-	}
 }
 
 void Boss::updateMove(sf::Time deltaTime, sf::Vector2f target, float grid_size)
@@ -87,24 +79,24 @@ void Boss::updateHud()
 	hud.updateText(hp, getPosition());
 }
 
-void Boss::updateCollision(sf::Vector2f target, std::vector<sf::FloatRect> walls, float grid_size)
+void Boss::updateCollision(sf::FloatRect target, std::vector<sf::FloatRect> walls, float grid_size)
 {
 	sf::Vector2f dir(0.f, 0.f);
 	sf::Vector2f ent(0.f, 0.f);
 
-	ent = this->collision->CollideWithEntity(this->getHitBox().getGlobalBounds(), entitydata->player->getHitBox().getGlobalBounds());
+	ent = this->collision->CollideWithEntity(this->getHitBox().getGlobalBounds(), target);
 	sprite.move(ent);
 
 	if (ent != sf::Vector2f(0.f, 0.f))
 		collision->resetOutMtv();
 
-	dir = this->collision->CollideWithWalls(this->getHitBox().getGlobalBounds(), entitydata->map->findWalls(static_cast<int>(sprite.getPosition().x), static_cast<int>(sprite.getPosition().y)));
+	dir = this->collision->CollideWithWalls(this->getHitBox().getGlobalBounds(), walls);
 	sprite.move(dir);
 
 	if (dir != sf::Vector2f(0.f, 0.f))
 		collision->resetOutMtv();
 
-	setGridPosition(this->entitydata->map->getGridSize());
+	setGridPosition(grid_size);
 }
 
 bool Boss::isInRange(sf::Vector2f obj1, sf::Vector2f obj2)

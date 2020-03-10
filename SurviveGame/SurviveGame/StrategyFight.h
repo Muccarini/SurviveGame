@@ -2,6 +2,9 @@
 #include "SFML/Graphics.hpp"
 #include "Bullet.h"
 #include "Entity.h"
+
+class Bullet;
+
 class StrategyFight
 {
 public:
@@ -12,6 +15,7 @@ public:
 		sf::Vector2f owner_pos, sf::Vector2f target_pos, sf::Texture texture) = 0;
 	virtual const sf::Time getRatio() { return ratio; };
 	int nrshot = 0;
+
 protected:
 	sf::Time ratio;
 };

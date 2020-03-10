@@ -5,6 +5,7 @@
 
 class Character;
 class PlayerT;
+class Pet;
 
 class Enemy :
 	public Character
