@@ -280,11 +280,6 @@ void PlayerT::initHitBox()
 	hit_box.setOrigin(45, 60);                       //ORIGIN
 }
 
-void PlayerT::takeDamage()
-{
-	this->hp--;
-}
-
 Textures::ID PlayerT::getId()
 {
 	return 

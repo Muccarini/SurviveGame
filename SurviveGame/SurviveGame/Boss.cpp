@@ -111,11 +111,6 @@ bool Boss::isInRange(sf::Vector2f obj1, sf::Vector2f obj2)
 		return false;
 }
 
-void Boss::takeDamage()
-{
-	this->hp--;
-}
-
 void Boss::initVar()
 {
 	mov_speed_default = 150;

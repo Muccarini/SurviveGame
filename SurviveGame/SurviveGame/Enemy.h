@@ -20,10 +20,7 @@ public:
 	void updateMove(sf::Time deltaTime, sf::Vector2f target, float grid_size);
 	void updateRotate(sf::Vector2f target);
 	void updateHud();
-	void updateCollision(std::shared_ptr<PlayerT> player, std::shared_ptr<Pet> pet, std::vector<sf::FloatRect> walls, float grid_size);
-	void takeDamage();
-
-	virtual void renderBullets(std::shared_ptr<sf::RenderWindow> target);
+	void updateCollision(std::shared_ptr<Character> player, std::shared_ptr<Character> pet, std::vector<sf::FloatRect> walls, float grid_size);
 
 private:
 	void initVar();

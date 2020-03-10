@@ -12,8 +12,6 @@ MainMenu::~MainMenu()
 {
 }
 
-
-
 void MainMenu::initButtons()
 {
 	new_game.setText("Sources/edunline.ttf", "New Game", sf::Color::Black, 100.f, sf::Vector2f(660.f, 200.f));

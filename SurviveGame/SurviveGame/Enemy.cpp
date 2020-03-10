@@ -41,7 +41,7 @@ void Enemy::updateHud()
 	hud.updateText(hp, getPosition());
 }
 
-void Enemy::updateCollision(std::shared_ptr<PlayerT> player, std::shared_ptr<Pet> pet, std::vector<sf::FloatRect> walls, float grid_size)
+void Enemy::updateCollision(std::shared_ptr<Character> player, std::shared_ptr<Character> pet, std::vector<sf::FloatRect> walls, float grid_size)
 {
 	sf::Vector2f ent(0, 0);
 	sf::Vector2f dir(0, 0);
@@ -68,10 +68,6 @@ void Enemy::updateCollision(std::shared_ptr<PlayerT> player, std::shared_ptr<Pet
 	collision->resetOutMtv();
 
 	setGridPosition(grid_size);
-}
-
-void Enemy::renderBullets(std::shared_ptr<sf::RenderWindow> target)
-{
 }
 
 void Enemy::initVar()
@@ -109,9 +105,3 @@ void Enemy::initHitBox(float grid_size)
 
 	setGridPosition(grid_size);
 }
-
-void Enemy::takeDamage()
-{// a seconda del tipo di proiettile da cui viene colpito take dmg
-	this->hp--;
-}
-

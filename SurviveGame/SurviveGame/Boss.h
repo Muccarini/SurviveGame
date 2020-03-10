@@ -8,6 +8,7 @@ class Boss :
 public:
 	explicit Boss(GridNode grid, sf::Texture texture);
 	Boss();
+
 	virtual ~Boss();
 
 	void updateMove(sf::Time deltaTime, sf::Vector2f target, float grid_size);
@@ -16,8 +17,6 @@ public:
 	void updateReload(sf::Time deltaTime);
 	void updateHud();
 	void updateCollision(sf::FloatRect player, std::vector<sf::FloatRect> walls, float grid_size);
-
-	void takeDamage();
 
 private:
 

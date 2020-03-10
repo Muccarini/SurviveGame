@@ -11,6 +11,11 @@ Character::~Character()
 {
 }
 
+void Character::takeDamage()
+{
+	this->hp--;
+}
+
 void Character::renderHud(std::shared_ptr<sf::RenderWindow> target)
 {
 	hud.renderTextsCharacter(target);

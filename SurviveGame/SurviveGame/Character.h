@@ -16,6 +16,8 @@ public:
 	Character();
 	virtual ~Character();
 
+	void takeDamage();
+
 	void renderHud(std::shared_ptr<sf::RenderWindow> target);
 
 	void boostHeal();

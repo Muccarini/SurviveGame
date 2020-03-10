@@ -2,6 +2,8 @@
 #include "Character.h"
 #include "StrategyFight.h"
 
+class StrategyFight;
+
 class PlayerT : public Character
 {
 public:
@@ -27,8 +29,6 @@ public:
 	void initVar();
 	void initSprite();
 	void initHitBox();
-
-	virtual void takeDamage();
 
 	Textures::ID getId();
 	StrategyFight* getStf();
