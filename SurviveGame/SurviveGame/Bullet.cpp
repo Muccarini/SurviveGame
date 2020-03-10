@@ -112,7 +112,7 @@ void Bullet::updateMove(sf::Time deltaTime)
 void Bullet::updateAlliedCollision(std::vector<std::shared_ptr<Enemy>> enemies, std::shared_ptr<Boss> boss, std::vector<sf::FloatRect> walls)
 {
 	//ALLIED CASE
-	
+
 	if (!enemies.empty())
 	{
 		for (int i = 0; i != enemies.size(); i++)
@@ -141,10 +141,17 @@ void Bullet::updateAlliedCollision(std::vector<std::shared_ptr<Enemy>> enemies, 
 	}
 
 	//WALLS
-
-	updateWallsCollision(walls);
-
-	this->collide = collision->isCollide();
+	if (!walls.empty())
+	{
+		collision->CollideWithWalls(this->hit_box.getGlobalBounds(), walls);
+		if (collision->isCollide())
+		{
+			collision->resetOutMtv();
+			this->collide = true;
+			return;
+		}
+		this->collide = collision->isCollide();
+	}
 }
 
 void Bullet::updateEnemyCollision(std::shared_ptr<PlayerT> player, std::shared_ptr<Pet> pet, std::vector<sf::FloatRect> walls)
@@ -174,8 +181,13 @@ void Bullet::updateEnemyCollision(std::shared_ptr<PlayerT> player, std::shared_p
 
 	//WALLS
 
-	updateWallsCollision(walls);
-
+	collision->CollideWithWalls(this->hit_box.getGlobalBounds(), walls);
+	if (collision->isCollide())
+	{
+		collision->resetOutMtv();
+		this->collide = true;
+		return;
+	}
 	this->collide = collision->isCollide();
 }
 

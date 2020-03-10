@@ -17,7 +17,7 @@ public:
 	void boostSubject(std::shared_ptr<Character> character);
 
 	Textures::ID getId();
-	void setTexturesSprite(sf::Texture texture);
+	void setTexturesSprite(const sf::Texture & texture);
 
 private:
 	void initHp();

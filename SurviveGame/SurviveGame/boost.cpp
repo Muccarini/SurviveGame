@@ -80,7 +80,7 @@ Textures::ID Boost::getId()
 	return this->id;
 }
 
-void Boost::setTexturesSprite(sf::Texture texture)
+void Boost::setTexturesSprite(const sf::Texture & texture)
 {
 	sprite.setTexture(texture);
 }

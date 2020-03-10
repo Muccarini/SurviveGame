@@ -39,8 +39,8 @@ bool Entity::isCollide()
 
 sf::Vector2f Entity::getPosition()
 {
-	return
-		this->sprite.getPosition();
+	sf::Vector2f pos = this->sprite.getPosition();
+	return pos;
 }
 
 sf::RectangleShape Entity::getHitBox()

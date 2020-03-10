@@ -233,15 +233,15 @@ void GameLogic::updateBullet(sf::Time deltaTime)
 			switch (bullets[i]->getOwner())
 			{
 			case(BulletOwner::Player):
-				bullets[i]->updateAlliedCollision(enemies, boss, tile_map.findWalls(static_cast<int>(player->getPosition().x), static_cast<int>(player->getPosition().y)));
+				bullets[i]->updateAlliedCollision(enemies, boss, tile_map.findWalls(static_cast<int>(bullets[i]->getPosition().x), static_cast<int>(bullets[i]->getPosition().y)));
 				break;
 
 			case(BulletOwner::Pet):
-				bullets[i]->updateAlliedCollision(enemies, boss, tile_map.findWalls(static_cast<int>(pet->getPosition().x), static_cast<int>(pet->getPosition().y)));
+				bullets[i]->updateAlliedCollision(enemies, boss, tile_map.findWalls(static_cast<int>(bullets[i]->getPosition().x), static_cast<int>(bullets[i]->getPosition().y)));
 				break;
 
 			case(BulletOwner::Boss):
-				bullets[i]->updateEnemyCollision(player, pet, tile_map.findWalls(static_cast<int>(boss->getPosition().x), static_cast<int>(boss->getPosition().y)));
+				bullets[i]->updateEnemyCollision(player, pet, tile_map.findWalls(static_cast<int>(bullets[i]->getPosition().x), static_cast<int>(bullets[i]->getPosition().y)));
 				break;
 			}
 
@@ -285,7 +285,7 @@ void GameLogic::updateBoost()
 void GameLogic::updatePlayer(sf::Time deltaTime)
 {
 	player->updateMove(deltaTime);
-	player->updateDash(deltaTime,tile_map.findWalls(static_cast<int>(player->getPosition().x), static_cast<int>(player->getPosition().y)));
+	player->updateDash(deltaTime,tile_map);
 
 	if (!enemies.empty())
 		player->updateCollisionEnemies(enemies);

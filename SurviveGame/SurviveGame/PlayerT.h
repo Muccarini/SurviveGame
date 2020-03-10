@@ -15,7 +15,7 @@ public:
 	void updateMove(sf::Time deltaTime);
 	void updateRotate(sf::Vector2f target);
 	bool updateReload(sf::Time deltaTime);
-	void updateDash(sf::Time deltaTime, std::vector<sf::FloatRect> walls);
+	void updateDash(sf::Time deltaTime, TileMap tile_map);
 	void updateMovSpeed(sf::Time deltaTime);
 	void updateHud();
 

@@ -111,15 +111,15 @@ bool PlayerT::updateReload(sf::Time deltaTime)
 	return false;
 }
 
-void PlayerT::updateDash(sf::Time deltaTime, std::vector<sf::FloatRect> walls)
+void PlayerT::updateDash(sf::Time deltaTime, TileMap tile_map)
 {
 	bool space_is_pressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
 
 	if (space_is_pressed && !is_dashing)
 	{
 		hit_box.setPosition(getPosition().x + (this->mov_dir.x * 160), (this->mov_dir.y * 160) + getPosition().y);
-		collision->CollideWithWalls(this->hit_box.getGlobalBounds(), walls);
-		if (!this->collision->isCollide())
+		collision->CollideWithWalls(this->hit_box.getGlobalBounds(), tile_map.findWalls(static_cast<int>(hit_box.getPosition().x), static_cast<int>(hit_box.getPosition().y)));
+		if (!this->collision->isCollide() && 0 < hit_box.getPosition().x  && hit_box.getPosition().x < 1280 && 0 < hit_box.getPosition().y && hit_box.getPosition().y < 1280)
 		{
 			is_dashing = true;
 			this->sprite.setPosition(hit_box.getGlobalBounds().left, hit_box.getGlobalBounds().top);
