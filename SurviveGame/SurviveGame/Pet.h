@@ -15,10 +15,11 @@ public:
 	void updateHud();
 	void updateCollision(sf::FloatRect parent_rect);
 
+	void takeDamage();
+
 	void renderBullets(std::shared_ptr<sf::RenderWindow> window);
 
 private:
-	void takeDamage();
 
 	void initVar();
 	void initSprite(sf::Texture texture, sf::Vector2f spawn_pos);

@@ -31,28 +31,6 @@ Bullet::~Bullet()
 {
 }
 
-void Bullet::update(sf::Time deltaTime)
-{
-	updateMove(deltaTime);
-
-	switch(this->owner)
-	{
-	case(BulletOwner::Player):
-		updateAlliedCollision();
-		break;
-
-	case(BulletOwner::Pet):
-		updateAlliedCollision();
-		break;
-
-	case(BulletOwner::Boss):
-		updateEnemyCollision();
-		break;
-	}
-
-	updateRotate(dir);
-}
-
 void Bullet::calculateDir(sf::Vector2f owner_pos, sf::Vector2f target)
 {
 	float dx;
@@ -82,6 +60,12 @@ void Bullet::calculateDir(sf::Vector2f owner_pos, sf::Vector2f target)
 void Bullet::setDir(sf::Vector2f dir)
 {
 	this->dir = dir;
+}
+
+BulletOwner::Owner Bullet::getOwner()
+{
+	return
+		this->owner;
 }
 
 void Bullet::initSpritePet(sf::Vector2f owner_pos, sf::Texture texture)
@@ -125,12 +109,10 @@ void Bullet::updateMove(sf::Time deltaTime)
 	hit_box.setPosition(sprite.getPosition());
 }
 
-void Bullet::updateAlliedCollision()
+void Bullet::updateAlliedCollision(std::vector<std::shared_ptr<Enemy>> enemies, std::shared_ptr<Boss> boss, std::vector<sf::FloatRect> walls)
 {
 	//ALLIED CASE
-	std::vector<std::shared_ptr<Character>> enemies;
-	enemies = *entitydata->enemies;
-
+	
 	if (!enemies.empty())
 	{
 		for (int i = 0; i != enemies.size(); i++)
@@ -146,12 +128,12 @@ void Bullet::updateAlliedCollision()
 		}
 	}
 
-	if (entitydata->boss)
+	if (boss)
 	{
-		collision->CollideWithEntity(this->hit_box.getGlobalBounds(), entitydata->boss->getHitBox().getGlobalBounds());
+		collision->CollideWithEntity(this->hit_box.getGlobalBounds(), boss->getHitBox().getGlobalBounds());
 		if (collision->isCollide())
 		{
-			entitydata->boss->takeDamage();
+			boss->takeDamage();
 			collision->resetOutMtv();
 			this->collide = true;
 			return;
@@ -160,30 +142,30 @@ void Bullet::updateAlliedCollision()
 
 	//WALLS
 
-	updateWallsCollision();
+	updateWallsCollision(walls);
 
 	this->collide = collision->isCollide();
 }
 
-void Bullet::updateEnemyCollision()
+void Bullet::updateEnemyCollision(std::shared_ptr<PlayerT> player, std::shared_ptr<Pet> pet, std::vector<sf::FloatRect> walls)
 {
 	//PLAYER
-	collision->CollideWithEntity(this->hit_box.getGlobalBounds(), entitydata->player->getHitBox().getGlobalBounds());
+	collision->CollideWithEntity(this->hit_box.getGlobalBounds(), player->getHitBox().getGlobalBounds());
 	if (collision->isCollide())
 	{
-		entitydata->player->takeDamage();
+		player->takeDamage();
 		collision->resetOutMtv();
 		this->collide = true;
 		return;
 	}
 
 	//PET
-	if (entitydata->pet)
+	if (pet)
 	{
-		collision->CollideWithEntity(this->hit_box.getGlobalBounds(), entitydata->pet->getHitBox().getGlobalBounds());
+		collision->CollideWithEntity(this->hit_box.getGlobalBounds(), pet->getHitBox().getGlobalBounds());
 		if (collision->isCollide())
 		{
-			entitydata->pet->takeDamage();
+			pet->takeDamage();
 			collision->resetOutMtv();
 			this->collide = true;
 			return;
@@ -192,22 +174,22 @@ void Bullet::updateEnemyCollision()
 
 	//WALLS
 
-	updateWallsCollision();
+	updateWallsCollision(walls);
 
 	this->collide = collision->isCollide();
 }
 
-void Bullet::updateWallsCollision()
+void Bullet::updateWallsCollision(std::vector<sf::FloatRect> walls)
 {
 	//WALLS
-	collision->CollideWithWalls(this->hit_box.getGlobalBounds(), entitydata->map->findWalls(static_cast<int>(sprite.getPosition().x), static_cast<int>(sprite.getPosition().y)));
+	collision->CollideWithWalls(this->hit_box.getGlobalBounds(), walls);
 	collision->resetOutMtv();
 }
 
-void Bullet::updateRotate(sf::Vector2f vec_dir)
+void Bullet::updateRotate()
 {
 	const float PI = 3.14159265f;
-	float deg = atan2(vec_dir.y, vec_dir.x) * 180.f / PI;
+	float deg = atan2(dir.y, dir.x) * 180.f / PI;
 
 	this->sprite.setRotation(deg);
 	this->hit_box.setRotation(deg);

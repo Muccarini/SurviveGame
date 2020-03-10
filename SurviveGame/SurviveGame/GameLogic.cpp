@@ -117,8 +117,7 @@ void GameLogic::updateZombie(sf::Time deltaTime, int i)
 	enemies[i]->updateMove(deltaTime, player->getPosition(), tile_map.getGridSize());
 	enemies[i]->updateRotate(player->getPosition());
 	enemies[i]->updateHud();
-	enemies[i]->updateCollision(player->getHitBox().getGlobalBounds(), 
-		pet->getHitBox().getGlobalBounds(), tile_map.findWalls(static_cast<int>(enemies[i]->getPosition().x), static_cast<int>(enemies[i]->getPosition().y)));
+	enemies[i]->updateCollision(player, pet, tile_map.findWalls(static_cast<int>(enemies[i]->getPosition().x), static_cast<int>(enemies[i]->getPosition().y)), tile_map.getGridSize());
 }
 
 void GameLogic::spawnBoss(sf::Time deltaTime)
@@ -228,7 +227,27 @@ void GameLogic::updateBullet(sf::Time deltaTime)
 	{
 		for (unsigned int i = 0; i < bullets.size(); i++)
 		{
-			bullets[i]->update(deltaTime);
+
+			bullets[i]->updateMove(deltaTime);
+
+			switch (bullets[i]->getOwner())
+			{
+			case(BulletOwner::Player):
+				bullets[i]->updateAlliedCollision(enemies, boss, tile_map.findWalls(static_cast<int>(player->getPosition().x), static_cast<int>(player->getPosition().y)));
+				break;
+
+			case(BulletOwner::Pet):
+				bullets[i]->updateAlliedCollision(enemies, boss, tile_map.findWalls(static_cast<int>(pet->getPosition().x), static_cast<int>(pet->getPosition().y)));
+				break;
+
+			case(BulletOwner::Boss):
+				bullets[i]->updateEnemyCollision(player, pet, tile_map.findWalls(static_cast<int>(boss->getPosition().x), static_cast<int>(boss->getPosition().y)));
+				break;
+			}
+
+			bullets[i]->updateRotate();
+
+
 			if (bullets[i]->isCollide())
 				bullets.erase(bullets.begin() + i);
 		}

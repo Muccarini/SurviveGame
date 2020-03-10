@@ -10,7 +10,7 @@ Enemy::Enemy(sf::Texture texture, GridNode grid, float grid_size) : _m(grid, max
 	_m.setMaxDist(max_distance);
 }
 
-Enemy::Enemy() : _m(*entitydata->grid, max_distance, distance)
+Enemy::Enemy()
 {
 }
 
@@ -42,23 +42,23 @@ void Enemy::updateHud()
 	hud.updateText(hp, getPosition());
 }
 
-void Enemy::updateCollision(sf::FloatRect player, sf::FloatRect pet, std::vector<sf::FloatRect> walls, float grid_size)
+void Enemy::updateCollision(std::shared_ptr<PlayerT> player, std::shared_ptr<Pet> pet, std::vector<sf::FloatRect> walls, float grid_size)
 {
 	sf::Vector2f ent(0, 0);
 	sf::Vector2f dir(0, 0);
 
 	//PLAYER
-	ent = this->collision->CollideWithEntity(player, this->getHitBox().getGlobalBounds());
+	ent = this->collision->CollideWithEntity(player->getHitBox().getGlobalBounds(), this->getHitBox().getGlobalBounds());
 	sprite.move(-ent);
 	collision->resetOutMtv();
 
 	//PET
-	if (entitydata->pet)
+	if (pet)
 	{
-		ent = this->collision->CollideWithEntity(pet, this->getHitBox().getGlobalBounds());
+		ent = this->collision->CollideWithEntity(pet->getHitBox().getGlobalBounds(), this->getHitBox().getGlobalBounds());
 		sprite.move(-ent);
 		if (ent.x != 0 || ent.y != 0)
-			entitydata->pet->takeDamage();
+			pet->takeDamage();
 		collision->resetOutMtv();
 	}
 

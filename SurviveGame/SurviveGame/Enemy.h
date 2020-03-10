@@ -15,7 +15,8 @@ public:
 	void updateMove(sf::Time deltaTime, sf::Vector2f target, float grid_size);
 	void updateRotate(sf::Vector2f target);
 	void updateHud();
-	void updateCollision(sf::FloatRect player, sf::FloatRect pet, std::vector<sf::FloatRect> walls);
+	void updateCollision(std::shared_ptr<PlayerT> player, std::shared_ptr<Pet> pet, std::vector<sf::FloatRect> walls, float grid_size);
+	void takeDamage();
 
 	virtual void renderBullets(std::shared_ptr<sf::RenderWindow> target);
 
@@ -24,8 +25,6 @@ private:
 	void initSprite(GridNode grid, sf::Texture texture);
 	void initHitBox(float grid_size);
 
-	void takeDamage(/*tipo di danno*/);
-
 	float distance;
 	float max_distance;
 	std::list <sf::Vector2f> move_vect;
@@ -33,6 +32,7 @@ private:
 	sf::Vector2f spostamento;
 
 	AStar _m;
+
 	std::list<GridLocation> DIRS =
 	{ GridLocation{4, 3}, GridLocation{16,4}, GridLocation{16, 3}, GridLocation{16, 5},
 	  GridLocation{12, 6}, GridLocation{4, 6}, GridLocation{7, 6}, GridLocation{3, 12},

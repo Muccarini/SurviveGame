@@ -16,14 +16,12 @@ public:
 	void updateHud();
 	void updateCollision(sf::Vector2f target, std::vector<sf::FloatRect> walls, float grid_size);
 
-	void setAmmo(int i);
-	int getAmmo();
+	void takeDamage();
 
 	virtual void renderBullets(std::shared_ptr<sf::RenderWindow> target);
 private:
 
 	bool isInRange(sf::Vector2f obj1, sf::Vector2f obj2);
-	void takeDamage();
 
 	void initVar();
 	void initSprite(GridNode grid, sf::Texture texture);
