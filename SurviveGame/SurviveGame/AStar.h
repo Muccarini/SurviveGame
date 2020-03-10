@@ -9,6 +9,8 @@ class AStar
 {
 public:
 	AStar(GridNode grid, float max_d, float dist);
+	AStar();
+
 	virtual ~AStar();
 
 	sf::Vector2f move(sf::Time deltatime, sf::Sprite* _sprite, sf::Vector2f target,

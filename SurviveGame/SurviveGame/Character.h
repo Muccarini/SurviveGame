@@ -1,7 +1,6 @@
 #pragma once
 #include "Entity.h"
 #include "Hud.h"
-#include "Bullet.h"
 #include <math.h>
 
 

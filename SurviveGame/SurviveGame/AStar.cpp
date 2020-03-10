@@ -12,6 +12,10 @@ AStar::AStar(GridNode grid, float max_d, float dist) : grid(grid)
 	distance = dist;
 }
 
+AStar::AStar()
+{
+}
+
 AStar::~AStar()
 {
 }

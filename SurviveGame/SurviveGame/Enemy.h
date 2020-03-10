@@ -1,6 +1,10 @@
 #pragma once
+
 #include "Character.h"
 #include "AStar.h"
+
+class Character;
+class PlayerT;
 
 class Enemy :
 	public Character

@@ -5,6 +5,10 @@ GridNode::GridNode(int width, int height) : width(width), height(height)
 	DIRS = { GridLocation{1, 0}, GridLocation{0, -1}, GridLocation{-1, 0}, GridLocation{0, 1} };
 }
 
+GridNode::GridNode()
+{
+}
+
 void GridNode::initGrid(std::vector<GridLocation> obstacles)
 {
 	this->grid.resize(this->height, std::vector<GridLocation>());

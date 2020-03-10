@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <array>
 #include <iostream>
+
 struct GridLocation
 {
 	int x, y;
@@ -56,7 +57,6 @@ struct PriorityQueue {
 };
 
 namespace std {
-	/* implement hash function so we can put GridLocation into an unordered_set */
 	template <> struct hash<GridLocation> {
 		typedef GridLocation argument_type;
 		typedef std::size_t result_type;
@@ -71,6 +71,8 @@ class GridNode
 {
 public:
 	GridNode(int width, int height);
+	GridNode();
+
 	virtual ~GridNode() {};
 
 	void initGrid(std::vector<GridLocation> obstacles);
