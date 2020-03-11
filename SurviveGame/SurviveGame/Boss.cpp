@@ -85,7 +85,7 @@ void Boss::updateCollision(sf::FloatRect target, std::vector<sf::FloatRect> wall
 	sf::Vector2f ent(0.f, 0.f);
 
 	ent = this->collision->CollideWithEntity(this->getHitBox().getGlobalBounds(), target);
-	sprite.move(ent);
+	/*sprite.move(ent);*/
 
 	if (ent != sf::Vector2f(0.f, 0.f))
 		collision->resetOutMtv();
