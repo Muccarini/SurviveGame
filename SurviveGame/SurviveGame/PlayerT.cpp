@@ -166,8 +166,6 @@ void PlayerT::updateCollisionEnemies(std::vector<std::shared_ptr<Enemy>> enemies
 	{
 		ent = this->collision->CollideWithEntity(this->hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds());
 		sprite.move(ent);
-		if (ent.x != 0 || ent.y != 0)
-			takeDamage();
 	}
 	hit_box.setPosition(getPosition());
 	collision->resetOutMtv();
@@ -190,7 +188,7 @@ void PlayerT::updateCollisionWalls(std::vector<sf::FloatRect> walls, float grid_
 
 	dir = this->collision->CollideWithWalls(this->hit_box.getGlobalBounds(), walls);
 
-	this->collision->setPreMtv(this->collision->getOutMtv());
+	//this->collision->setPreMtv(this->collision->getOutMtv());
 	sprite.move(dir);
 	hit_box.setPosition(getPosition());
 	collision->resetOutMtv();

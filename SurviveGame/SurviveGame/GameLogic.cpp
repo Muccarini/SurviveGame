@@ -227,8 +227,7 @@ void GameLogic::updateBullet(sf::Time deltaTime)
 	{
 		for (unsigned int i = 0; i < bullets.size(); i++)
 		{
-
-			bullets[i]->updateMove(deltaTime);
+			bullets[i]->updateRotate();
 
 			switch (bullets[i]->getOwner())
 			{
@@ -244,9 +243,7 @@ void GameLogic::updateBullet(sf::Time deltaTime)
 				bullets[i]->updateEnemyCollision(player, pet, tile_map.findWalls(static_cast<int>(bullets[i]->getPosition().x), static_cast<int>(bullets[i]->getPosition().y)));
 				break;
 			}
-
-			bullets[i]->updateRotate();
-
+			bullets[i]->updateMove(deltaTime);
 
 			if (bullets[i]->isCollide())
 				bullets.erase(bullets.begin() + i);
