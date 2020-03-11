@@ -112,7 +112,6 @@ void Bullet::updateMove(sf::Time deltaTime)
 void Bullet::updateAlliedCollision(std::vector<std::shared_ptr<Enemy>> enemies, std::shared_ptr<Boss> boss, std::vector<sf::FloatRect> walls)
 {
 	//ALLIED CASE
-
 	if (!enemies.empty())
 	{
 		for (int i = 0; i != enemies.size(); i++)
@@ -180,7 +179,6 @@ void Bullet::updateEnemyCollision(std::shared_ptr<PlayerT> player, std::shared_p
 	}
 
 	//WALLS
-
 	collision->CollideWithWalls(this->hit_box.getGlobalBounds(), walls);
 	if (collision->isCollide())
 	{
@@ -193,7 +191,6 @@ void Bullet::updateEnemyCollision(std::shared_ptr<PlayerT> player, std::shared_p
 
 void Bullet::updateWallsCollision(std::vector<sf::FloatRect> walls)
 {
-	//WALLS
 	collision->CollideWithWalls(this->hit_box.getGlobalBounds(), walls);
 	collision->resetOutMtv();
 }
