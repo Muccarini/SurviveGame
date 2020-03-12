@@ -48,7 +48,6 @@ void Enemy::updateCollision(std::shared_ptr<Character> player, std::shared_ptr<C
 
 	//PLAYER
 	ent = this->collision->CollideWithEntity(player->getHitBox().getGlobalBounds(), this->getHitBox().getGlobalBounds());
-	sprite.move(-ent);
 	if (ent.x != 0 || ent.y != 0)
 		player->takeDamage();
 	collision->resetOutMtv();

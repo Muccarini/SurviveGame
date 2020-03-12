@@ -6,7 +6,7 @@ StShotgunPlayerFight::StShotgunPlayerFight()
 	nrshot = 8;//deve essere pari
 }
 
-void StShotgunPlayerFight::shot(std::vector<std::shared_ptr<Bullet>>& bullets, sf::Vector2f owner_pos, sf::Vector2f target_pos, const sf::Texture & texture)
+void StShotgunPlayerFight::shot(std::vector<std::shared_ptr<Bullet>>& bullets, BulletOwner::Owner owner, sf::Vector2f owner_pos, sf::Vector2f target_pos, const sf::Texture & texture)
 {
 	float dir = 180.f / (nrshot * 360.f);
 	int count = 0;
@@ -15,7 +15,7 @@ void StShotgunPlayerFight::shot(std::vector<std::shared_ptr<Bullet>>& bullets, s
 		count = 1;
 		for (int i = 0; i < nrshot; i++)
 		{
-			std::shared_ptr<Bullet>bullet(new Bullet(BulletOwner::Player, owner_pos, texture));
+			std::shared_ptr<Bullet>bullet(new Bullet(owner, owner_pos, texture));
 
 			float dx = target_pos.x - owner_pos.x;
 			float dy = target_pos.y - owner_pos.y;

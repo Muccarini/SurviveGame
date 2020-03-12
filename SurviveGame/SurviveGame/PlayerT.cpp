@@ -188,7 +188,6 @@ void PlayerT::updateCollisionWalls(std::vector<sf::FloatRect> walls, float grid_
 
 	dir = this->collision->CollideWithWalls(this->hit_box.getGlobalBounds(), walls);
 
-	//this->collision->setPreMtv(this->collision->getOutMtv());
 	sprite.move(dir);
 	hit_box.setPosition(getPosition());
 	collision->resetOutMtv();

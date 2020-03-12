@@ -95,7 +95,7 @@ void Bullet::initSpritePlayer(sf::Vector2f owner_pos, const sf::Texture & textur
 void Bullet::initHitBox()
 {
 	hit_box.setSize(sf::Vector2f(813.f, 306.f));
-	hit_box.setOutlineColor(sf::Color::Magenta);
+	hit_box.setOutlineColor(sf::Color::Transparent);
 	hit_box.setOutlineThickness(10.f);
 	hit_box.setFillColor(sf::Color::Transparent);
 	hit_box.setPosition(this->getPosition());
