@@ -204,7 +204,7 @@ void GameLogic::updatePet(sf::Time deltaTime)
 	//playerCollision
 		sf::Vector2f dir = collision.CollideWithEntity(pet->getHitBox().getGlobalBounds(), player->getHitBox().getGlobalBounds());
 		if (collision.isCollide())
-			pet->setPosition(pet->getPosition() - dir);
+			pet->setPosition(pet->getPosition() + dir);
 		collision.reset();
 
 		//PET DEATH
