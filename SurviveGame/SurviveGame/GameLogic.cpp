@@ -249,7 +249,7 @@ void GameLogic::updateBullet(sf::Time deltaTime)
 			bullets[i]->updateRotate();
 
 			//ALLIED
-			if(bullets[i]->isAllied())
+			if (bullets[i]->isAllied())
 			{
 				//collisonZombies
 				if (!enemies.empty())
@@ -261,6 +261,7 @@ void GameLogic::updateBullet(sf::Time deltaTime)
 						{
 							enemies[j]->takeDamage();
 							bullets.erase(bullets.begin() + i);
+							j = (enemies.size() - 1);
 						}
 					}
 				}
@@ -286,13 +287,16 @@ void GameLogic::updateBullet(sf::Time deltaTime)
 					bullets.erase(bullets.begin() + i);
 				}
 				else
-				{ 
-					//collisionPet
-					collision.CollideWithEntity(bullets[i]->getHitBox().getGlobalBounds(), pet->getHitBox().getGlobalBounds());
-					if (collision.isCollide())
+				{
+					if (pet_alive)
 					{
-						pet->takeDamage();
-						bullets.erase(bullets.begin() + i);
+						//collisionPet
+						collision.CollideWithEntity(bullets[i]->getHitBox().getGlobalBounds(), pet->getHitBox().getGlobalBounds());
+						if (collision.isCollide())
+						{
+							pet->takeDamage();
+							bullets.erase(bullets.begin() + i);
+						}
 					}
 				}
 			}
@@ -300,16 +304,16 @@ void GameLogic::updateBullet(sf::Time deltaTime)
 			//WALLS
 			if (collision.isCollide())
 				collision.reset();
-			else 
+			else
 			{
-				collision.CollideWithWalls(bullets[i]->getHitBox().getGlobalBounds(), tile_map.findWalls(static_cast<int>(player->getPosition().x), static_cast<int>(player->getPosition().y)));
+				collision.CollideWithWalls(bullets[i]->getHitBox().getGlobalBounds(), tile_map.findWalls(static_cast<int>(bullets[i]->getPosition().x), static_cast<int>(bullets[i]->getPosition().y)));
 				if (collision.isCollide())
 				{
 					collision.reset();
 					bullets.erase(bullets.begin() + i);
 				}
-
-				bullets[i]->updateMove(deltaTime);
+				else
+					bullets[i]->updateMove(deltaTime);
 			}
 		}
 	}
@@ -370,7 +374,7 @@ void GameLogic::updatePlayer(sf::Time deltaTime)
 		sf::Vector2f dir = collision.CollideWithEntity(player->getHitBox().getGlobalBounds(), boss->getHitBox().getGlobalBounds());
 		if (collision.isCollide())
 		{
-			player->setPosition(player->getPosition() - dir);
+			player->setPosition(player->getPosition() + dir);
 			collision.reset();
 		}
 	}
