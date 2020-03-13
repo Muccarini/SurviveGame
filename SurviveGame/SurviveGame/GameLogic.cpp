@@ -269,7 +269,7 @@ void GameLogic::updateBullet(sf::Time deltaTime)
 				//collisionBoss
 				if (boss_alive)
 				{
-					collision.CollideWithEntity(player->getHitBox().getGlobalBounds(), boss->getHitBox().getGlobalBounds());
+					collision.CollideWithEntity(bullets[i]->getHitBox().getGlobalBounds(), boss->getHitBox().getGlobalBounds());
 					if (collision.isCollide())
 					{
 						boss->takeDamage();
