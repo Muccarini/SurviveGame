@@ -12,7 +12,6 @@ public:
 	void updateMove(sf::Time deltaTime, sf::Vector2f parent_pos);
 	void updateRotate(sf::Vector2f target);
 	void updateHud();
-	void updateCollision(sf::FloatRect parent_rect);
 
 	void takeDamage();
 

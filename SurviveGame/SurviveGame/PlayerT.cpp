@@ -111,32 +111,32 @@ bool PlayerT::updateReload(sf::Time deltaTime)
 	return false;
 }
 
-void PlayerT::updateDash(sf::Time deltaTime, TileMap tile_map)
-{
-	bool space_is_pressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
-
-	if (space_is_pressed && !is_dashing)
-	{
-		hit_box.setPosition(getPosition().x + (this->mov_dir.x * 160), (this->mov_dir.y * 160) + getPosition().y);
-		collision->CollideWithWalls(this->hit_box.getGlobalBounds(), tile_map.findWalls(static_cast<int>(hit_box.getPosition().x), static_cast<int>(hit_box.getPosition().y)));
-		if (!this->collision->isCollide() && 0 < hit_box.getPosition().x  && hit_box.getPosition().x < 1280 && 0 < hit_box.getPosition().y && hit_box.getPosition().y < 1280)
-		{
-			is_dashing = true;
-			this->sprite.setPosition(hit_box.getGlobalBounds().left, hit_box.getGlobalBounds().top);
-		}
-		else
-			hit_box.setPosition(getPosition());
-	}
-	if (is_dashing && dash_clock > 0)
-	{
-		dash_clock -= deltaTime.asSeconds();
-		if (dash_clock < 0)
-		{
-			is_dashing = false;
-			dash_clock = dash_cd;
-		}
-	}
-}
+//void PlayerT::updateDash(sf::Time deltaTime, TileMap tile_map)
+//{
+//	bool space_is_pressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
+//
+//	if (space_is_pressed && !is_dashing)
+//	{
+//		hit_box.setPosition(getPosition().x + (this->mov_dir.x * 160), (this->mov_dir.y * 160) + getPosition().y);
+//		collision->CollideWithWalls(this->hit_box.getGlobalBounds(), tile_map.findWalls(static_cast<int>(hit_box.getPosition().x), static_cast<int>(hit_box.getPosition().y)));
+//		if (!this->collision->isCollide() && 0 < hit_box.getPosition().x  && hit_box.getPosition().x < 1280 && 0 < hit_box.getPosition().y && hit_box.getPosition().y < 1280)
+//		{
+//			is_dashing = true;
+//			this->sprite.setPosition(hit_box.getGlobalBounds().left, hit_box.getGlobalBounds().top);
+//		}
+//		else
+//			hit_box.setPosition(getPosition());
+//	}
+//	if (is_dashing && dash_clock > 0)
+//	{
+//		dash_clock -= deltaTime.asSeconds();
+//		if (dash_clock < 0)
+//		{
+//			is_dashing = false;
+//			dash_clock = dash_cd;
+//		}
+//	}
+//}
 
 void PlayerT::updateMovSpeed(sf::Time deltaTime)
 {
@@ -156,42 +156,6 @@ void PlayerT::updateMovSpeed(sf::Time deltaTime)
 void PlayerT::updateHud()
 {
 	hud.updateText(getAmmo(), getHp(), this->dash_clock, getPosition());
-}
-
-void PlayerT::updateCollisionEnemies(std::vector<std::shared_ptr<Enemy>> enemies)
-{
-	sf::Vector2f ent(0, 0);
-
-	for (int i = 0; i != enemies.size(); i++)
-	{
-		ent = this->collision->CollideWithEntity(this->hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds());
-		sprite.move(ent);
-	}
-	hit_box.setPosition(getPosition());
-	collision->resetOutMtv();
-}
-
-void PlayerT::updateCollisionBoss(sf::FloatRect boss_rect)
-{
-	sf::Vector2f ent(0, 0);
-
-	ent = this->collision->CollideWithEntity(this->hit_box.getGlobalBounds(), boss_rect);
-	sprite.move(ent);
-
-	hit_box.setPosition(getPosition());
-	collision->resetOutMtv();
-}
-
-void PlayerT::updateCollisionWalls(std::vector<sf::FloatRect> walls, float grid_size)
-{
-	sf::Vector2f dir(0, 0);
-
-	dir = this->collision->CollideWithWalls(this->hit_box.getGlobalBounds(), walls);
-
-	sprite.move(dir);
-	hit_box.setPosition(getPosition());
-	collision->resetOutMtv();
-	setGridPosition(grid_size);
 }
 
 bool PlayerT::shooting(sf::Time deltaTime)

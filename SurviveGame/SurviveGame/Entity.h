@@ -37,10 +37,12 @@ public:
 	bool isCollide(); 
 
 	sf::Vector2f getPosition();
+	void         setPosition(const sf::Vector2f & pos);
+
 	sf::RectangleShape getHitBox();
 
 	GridLocation getGridPos();
-	void setGridPosition(float tilesize);
+	void         setGridPosition(float tilesize);
 
 protected:
 
@@ -48,7 +50,6 @@ protected:
 
 	sf::Sprite sprite;
 	sf::RectangleShape hit_box;
-	std::shared_ptr<CollisionManager> collision;
 
 	sf::Vector2f vec;
 

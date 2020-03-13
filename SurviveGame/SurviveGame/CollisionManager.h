@@ -1,20 +1,26 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "Entity.h"
 
 class CollisionManager
 {
+
 public:
 	CollisionManager();
 	~CollisionManager();
 
 	sf::Vector2f CollideWithWalls(const sf::FloatRect & rectSp1, const std::vector<sf::FloatRect> walls);
 	sf::Vector2f CollideWithEntity(const sf::FloatRect & rectSp1, const sf::FloatRect & rectSp2);
-	void resetOutMtv();
-	bool isCollide();
 
-	void setPreMtv(sf::Vector2f vec);
+	void reset();
+	void resetOutMtv();
+	void resetCollide();
+
+	bool isCollide();
 	sf::Vector2f getOutMtv();
+	
+	void setPreMtv(sf::Vector2f vec);
 
 private:
 	bool sat_test(const sf::FloatRect &rectSp1, const sf::FloatRect &rectSp2);

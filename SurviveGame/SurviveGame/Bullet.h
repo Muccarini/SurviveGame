@@ -22,6 +22,8 @@ public:
 	void calculateDir(sf::Vector2f owner_pos, sf::Vector2f target);
 	void setDir(sf::Vector2f dir);
 
+	bool isAllied();
+
 	BulletOwner::Owner getOwner();
 
 private:
@@ -36,5 +38,6 @@ private:
 	sf::Vector2f dir;
 
 	BulletOwner::Owner owner;
+	bool allied;
 };
 

@@ -117,12 +117,27 @@ void GameLogic::updateZombie(sf::Time deltaTime, int i)
 	enemies[i]->updateMove(deltaTime, player->getPosition(), tile_map.getGridSize());
 	enemies[i]->updateRotate(player->getPosition());
 	enemies[i]->updateHud();
-	enemies[i]->updateCollision(player, pet, tile_map.findWalls(static_cast<int>(enemies[i]->getPosition().x), static_cast<int>(enemies[i]->getPosition().y)), tile_map.getGridSize());
+
+	//playerCollision
+	collision.CollideWithEntity(enemies[i]->getHitBox().getGlobalBounds(), player->getHitBox().getGlobalBounds());
+	if (collision.isCollide())
+		player->takeDamage();
+	collision.reset();
+
+	//petCollision
+	if(pet_alive)
+	{
+		collision.CollideWithEntity(enemies[i]->getHitBox().getGlobalBounds(), pet->getHitBox().getGlobalBounds());
+		if (collision.isCollide())
+			pet->takeDamage();
+		collision.reset();
+	}
 }
 
 void GameLogic::spawnBoss(sf::Time deltaTime)
 {
 	round.startCountdown(deltaTime);
+
 	if (!round.isLoading() && round.isBossRound())
 	{
 		if (!boss_alive)
@@ -161,9 +176,6 @@ void GameLogic::updateBoss(sf::Time deltaTime)
 	boss->updateRotate(player->getPosition());
 	boss->updateReload(deltaTime);
 	boss->updateHud();
-	boss->updateCollision(player->getHitBox().getGlobalBounds(), 
-		tile_map.findWalls(static_cast<int>(boss->getPosition().x), static_cast<int>(boss->getPosition().y)),
-		tile_map.getGridSize());
 }
 
 void GameLogic::spawnPet()
@@ -188,7 +200,12 @@ void GameLogic::updatePet(sf::Time deltaTime)
 			spawnBullet(BulletOwner::Pet);
 
 		pet->updateHud();
-		pet->updateCollision(player->getHitBox().getGlobalBounds());
+
+	//playerCollision
+		sf::Vector2f dir = collision.CollideWithEntity(pet->getHitBox().getGlobalBounds(), player->getHitBox().getGlobalBounds());
+		if (collision.isCollide())
+			pet->setPosition(pet->getPosition() - dir);
+		collision.reset();
 
 		//PET DEATH
 		if(pet->getHp() <= 0)
@@ -231,24 +248,69 @@ void GameLogic::updateBullet(sf::Time deltaTime)
 		{
 			bullets[i]->updateRotate();
 
-			switch (bullets[i]->getOwner())
+			//ALLIED
+			if(bullets[i]->isAllied())
 			{
-			case(BulletOwner::Player):
-				bullets[i]->updateAlliedCollision(enemies, boss, tile_map.findWalls(static_cast<int>(bullets[i]->getPosition().x), static_cast<int>(bullets[i]->getPosition().y)));
-				break;
+				//collisonZombies
+				if (!enemies.empty())
+				{
+					for (int j = 0; j != enemies.size(); j++)
+					{
+						collision.CollideWithEntity(bullets[i]->getHitBox().getGlobalBounds(), enemies[j]->getHitBox().getGlobalBounds());
+						if (collision.isCollide())
+						{
+							enemies[j]->takeDamage();
+							bullets.erase(bullets.begin() + i);
+						}
+					}
+				}
 
-			case(BulletOwner::Pet):
-				bullets[i]->updateAlliedCollision(enemies, boss, tile_map.findWalls(static_cast<int>(bullets[i]->getPosition().x), static_cast<int>(bullets[i]->getPosition().y)));
-				break;
-
-			case(BulletOwner::Boss):
-				bullets[i]->updateEnemyCollision(player, pet, tile_map.findWalls(static_cast<int>(bullets[i]->getPosition().x), static_cast<int>(bullets[i]->getPosition().y)));
-				break;
+				//collisionBoss
+				if (boss_alive)
+				{
+					collision.CollideWithEntity(player->getHitBox().getGlobalBounds(), boss->getHitBox().getGlobalBounds());
+					if (collision.isCollide())
+					{
+						boss->takeDamage();
+						bullets.erase(bullets.begin() + i);
+					}
+				}
 			}
-			bullets[i]->updateMove(deltaTime);
+			else //!ALLIED
+			{
+				//collisionPlayer
+				collision.CollideWithEntity(bullets[i]->getHitBox().getGlobalBounds(), player->getHitBox().getGlobalBounds());
+				if (collision.isCollide())
+				{
+					player->takeDamage();
+					bullets.erase(bullets.begin() + i);
+				}
+				else
+				{ 
+					//collisionPet
+					collision.CollideWithEntity(bullets[i]->getHitBox().getGlobalBounds(), pet->getHitBox().getGlobalBounds());
+					if (collision.isCollide())
+					{
+						pet->takeDamage();
+						bullets.erase(bullets.begin() + i);
+					}
+				}
+			}
 
-			if (bullets[i]->isCollide())
-				bullets.erase(bullets.begin() + i);
+			//WALLS
+			if (collision.isCollide())
+				collision.reset();
+			else 
+			{
+				collision.CollideWithWalls(bullets[i]->getHitBox().getGlobalBounds(), tile_map.findWalls(static_cast<int>(player->getPosition().x), static_cast<int>(player->getPosition().y)));
+				if (collision.isCollide())
+				{
+					collision.reset();
+					bullets.erase(bullets.begin() + i);
+				}
+
+				bullets[i]->updateMove(deltaTime);
+			}
 		}
 	}
 }
@@ -284,14 +346,42 @@ void GameLogic::updateBoost()
 void GameLogic::updatePlayer(sf::Time deltaTime)
 {
 	player->updateMove(deltaTime);
-	player->updateDash(deltaTime,tile_map);
 
+	/*player->updateDash(deltaTime,tile_map);*/ //DA FIXARE
+
+	//collisionZomies
 	if (!enemies.empty())
-		player->updateCollisionEnemies(enemies);
-	if (boss_alive)
-		player->updateCollisionBoss(boss->getHitBox().getGlobalBounds());
+	{
+		for(int i = 0; i != enemies.size(); i++)
+		{
+			sf::Vector2f dir = collision.CollideWithEntity(player->getHitBox().getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds());
+			if(collision.isCollide())
+			{
+				player->takeDamage();
+				player->setPosition(player->getPosition() + dir);
+				collision.reset();
+			}
+		}
+	}
 
-	player->updateCollisionWalls(tile_map.findWalls(static_cast<int>(player->getPosition().x), static_cast<int>(player->getPosition().y)), tile_map.getGridSize());
+	//collisionBoss
+	if (boss_alive)
+	{
+		sf::Vector2f dir = collision.CollideWithEntity(player->getHitBox().getGlobalBounds(), boss->getHitBox().getGlobalBounds());
+		if (collision.isCollide())
+		{
+			player->setPosition(player->getPosition() - dir);
+			collision.reset();
+		}
+	}
+
+	//collisionwalls
+	sf::Vector2f dir = collision.CollideWithWalls(player->getHitBox().getGlobalBounds(), tile_map.findWalls(static_cast<int>(player->getPosition().x), static_cast<int>(player->getPosition().y)));
+	if (collision.isCollide())
+	{
+		player->setPosition(player->getPosition() + dir);
+		collision.reset();
+	}
 
 	player->updateMovSpeed(deltaTime);
 

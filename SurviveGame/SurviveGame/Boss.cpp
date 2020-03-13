@@ -79,26 +79,6 @@ void Boss::updateHud()
 	hud.updateText(hp, getPosition());
 }
 
-void Boss::updateCollision(sf::FloatRect target, std::vector<sf::FloatRect> walls, float grid_size)
-{
-	sf::Vector2f dir(0.f, 0.f);
-	sf::Vector2f ent(0.f, 0.f);
-
-	ent = this->collision->CollideWithEntity(this->getHitBox().getGlobalBounds(), target);
-	/*sprite.move(ent);*/
-
-	if (ent != sf::Vector2f(0.f, 0.f))
-		collision->resetOutMtv();
-
-	dir = this->collision->CollideWithWalls(this->getHitBox().getGlobalBounds(), walls);
-	sprite.move(dir);
-
-	if (dir != sf::Vector2f(0.f, 0.f))
-		collision->resetOutMtv();
-
-	setGridPosition(grid_size);
-}
-
 bool Boss::isInRange(sf::Vector2f obj1, sf::Vector2f obj2)
 {
 	float dx = obj1.x - obj2.x;
@@ -139,8 +119,8 @@ void Boss::initSprite(GridNode grid,const sf::Texture & texture)
 {
 	sprite.setTexture(texture);
 	sprite.setScale(1.5, 1.5);
-	int k = /*7;*/rand() % 17 + 1;//max 1920
-	int j = /*6;*/rand() % 13 + 1;//max 1080
+	int k = rand() % 17 + 1;//max 1920
+	int j = rand() % 13 + 1;//max 1080
 	GridLocation pos = { k , j };
 	while (!grid.getGrid()[j][k].walkable)
 	{

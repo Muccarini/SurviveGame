@@ -16,7 +16,6 @@ public:
 	void updateRotate(sf::Vector2f target);
 	void updateReload(sf::Time deltaTime);
 	void updateHud();
-	void updateCollision(sf::FloatRect player, std::vector<sf::FloatRect> walls, float grid_size);
 
 private:
 

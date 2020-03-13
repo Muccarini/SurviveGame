@@ -5,7 +5,6 @@
 Entity::Entity()
 {
 	this->alive = false;
-	this->collision = std::make_shared<CollisionManager>();
 }
 
 
@@ -41,6 +40,11 @@ sf::Vector2f Entity::getPosition()
 {
 	sf::Vector2f pos = this->sprite.getPosition();
 	return pos;
+}
+
+void Entity::setPosition(const sf::Vector2f &pos)
+{
+	this->sprite.setPosition(pos);
 }
 
 sf::RectangleShape Entity::getHitBox()

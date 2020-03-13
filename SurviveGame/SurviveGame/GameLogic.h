@@ -71,6 +71,7 @@ private:
 	Hud hud;
 	RoundManager round;
 	Achievement * achievement;
+	CollisionManager collision;
 
 	std::shared_ptr<TextureHolder> textures;
 
@@ -86,6 +87,7 @@ private:
 
 	const int max_enemies = 5;
 	int enemies_alive;
+
 	bool boss_alive;
 	bool pet_alive;
 

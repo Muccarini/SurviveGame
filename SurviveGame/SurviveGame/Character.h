@@ -23,16 +23,15 @@ public:
 	void boostHeal();
 	void boostMovSpeed();
 
-	int getHp();
-	int getHpMax();
-
+	int   getHp();
+	int   getHpMax();
 	float getMovSpeed();
 	float getMovSpeedDef();
+	int   getAmmo();
 
-	int getAmmo();
 	void setAmmo(int i);
-
 	void setRatioCd(sf::Time ratio);
+
 	const sf::Time getRatioCd();
 
 	CharacterType::Type getType();

@@ -11,14 +11,19 @@ Bullet::Bullet(BulletOwner::Owner owner, sf::Vector2f owner_pos,const sf::Textur
 	case(BulletOwner::Player):
 		initSpritePlayer(owner_pos, texture);
 		initHitBox();
+		this->allied = true;
 		break;
+
 	case(BulletOwner::Boss):
 		initSpriteBoss(owner_pos, texture);
 		initHitBox();
+		this->allied = false;
 		break;
+
 	case(BulletOwner::Pet):
 		initSpritePet(owner_pos, texture);
 		initHitBox();
+		this->allied = true;
 		break;
 	}
 }
@@ -60,6 +65,12 @@ void Bullet::calculateDir(sf::Vector2f owner_pos, sf::Vector2f target)
 void Bullet::setDir(sf::Vector2f dir)
 {
 	this->dir = dir;
+}
+
+bool Bullet::isAllied()
+{
+	return
+		this->allied;
 }
 
 BulletOwner::Owner Bullet::getOwner()
@@ -107,92 +118,6 @@ void Bullet::updateMove(sf::Time deltaTime)
 {
 	this->sprite.move(this->dir.x * this->mov_speed * deltaTime.asSeconds(), this->dir.y * this->mov_speed * deltaTime.asSeconds());
 	hit_box.setPosition(sprite.getPosition());
-}
-
-void Bullet::updateAlliedCollision(std::vector<std::shared_ptr<Enemy>> enemies, std::shared_ptr<Boss> boss, std::vector<sf::FloatRect> walls)
-{
-	//ALLIED CASE
-	if (!enemies.empty())
-	{
-		for (int i = 0; i != enemies.size(); i++)
-		{
-			collision->CollideWithEntity(this->hit_box.getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds());
-			if (collision->isCollide())
-			{
-				enemies[i]->takeDamage();
-				collision->resetOutMtv();
-				this->collide = true;
-				return;
-			}
-		}
-	}
-
-	if (boss)
-	{
-		collision->CollideWithEntity(this->hit_box.getGlobalBounds(), boss->getHitBox().getGlobalBounds());
-		if (collision->isCollide())
-		{
-			boss->takeDamage();
-			collision->resetOutMtv();
-			this->collide = true;
-			return;
-		}
-	}
-
-	//WALLS
-	if (!walls.empty())
-	{
-		collision->CollideWithWalls(this->hit_box.getGlobalBounds(), walls);
-		if (collision->isCollide())
-		{
-			collision->resetOutMtv();
-			this->collide = true;
-			return;
-		}
-		this->collide = collision->isCollide();
-	}
-}
-
-void Bullet::updateEnemyCollision(std::shared_ptr<PlayerT> player, std::shared_ptr<Pet> pet, std::vector<sf::FloatRect> walls)
-{
-	//PLAYER
-	collision->CollideWithEntity(this->hit_box.getGlobalBounds(), player->getHitBox().getGlobalBounds());
-	if (collision->isCollide())
-	{
-		player->takeDamage();
-		collision->resetOutMtv();
-		this->collide = true;
-		return;
-	}
-
-	//PET
-	if (pet)
-	{
-		collision->CollideWithEntity(this->hit_box.getGlobalBounds(), pet->getHitBox().getGlobalBounds());
-		if (collision->isCollide())
-		{
-			pet->takeDamage();
-			collision->resetOutMtv();
-			this->collide = true;
-			return;
-		}
-	}
-
-	//WALLS
-	collision->CollideWithWalls(this->hit_box.getGlobalBounds(), walls);
-	if (collision->isCollide())
-	{
-		collision->resetOutMtv();
-		this->collide = true;
-		return;
-	}
-	this->collide = collision->isCollide();
-}
-
-void Bullet::updateWallsCollision(std::vector<sf::FloatRect> walls)
-{
-	collision->CollideWithWalls(this->hit_box.getGlobalBounds(), walls);
-	collision->resetOutMtv();
 }
 
 void Bullet::updateRotate()

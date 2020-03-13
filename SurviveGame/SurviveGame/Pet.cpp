@@ -46,17 +46,6 @@ void Pet::updateHud()
 	hud.updateText(hp, getPosition());
 }
 
-void Pet::updateCollision(sf::FloatRect parent_rect)
-{ //PLAYER
-	sf::Vector2f ent(0, 0);
-	sf::Vector2f dir(0, 0);
-
-	ent = this->collision->CollideWithEntity(parent_rect, this->getHitBox().getGlobalBounds());
-	sprite.move(-ent);
-	
-	collision->resetOutMtv();
-}
-
 void Pet::initVar()
 {
 	mov_speed_default = 1;
