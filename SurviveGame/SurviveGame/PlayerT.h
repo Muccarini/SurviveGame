@@ -1,5 +1,6 @@
 #pragma once
 #include "Character.h"
+#include "boost.h"
 #include "StrategyFight.h"
 
 class StrategyFight;
@@ -15,15 +16,12 @@ public:
 	void updateMove(sf::Time deltaTime);
 	void updateRotate(sf::Vector2f target);
 	bool updateReload(sf::Time deltaTime);
-	void updateDash(sf::Time deltaTime, TileMap tile_map);
+	//void updateDash(sf::Time deltaTime, TileMap tile_map);
 	void updateMovSpeed(sf::Time deltaTime);
 	void updateHud();
 
-	void updateCollisionEnemies(std::vector<std::shared_ptr<Enemy>> enemies);
-	void updateCollisionBoss(sf::FloatRect boss_rect);
-	void updateCollisionWalls(std::vector<sf::FloatRect> walls, float grid_size);
-
 	bool shooting(sf::Time deltaTime);
+	void boost(BoostType b_type);
 	void setStrategyFight(StrategyFight* stf);
 
 	void initVar();

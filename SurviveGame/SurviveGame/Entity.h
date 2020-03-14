@@ -12,17 +12,6 @@ namespace BulletOwner
 	enum Owner { Player, Boss, Pet };
 }
 
-struct BoostPos {
-
-public:
-	BoostPos() { pos1_1 = false; pos1_2 = false; pos2_1 = false; pos2_2 = false; };
-
-	bool pos1_1;
-	bool pos1_2;
-	bool pos2_1;
-	bool pos2_2;
-};
-
 class Entity
 {
 public:

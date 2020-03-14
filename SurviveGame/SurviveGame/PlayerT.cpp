@@ -192,6 +192,21 @@ bool PlayerT::shooting(sf::Time deltaTime)
 	}
 }
 
+void PlayerT::boost(BoostType b_type)
+{
+	switch (b_type)
+	{
+	case BoostType::HP:
+		if (this->hp < this->hp_max)
+			boostHeal();
+		break;
+	case BoostType::MS:
+		if (this->mov_speed == this->mov_speed_default)
+			boostMovSpeed();
+		break;
+	}
+}
+
 void PlayerT::setStrategyFight(StrategyFight* stf)
 {
 	this->stf = stf;

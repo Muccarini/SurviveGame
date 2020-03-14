@@ -123,6 +123,9 @@
     <ClCompile Include="Achievement.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="BoostManager.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TextureHolder.h">
@@ -194,9 +197,6 @@
     <ClInclude Include="Subject.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="StrategyMove.h">
-      <Filter>Strategy\move</Filter>
-    </ClInclude>
     <ClInclude Include="StrategyFight.h">
       <Filter>Strategy\Fight</Filter>
     </ClInclude>
@@ -223,6 +223,9 @@
     </ClInclude>
     <ClInclude Include="AStar.h">
       <Filter>Personaggi\Nemici</Filter>
+    </ClInclude>
+    <ClInclude Include="BoostManager.h">
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

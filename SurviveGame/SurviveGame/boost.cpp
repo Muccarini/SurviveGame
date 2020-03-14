@@ -1,20 +1,20 @@
 #include "Boost.h"
 
-Boost::Boost(const std::shared_ptr<BoostPos> boost_pos)
+Boost::Boost(sf::Vector2f spawn_pos, std::vector<const sf::Texture &> textures)
 {
-	this->boost_pos = boost_pos;
-	this->alive = true;
-	this->pos = sf::Vector2f(0, 0);
+	this->pos = spawn_pos;
 
 	switch (int i = rand() % 2)
 	{
 	case 0: 
-		this->id = Textures::HP;
+		this->id = textures[0];
+		this->b_type = HP;
 		initHp();
 		break;
 
 	case 1: 
 		this->id = Textures::MS;
+		this->b_type = MS;
 		initMs();
 		break;
 	}
@@ -73,6 +73,12 @@ void Boost::boostSubject(std::shared_ptr<Character> character)
 		}
 		break;
 	}
+}
+
+BoostType Boost::getType()
+{
+	return
+		this->b_type;
 }
 
 Textures::ID Boost::getId()

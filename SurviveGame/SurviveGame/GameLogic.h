@@ -4,6 +4,7 @@
 #include "Observer.h"
 #include "PauseMenu.h"
 #include "RoundManager.h"
+#include "BoostManager.h"
 #include "Achievement.h"
 #include "Hud.h"
 #include "TileMap.h"
@@ -72,6 +73,7 @@ private:
 	RoundManager round;
 	Achievement * achievement;
 	CollisionManager collision;
+	BoostManager boost_manager;
 
 	std::shared_ptr<TextureHolder> textures;
 
@@ -80,10 +82,7 @@ private:
 	std::shared_ptr<Boss> boss;
 
 	std::shared_ptr<Pet> pet;
-	std::vector<std::shared_ptr<Boost>> boosts;
 	std::vector<std::shared_ptr<Bullet>> bullets;
-
-	std::shared_ptr<BoostPos> boost_pos;
 
 	const int max_enemies = 5;
 	int enemies_alive;
@@ -94,7 +93,5 @@ private:
 	int kill_counter;
 
 	const float game_view_speed = 4.5f;
-	sf::Clock boost_time;
-	sf::Time rand_time;
 
 };

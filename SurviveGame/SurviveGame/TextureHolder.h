@@ -14,9 +14,11 @@ class TextureHolder   //NO COSTRU PERCHE MAP VUOTA
 public:
 	
 	void load(Textures::ID id, const std::string& filename);
+	void load(Textures::ID id, std::unique_ptr<sf::Texture> texture);
+
 	const sf::Texture& get(Textures::ID id) const;
 
 private:
-	std::map<Textures::ID, std::unique_ptr<sf::Texture>> _textureMap;
+	std::map<Textures::ID, std::unique_ptr<sf::Texture>> texture_map;
 };
 

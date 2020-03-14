@@ -319,12 +319,12 @@ void GameLogic::updateBullet(sf::Time deltaTime)
 	}
 }
 
-void GameLogic::updateBoost()
+void GameLogic:updateBoost()
 {
 	//SPAWN BOOST
 	if (boosts.size() < 4)
 	{
-		if (boost_time.getElapsedTime() > rand_time)
+		if (boost_time.getElapsedTime() > rand_time)// boost_manager.spawn();
 		{
 			std::shared_ptr<Boost> boost(new Boost(boost_pos));
 			boost->setTexturesSprite(textures->get(boost->getId()));
@@ -334,10 +334,11 @@ void GameLogic::updateBoost()
 			this->rand_time = sf::seconds((rand() % 10)+ 5.f);
 		}
 	}
+	//UPDATE BOOST
 	if (!boosts.empty())
 	{
 		for (unsigned int i = 0; i < boosts.size(); i++)
-		{
+		{:
 			if (boosts[i]->checkCollide(player->getHitBox().getGlobalBounds()))
 				boosts[i]->boostSubject(player);
 
