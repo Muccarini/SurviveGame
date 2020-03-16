@@ -1,84 +1,129 @@
 #include "BoostManager.h"
+#include <memory>
 
 
 
-BoostManager::BoostManager(const sf::Texture *txt_hp, const sf::Texture &txt_ms)
+BoostManager::BoostManager()
 {
-	texture = txt_hp;
-	textures.load(txt_hp);
-	textures.emplace_back(txt_ms);
-
+	this->rand_time = sf::seconds((rand() % 10) + 5.f);
 	pos1_1 = false; 
 	pos1_2 = false; 
 	pos2_1 = false; 
 	pos2_2 = false;
+	vec1_1 = sf::Vector2f(327, 327);
+	vec1_2 = sf::Vector2f(903, 327);
+	vec2_1 = sf::Vector2f(327, 903);
+	vec2_2 = sf::Vector2f(903, 903);
 }
 
 
 BoostManager::~BoostManager()
 {
+}
 
+void BoostManager::setTextures(sf::Texture txt_hp, sf::Texture txt_ms)
+{
+	textures.emplace(std::pair<BoostType::Type, sf::Texture>(BoostType::MS, txt_ms));
+	textures.emplace(std::pair<BoostType::Type, sf::Texture>(BoostType::HP, txt_hp));
 }
 
 void BoostManager::spawn()
 {
+	sf::Vector2f pos = calculateSpawnPos();
+	int i = (rand() % 1) + 1;
+
+	/*Pos pos_B = boost.getPosType();*/
+	/*auto it = boosts.find(pos_B);
+	*it->second = boost;*/
+	boosts.emplace_back(Boost(pos, textures.find(BoostType::Type(i))->first, *textures.find(BoostType::Type(i))->second));
+	boost_time.restart();
+}
+
+void BoostManager::resetBoostTime()
+{
+	this->boost_time.restart();
+}
+
+bool BoostManager::canSpawn()
+{
 	if (boosts.size() < 4)
 	{
 		if (boost_time.getElapsedTime() > rand_time)
-		{
-			Boost boost(calculateSpawnPos(), textures);
+			return true;
+	}
+	else return false;
+}
 
-			this->boosts.emplace_back(boost);
-			this->boost_time.restart();
-			this->rand_time = sf::seconds((rand() % 10) + 5.f);
+int BoostManager::checkIfType(sf::FloatRect character)
+{
+	for (auto i = boosts.begin(); i != boosts.end(); i++)
+	{
+		if ((*i).checkCollide(character))
+		{
+			BoostType::Type type = (*i).getType();
+			sf::Vector2f b_pos = (*i).getPosition();
+			if (b_pos == vec1_1)
+				pos1_1 = false;
+			if (b_pos == vec1_2)
+				pos1_2 = false;
+			if (b_pos == vec2_1)
+				pos2_1 = false;
+			if (b_pos == vec2_2)
+				pos2_2 = false;
+
+			boosts.erase(i);
+
+			resetBoostTime();
+			return type;
 		}
+	}
+	return 0;
+}
+
+void BoostManager::renderBoosts(std::shared_ptr<sf::RenderWindow> target)
+{
+	for (int i = 0; i < boosts.size(); i++)
+	{
+		boosts[i].render(target);
 	}
 }
 
 sf::Vector2f BoostManager::calculateSpawnPos()
 {
-	sf::Vector2f vec1_1(327, 327);  //TOP_LEFT
-	sf::Vector2f vec1_2(903, 327);  //TOP_RIGHT
-	sf::Vector2f vec2_1(327, 903);  //DOWN_LEFT
-	sf::Vector2f vec2_2(903, 903);  //DOWN_RIGHT
 
-	while (this->pos == sf::Vector2f(0, 0))
+	while (true)
 	{
 		switch (int i = rand() % 4)
 		{
 		case 0:
-			if (!boost_pos->pos1_1)
+			if (!pos1_1)
 			{
-				this->pos = vec1_1;
-				boost_pos->pos1_1 = true;
-				position = TOP_LEFT;
+				pos1_1 = true;
+				return vec1_1;
 				break;
 			}
 
 		case 1:
-			if (!boost_pos->pos1_2)
+			if (!pos1_2)
 			{
-				this->pos = vec1_2;
-				boost_pos->pos1_2 = true;
-				position = TOP_RIGHT;
+				pos1_2 = true;
+				return vec1_2;
 				break;
 			}
 
 		case 2:
-			if (!boost_pos->pos2_1)
+			if (!pos2_1)
 			{
-				this->pos = vec2_1;
-				boost_pos->pos2_1 = true;
-				position = DOWN_LEFT;
+				pos2_1 = true;
+				return vec2_1;
 				break;
 			}
 
 		case 3:
-			if (!boost_pos->pos2_2)
+			if (!pos2_2)
 			{
-				this->pos = vec2_2;
-				boost_pos->pos2_2 = true;
-				position = DOWN_RIGHT;
+				pos2_2 = true;
+				return vec2_2;
 				break;
 			}
 		}

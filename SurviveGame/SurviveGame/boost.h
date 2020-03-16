@@ -2,37 +2,37 @@
 #include "Character.h"
 #include <ctime>
 
-enum Pos {TOP_LEFT , TOP_RIGHT, DOWN_LEFT, DOWN_RIGHT};
+namespace BoostType
+{
+	enum Type {HP = 1, MS = 2 };
+};
 
-enum BoostType {HP, MS};
 
 class Boost :
 	public Entity
 {
 public:
-	Boost(sf::Vector2f spawn_pos, std::vector<const sf::Texture &> textures;);
+	Boost(sf::Vector2f spawn_pos, BoostType::Type type, sf::Texture texture);
+	Boost() {};
 	virtual ~Boost();
 
 	bool checkCollide(sf::FloatRect character);
 	void boostSubject(std::shared_ptr<Character> character);
 
-	BoostType getType();
-	Textures::ID getId();
+	BoostType::Type getType();
 
 private:
-	void initHp();
-	void initMs();
+	void initHp(sf::Vector2f spawn_pos, const sf::Texture & texture);
+	void initMs(sf::Vector2f spawn_pos, const sf::Texture & texture);
 
-	void initPos();
-	void initSpriteHp();
+	//void initPos();
+	void initSpriteHp(sf::Vector2f spawn_pos, const sf::Texture & texture);
 	void initHitBoxHp();
 
-	void initSpriteMs();
+	void initSpriteMs(sf::Vector2f spawn_pos, const sf::Texture & texture);
 	void initHitBoxMs();
 
-	BoostType id;
-	Pos position;
-
+	BoostType::Type b_type;
 	sf::Vector2f pos;
 };
 

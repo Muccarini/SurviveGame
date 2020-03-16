@@ -5,6 +5,7 @@ GameLogic::GameLogic(Textures::ID id, StrategyFight* stf) : game_view(sf::Vector
 tile_map(sf::Vector2i(20, 20)), grid(20, 20)
 {
 	textureInit();
+	boost_manager.setTextures(textures->get(Textures::HP), textures->get(Textures::MS));
 	entitiesInit(id, stf);
 	varInit();
 	gameViewInit();
@@ -49,7 +50,7 @@ void GameLogic::render()
 {
 	tile_map.render(window);
 
-	if(!boosts.empty())
+	
 		renderBoosts();
 
 	renderPlayer();
@@ -319,33 +320,31 @@ void GameLogic::updateBullet(sf::Time deltaTime)
 	}
 }
 
-void GameLogic:updateBoost()
+void GameLogic::updateBoost()
 {
-	//SPAWN BOOST
-	if (boosts.size() < 4)
+	//SPAWN
+	if (boost_manager.canSpawn())
 	{
-		if (boost_time.getElapsedTime() > rand_time)// boost_manager.spawn();
-		{
-			std::shared_ptr<Boost> boost(new Boost(boost_pos));
-			boost->setTexturesSprite(textures->get(boost->getId()));
-
-			this->boosts.emplace_back(boost);
-			this->boost_time.restart();
-			this->rand_time = sf::seconds((rand() % 10)+ 5.f);
-		}
+		boost_manager.spawn();
 	}
-	//UPDATE BOOST
-	if (!boosts.empty())
-	{
-		for (unsigned int i = 0; i < boosts.size(); i++)
-		{:
-			if (boosts[i]->checkCollide(player->getHitBox().getGlobalBounds()))
-				boosts[i]->boostSubject(player);
 
-			if (!boosts[i]->isAlive())
-				boosts.erase(boosts.begin() + i);
-		}
-	}
+	////UPDATE BOOST
+	int b_type = boost_manager.checkIfType(player->getHitBox().getGlobalBounds());
+	if (b_type = BoostType::HP)
+		player->boostHeal();
+	else if (b_type = BoostType::MS)
+		player->boostMovSpeed();
+	//if (!boosts.empty())
+	//{
+	//	for (unsigned int i = 0; i < boosts.size(); i++)
+	//	{:
+	//		if (boosts[i]->checkCollide(player->getHitBox().getGlobalBounds()))
+	//			boosts[i]->boostSubject(player);
+
+	//		if (!boosts[i]->isAlive())
+	//			boosts.erase(boosts.begin() + i);
+	//	}
+	//}
 }
 
 void GameLogic::updatePlayer(sf::Time deltaTime)
@@ -462,10 +461,7 @@ void GameLogic::renderBullets()
 
 void GameLogic::renderBoosts()
 {
-	for(int i = 0; i != boosts.size(); i++)
-	{
-		boosts[i]->render(window);
-	}
+	boost_manager.renderBoosts(window);
 }
 
 void GameLogic::renderAchievement()
@@ -517,9 +513,6 @@ void GameLogic::varInit()
 	this->enemies_alive = 0;
 	this->boss_alive = false;
 	this->pet_alive = false;
-	this->rand_time = sf::seconds((rand() % 10) +5.f);
-
-	boost_pos = std::make_shared<BoostPos>();
 }
 
 void GameLogic::textureInit()

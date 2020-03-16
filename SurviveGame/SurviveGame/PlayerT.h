@@ -1,6 +1,5 @@
 #pragma once
 #include "Character.h"
-#include "boost.h"
 #include "StrategyFight.h"
 
 class StrategyFight;
@@ -21,7 +20,6 @@ public:
 	void updateHud();
 
 	bool shooting(sf::Time deltaTime);
-	void boost(BoostType b_type);
 	void setStrategyFight(StrategyFight* stf);
 
 	void initVar();
