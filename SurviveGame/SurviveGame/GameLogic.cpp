@@ -330,21 +330,11 @@ void GameLogic::updateBoost()
 
 	////UPDATE BOOST
 	int b_type = boost_manager.checkIfType(player->getHitBox().getGlobalBounds());
-	if (b_type = BoostType::HP)
+	if (b_type == 1)
 		player->boostHeal();
-	else if (b_type = BoostType::MS)
+	else if (b_type == 2)
 		player->boostMovSpeed();
-	//if (!boosts.empty())
-	//{
-	//	for (unsigned int i = 0; i < boosts.size(); i++)
-	//	{:
-	//		if (boosts[i]->checkCollide(player->getHitBox().getGlobalBounds()))
-	//			boosts[i]->boostSubject(player);
-
-	//		if (!boosts[i]->isAlive())
-	//			boosts.erase(boosts.begin() + i);
-	//	}
-	//}
+	
 }
 
 void GameLogic::updatePlayer(sf::Time deltaTime)

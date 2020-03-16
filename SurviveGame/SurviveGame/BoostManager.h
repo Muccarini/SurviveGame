@@ -25,7 +25,7 @@ private:
 
 	std::vector<Boost> boosts;
 	/*TextureHolder textures;*/
-	std::map<BoostType::Type, std::unique_ptr<sf::Texture>> textures;
+	std::map<BoostType::Type, sf::Texture> textures;
 	sf::Vector2f pos;
 	/*std::map<Pos, std::shared_ptr<Boost>> boosts;*/
 	bool pos1_1;

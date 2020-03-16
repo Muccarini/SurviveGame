@@ -1,6 +1,6 @@
 #include "Boost.h"
 
-Boost::Boost(sf::Vector2f spawn_pos, BoostType::Type type, sf::Texture texture)
+Boost::Boost(sf::Vector2f spawn_pos, BoostType::Type type, const sf::Texture & texture)
 {
 	this->pos = spawn_pos;
 

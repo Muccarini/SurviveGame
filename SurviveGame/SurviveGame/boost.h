@@ -12,7 +12,7 @@ class Boost :
 	public Entity
 {
 public:
-	Boost(sf::Vector2f spawn_pos, BoostType::Type type, sf::Texture texture);
+	Boost(sf::Vector2f spawn_pos, BoostType::Type type, const sf::Texture & texture);
 	Boost() {};
 	virtual ~Boost();
 
