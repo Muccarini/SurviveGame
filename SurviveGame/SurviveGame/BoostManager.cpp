@@ -79,7 +79,7 @@ int BoostManager::checkCollisionType(sf::FloatRect character)
 
 void BoostManager::renderBoosts(std::shared_ptr<sf::RenderWindow> target)
 {
-	for (int i = 0; i < boosts.size(); i++)
+	for (int i = 0; i != boosts.size(); i++)
 	{
 		boosts[i].render(target);
 	}

@@ -13,9 +13,9 @@ namespace Test
 	TEST_CLASS(UnitTest2)
 	{
 	public:
-		
-		Boost boost;
+
 		PlayerT player;
+
 		TEST_METHOD(boostMSPlayer)
 		{
 			BoostType::Type b_type = BoostType::MS;
