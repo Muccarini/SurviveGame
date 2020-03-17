@@ -65,6 +65,29 @@ void Entity::setGridPosition(float tilesize)
 	this->gridpos.walkable = false;
 }
 
+void Entity::setMoveSpeed(float mov_speed)
+{
+	this->mov_speed = mov_speed;
+}
+
+float Entity::getMovSpeed()
+{
+	return 
+		this->mov_speed;
+}
+
+void Entity::setMoveSpeedDef(float mov_speed_def)
+{
+	this->mov_speed_default = mov_speed_def;
+}
+
+float Entity::getMovSpeedDef()
+{
+	return 
+		this->mov_speed_default;
+}
+
+
 bool Entity::sat_test(const sf::FloatRect &rectSp1, const sf::FloatRect &rectSp2, sf::Vector2f *out_mtv)
 {
 	float proj_x, proj_y, overlap_x, overlap_y;

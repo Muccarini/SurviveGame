@@ -55,18 +55,6 @@ int Character::getHpMax()
 		this->hp_max;
 }
 
-float Character::getMovSpeed()
-{
-	return
-		this->mov_speed;
-}
-
-float Character::getMovSpeedDef()
-{
-	return
-		this->mov_speed_default;
-}
-
 int Character::getAmmo()
 {
 	return

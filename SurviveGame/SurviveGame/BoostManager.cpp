@@ -49,6 +49,7 @@ bool BoostManager::canSpawn()
 			return true;
 	}
 	else return false;
+	return false;
 }
 
 int BoostManager::checkCollisionType(sf::FloatRect character)

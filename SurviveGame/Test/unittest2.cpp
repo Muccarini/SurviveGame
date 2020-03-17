@@ -17,7 +17,14 @@ namespace Test
 
 		TEST_METHOD(boostMSPlayer)
 		{
+			//set up player
+			player.setMoveSpeed(150.f);
+			player.setMoveSpeedDef(150.f);
+
+			//set boost type
 			BoostType::Type b_type = BoostType::MS;
+
+			//method test
 			player.boost(b_type);
 			bool boosted = false;
 			if (player.getMovSpeed() > player.getMovSpeedDef())
@@ -28,7 +35,14 @@ namespace Test
 
 		TEST_METHOD(boostHPMaxPlayer)
 		{
+			//set up player
+			player.setHp(100);
+			player.setHpMax(100);
+
+			//set boost type
 			BoostType::Type b_type = BoostType::HP;
+
+			//method test
 			player.boost(b_type);
 			bool boosted = false;
 			if (player.getHp() == player.getHpMax())
@@ -39,9 +53,14 @@ namespace Test
 
 		TEST_METHOD(boostHPPlayer)
 		{
-			int hp = 60;
-			player.setHp(hp);
+			//set up player
+			player.setHp(60);
+			player.setHpMax(100);
+
+			//set boost type
 			BoostType::Type b_type = BoostType::HP;
+
+			//method test
 			player.boost(b_type);
 			bool boosted = false;
 			if (player.getHp() == 90)

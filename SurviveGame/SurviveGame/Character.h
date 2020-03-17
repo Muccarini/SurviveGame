@@ -27,8 +27,6 @@ public:
 	int   getHp();
 	void  setHpMax(int hp_max);
 	int   getHpMax();
-	float getMovSpeed();
-	float getMovSpeedDef();
 	int   getAmmo();
 
 	void setAmmo(int i);

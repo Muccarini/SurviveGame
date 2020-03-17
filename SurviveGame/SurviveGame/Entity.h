@@ -33,6 +33,10 @@ public:
 	GridLocation getGridPos();
 	void         setGridPosition(float tilesize);
 
+	void  setMoveSpeed(float mov_speed);
+	float getMovSpeed();
+	void  setMoveSpeedDef(float mov_speed_def);
+	float getMovSpeedDef();
 protected:
 
 	bool sat_test(const sf::FloatRect &rectSp1, const sf::FloatRect &rectSp2, sf::Vector2f *vec);
