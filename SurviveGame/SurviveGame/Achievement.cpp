@@ -87,11 +87,6 @@ void Achievement::detach()
 	this->subject->unsubscribe(this);
 }
 
-float Achievement::getClockKills()
-{
-	return this->clock_kills;
-}
-
 bool Achievement::isRoundOn()
 {
 	return this->round_on;

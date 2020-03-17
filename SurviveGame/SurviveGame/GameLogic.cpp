@@ -6,7 +6,7 @@ tile_map(sf::Vector2i(20, 20)), grid(20, 20)
 {
 	textureInit();
 	boost_manager.setTextures(textures->get(Textures::HP), textures->get(Textures::MS));
-	entitiesInit(id, stf);
+	playerInit(id, stf);
 	varInit();
 	gameViewInit();
 	achievement = new Achievement(&round);
@@ -489,7 +489,7 @@ void GameLogic::renderEnemies()
 	}
 }
 
-void GameLogic::entitiesInit(Textures::ID id, StrategyFight* stf)
+void GameLogic::playerInit(Textures::ID id, StrategyFight* stf)
 {  
 	this->player = std::make_shared<PlayerT>(id, stf);
 	player->setTexturesSprite(textures->get(id));

@@ -12,10 +12,10 @@ public:
 	MainMenu();
 	virtual ~MainMenu();
 
-	void update(sf::Time deltaTime);
-	void render();
-
 private:
+	virtual void update(sf::Time deltaTime);
+	virtual void render();
+
 	void initButtons();
 	void initBackground();
 

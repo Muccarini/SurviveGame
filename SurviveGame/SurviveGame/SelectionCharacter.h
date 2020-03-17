@@ -10,10 +10,11 @@ public:
 	SelectionCharacter();
 	virtual ~SelectionCharacter() = default;
 
-	void update(sf::Time deltaTime);
-	void render();
-
 private:
+
+	virtual void update(sf::Time deltaTime);
+	virtual void render();
+
 	void initButtons();
 	void initBackground();
 

@@ -12,13 +12,6 @@ public:
 	Achievement(RoundManager * subject);
 	virtual ~Achievement();
 
-	virtual void update();
-
-	virtual void attach();
-	virtual void detach();
-
-	float getClockKills();
-
 	bool isRoundOn();
 	bool isKillsOn();
 	bool isBossOn();
@@ -30,6 +23,10 @@ public:
 	void renderBossBadge(std::shared_ptr<sf::RenderWindow> window, sf::View view);
 
 private:
+
+	virtual void update();
+	virtual void attach();
+	virtual void detach();
 
 	RoundManager * subject;
 
@@ -53,8 +50,6 @@ private:
 	sf::Text round_t;
 
 	sf::Text text;
-
-	sf::Texture frame;
 
 	float clock_kills;
 	float clock_round;

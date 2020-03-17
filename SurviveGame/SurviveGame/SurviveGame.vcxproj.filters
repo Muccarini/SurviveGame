@@ -218,14 +218,11 @@
     <ClInclude Include="Button.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="StrategyMove.h">
-      <Filter>Strategy\move</Filter>
-    </ClInclude>
     <ClInclude Include="AStar.h">
       <Filter>Personaggi\Nemici</Filter>
     </ClInclude>
     <ClInclude Include="BoostManager.h">
-      <Filter>Game</Filter>
+      <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -24,10 +24,10 @@ public:
     GameLogic(Textures::ID id, StrategyFight* stf);
 	virtual ~GameLogic();
 
-
 private:
-	void update(sf::Time deltaTime);
-	void render();
+
+	virtual void update(sf::Time deltaTime);
+	virtual void render();
 
 	void updateState();
 
@@ -62,7 +62,7 @@ private:
 	void renderBoosts();
 	void renderAchievement();
 
-	void entitiesInit(Textures::ID id, StrategyFight* stf);
+	void playerInit(Textures::ID id, StrategyFight* stf);
 	void gameViewInit();
 	void textureInit();
 	void varInit();
@@ -85,14 +85,11 @@ private:
 	std::shared_ptr<Pet> pet;
 	std::vector<std::shared_ptr<Bullet>> bullets;
 
-	const int max_enemies = 5;
 	int enemies_alive;
-
 	bool boss_alive;
 	bool pet_alive;
 
-	int kill_counter;
-
+	const int max_enemies = 5;
 	const float game_view_speed = 4.5f;
 
 };
