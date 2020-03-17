@@ -351,7 +351,6 @@ void GameLogic::updatePlayer(sf::Time deltaTime)
 			sf::Vector2f dir = collision.CollideWithEntity(player->getHitBox().getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds());
 			if(collision.isCollide())
 			{
-				player->takeDamage();
 				player->setPosition(player->getPosition() + dir);
 				collision.reset();
 			}

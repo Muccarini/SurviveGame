@@ -76,7 +76,6 @@ int BoostManager::checkIfType(sf::FloatRect character)
 			resetBoostTime();
 			return type;
 		}
-		else return 0;
 	}
 	return 0;
 }

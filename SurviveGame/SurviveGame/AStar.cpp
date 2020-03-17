@@ -30,7 +30,9 @@ sf::Vector2f AStar::move(sf::Time deltatime, sf::Sprite* _sprite, sf::Vector2f t
 			movevect.clear();
 		GridLocation start = { static_cast<int>(_sprite->getPosition().x / 64) , static_cast<int>(_sprite->getPosition().y / 64) };
 		GridLocation goal = { static_cast<int>(target.x / 64) , static_cast<int>(target.y / 64) };
-		a_star_search(this->grid, start, goal, this->came_from, this->cost_so_far, movevect);
+		if (grid.getGrid()[goal.x][goal.y].walkable)
+			a_star_search(this->grid, start, goal, this->came_from, this->cost_so_far, movevect);
+		else return sf::Vector2f(0, 0);
 		this->came_from.clear();
 		this->cost_so_far.clear();
 		this->target = target;
