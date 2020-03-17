@@ -119,18 +119,20 @@ void GameLogic::updateZombie(sf::Time deltaTime, int i)
 	enemies[i]->updateRotate(player->getPosition());
 	enemies[i]->updateHud();
 
-	//playerCollision
-	collision.CollideWithEntity(enemies[i]->getHitBox().getGlobalBounds(), player->getHitBox().getGlobalBounds());
-	if (collision.isCollide())
-		player->takeDamage();
-	collision.reset();
-
 	//petCollision
 	if(pet_alive)
 	{
 		collision.CollideWithEntity(enemies[i]->getHitBox().getGlobalBounds(), pet->getHitBox().getGlobalBounds());
 		if (collision.isCollide())
 			pet->takeDamage();
+		collision.reset();
+	}
+
+	//collisionwalls
+	sf::Vector2f dir = collision.CollideWithWalls(enemies[i]->getHitBox().getGlobalBounds(), tile_map.findWalls(static_cast<int>(enemies[i]->getPosition().x), static_cast<int>(enemies[i]->getPosition().y)));
+	if (collision.isCollide())
+	{
+		enemies[i]->setPosition(player->getPosition() + dir);
 		collision.reset();
 	}
 }
@@ -351,6 +353,7 @@ void GameLogic::updatePlayer(sf::Time deltaTime)
 			sf::Vector2f dir = collision.CollideWithEntity(player->getHitBox().getGlobalBounds(), enemies[i]->getHitBox().getGlobalBounds());
 			if(collision.isCollide())
 			{
+				player->takeDamage();
 				player->setPosition(player->getPosition() + dir);
 				collision.reset();
 			}
