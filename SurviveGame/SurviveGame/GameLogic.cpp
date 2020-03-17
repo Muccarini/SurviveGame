@@ -36,8 +36,8 @@ void GameLogic::update(sf::Time deltaTime)
 
 	updatePet(deltaTime);
 
-	updateBoost();
-
+	spawnBoost();
+	
 	updateBullet(deltaTime);
 
 	updateGameView(deltaTime);
@@ -322,7 +322,7 @@ void GameLogic::updateBullet(sf::Time deltaTime)
 	}
 }
 
-void GameLogic::updateBoost()
+void GameLogic::spawnBoost()
 {
 	//SPAWN
 	if (boost_manager.canSpawn())
@@ -330,12 +330,14 @@ void GameLogic::updateBoost()
 		boost_manager.spawn();
 	}
 
+	updateBoost();
+}
+
+void GameLogic::updateBoost()
+{
 	////UPDATE BOOST
-	int b_type = boost_manager.checkIfType(player->getHitBox().getGlobalBounds());
-	if (b_type == 1)
-		player->boostHeal();
-	else if (b_type == 2)
-		player->boostMovSpeed();
+	int b_type = boost_manager.checkCollisionType(player->getHitBox().getGlobalBounds());
+	player->boost(BoostType::Type(b_type));
 	
 }
 

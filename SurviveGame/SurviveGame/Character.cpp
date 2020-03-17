@@ -33,10 +33,20 @@ void Character::boostMovSpeed()
 	this->mov_speed += 100;
 }
 
+void Character::setHp(int hp)
+{
+	this->hp = hp;
+}
+
 int Character::getHp()
 {
 	return
 		this->hp;
+}
+
+void Character::setHpMax(int hp_max)
+{
+	this->hp_max = hp_max;
 }
 
 int Character::getHpMax()

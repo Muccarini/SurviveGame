@@ -17,7 +17,6 @@ public:
 	virtual ~Boost();
 
 	bool checkCollide(sf::FloatRect character);
-	void boostSubject(std::shared_ptr<Character> character);
 
 	BoostType::Type getType();
 
@@ -25,7 +24,6 @@ private:
 	void initHp(sf::Vector2f spawn_pos, const sf::Texture & texture);
 	void initMs(sf::Vector2f spawn_pos, const sf::Texture & texture);
 
-	//void initPos();
 	void initSpriteHp(sf::Vector2f spawn_pos, const sf::Texture & texture);
 	void initHitBoxHp();
 

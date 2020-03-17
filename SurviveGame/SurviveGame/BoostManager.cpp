@@ -32,9 +32,6 @@ void BoostManager::spawn()
 	sf::Vector2f pos = calculateSpawnPos();
 	int i = (rand() % 2) + 1;
 
-	/*Pos pos_B = boost.getPosType();*/
-	/*auto it = boosts.find(pos_B);
-	*it->second = boost;*/
 	boosts.emplace_back(Boost(pos, textures.find(BoostType::Type(i))->first, textures.find(BoostType::Type(i))->second));
 	boost_time.restart();
 }
@@ -54,7 +51,7 @@ bool BoostManager::canSpawn()
 	else return false;
 }
 
-int BoostManager::checkIfType(sf::FloatRect character)
+int BoostManager::checkCollisionType(sf::FloatRect character)
 {
 	for (auto i = boosts.begin(); i != boosts.end(); i++)
 	{

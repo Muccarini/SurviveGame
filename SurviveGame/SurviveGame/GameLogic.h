@@ -48,6 +48,7 @@ private:
 	void spawnBullet(BulletOwner::Owner owner);
 	void updateBullet(sf::Time deltaTime);
 
+	void spawnBoost();
 	void updateBoost();
 
 	void updateGameView(sf::Time deltaTime);

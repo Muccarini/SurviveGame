@@ -1,5 +1,6 @@
 #pragma once
 #include "Character.h"
+#include "boost.h"
 #include "StrategyFight.h"
 
 class StrategyFight;
@@ -18,6 +19,8 @@ public:
 	//void updateDash(sf::Time deltaTime, TileMap tile_map);
 	void updateMovSpeed(sf::Time deltaTime);
 	void updateHud();
+
+	void boost(BoostType::Type b_type);
 
 	bool shooting(sf::Time deltaTime);
 	void setStrategyFight(StrategyFight* stf);

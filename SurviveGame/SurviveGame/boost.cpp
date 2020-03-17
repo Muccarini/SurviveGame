@@ -27,27 +27,6 @@ bool Boost::checkCollide(sf::FloatRect character)
 	return(sat_test(character, getHitBox().getGlobalBounds(), &vec));
 }
 
-void Boost::boostSubject(std::shared_ptr<Character> character)
-{
-	switch (b_type)
-	{
-	case BoostType::HP:
-		if (character->getHp() < character->getHpMax())
-		{
-			character->boostHeal();
-			this->alive = false;
-		}
-		break;
-	case BoostType::MS:
-		if (character->getMovSpeed() == character->getMovSpeedDef())
-		{
-			character->boostMovSpeed();
-			this->alive = false;
-		}
-		break;
-	}
-}
-
 BoostType::Type Boost::getType()
 {
 	return
@@ -65,56 +44,6 @@ void Boost::initMs(sf::Vector2f spawn_pos, const sf::Texture & texture)
 	initSpriteMs(spawn_pos, texture);
 	initHitBoxMs();
 }
-
-//void Boost::initPos()
-//{
-//	sf::Vector2f vec1_1(327, 327);  //TOP_LEFT
-//	sf::Vector2f vec1_2(903, 327);  //TOP_RIGHT
-//	sf::Vector2f vec2_1(327, 903);  //DOWN_LEFT
-//	sf::Vector2f vec2_2(903, 903);  //DOWN_RIGHT
-//
-//	while (this->pos == sf::Vector2f(0,0))
-//	{
-//		switch (int i = rand() % 4)
-//		{
-//		case 0:
-//			if (!boost_pos->pos1_1)
-//			{
-//				this->pos = vec1_1;
-//				boost_pos->pos1_1 = true;
-//				position = TOP_LEFT;
-//				break;
-//			}
-//
-//		case 1:
-//			if (!boost_pos->pos1_2)
-//			{
-//				this->pos = vec1_2;
-//				boost_pos->pos1_2 = true;
-//				position = TOP_RIGHT;
-//				break;
-//			}
-//
-//		case 2:
-//			if (!boost_pos->pos2_1)
-//			{
-//				this->pos = vec2_1;
-//				boost_pos->pos2_1 = true;
-//				position = DOWN_LEFT;
-//				break;
-//			}
-//
-//		case 3:
-//			if (!boost_pos->pos2_2)
-//			{
-//				this->pos = vec2_2;
-//				boost_pos->pos2_2 = true;
-//				position = DOWN_RIGHT;
-//				break;
-//			}
-//		}
-//	}
-//}
 
 void Boost::initSpriteHp(sf::Vector2f spawn_pos, const sf::Texture & texture)
 { 

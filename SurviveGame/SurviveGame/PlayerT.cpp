@@ -158,6 +158,22 @@ void PlayerT::updateHud()
 	hud.updateText(getAmmo(), getHp(), this->dash_clock, getPosition());
 }
 
+void PlayerT::boost(BoostType::Type b_type)
+{
+	switch (b_type)
+	{
+	case BoostType::HP:
+		if ((this->hp = this->hp + 30) > this->hp_max)
+			this->hp = this->hp_max;
+		break;
+	case BoostType::MS:
+		this->mov_speed += 100;
+		break;
+	default:
+		break;
+	}
+}
+
 bool PlayerT::shooting(sf::Time deltaTime)
 {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !reloading)

@@ -15,7 +15,7 @@ public:
 	void resetBoostTime();
 	bool canSpawn();
 
-	int checkIfType(sf::FloatRect character);
+	int checkCollisionType(sf::FloatRect character);
 	void renderBoosts(std::shared_ptr<sf::RenderWindow> target);
 private:
 	sf::Vector2f calculateSpawnPos();
@@ -24,10 +24,7 @@ private:
 	sf::Time rand_time;
 
 	std::vector<Boost> boosts;
-	/*TextureHolder textures;*/
 	std::map<BoostType::Type, sf::Texture> textures;
-	sf::Vector2f pos;
-	/*std::map<Pos, std::shared_ptr<Boost>> boosts;*/
 	bool pos1_1;
 	bool pos1_2;
 	bool pos2_1;

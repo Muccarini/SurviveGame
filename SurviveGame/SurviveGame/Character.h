@@ -22,8 +22,10 @@ public:
 
 	void boostHeal();
 	void boostMovSpeed();
-
+	
+	void  setHp(int hp);
 	int   getHp();
+	void  setHpMax(int hp_max);
 	int   getHpMax();
 	float getMovSpeed();
 	float getMovSpeedDef();
