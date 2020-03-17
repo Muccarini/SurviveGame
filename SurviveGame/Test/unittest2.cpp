@@ -4,7 +4,6 @@
 #include "CppUnitTest.h"
 #include "SFML/Graphics.hpp"
 #include "PlayerT.h"
-#include "boost.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
