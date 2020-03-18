@@ -42,6 +42,7 @@ void Bullet::calculateDir(sf::Vector2f owner_pos, sf::Vector2f target)
 	float dy;
 	float lenght;
 	sf::Vector2f normVect;
+
 	switch (this->owner)
 	{
 	case(BulletOwner::Pet):
@@ -57,6 +58,7 @@ void Bullet::calculateDir(sf::Vector2f owner_pos, sf::Vector2f target)
 		hit_box.setPosition(sprite.getPosition());
 		break;
 	}
+
 	lenght = sqrt(pow(dx, 2) + pow(dy, 2));
 	normVect = sf::Vector2f(dx / lenght, dy / lenght);
 	this->dir = normVect;

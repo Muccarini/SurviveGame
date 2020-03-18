@@ -96,13 +96,7 @@
     <ClCompile Include="StRiflePlayerFight.cpp">
       <Filter>Strategy\Fight</Filter>
     </ClCompile>
-    <ClCompile Include="Observer.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
     <ClCompile Include="GridNode.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
-    <ClCompile Include="Subject.cpp">
       <Filter>Map</Filter>
     </ClCompile>
     <ClCompile Include="TileMap.cpp">
@@ -125,6 +119,12 @@
     </ClCompile>
     <ClCompile Include="BoostManager.cpp">
       <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Observer.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

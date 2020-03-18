@@ -31,6 +31,8 @@ private:
 	void initHitBoxMs();
 
 	BoostType::Type b_type;
+
 	sf::Vector2f pos;
+	sf::Vector2f vec;
 };
 

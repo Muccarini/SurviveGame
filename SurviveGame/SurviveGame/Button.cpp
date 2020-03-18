@@ -41,13 +41,6 @@ sf::RectangleShape Button::getBox()
 	return this->box;
 }
 
-void Button::setBoxTxt(sf::Texture & txt, sf::IntRect rect)
-{
-	this->box.setTextureRect(rect);
-	this->box.setTexture(&txt);	
-
-}
-
 bool Button::isHover(const sf::Vector2f mouse_pos_view)
 {
 	if (box.getGlobalBounds().contains(static_cast<sf::Vector2f>(mouse_pos_view)))

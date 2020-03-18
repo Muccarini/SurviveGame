@@ -28,11 +28,6 @@ void Character::boostHeal()
 		this->hp = this->hp_max;
 }
 
-void Character::boostMovSpeed()
-{
-	this->mov_speed += 100;
-}
-
 void Character::setHp(int hp)
 {
 	this->hp = hp;
@@ -74,17 +69,6 @@ void Character::setRatioCd(sf::Time ratio)
 const sf::Time Character::getRatioCd()
 {
 	return this->ratio_cd;
-}
-
-CharacterType::Type Character::getType()
-{
-	return this->type;
-}
-
-bool Character::isReloading()
-{
-	return
-		this->reloading;
 }
 
 bool Character::isShooting()

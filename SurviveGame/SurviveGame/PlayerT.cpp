@@ -8,7 +8,7 @@
 PlayerT::PlayerT(Textures::ID id, StrategyFight* stf) : id(id)
 {
 	setStrategyFight(stf);
-	setType();
+	initType();
 	initVar();
 	initSprite();
 	initHitBox();
@@ -18,9 +18,9 @@ PlayerT::PlayerT()
 {
 }
 
-
 PlayerT::~PlayerT()
 {
+	delete stf;
 }
 
 void PlayerT::updateMove(sf::Time deltaTime)
@@ -53,7 +53,6 @@ void PlayerT::updateMove(sf::Time deltaTime)
 	}
 
 	updateMovSpeed(deltaTime);
-	this->mov_dir = dir;
 
 	hit_box.setPosition(getPosition() + sf::Vector2f((dir.x * this->mov_speed* deltaTime.asSeconds()), dir.y * this->mov_speed* deltaTime.asSeconds()));
 	this->sprite.move((dir.x * this->mov_speed* deltaTime.asSeconds()) , dir.y * this->mov_speed* deltaTime.asSeconds());
@@ -111,33 +110,6 @@ bool PlayerT::updateReload(sf::Time deltaTime)
 	return false;
 }
 
-//void PlayerT::updateDash(sf::Time deltaTime, TileMap tile_map)
-//{
-//	bool space_is_pressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
-//
-//	if (space_is_pressed && !is_dashing)
-//	{
-//		hit_box.setPosition(getPosition().x + (this->mov_dir.x * 160), (this->mov_dir.y * 160) + getPosition().y);
-//		collision->CollideWithWalls(this->hit_box.getGlobalBounds(), tile_map.findWalls(static_cast<int>(hit_box.getPosition().x), static_cast<int>(hit_box.getPosition().y)));
-//		if (!this->collision->isCollide() && 0 < hit_box.getPosition().x  && hit_box.getPosition().x < 1280 && 0 < hit_box.getPosition().y && hit_box.getPosition().y < 1280)
-//		{
-//			is_dashing = true;
-//			this->sprite.setPosition(hit_box.getGlobalBounds().left, hit_box.getGlobalBounds().top);
-//		}
-//		else
-//			hit_box.setPosition(getPosition());
-//	}
-//	if (is_dashing && dash_clock > 0)
-//	{
-//		dash_clock -= deltaTime.asSeconds();
-//		if (dash_clock < 0)
-//		{
-//			is_dashing = false;
-//			dash_clock = dash_cd;
-//		}
-//	}
-//}
-
 void PlayerT::updateMovSpeed(sf::Time deltaTime)
 {
 	if (this->mov_speed != this->mov_speed_default)
@@ -155,7 +127,7 @@ void PlayerT::updateMovSpeed(sf::Time deltaTime)
 
 void PlayerT::updateHud()
 {
-	hud.updateText(getAmmo(), getHp(), this->dash_clock, getPosition());
+	hud.updateText(getAmmo(), getHp(), getPosition());
 }
 
 void PlayerT::boost(BoostType::Type b_type)
@@ -230,12 +202,6 @@ void PlayerT::initVar()
 	setRatioCd(stf->getRatio());
 	ratio_clock = ratio_cd;
 
-	this->dash_speed = 1000;
-	this->dash_cd = 10.f;
-	this->dash_clock = dash_cd;
-	this->is_dashing = false;
-
-	this->ms_cd = 3.f;
 	this->ms_clock = ms_cd;
 }
 
@@ -273,7 +239,7 @@ void PlayerT::setTexturesSprite(const sf::Texture & texture)
 	sprite.setTexture(texture);
 }
 
-void PlayerT::setType()
+void PlayerT::initType()
 {
 	switch (this->id)
 	{

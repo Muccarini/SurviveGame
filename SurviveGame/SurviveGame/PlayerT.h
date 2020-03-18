@@ -1,5 +1,6 @@
 #pragma once
 #include "Character.h"
+#include "TextureHolder.h"
 #include "boost.h"
 #include "StrategyFight.h"
 
@@ -16,7 +17,6 @@ public:
 	void updateMove(sf::Time deltaTime);
 	void updateRotate(sf::Vector2f target);
 	bool updateReload(sf::Time deltaTime);
-	//void updateDash(sf::Time deltaTime, TileMap tile_map);
 	void updateMovSpeed(sf::Time deltaTime);
 	void updateHud();
 
@@ -25,37 +25,24 @@ public:
 	bool shooting(sf::Time deltaTime);
 	void setStrategyFight(StrategyFight* stf);
 
-	void initVar();
-	void initSprite();
-	void initHitBox();
-
 	Textures::ID getId();
 	StrategyFight* getStf();
 
 	void setTexturesSprite(const sf::Texture & texture);
 
-	sf::Texture texture_movspeed;
-	sf::Texture texture_bullet;
-
-	sf::Vector2f mov_dir;
-
 private:
 
+	void initVar();
+	void initSprite();
+	void initHitBox();
+	void initType();
+
 	Textures::ID id;
+	CharacterType::Type type;
+
 	StrategyFight* stf;
-	void setType();
 
-	int kills;
-	int kills_boss;
-
-	float dash_speed;
-	float dash_cd;
-	float dash_clock;
-
-	float ms_cd;
+	const float ms_cd = 3.f;
 	float ms_clock;
-
-	bool is_dashing;
-
 };
 

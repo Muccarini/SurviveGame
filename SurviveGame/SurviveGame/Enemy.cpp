@@ -1,12 +1,11 @@
 #include "Enemy.h"
 
 
-Enemy::Enemy(const sf::Texture& texture, GridNode grid, float grid_size) : _m(grid, max_distance, distance)
+Enemy::Enemy(const sf::Texture& texture, GridNode grid, float grid_size) : _m(grid, max_distance)
 {
 	initVar();
 	initSprite(grid, texture);
 	initHitBox(grid_size);
-	_m.setDist(distance);
 	_m.setMaxDist(max_distance);
 }
 
@@ -45,7 +44,6 @@ void Enemy::initVar()
 {
 	mov_speed = 100;
 	hp = 10;
-	max_distance = 64;
 }
 
 void Enemy::initSprite(GridNode grid,const sf::Texture & texture)

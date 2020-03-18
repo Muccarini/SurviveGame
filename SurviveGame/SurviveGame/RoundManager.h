@@ -6,36 +6,36 @@
 class RoundManager : public Subject
 {
 public:
-	RoundManager();
-	virtual ~RoundManager();
-
 	virtual void subscribe(Observer* obs);
 	virtual void unsubscribe(Observer* obs);
 
 	virtual void notify();
+
+	RoundManager();
+	virtual ~RoundManager();
+
+	void startCountdown(sf::Time deltaTime);
 
 	void increaseRound();
 	void increaseKills();
 	void increaseBoss();
 
 	void reset();
-	void startCountdown(sf::Time deltaTime);
 
 	bool isBossRound();
+	bool isLoading();
 
 	sf::Time getCountdown();
-	bool isLoading();
-	int getCounterRound();
-	int getCounterBoss();
-	void setBossRound(bool boolean);
+	int      getCounterRound();
+	int      getCounterBoss();
 
-	void setKills(int kills);
+	void     setBossRound(bool boolean);
+	void     setKills(int kills);
 
 	int getKills();
 	int getTotalKills();
 	int getKillsPerRound();
 	int getRoundPerBoss();
-
 
 private:
 	sf::Time countdown;
