@@ -6,10 +6,9 @@ inline double heuristic(GridLocation a, GridLocation b)
 }
 
 
-AStar::AStar(GridNode grid, float max_d, float dist) : grid(grid)
+AStar::AStar(GridNode grid, float max_d) : grid(grid)
 {
 	max_distance = max_d;
-	distance = dist;
 }
 
 AStar::AStar()
@@ -32,17 +31,20 @@ sf::Vector2f AStar::move(sf::Time deltatime, sf::Sprite* _sprite, sf::Vector2f t
 		std::unordered_map<GridLocation, double> cost_so_far;
 		GridLocation start = { static_cast<int>(_sprite->getPosition().x / 64) , static_cast<int>(_sprite->getPosition().y / 64) };
 		GridLocation goal = { static_cast<int>(target.x / 64) , static_cast<int>(target.y / 64) };
+
 		if (grid.getGrid()[goal.x][goal.y].walkable)
 			a_star_search(this->grid, start, goal, came_from, cost_so_far, movevect);
 		else return sf::Vector2f(0, 0);
 		this->target = target;
 	}
+
 	if (!movevect.empty())
 	{
 		mv = sf::Vector2i(movevect.front());
 		spostamento = static_cast <sf::Vector2f> (mv) * mov_speed * deltatime.asSeconds();
 		distance = sqrt(pow(spostamento.x, 2) + pow(spostamento.y, 2));
 		max_distance -= distance;
+
 		if (max_distance <= 0)
 		{
 			max_distance += distance;
@@ -68,6 +70,7 @@ sf::Vector2f AStar::move(sf::Time deltatime, sf::Sprite* _sprite, sf::Vector2f t
 			}
 			max_distance = 64;
 		}
+
 		if (max_distance == 64)
 		{
 			movevect.pop_front();
@@ -81,10 +84,6 @@ void AStar::setMaxDist(float m_distance)
 	this->max_distance = m_distance;
 }
 
-void AStar::setDist(float dist)
-{
-	this->distance = dist;
-}
 
 void AStar::a_star_search(GridNode graph, GridLocation start, GridLocation goal, std::unordered_map<GridLocation, GridLocation>& came_from, std::unordered_map<GridLocation, double>& cost_so_far, std::list<sf::Vector2f>& movevect)
 {
@@ -130,11 +129,14 @@ std::vector<GridLocation> AStar::reconstruct_path(GridLocation start, GridLocati
 
 	std::vector<GridLocation> path;
 	GridLocation current = goal;
-	while (current != start) {
+
+	while (current != start) 
+	{
 		path.push_back(current);
 		current = came_from[current];
 	}
-	path.push_back(start); // per evitare errori quando sono nella stessa posizione
+
+	path.push_back(start);
 	std::reverse(path.begin(), path.end());
 	return path;
 }

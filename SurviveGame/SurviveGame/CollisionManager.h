@@ -1,7 +1,6 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Entity.h"
 
 class CollisionManager
 {
@@ -18,8 +17,8 @@ public:
 	void resetCollide();
 
 	bool isCollide();
+
 	sf::Vector2f getOutMtv();
-	
 	void setPreMtv(sf::Vector2f vec);
 
 private:

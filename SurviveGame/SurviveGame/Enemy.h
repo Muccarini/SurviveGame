@@ -1,11 +1,6 @@
 #pragma once
-
 #include "Character.h"
 #include "AStar.h"
-
-class Character;
-class PlayerT;
-class Pet;
 
 class Enemy :
 	public Character
@@ -13,7 +8,6 @@ class Enemy :
 
 public:
 	explicit Enemy(const sf::Texture& texture, GridNode grid, float grid_size);
-
 	Enemy();
 	virtual ~Enemy();
 
@@ -26,18 +20,10 @@ private:
 	void initSprite(GridNode grid,const sf::Texture & texture);
 	void initHitBox(float grid_size); 
 
-	float distance;
-	float max_distance;
+	const float max_distance = 64; //check tile
+
 	std::list <sf::Vector2f> move_vect;
-	sf::Vector2f target;
-	sf::Vector2f spostamento;
 
 	AStar _m;
-
-	//std::list<GridLocation> DIRS =
-	//{ GridLocation{4, 3}, GridLocation{16,4}, GridLocation{16, 3}, GridLocation{16, 5},
-	//  GridLocation{12, 6}, GridLocation{4, 6}, GridLocation{7, 6}, GridLocation{3, 12},
-	//  GridLocation{3, 13}, GridLocation{3, 14}, GridLocation{3, 15}, GridLocation{12, 12},
-	//  GridLocation{12, 13}, GridLocation{12, 14}, GridLocation{12, 15}, GridLocation{16, 15}};
 };
 

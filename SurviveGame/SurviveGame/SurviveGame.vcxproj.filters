@@ -120,6 +120,12 @@
     <ClCompile Include="BoostManager.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Observer.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TextureHolder.h">

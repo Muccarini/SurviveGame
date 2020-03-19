@@ -10,10 +10,9 @@ public:
 	~Button();
 
 	void setText(const std::string path, const std::string string, const sf::Color color, const float size, const sf::Vector2f pos);
-
 	void setBox(const sf::Vector2f size, const sf::Color color, const float thickness, const sf::Color fill_color, const sf::Vector2f pos, sf::Texture* txt = NULL);
+
 	sf::RectangleShape getBox();
-	void setBoxTxt(sf::Texture& txt, sf::IntRect rect);
 	void draw(std::shared_ptr<sf::RenderWindow> target);
 
 	bool isHover(const sf::Vector2f mouse_pos_view);
@@ -21,7 +20,6 @@ public:
 
 	void buttonAnimation();
 	void setStandard();
-
 
 private:
 	sf::Font font;

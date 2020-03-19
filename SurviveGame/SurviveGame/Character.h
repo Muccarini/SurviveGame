@@ -3,7 +3,6 @@
 #include "Hud.h"
 #include <math.h>
 
-
 namespace CharacterType
 {
 	enum Type { Shotgun, Rifle, Handgun, Player};
@@ -16,40 +15,31 @@ public:
 	Character();
 	virtual ~Character();
 
-	void takeDamage();
-
 	void renderHud(std::shared_ptr<sf::RenderWindow> target);
 
+	void takeDamage();
 	void boostHeal();
-	void boostMovSpeed();
 	
 	void  setHp(int hp);
-	int   getHp();
 	void  setHpMax(int hp_max);
-	int   getHpMax();
-	int   getAmmo();
-
 	void setAmmo(int i);
 	void setRatioCd(sf::Time ratio);
 
+	int            getHp();
+	int            getHpMax();
+	int            getAmmo();
 	const sf::Time getRatioCd();
 
-	CharacterType::Type getType();
-
-	bool isReloading();
 	bool isShooting();
 
 protected:
 	Hud hud;
-	CharacterType::Type type;
 
 	sf::Time reload_cd;
 	sf::Time reload_clock;
 
 	sf::Time ratio_cd;
 	sf::Time ratio_clock;
-
-	float range;
 
 	int hp;
 	int hp_max;

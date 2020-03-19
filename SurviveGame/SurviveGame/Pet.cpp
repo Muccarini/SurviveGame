@@ -18,11 +18,6 @@ Pet::~Pet()
 {
 }
 
-void Pet::takeDamage()
-{
-	this->hp--;
-}
-
 void Pet::updateMove(sf::Time deltaTime, sf::Vector2f parent_pos)
 {
 	sf::Vector2f dir = parent_pos - this->getPosition();
@@ -53,8 +48,6 @@ void Pet::initVar()
 
 	hp_max = 25;
 	hp = hp_max;
-
-	range = 50;
 }
 
 void Pet::initSprite(const sf::Texture & texture, sf::Vector2f spawn_pos)

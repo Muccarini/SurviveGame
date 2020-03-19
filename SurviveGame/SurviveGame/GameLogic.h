@@ -5,6 +5,7 @@
 #include "PauseMenu.h"
 #include "RoundManager.h"
 #include "BoostManager.h"
+#include "CollisionManager.h"
 #include "Achievement.h"
 #include "Hud.h"
 #include "TileMap.h"
@@ -48,7 +49,6 @@ private:
 	void spawnBullet(BulletOwner::Owner owner);
 	void updateBullet(sf::Time deltaTime);
 
-	void spawnBoost();
 	void updateBoost();
 
 	void updateGameView(sf::Time deltaTime);

@@ -1,12 +1,11 @@
 #include "Boss.h"
 
 Boss::Boss(GridNode grid, const sf::Texture & texture) :
-	_m(grid, max_distance, distance)
+	_m(grid, max_distance)
 {
 	initVar();
 	initSprite(grid, texture);
 	initHitBox();
-	_m.setDist(distance);
 	_m.setMaxDist(max_distance);
 }
 
@@ -96,8 +95,6 @@ void Boss::initVar()
 	mov_speed_default = 150;
 	mov_speed = mov_speed_default;
 
-	max_distance = 64;
-
 	hp_max = 200;
 	hp = hp_max;
 
@@ -111,8 +108,6 @@ void Boss::initVar()
 	ratio_clock = ratio_cd;
 
 	reloading = false;
-
-	range = 300;
 }
 
 void Boss::initSprite(GridNode grid,const sf::Texture & texture)

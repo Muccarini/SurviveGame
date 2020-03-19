@@ -17,9 +17,6 @@ void Hud::renderTextsCharacter(std::shared_ptr<sf::RenderWindow> target)
 {
 	 target->draw(this->ammo);
 	 target->draw(this->hp);
-	 if (d_cd != 10)
-		 target->draw(this->dash_cd);
-
 }
 
 void Hud::renderTextsHud(std::shared_ptr<sf::RenderWindow> target)
@@ -29,7 +26,6 @@ void Hud::renderTextsHud(std::shared_ptr<sf::RenderWindow> target)
 		target->draw(this->kills);
 	if(this->cd > 0.2)
 		target->draw(this->countdown);
-
 }
 
 
@@ -68,7 +64,7 @@ void Hud::updateText(int hp, sf::Vector2f obj)
 	this->hp.setPosition(obj.x - 8, obj.y + 30);
 }
 
-void Hud::updateText(int ammo, int hp, float dash_cd, sf::Vector2f obj)
+void Hud::updateText(int ammo, int hp, sf::Vector2f obj)
 {
 	//AMMO GUI
 	this->ammo.setString(std::to_string(ammo));
@@ -81,15 +77,6 @@ void Hud::updateText(int ammo, int hp, float dash_cd, sf::Vector2f obj)
 	this->hp.setFillColor(sf::Color::Red);
 	this->hp.setCharacterSize(15);
 	this->hp.setPosition(obj.x + 20, obj.y + 25);
-
-	//DASH_CD
-
-	this->dash_cd.setString(std::to_string(static_cast<int>(dash_cd)));
-	this->dash_cd.setFillColor(sf::Color::Blue);
-	this->dash_cd.setCharacterSize(15);
-	this->dash_cd.setPosition(obj.x + 50, obj.y -50);
-
-	this->d_cd = static_cast<int>(dash_cd);
 } 
 
 void Hud::fontInit()
@@ -98,7 +85,6 @@ void Hud::fontInit()
 
 		ammo.setFont(font);
 		hp.setFont(font);
-		dash_cd.setFont(font);
 
 		kills.setFont(font);
 		countdown.setFont(font);

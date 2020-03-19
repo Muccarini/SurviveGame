@@ -9,13 +9,13 @@ public:
 	BoostManager();
 	~BoostManager();
 
-
 	void setTextures(sf::Texture txt_hp, sf::Texture txt_ms);
 	void spawn();
 	bool canSpawn();
 
 	int checkCollisionType(sf::FloatRect character);
 	void renderBoosts(std::shared_ptr<sf::RenderWindow> target);
+
 private:
 	void resetBoostTime();
 
@@ -26,6 +26,7 @@ private:
 
 	std::vector<Boost> boosts;
 	std::map<BoostType::Type, sf::Texture> textures;
+
 	bool pos1_1;
 	bool pos1_2;
 	bool pos2_1;

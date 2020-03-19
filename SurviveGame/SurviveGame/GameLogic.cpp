@@ -14,7 +14,7 @@ tile_map(sf::Vector2i(20, 20)), grid(20, 20)
 
 GameLogic::~GameLogic()
 { 
-
+	delete achievement;
 }
 
 void GameLogic::update(sf::Time deltaTime)
@@ -36,7 +36,7 @@ void GameLogic::update(sf::Time deltaTime)
 
 	updatePet(deltaTime);
 
-	spawnBoost();
+	updateBoost();
 	
 	updateBullet(deltaTime);
 
@@ -50,14 +50,13 @@ void GameLogic::render()
 {
 	tile_map.render(window);
 
-	
-		renderBoosts();
-
+	renderBoosts();
 	renderPlayer();
 	renderPet();
 	renderEnemies();
 	renderBoss();
 	renderBullets();
+
 	hud.renderTextsHud(window);
 
 	renderAchievement();
@@ -322,7 +321,7 @@ void GameLogic::updateBullet(sf::Time deltaTime)
 	}
 }
 
-void GameLogic::spawnBoost()
+void GameLogic::updateBoost()
 {
 	//SPAWN
 	if (boost_manager.canSpawn())
@@ -330,22 +329,16 @@ void GameLogic::spawnBoost()
 		boost_manager.spawn();
 	}
 
-	updateBoost();
-}
-
-void GameLogic::updateBoost()
-{
 	////UPDATE BOOST
 	int b_type = boost_manager.checkCollisionType(player->getHitBox().getGlobalBounds());
 	player->boost(BoostType::Type(b_type));
-	
 }
 
 void GameLogic::updatePlayer(sf::Time deltaTime)
 {
 	player->updateMove(deltaTime);
-
-	/*player->updateDash(deltaTime,tile_map);*/ //DA FIXARE
+	player->updateMovSpeed(deltaTime);
+	player->updateHud();
 
 	//collisionZomies
 	if (!enemies.empty())
@@ -381,8 +374,6 @@ void GameLogic::updatePlayer(sf::Time deltaTime)
 		collision.reset();
 	}
 
-	player->updateMovSpeed(deltaTime);
-
 	if (player->shooting(deltaTime))
 		spawnBullet(BulletOwner::Player);
 
@@ -390,9 +381,6 @@ void GameLogic::updatePlayer(sf::Time deltaTime)
 
 	if (player->updateReload(deltaTime))
 		player->setTexturesSprite(textures->get(player->getId()));
-
-	player->updateHud();
-
 }
 
 void GameLogic::updateRound()
@@ -431,8 +419,8 @@ void GameLogic::renderBoss()
 {
 	if (boss_alive)
 	{
-			boss->renderHud(window);
-			boss->render(window);
+	    boss->renderHud(window);
+		boss->render(window);
 	}
 }
 

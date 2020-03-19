@@ -13,10 +13,7 @@ public:
 	void updateRotate(sf::Vector2f target);
 	void updateHud();
 
-	void takeDamage();
-
 private:
-
 	void initVar();
 	void initSprite(const sf::Texture & texture, sf::Vector2f spawn_pos);
 	void initHitbox();

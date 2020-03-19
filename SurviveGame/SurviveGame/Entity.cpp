@@ -4,7 +4,7 @@
 
 Entity::Entity()
 {
-	this->alive = false;
+
 }
 
 
@@ -16,24 +16,6 @@ void Entity::render(std::shared_ptr<sf::RenderWindow> target)
 {
 	target->draw(hit_box);
 	target->draw(sprite);
-}
-
-bool Entity::isAlive()
-{
-	return
-		this->alive;
-}
-
-void Entity::setAlive(bool boolean)
-{
-	this->alive = boolean;
-}
-
-
-bool Entity::isCollide()
-{
-	return
-		this->collide;
 }
 
 sf::Vector2f Entity::getPosition()

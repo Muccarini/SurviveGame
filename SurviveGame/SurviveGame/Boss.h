@@ -18,15 +18,14 @@ public:
 	void updateHud();
 
 private:
-
 	bool isInRange(sf::Vector2f obj1, sf::Vector2f obj2);
 
 	void initVar();
 	void initSprite(GridNode grid,const sf::Texture & texture);
 	void initHitBox();
 
-	float distance;
-	float max_distance;
+	const float max_distance = 64; //check tile
+	const float range = 300;
 	std::list <sf::Vector2f> move_vect;
 	sf::Vector2f spostamento;
 
