@@ -22,7 +22,7 @@ Boost::~Boost()
 
 bool Boost::checkCollide(sf::FloatRect character)
 {
-	return(sat_test(character, getHitBox().getGlobalBounds(), &vec));
+	return(sat_test(character, getHitBox().getGlobalBounds(), NULL));
 }
 
 BoostType::Type Boost::getType()

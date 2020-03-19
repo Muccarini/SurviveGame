@@ -20,7 +20,6 @@ PlayerT::PlayerT()
 
 PlayerT::~PlayerT()
 {
-	delete stf;
 }
 
 void PlayerT::updateMove(sf::Time deltaTime)

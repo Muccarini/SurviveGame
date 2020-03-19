@@ -19,7 +19,7 @@ Enemy::~Enemy()
 
 void Enemy::updateMove(sf::Time deltaTime, sf::Vector2f target, float grid_size)
 {
-	this->sprite.move(_m.move(deltaTime, &(this->sprite), target, move_vect, mov_speed));
+	this->sprite.move(_m.move(deltaTime, getPosition(), target, move_vect, mov_speed));
 
 	hit_box.setPosition(getPosition());
 	setGridPosition(grid_size);

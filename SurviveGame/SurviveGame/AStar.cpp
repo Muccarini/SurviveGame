@@ -19,7 +19,7 @@ AStar::~AStar()
 {
 }
 
-sf::Vector2f AStar::move(sf::Time deltatime, sf::Sprite* _sprite, sf::Vector2f target,
+sf::Vector2f AStar::move(sf::Time deltatime, sf::Vector2f subject, sf::Vector2f target,
 	std::list<sf::Vector2f> &movevect, const float mov_speed)
 {
 	sf::Vector2i mv; 
@@ -29,7 +29,7 @@ sf::Vector2f AStar::move(sf::Time deltatime, sf::Sprite* _sprite, sf::Vector2f t
 			movevect.clear();
 		std::unordered_map<GridLocation, GridLocation> came_from;
 		std::unordered_map<GridLocation, double> cost_so_far;
-		GridLocation start = { static_cast<int>(_sprite->getPosition().x / 64) , static_cast<int>(_sprite->getPosition().y / 64) };
+		GridLocation start = { static_cast<int>(subject.x / 64) , static_cast<int>(subject.y / 64) };
 		GridLocation goal = { static_cast<int>(target.x / 64) , static_cast<int>(target.y / 64) };
 
 		if (grid.getGrid()[goal.x][goal.y].walkable)
@@ -42,7 +42,7 @@ sf::Vector2f AStar::move(sf::Time deltatime, sf::Sprite* _sprite, sf::Vector2f t
 	{
 		mv = sf::Vector2i(movevect.front());
 		spostamento = static_cast <sf::Vector2f> (mv) * mov_speed * deltatime.asSeconds();
-		distance = sqrt(pow(spostamento.x, 2) + pow(spostamento.y, 2));
+		float distance = sqrt(pow(spostamento.x, 2) + pow(spostamento.y, 2));
 		max_distance -= distance;
 
 		if (max_distance <= 0)
@@ -83,7 +83,6 @@ void AStar::setMaxDist(float m_distance)
 {
 	this->max_distance = m_distance;
 }
-
 
 void AStar::a_star_search(GridNode graph, GridLocation start, GridLocation goal, std::unordered_map<GridLocation, GridLocation>& came_from, std::unordered_map<GridLocation, double>& cost_so_far, std::list<sf::Vector2f>& movevect)
 {
