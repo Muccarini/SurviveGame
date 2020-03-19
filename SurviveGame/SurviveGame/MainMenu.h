@@ -13,7 +13,7 @@ public:
 	virtual ~MainMenu();
 
 private:
-	virtual void update(sf::Time deltaTime);
+	virtual void update(const sf::Time& deltaTime);
 	virtual void render();
 
 	void initButtons();

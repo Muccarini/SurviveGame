@@ -16,11 +16,11 @@ public:
 	bool isKillsOn();
 	bool isBossOn();
 
-	void updateBadge(sf::Time deltaTime);
+	void updateBadge(const sf::Time& deltaTime);
 
-	void renderRoundBadge(std::shared_ptr<sf::RenderWindow> window, sf::View view);
-	void renderKillsBadge(std::shared_ptr<sf::RenderWindow> window, sf::View view);
-	void renderBossBadge(std::shared_ptr<sf::RenderWindow> window, sf::View view);
+	void renderRoundBadge(std::shared_ptr<sf::RenderWindow> window, const sf::View& view);
+	void renderKillsBadge(std::shared_ptr<sf::RenderWindow> window, const sf::View& view);
+	void renderBossBadge(std::shared_ptr<sf::RenderWindow> window, const sf::View& view);
 
 private:
 

@@ -17,7 +17,7 @@ GameLogic::~GameLogic()
 	delete achievement;
 }
 
-void GameLogic::update(sf::Time deltaTime)
+void GameLogic::update(const sf::Time& deltaTime)
 {
 	updateMousePos();
 
@@ -81,7 +81,7 @@ void GameLogic::updateState()
 	}
 }
 
-void GameLogic::updateAchievement(sf::Time deltaTime)
+void GameLogic::updateAchievement(const sf::Time& deltaTime)
 {
 	achievement->updateBadge(deltaTime);
 }
@@ -91,7 +91,7 @@ void GameLogic::updateHud()
 	hud.updateText(round.getKills(), round.getCountdown().asSeconds(), round.getCounterRound(), game_view);
 }
 
-void GameLogic::spawnZombies(sf::Time deltaTime)
+void GameLogic::spawnZombies(const sf::Time& deltaTime)
 {
 		while (enemies_alive != max_enemies)
 		{
@@ -112,7 +112,7 @@ void GameLogic::spawnZombies(sf::Time deltaTime)
 		}
 }
 
-void GameLogic::updateZombie(sf::Time deltaTime, int i)
+void GameLogic::updateZombie(const sf::Time& deltaTime, int i)
 {
 	enemies[i]->updateMove(deltaTime, player->getPosition(), tile_map.getGridSize());
 	enemies[i]->updateRotate(player->getPosition());
@@ -136,7 +136,7 @@ void GameLogic::updateZombie(sf::Time deltaTime, int i)
 	}
 }
 
-void GameLogic::spawnBoss(sf::Time deltaTime)
+void GameLogic::spawnBoss(const sf::Time& deltaTime)
 {
 	round.startCountdown(deltaTime);
 
@@ -168,7 +168,7 @@ void GameLogic::spawnBoss(sf::Time deltaTime)
 	}
 }
 
-void GameLogic::updateBoss(sf::Time deltaTime)
+void GameLogic::updateBoss(const sf::Time& deltaTime)
 {
 	boss->updateMove(deltaTime, player->getPosition(), tile_map.getGridSize());
 
@@ -191,7 +191,7 @@ void GameLogic::spawnPet()
 		pet->boostHeal();
 }
 
-void GameLogic::updatePet(sf::Time deltaTime)
+void GameLogic::updatePet(const sf::Time& deltaTime)
 {
 	if (pet_alive)
 	{
@@ -242,7 +242,7 @@ void GameLogic::spawnBullet(BulletOwner::Owner owner)
 		}
 }
 
-void GameLogic::updateBullet(sf::Time deltaTime)
+void GameLogic::updateBullet(const sf::Time& deltaTime)
 {
 	if (!bullets.empty())
 	{
@@ -334,7 +334,7 @@ void GameLogic::updateBoost()
 	player->boost(BoostType::Type(b_type));
 }
 
-void GameLogic::updatePlayer(sf::Time deltaTime)
+void GameLogic::updatePlayer(const sf::Time& deltaTime)
 {
 	player->updateMove(deltaTime);
 	player->updateMovSpeed(deltaTime);
@@ -402,7 +402,7 @@ void GameLogic::updateRound()
 	}
 }
 
-void GameLogic::updateGameView(sf::Time deltaTime)
+void GameLogic::updateGameView(const sf::Time& deltaTime)
 {
 	sf::Vector2f dir = player->getPosition() - game_view.getCenter();
 	game_view.move(dir * deltaTime.asSeconds() * this->game_view_speed);
@@ -461,7 +461,6 @@ void GameLogic::renderAchievement()
 	if (this->achievement->isBossOn())
 	{
 		achievement->renderBossBadge(this->window, this->game_view);
-
 	}
 }
 
