@@ -8,7 +8,7 @@
 class AStar
 {
 public:
-	AStar(GridNode grid, float max_d);
+	AStar(const GridNode& grid,const float max_d);
 	AStar();
 
 	virtual ~AStar();

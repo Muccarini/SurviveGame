@@ -7,7 +7,7 @@ class Enemy :
 {
 
 public:
-	explicit Enemy(const sf::Texture& texture, GridNode grid, float grid_size);
+	explicit Enemy(const sf::Texture& texture, const GridNode& grid, float grid_size);
 	Enemy();
 	virtual ~Enemy();
 

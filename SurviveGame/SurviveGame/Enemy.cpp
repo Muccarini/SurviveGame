@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
 
-Enemy::Enemy(const sf::Texture& texture, GridNode grid, float grid_size) : _m(grid, max_distance)
+Enemy::Enemy(const sf::Texture& texture, const GridNode& grid, float grid_size) : _m(grid, max_distance)
 {
 	initVar();
 	initSprite(grid, texture);

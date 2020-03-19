@@ -66,7 +66,7 @@ namespace std {
 class GridNode
 {
 public:
-	GridNode(int width, int height);
+	GridNode(const int width, const int height);
 	GridNode();
 
 	virtual ~GridNode() {};
@@ -85,7 +85,8 @@ private:
 
 	std::array<GridLocation, 4> DIRS;
 
-	int width, height;
+	const int width = 20;
+	const int height = 20;
 
 	bool in_bounds(GridLocation id) const;
 	

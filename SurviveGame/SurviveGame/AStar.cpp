@@ -6,7 +6,7 @@ inline double heuristic(GridLocation a, GridLocation b)
 }
 
 
-AStar::AStar(GridNode grid, float max_d) : grid(grid)
+AStar::AStar(const GridNode& grid,const float max_d) : grid(grid)
 {
 	max_distance = max_d;
 }
