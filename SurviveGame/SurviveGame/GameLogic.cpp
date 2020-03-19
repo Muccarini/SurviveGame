@@ -1,7 +1,7 @@
 #include "GameLogic.h"
 
 
-GameLogic::GameLogic(Textures::ID id, StrategyFight* stf) : game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f)), 
+GameLogic::GameLogic(Textures::ID id, std::shared_ptr<StrategyFight> stf) : game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f)),
 tile_map(sf::Vector2i(20, 20)), grid(20, 20)
 {
 	textureInit();
@@ -489,7 +489,7 @@ void GameLogic::renderEnemies()
 	}
 }
 
-void GameLogic::playerInit(Textures::ID id, StrategyFight* stf)
+void GameLogic::playerInit(Textures::ID id, std::shared_ptr<StrategyFight> stf)
 {  
 	this->player = std::make_shared<PlayerT>(id, stf);
 	player->setTexturesSprite(textures->get(id));

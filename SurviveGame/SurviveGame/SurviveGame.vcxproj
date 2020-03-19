@@ -69,7 +69,14 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -146,7 +153,6 @@
     <ClCompile Include="Hud.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Observer.cpp" />
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Pet.cpp" />
     <ClCompile Include="PlayerT.cpp" />
@@ -154,7 +160,6 @@
     <ClCompile Include="SelectionCharacter.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StGunPlayerFight.cpp" />
-    <ClCompile Include="Subject.cpp" />
     <ClCompile Include="StRiflePlayerFight.cpp" />
     <ClCompile Include="StShotgunPlayerFight.cpp" />
     <ClCompile Include="TextureHolder.cpp" />

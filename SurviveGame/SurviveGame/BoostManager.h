@@ -12,12 +12,13 @@ public:
 
 	void setTextures(sf::Texture txt_hp, sf::Texture txt_ms);
 	void spawn();
-	void resetBoostTime();
 	bool canSpawn();
 
 	int checkCollisionType(sf::FloatRect character);
 	void renderBoosts(std::shared_ptr<sf::RenderWindow> target);
 private:
+	void resetBoostTime();
+
 	sf::Vector2f calculateSpawnPos();
 
 	sf::Clock boost_time;

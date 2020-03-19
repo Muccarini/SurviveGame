@@ -5,7 +5,7 @@
 #include "StGunPlayerFight.h"
 
 
-PlayerT::PlayerT(Textures::ID id, StrategyFight* stf) : id(id)
+PlayerT::PlayerT(Textures::ID id, std::shared_ptr<StrategyFight> stf) : id(id)
 {
 	setStrategyFight(stf);
 	setType();
@@ -84,21 +84,21 @@ bool PlayerT::updateReload(sf::Time deltaTime)
 			{
 				this->type = CharacterType::Rifle;
 				this->id = Textures::ID::RifleP;
-				this->stf = new StRiflePlayerFight();
+				this->stf = std::make_shared<StRiflePlayerFight>(StRiflePlayerFight());
 				break;
 			}
 			case(Textures::ID::RifleP):
 			{
 				this->type = CharacterType::Handgun;
 				this->id = Textures::ID::HandgunP;
-				this->stf = new StGunPlayerFight();
+				this->stf = std::make_shared<StGunPlayerFight>(StGunPlayerFight());
 				break;
 			}
 			case(Textures::ID::HandgunP):
 			{
 				this->type = CharacterType::Shotgun;
 				this->id = Textures::ID::ShotgunP;
-				this->stf = new StShotgunPlayerFight();
+				this->stf = std::make_shared<StShotgunPlayerFight>(StShotgunPlayerFight());
 				break;
 			}
 			}
@@ -208,7 +208,7 @@ bool PlayerT::shooting(sf::Time deltaTime)
 	}
 }
 
-void PlayerT::setStrategyFight(StrategyFight* stf)
+void PlayerT::setStrategyFight(std::shared_ptr<StrategyFight> stf)
 {
 	this->stf = stf;
 }
@@ -263,9 +263,10 @@ Textures::ID PlayerT::getId()
 		this->id;
 }
 
-StrategyFight * PlayerT::getStf()
+std::shared_ptr<StrategyFight> PlayerT::getStf()
 {
-	return this->stf;
+	return 
+		this->stf;
 }
 
 void PlayerT::setTexturesSprite(const sf::Texture & texture)

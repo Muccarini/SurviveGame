@@ -17,7 +17,6 @@ public:
 		std::list<sf::Vector2f> &movevect, const float mov_speed);
 	void setMaxDist(float m_distance);
 	void setDist(float dist);
-	void setTarget(sf::Vector2f target);
 private:
 	void a_star_search(GridNode graph, GridLocation start, GridLocation goal,
 		std::unordered_map<GridLocation, GridLocation>& came_from,
@@ -26,8 +25,6 @@ private:
 		std::unordered_map<GridLocation, GridLocation> came_from);
 
 protected:
-	std::unordered_map<GridLocation, GridLocation> came_from;
-	std::unordered_map<GridLocation, double> cost_so_far;
 	GridNode grid; 
 	float max_distance;
 	float distance;

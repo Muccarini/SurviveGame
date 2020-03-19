@@ -8,7 +8,7 @@ class StrategyFight;
 class PlayerT : public Character
 {
 public:
-	explicit PlayerT(Textures::ID id, StrategyFight* stf);
+	explicit PlayerT(Textures::ID id, std::shared_ptr<StrategyFight> stf);
 
 	PlayerT();
 	virtual ~PlayerT();
@@ -23,14 +23,14 @@ public:
 	void boost(BoostType::Type b_type);
 
 	bool shooting(sf::Time deltaTime);
-	void setStrategyFight(StrategyFight* stf);
+	void setStrategyFight(std::shared_ptr<StrategyFight> stf);
 
 	void initVar();
 	void initSprite();
 	void initHitBox();
 
 	Textures::ID getId();
-	StrategyFight* getStf();
+	std::shared_ptr<StrategyFight> getStf();
 
 	void setTexturesSprite(const sf::Texture & texture);
 
@@ -42,7 +42,7 @@ public:
 private:
 
 	Textures::ID id;
-	StrategyFight* stf;
+	std::shared_ptr<StrategyFight> stf;
 	void setType();
 
 	int kills;

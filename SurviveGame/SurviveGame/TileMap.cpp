@@ -38,16 +38,6 @@ TileMap::TileMap(sf::Vector2i map_size)
 						std::string t_type = value.substr(0, value.find(','));
 						tile_type = atoi(t_type.c_str());
 
-						int wall_counter = 0;
-						if (tile_type == 9) 
-						{
-							wall.setPosition(x * grid_size_f, y * grid_size_f);
-							wall.setSize(sf::Vector2f(grid_size_f, grid_size_f));
-
-							walls.push_back(wall);
-							wall_counter++;
-						}
-
 						this->map[y][x] = new Tile(x * this->grid_size_f, y * grid_size_f, this->grid_size_f, tileset, tile_type);
 						x++;
 					}
@@ -62,18 +52,6 @@ TileMap::TileMap(sf::Vector2i map_size)
 
 TileMap::~TileMap()
 {
-}
-
-std::vector<sf::FloatRect> TileMap::getWalls()
-{
-	std::vector<sf::FloatRect> wall_block;
-
-	for (int i = 0 ; i!=walls.size() ; i++)
-	{
-		wall_block.push_back(walls[i].getGlobalBounds());
-	}
-
-	return wall_block;
 }
 
 void TileMap::loadFromFile(const std::string file_name)

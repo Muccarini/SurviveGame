@@ -21,7 +21,7 @@
 class GameLogic : public State
 {
 public:
-    GameLogic(Textures::ID id, StrategyFight* stf);
+    GameLogic(Textures::ID id, std::shared_ptr<StrategyFight> stf);
 	virtual ~GameLogic();
 
 private:
@@ -62,7 +62,7 @@ private:
 	void renderBoosts();
 	void renderAchievement();
 
-	void playerInit(Textures::ID id, StrategyFight* stf);
+	void playerInit(Textures::ID id, std::shared_ptr<StrategyFight> stf);
 	void gameViewInit();
 	void textureInit();
 	void varInit();

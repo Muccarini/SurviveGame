@@ -28,13 +28,13 @@ sf::Vector2f AStar::move(sf::Time deltatime, sf::Sprite* _sprite, sf::Vector2f t
 	{
 		if (!movevect.empty())
 			movevect.clear();
+		std::unordered_map<GridLocation, GridLocation> came_from;
+		std::unordered_map<GridLocation, double> cost_so_far;
 		GridLocation start = { static_cast<int>(_sprite->getPosition().x / 64) , static_cast<int>(_sprite->getPosition().y / 64) };
 		GridLocation goal = { static_cast<int>(target.x / 64) , static_cast<int>(target.y / 64) };
 		if (grid.getGrid()[goal.x][goal.y].walkable)
-			a_star_search(this->grid, start, goal, this->came_from, this->cost_so_far, movevect);
+			a_star_search(this->grid, start, goal, came_from, cost_so_far, movevect);
 		else return sf::Vector2f(0, 0);
-		this->came_from.clear();
-		this->cost_so_far.clear();
 		this->target = target;
 	}
 	if (!movevect.empty())
@@ -84,11 +84,6 @@ void AStar::setMaxDist(float m_distance)
 void AStar::setDist(float dist)
 {
 	this->distance = dist;
-}
-
-void AStar::setTarget(sf::Vector2f target)
-{
-	this->target = target;
 }
 
 void AStar::a_star_search(GridNode graph, GridLocation start, GridLocation goal, std::unordered_map<GridLocation, GridLocation>& came_from, std::unordered_map<GridLocation, double>& cost_so_far, std::list<sf::Vector2f>& movevect)

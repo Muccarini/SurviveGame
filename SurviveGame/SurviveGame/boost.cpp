@@ -2,8 +2,6 @@
 
 Boost::Boost(sf::Vector2f spawn_pos, BoostType::Type type, const sf::Texture & texture)
 {
-	this->pos = spawn_pos;
-
 	switch (type)
 	{
 	case 1: // 1 = HP

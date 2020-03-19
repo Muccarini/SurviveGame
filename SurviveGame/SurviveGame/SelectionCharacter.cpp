@@ -48,32 +48,27 @@ void SelectionCharacter::updateButtons()
 	//SHOTGUN
 	if (shotgun.isActive(mouse_pos_view))
 	{
-		StrategyFight* stf = new StShotgunPlayerFight();
-		this->states->push(new GameLogic(Textures::ID::ShotgunP, stf));
+		this->states->push(new GameLogic(Textures::ID::ShotgunP, std::make_shared<StShotgunPlayerFight>(StShotgunPlayerFight())));
 		this->states->top()->window = this->window;
 		this->states->top()->states = this->states;
 		return;
 	}
 
 	//RIFLE
-	if (rifle.isActive(mouse_pos_view))
+	else if (rifle.isActive(mouse_pos_view))
 	{
-		StrategyFight* stf = new StRiflePlayerFight();
-		this->states->push(new GameLogic(Textures::ID::RifleP, stf));
+		this->states->push(new GameLogic(Textures::ID::RifleP, std::make_shared<StRiflePlayerFight>(StRiflePlayerFight())));
 		this->states->top()->window = this->window;
 		this->states->top()->states = this->states;
 		return;
 	}
 
 	//HANDGUN
-	if (gun.isActive(mouse_pos_view))
+	else if (gun.isActive(mouse_pos_view))
 	{
-		StrategyFight* stf = new StGunPlayerFight();
-		this->states->push(new GameLogic(Textures::ID::HandgunP, stf));
+		this->states->push(new GameLogic(Textures::ID::HandgunP, std::make_shared<StGunPlayerFight>(StGunPlayerFight())));
 		this->states->top()->window = this->window;
 		this->states->top()->states = this->states;
 		return;
 	}
-
-
 }

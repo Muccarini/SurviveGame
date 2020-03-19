@@ -9,11 +9,6 @@ struct GridLocation
 	int x, y;
 	bool walkable = true;
 
-	inline bool isEqual(const GridLocation& second)
-	{
-		return (this->x == second.x && this->y == second.y && this->walkable == second.walkable);
-	}
-
 	inline bool operator==(const GridLocation& second) const
 	{
 		return (this->x == second.x && this->y == second.y);
@@ -23,6 +18,7 @@ struct GridLocation
 	{
 		return !operator==(second);
 	}
+
 	bool operator < (const GridLocation& b) const 
 	{
 		return std::tie(this->x, this->y) < std::tie(b.x, b.y);
@@ -83,8 +79,7 @@ public:
 
 	int cost(GridLocation start, GridLocation goal);
 
-	void setGrid(std::vector< std::vector<GridLocation> > grid);
-protected:
+private:
 
 	std::vector< std::vector<GridLocation> > grid;
 

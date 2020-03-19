@@ -59,11 +59,6 @@ int GridNode::cost(GridLocation start, GridLocation goal)
 	return abs(start.x - goal.x) + abs(start.y - goal.y);
 }
 
-void GridNode::setGrid(std::vector<std::vector<GridLocation>> grid)
-{
-	this->grid = grid;
-}
-
 bool GridNode::in_bounds(GridLocation id) const
 {
 	return 0 <= id.x && id.x < width
