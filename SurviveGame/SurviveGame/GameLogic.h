@@ -26,7 +26,6 @@ public:
 	virtual ~GameLogic();
 
 private:
-
 	virtual void update(const sf::Time& delta_time);
 	virtual void render();
 

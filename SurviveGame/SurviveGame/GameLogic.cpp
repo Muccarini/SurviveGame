@@ -461,7 +461,6 @@ void GameLogic::renderAchievement()
 	if (this->achievement->isBossOn())
 	{
 		achievement->renderBossBadge(this->window, this->game_view);
-
 	}
 }
 

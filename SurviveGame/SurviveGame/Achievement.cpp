@@ -102,7 +102,7 @@ bool Achievement::isBossOn() const
 	return this->boss_on;
 }
 
-void Achievement::updateBadge(sf::Time delta_time)
+void Achievement::updateBadge(const sf::Time& delta_time)
 {
 	if (this->kills_on)
 		this->clock_kills -= delta_time.asSeconds();

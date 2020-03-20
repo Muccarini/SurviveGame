@@ -16,7 +16,7 @@ public:
 	bool isKillsOn() const;
 	bool isBossOn() const;
 
-	void updateBadge(sf::Time delta_time);
+	void updateBadge(const sf::Time& deltaTime);
 
 	void renderRoundBadge(std::shared_ptr<sf::RenderWindow> window, const sf::View& view);
 	void renderKillsBadge(std::shared_ptr<sf::RenderWindow> window, const sf::View& view);
