@@ -149,3 +149,9 @@ float TileMap::getGridSize()
 {
 	return this->grid_size_f;
 }
+
+sf::Vector2f const TileMap::getSize()
+{
+	return 
+		sf::Vector2f(grid_size_f * max_size.x, grid_size_f * max_size.y);
+}

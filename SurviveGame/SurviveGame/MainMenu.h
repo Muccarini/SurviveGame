@@ -25,7 +25,6 @@ private:
 	sf::Sprite background;
 
 	Button new_game;
-	Button settings;
 	Button exit;
 };
 

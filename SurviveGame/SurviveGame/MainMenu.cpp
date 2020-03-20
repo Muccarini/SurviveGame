@@ -17,9 +17,6 @@ void MainMenu::initButtons()
 	new_game.setText("Sources/edunline.ttf", "New Game", sf::Color::Black, 100.f, sf::Vector2f(660.f, 200.f));
 	new_game.setBox(sf::Vector2f(500.f, 70.f), sf::Color::Transparent, 0.f, sf::Color::Transparent, sf::Vector2f(660.f, 230.f));
 
-	settings.setText("Sources/edunline.ttf", "Settings", sf::Color::Black, 70.f, sf::Vector2f(660.f, 300.f));
-	settings.setBox(sf::Vector2f(300.f, 50.f), sf::Color::Transparent, 0.f, sf::Color::Transparent, sf::Vector2f(660.f, 320.f));
-
 	exit.setText("Sources/edunline.ttf", "Exit", sf::Color::Black, 70.f, sf::Vector2f(900.f, 600.f));
 	exit.setBox(sf::Vector2f(135.f, 50.f), sf::Color::Transparent, 0.f, sf::Color::Transparent, sf::Vector2f(900.f, 620.f));
 }
@@ -61,20 +58,6 @@ void MainMenu::updateButtons()
 	{
 		this->states->top()->endState();
 	}
-
-	//SETTINGS
-	if (settings.isHover(mouse_pos_view))
-	{
-		settings.buttonAnimation();
-	}
-	else
-		settings.setStandard();
-
-	if (settings.isActive(mouse_pos_view))
-	{
-		//OPEN STATE SETTINGS
-	}
-
 }
 
 void MainMenu::update(const sf::Time& delta_time)
@@ -89,6 +72,5 @@ void MainMenu::render()
 {
 	window->draw(background);
 	new_game.draw(window);
-	settings.draw(window);
 	exit.draw(window);
 }

@@ -1,7 +1,7 @@
 #include "GameLogic.h"
 
 
-GameLogic::GameLogic(Textures::ID id, std::shared_ptr<StrategyFight> stf) : game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280.f, 720.f)),
+GameLogic::GameLogic(Textures::ID id, std::shared_ptr<StrategyFight> stf) : game_view(sf::Vector2f(0.f, 0.f), sf::Vector2f(854.f, 480.f)),
 tile_map(sf::Vector2i(20, 20)), grid(20, 20)
 {
 	textureInit();
@@ -405,7 +405,14 @@ void GameLogic::updateRound()
 void GameLogic::updateGameView(const sf::Time& delta_time)
 {
 	sf::Vector2f dir = player->getPosition() - game_view.getCenter();
-	game_view.move(dir * delta_time.asSeconds() * this->game_view_speed);
+	if ((game_view.getCenter().x + (game_view.getSize().x / 2) + (dir.x * delta_time.asSeconds() * this->game_view_speed)) > tile_map.getSize().x
+		|| game_view.getCenter().x - (game_view.getSize().x / 2) + (dir.x * delta_time.asSeconds() * this->game_view_speed) < 0)
+		dir.x = 0;
+	if ((game_view.getCenter().y + (game_view.getSize().y / 2) + (dir.y * delta_time.asSeconds() * this->game_view_speed)) > tile_map.getSize().y
+		|| game_view.getCenter().y - (game_view.getSize().y / 2) + (dir.y * delta_time.asSeconds() * this->game_view_speed) < 0)
+		dir.y = 0;
+	if (dir != sf::Vector2f(0, 0))
+		game_view.move(dir * delta_time.asSeconds() * this->game_view_speed);
 	window->setView(game_view);
 }
 

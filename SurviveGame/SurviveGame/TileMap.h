@@ -29,5 +29,7 @@ public:
 	std::vector<GridLocation> getObstacle();
 	
 	float getGridSize();
+
+	sf::Vector2f const getSize();
 };
 
