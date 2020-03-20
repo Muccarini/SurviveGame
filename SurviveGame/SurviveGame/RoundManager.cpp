@@ -61,9 +61,9 @@ void RoundManager::reset()
 	countdown = sf::seconds(6.f);
 }
 
-void RoundManager::startCountdown(sf::Time deltaTime)
+void RoundManager::startCountdown(const sf::Time& delta_time)
 {
-	countdown -= deltaTime;
+	countdown -= delta_time;
 	if (countdown <= sf::seconds(1.f))
 		loading = false;
 }

@@ -22,7 +22,7 @@ PlayerT::~PlayerT()
 {
 }
 
-void PlayerT::updateMove(sf::Time deltaTime)
+void PlayerT::updateMove(const sf::Time& delta_time)
 {
 	sf::Vector2f dir(0, 0);
 
@@ -51,13 +51,13 @@ void PlayerT::updateMove(sf::Time deltaTime)
 		dir.x = +1;
 	}
 
-	updateMovSpeed(deltaTime);
+	updateMovSpeed(delta_time);
 
-	hit_box.setPosition(getPosition() + sf::Vector2f((dir.x * this->mov_speed* deltaTime.asSeconds()), dir.y * this->mov_speed* deltaTime.asSeconds()));
-	this->sprite.move((dir.x * this->mov_speed* deltaTime.asSeconds()) , dir.y * this->mov_speed* deltaTime.asSeconds());
+	hit_box.setPosition(getPosition() + sf::Vector2f((dir.x * this->mov_speed* delta_time.asSeconds()), dir.y * this->mov_speed* delta_time.asSeconds()));
+	this->sprite.move((dir.x * this->mov_speed* delta_time.asSeconds()) , dir.y * this->mov_speed* delta_time.asSeconds());
 }
 
-void PlayerT::updateRotate(sf::Vector2f target)
+void PlayerT::updateRotate(const sf::Vector2f target)
 {
 	float dX = target.x - getPosition().x;
 	float dY = target.y - getPosition().y;
@@ -67,11 +67,11 @@ void PlayerT::updateRotate(sf::Vector2f target)
 	this->sprite.setRotation(deg + 360.f);
 }
 
-bool PlayerT::updateReload(sf::Time deltaTime)
+bool PlayerT::updateReload(const sf::Time& delta_time)
 {
 	if (ammo == 0 || reloading)
 	{
-		reload_clock -= deltaTime;
+		reload_clock -= delta_time;
 		if (reload_clock < sf::seconds(0.f))
 		{
 			ammo = ammo_max;
@@ -109,11 +109,11 @@ bool PlayerT::updateReload(sf::Time deltaTime)
 	return false;
 }
 
-void PlayerT::updateMovSpeed(sf::Time deltaTime)
+void PlayerT::updateMovSpeed(const sf::Time& delta_time)
 {
 	if (this->mov_speed != this->mov_speed_default)
 	{
-		this->ms_clock -= deltaTime.asSeconds();
+		this->ms_clock -= delta_time.asSeconds();
 	}
 
 	if (ms_clock < 0.f)
@@ -145,11 +145,11 @@ void PlayerT::boost(BoostType::Type b_type)
 	}
 }
 
-bool PlayerT::shooting(sf::Time deltaTime)
+bool PlayerT::shooting(const sf::Time& delta_time)
 {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !reloading)
 	{
-		ratio_clock -= deltaTime;
+		ratio_clock -= delta_time;
 
 		if (ratio_clock < sf::seconds(0.f))
 		{
@@ -234,7 +234,7 @@ std::shared_ptr<StrategyFight> PlayerT::getStf()
 		this->stf;
 }
 
-void PlayerT::setTexturesSprite(const sf::Texture & texture)
+void PlayerT::setTexturesSprite(const sf::Texture& texture)
 {
 	sprite.setTexture(texture);
 }

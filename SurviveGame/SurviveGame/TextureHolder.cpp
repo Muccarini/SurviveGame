@@ -9,8 +9,6 @@ void TextureHolder::load(Textures::ID id, const std::string & filename)
 		throw std::runtime_error("il file" + filename + "errore");
 
 		auto inserted = texture_map.insert(std::make_pair(id, std::move(texture)));
-		//assert(inserted.second);
-		
 	}
 
 	texture->loadFromFile(filename);
@@ -26,7 +24,6 @@ void TextureHolder::load(Textures::ID id, std::unique_ptr<sf::Texture> texture)
 const sf::Texture & TextureHolder::get(Textures::ID id) const
 {
 	auto found = texture_map.find(id);
-	//assert(found != _textureMap.find(id));
 
 	return *found->second;
 }

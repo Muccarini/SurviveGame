@@ -3,10 +3,11 @@
 StShotgunPlayerFight::StShotgunPlayerFight()
 {
 	this->ratio = sf::seconds(1.f / 4.f);
-	nrshot = 5;//deve essere pari
+	nrshot = 5;
 }
 
-void StShotgunPlayerFight::shot(std::vector<std::shared_ptr<Bullet>>& bullets, BulletOwner::Owner owner, sf::Vector2f owner_pos, sf::Vector2f target_pos, const sf::Texture & texture)
+void StShotgunPlayerFight::shot(std::vector<std::shared_ptr<Bullet>>& bullets, BulletOwner::Owner owner,
+	const sf::Vector2f owner_pos, const sf::Vector2f target_pos, const sf::Texture & texture)
 {
 	float dir = 180.f / (nrshot * 360.f);
 	int count = 0;

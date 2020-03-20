@@ -1,6 +1,6 @@
 #include "Boss.h"
 
-Boss::Boss(GridNode grid, const sf::Texture & texture) :
+Boss::Boss(const GridNode& grid, const sf::Texture& texture) :
 	_m(grid, max_distance)
 {
 	initVar();
@@ -17,17 +17,17 @@ Boss::~Boss()
 {
 }
 
-void Boss::updateMove(sf::Time deltaTime, sf::Vector2f target, float grid_size)
+void Boss::updateMove(const sf::Time& delta_time, const sf::Vector2f target, const float grid_size)
 {
-	this->sprite.move(_m.move(deltaTime, getPosition(), target, move_vect, mov_speed));
+	this->sprite.move(_m.move(delta_time, getPosition(), target, move_vect, mov_speed));
 
 	hit_box.setPosition(getPosition());
 	setGridPosition(grid_size);
 }
 
-bool Boss::shooting(sf::Time deltaTime, sf::Vector2f target)
+bool Boss::shooting(const sf::Time& delta_time, const sf::Vector2f target)
 {
-	ratio_clock -= deltaTime;
+	ratio_clock -= delta_time;
 
 	if (isInRange(getPosition(), target) && !reloading)
 	{
@@ -47,7 +47,7 @@ bool Boss::shooting(sf::Time deltaTime, sf::Vector2f target)
 	return shoot;
 }
 
-void Boss::updateRotate(sf::Vector2f target)
+void Boss::updateRotate(const sf::Vector2f target)
 {
 	float dX = target.x - this->sprite.getPosition().x;
 	float dY = target.y - this->sprite.getPosition().y;
@@ -57,12 +57,12 @@ void Boss::updateRotate(sf::Vector2f target)
 	this->sprite.setRotation(deg);
 }
 
-void Boss::updateReload(sf::Time deltaTime)
+void Boss::updateReload(const sf::Time& delta_time)
 {
 	if (ammo == 0)
 	{
 		reloading = true;
-		reload_clock -= deltaTime;
+		reload_clock -= delta_time;
 
 		if (reload_clock < sf::seconds(0.f))
 		{
@@ -78,7 +78,7 @@ void Boss::updateHud()
 	hud.updateText(hp, getPosition());
 }
 
-bool Boss::isInRange(sf::Vector2f obj1, sf::Vector2f obj2)
+bool Boss::isInRange(const sf::Vector2f obj1, const sf::Vector2f obj2)
 {
 	float dx = obj1.x - obj2.x;
 	float dy = obj1.y - obj2.y;
@@ -110,7 +110,7 @@ void Boss::initVar()
 	reloading = false;
 }
 
-void Boss::initSprite(GridNode grid,const sf::Texture & texture)
+void Boss::initSprite(const GridNode& grid,const sf::Texture& texture)
 {
 	sprite.setTexture(texture);
 	sprite.setScale(1.5, 1.5);

@@ -9,7 +9,7 @@ SelectionCharacter::SelectionCharacter()
 	initButtons();
 }
 
-void SelectionCharacter::update(sf::Time deltaTime)
+void SelectionCharacter::update(const sf::Time& delta_time)
 {
 	window->setView(window->getDefaultView());
 	updateMousePos();

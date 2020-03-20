@@ -77,7 +77,7 @@ void MainMenu::updateButtons()
 
 }
 
-void MainMenu::update(sf::Time deltaTime)
+void MainMenu::update(const sf::Time& delta_time)
 {
 	window->setView(window->getDefaultView());
 	updateMousePos();

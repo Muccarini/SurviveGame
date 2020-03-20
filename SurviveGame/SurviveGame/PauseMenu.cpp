@@ -13,7 +13,7 @@ PauseMenu::~PauseMenu()
 {
 }
 
-void PauseMenu::update(sf::Time deltaTime)
+void PauseMenu::update(const sf::Time& delta_time)
 {
 	window->setView(window->getDefaultView());
 	updateMousePos();

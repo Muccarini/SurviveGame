@@ -9,18 +9,18 @@ class Achievement : public Observer
 public:
 
 	Achievement() = default;
-	Achievement(RoundManager * subject);
+	explicit Achievement(RoundManager * subject);
 	virtual ~Achievement();
 
-	bool isRoundOn();
-	bool isKillsOn();
-	bool isBossOn();
+	bool isRoundOn() const;
+	bool isKillsOn() const;
+	bool isBossOn() const;
 
-	void updateBadge(sf::Time deltaTime);
+	void updateBadge(sf::Time delta_time);
 
-	void renderRoundBadge(std::shared_ptr<sf::RenderWindow> window, sf::View view);
-	void renderKillsBadge(std::shared_ptr<sf::RenderWindow> window, sf::View view);
-	void renderBossBadge(std::shared_ptr<sf::RenderWindow> window, sf::View view);
+	void renderRoundBadge(std::shared_ptr<sf::RenderWindow> window, const sf::View& view);
+	void renderKillsBadge(std::shared_ptr<sf::RenderWindow> window, const sf::View& view);
+	void renderBossBadge(std::shared_ptr<sf::RenderWindow> window, const sf::View& view);
 
 private:
 

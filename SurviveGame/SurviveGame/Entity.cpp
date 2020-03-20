@@ -40,14 +40,14 @@ GridLocation Entity::getGridPos()
 	return this->gridpos;
 }
 
-void Entity::setGridPosition(float tilesize)
+void Entity::setGridPosition(const float tilesize)
 {
 	this->gridpos.x = static_cast<int>(this->sprite.getPosition().x / tilesize);
 	this->gridpos.y = static_cast<int>(this->sprite.getPosition().y / tilesize);
 	this->gridpos.walkable = false;
 }
 
-void Entity::setMoveSpeed(float mov_speed)
+void Entity::setMoveSpeed(const float mov_speed)
 {
 	this->mov_speed = mov_speed;
 }
@@ -58,7 +58,7 @@ float Entity::getMovSpeed()
 		this->mov_speed;
 }
 
-void Entity::setMoveSpeedDef(float mov_speed_def)
+void Entity::setMoveSpeedDef(const float mov_speed_def)
 {
 	this->mov_speed_default = mov_speed_def;
 }

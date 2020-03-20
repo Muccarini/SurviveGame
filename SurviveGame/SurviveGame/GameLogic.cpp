@@ -17,30 +17,30 @@ GameLogic::~GameLogic()
 	delete achievement;
 }
 
-void GameLogic::update(sf::Time deltaTime)
+void GameLogic::update(const sf::Time& delta_time)
 {
 	updateMousePos();
 
-	updateAchievement(deltaTime);
+	updateAchievement(delta_time);
 
 	updateHud();
 
-	updatePlayer(deltaTime);
+	updatePlayer(delta_time);
 
 	updateRound();
 
 	if (!round.isLoading() && !round.isBossRound())
-		spawnZombies(deltaTime);
+		spawnZombies(delta_time);
 	else
-		spawnBoss(deltaTime);
+		spawnBoss(delta_time);
 
-	updatePet(deltaTime);
+	updatePet(delta_time);
 
 	updateBoost();
 	
-	updateBullet(deltaTime);
+	updateBullet(delta_time);
 
-	updateGameView(deltaTime);
+	updateGameView(delta_time);
 
 	updateState();
 }
@@ -81,9 +81,9 @@ void GameLogic::updateState()
 	}
 }
 
-void GameLogic::updateAchievement(sf::Time deltaTime)
+void GameLogic::updateAchievement(const sf::Time& delta_time)
 {
-	achievement->updateBadge(deltaTime);
+	achievement->updateBadge(delta_time);
 }
 
 void GameLogic::updateHud()
@@ -91,7 +91,7 @@ void GameLogic::updateHud()
 	hud.updateText(round.getKills(), round.getCountdown().asSeconds(), round.getCounterRound(), game_view);
 }
 
-void GameLogic::spawnZombies(sf::Time deltaTime)
+void GameLogic::spawnZombies(const sf::Time& delta_time)
 {
 		while (enemies_alive != max_enemies)
 		{
@@ -101,7 +101,7 @@ void GameLogic::spawnZombies(sf::Time deltaTime)
 
 		for (unsigned int i = 0; i < enemies.size(); i++)
 		{
-			updateZombie(deltaTime, i);
+			updateZombie(delta_time, i);
 
 			if ((enemies[i]->getHp() <= 0))
 			{
@@ -112,9 +112,9 @@ void GameLogic::spawnZombies(sf::Time deltaTime)
 		}
 }
 
-void GameLogic::updateZombie(sf::Time deltaTime, int i)
+void GameLogic::updateZombie(const sf::Time& delta_time, int i)
 {
-	enemies[i]->updateMove(deltaTime, player->getPosition(), tile_map.getGridSize());
+	enemies[i]->updateMove(delta_time, player->getPosition(), tile_map.getGridSize());
 	enemies[i]->updateRotate(player->getPosition());
 	enemies[i]->updateHud();
 
@@ -136,9 +136,9 @@ void GameLogic::updateZombie(sf::Time deltaTime, int i)
 	}
 }
 
-void GameLogic::spawnBoss(sf::Time deltaTime)
+void GameLogic::spawnBoss(const sf::Time& delta_time)
 {
-	round.startCountdown(deltaTime);
+	round.startCountdown(delta_time);
 
 	if (!round.isLoading() && round.isBossRound())
 	{
@@ -149,7 +149,7 @@ void GameLogic::spawnBoss(sf::Time deltaTime)
 			this->boss_alive = true;
 		}
 
-		updateBoss(deltaTime);
+		updateBoss(delta_time);
 
 		if ((boss->getHp() <= 0))
 		{
@@ -168,15 +168,15 @@ void GameLogic::spawnBoss(sf::Time deltaTime)
 	}
 }
 
-void GameLogic::updateBoss(sf::Time deltaTime)
+void GameLogic::updateBoss(const sf::Time& delta_time)
 {
-	boss->updateMove(deltaTime, player->getPosition(), tile_map.getGridSize());
+	boss->updateMove(delta_time, player->getPosition(), tile_map.getGridSize());
 
-	if (boss->shooting(deltaTime, player->getPosition()))
+	if (boss->shooting(delta_time, player->getPosition()))
 		spawnBullet(BulletOwner::Boss);
 
 	boss->updateRotate(player->getPosition());
-	boss->updateReload(deltaTime);
+	boss->updateReload(delta_time);
 	boss->updateHud();
 }
 
@@ -191,11 +191,11 @@ void GameLogic::spawnPet()
 		pet->boostHeal();
 }
 
-void GameLogic::updatePet(sf::Time deltaTime)
+void GameLogic::updatePet(const sf::Time& delta_time)
 {
 	if (pet_alive)
 	{
-		pet->updateMove(deltaTime, player->getPosition());
+		pet->updateMove(delta_time, player->getPosition());
 		pet->updateRotate(mouse_pos_view);
 
 		if (player->isShooting())
@@ -242,7 +242,7 @@ void GameLogic::spawnBullet(BulletOwner::Owner owner)
 		}
 }
 
-void GameLogic::updateBullet(sf::Time deltaTime)
+void GameLogic::updateBullet(const sf::Time& delta_time)
 {
 	if (!bullets.empty())
 	{
@@ -315,7 +315,7 @@ void GameLogic::updateBullet(sf::Time deltaTime)
 					bullets.erase(bullets.begin() + i);
 				}
 				else
-					bullets[i]->updateMove(deltaTime);
+					bullets[i]->updateMove(delta_time);
 			}
 		}
 	}
@@ -334,10 +334,10 @@ void GameLogic::updateBoost()
 	player->boost(BoostType::Type(b_type));
 }
 
-void GameLogic::updatePlayer(sf::Time deltaTime)
+void GameLogic::updatePlayer(const sf::Time& delta_time)
 {
-	player->updateMove(deltaTime);
-	player->updateMovSpeed(deltaTime);
+	player->updateMove(delta_time);
+	player->updateMovSpeed(delta_time);
 	player->updateHud();
 
 	//collisionZomies
@@ -374,12 +374,12 @@ void GameLogic::updatePlayer(sf::Time deltaTime)
 		collision.reset();
 	}
 
-	if (player->shooting(deltaTime))
+	if (player->shooting(delta_time))
 		spawnBullet(BulletOwner::Player);
 
 	player->updateRotate(mouse_pos_view);
 
-	if (player->updateReload(deltaTime))
+	if (player->updateReload(delta_time))
 		player->setTexturesSprite(textures->get(player->getId()));
 }
 
@@ -402,10 +402,10 @@ void GameLogic::updateRound()
 	}
 }
 
-void GameLogic::updateGameView(sf::Time deltaTime)
+void GameLogic::updateGameView(const sf::Time& delta_time)
 {
 	sf::Vector2f dir = player->getPosition() - game_view.getCenter();
-	game_view.move(dir * deltaTime.asSeconds() * this->game_view_speed);
+	game_view.move(dir * delta_time.asSeconds() * this->game_view_speed);
 	window->setView(game_view);
 }
 

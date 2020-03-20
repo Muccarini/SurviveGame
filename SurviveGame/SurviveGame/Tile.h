@@ -12,17 +12,13 @@
 class Tile
 {
 public:
-	Tile(float x, float y, float grideSizeF, sf::Texture& txt, int t_type);
+	Tile(const float x, const float y, const float tile_size_f, const sf::Texture& txt, int t_type);
 
 	virtual ~Tile();
 
 	sf::RectangleShape shape;
-	int type_tile;
+	bool walkable = true;
 	void render(std::shared_ptr<sf::RenderTarget> target);
 
-protected:
-
-	sf::FloatRect rect_shape;
-	sf::Texture &textures;
 };
 

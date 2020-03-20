@@ -9,7 +9,6 @@ State::State()
 
 State::~State()
 {
-	delete states;
 }
 
 void State::updateMousePos()

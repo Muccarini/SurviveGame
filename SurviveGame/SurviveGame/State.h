@@ -8,7 +8,7 @@ public:
 	State();
 	virtual ~State();
 
-	virtual void update(sf::Time deltaTime) = 0;
+	virtual void update(const sf::Time& delta_time) = 0;
 	virtual void render() = 0;
 
 	void endState();

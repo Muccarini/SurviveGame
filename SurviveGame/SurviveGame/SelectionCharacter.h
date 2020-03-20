@@ -12,7 +12,7 @@ public:
 
 private:
 
-	virtual void update(sf::Time deltaTime);
+	virtual void update(const sf::Time& delta_time);
 	virtual void render();
 
 	void initButtons();

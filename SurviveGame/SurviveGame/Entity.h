@@ -21,11 +21,11 @@ public:
 	sf::RectangleShape getHitBox();
 
 	GridLocation getGridPos();
-	void         setGridPosition(float tilesize);
+	void         setGridPosition(const float tilesize);
 
-	void  setMoveSpeed(float mov_speed);
+	void  setMoveSpeed(const float mov_speed);
 	float getMovSpeed();
-	void  setMoveSpeedDef(float mov_speed_def);
+	void  setMoveSpeedDef(const float mov_speed_def);
 	float getMovSpeedDef();
 
 protected:

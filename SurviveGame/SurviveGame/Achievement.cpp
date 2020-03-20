@@ -87,34 +87,34 @@ void Achievement::detach()
 	this->subject->unsubscribe(this);
 }
 
-bool Achievement::isRoundOn()
+bool Achievement::isRoundOn() const
 {
 	return this->round_on;
 }
 
-bool Achievement::isKillsOn()
+bool Achievement::isKillsOn() const
 {
 	return this->kills_on;
 }
 
-bool Achievement::isBossOn()
+bool Achievement::isBossOn() const
 {
 	return this->boss_on;
 }
 
-void Achievement::updateBadge(sf::Time deltaTime)
+void Achievement::updateBadge(sf::Time delta_time)
 {
 	if (this->kills_on)
-		this->clock_kills -= deltaTime.asSeconds();
+		this->clock_kills -= delta_time.asSeconds();
 
 	if (this->round_on)
-		this->clock_round -= deltaTime.asSeconds();
+		this->clock_round -= delta_time.asSeconds();
 
 	if (this->boss_on)
-		this->clock_boss -= deltaTime.asSeconds();
+		this->clock_boss -= delta_time.asSeconds();
 }
 
-void Achievement::renderRoundBadge(std::shared_ptr<sf::RenderWindow> window, sf::View view)
+void Achievement::renderRoundBadge(std::shared_ptr<sf::RenderWindow> window, const sf::View& view)
 {
 	if (this->clock_round > 0)
 	{
@@ -134,7 +134,7 @@ void Achievement::renderRoundBadge(std::shared_ptr<sf::RenderWindow> window, sf:
 	}
 }
 
-void Achievement::renderKillsBadge(std::shared_ptr<sf::RenderWindow> window, sf::View view)
+void Achievement::renderKillsBadge(std::shared_ptr<sf::RenderWindow> window, const sf::View& view)
 {
 	if (this->clock_kills > 0)
 	{
@@ -154,7 +154,7 @@ void Achievement::renderKillsBadge(std::shared_ptr<sf::RenderWindow> window, sf:
 	}
 }
 
-void Achievement::renderBossBadge(std::shared_ptr<sf::RenderWindow> window, sf::View view)
+void Achievement::renderBossBadge(std::shared_ptr<sf::RenderWindow> window, const sf::View& view)
 {
 	if (this->clock_boss > 0)
 	{

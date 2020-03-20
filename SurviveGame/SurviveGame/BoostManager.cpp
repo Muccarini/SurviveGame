@@ -21,7 +21,7 @@ BoostManager::~BoostManager()
 {
 }
 
-void BoostManager::setTextures(sf::Texture txt_hp, sf::Texture txt_ms)
+void BoostManager::setTextures(const sf::Texture& txt_hp, const sf::Texture& txt_ms)
 {
 	textures.emplace(std::pair<BoostType::Type, sf::Texture>(BoostType::MS, txt_ms));
 	textures.emplace(std::pair<BoostType::Type, sf::Texture>(BoostType::HP, txt_hp));

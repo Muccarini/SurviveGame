@@ -13,13 +13,13 @@ public:
 
 	virtual ~AStar();
 
-	sf::Vector2f move(sf::Time deltatime, sf::Vector2f subject, sf::Vector2f target,
+	sf::Vector2f const move(const sf::Time& deltatime, const sf::Vector2f subject, const sf::Vector2f target,
 		std::list<sf::Vector2f> &movevect, const float mov_speed);
 
 	void setMaxDist(float m_distance);
 
 private:
-	void a_star_search(GridNode graph, GridLocation start, GridLocation goal,
+	void a_star_search(const GridNode& graph, GridLocation start, GridLocation goal,
 		std::unordered_map<GridLocation, GridLocation>& came_from,
 		std::unordered_map<GridLocation, double>& cost_so_far, std::list<sf::Vector2f> &movevect);
 

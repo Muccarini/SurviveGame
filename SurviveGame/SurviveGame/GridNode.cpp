@@ -5,7 +5,7 @@ GridNode::GridNode(const int width, const int height) : width(width), height(hei
 	DIRS = { GridLocation{1, 0}, GridLocation{0, -1}, GridLocation{-1, 0}, GridLocation{0, 1} };
 }
 
-GridNode::GridNode()
+GridNode::GridNode() : width(20), height(20)
 {
 }
 
@@ -32,12 +32,12 @@ void GridNode::initGrid(std::vector<GridLocation> obstacles)
 	}
 }
 
-std::vector<std::vector<GridLocation>> GridNode::getGrid()
+std::vector<std::vector<GridLocation>> GridNode::getGrid() const
 {
 	return this->grid;
 }
 
-std::vector<GridLocation> GridNode::neighbors(GridLocation id) const
+std::vector<GridLocation> GridNode::neighbors(const GridLocation& id) const
 {
 	std::vector<GridLocation> results;
 
@@ -54,12 +54,12 @@ std::vector<GridLocation> GridNode::neighbors(GridLocation id) const
 	return results;
 }
 
-int GridNode::cost(GridLocation start, GridLocation goal)
+int GridNode::cost(const GridLocation& start, const GridLocation& goal) const 
 {
 	return abs(start.x - goal.x) + abs(start.y - goal.y);
 }
 
-bool GridNode::in_bounds(GridLocation id) const
+bool GridNode::in_bounds(const GridLocation& id) const
 {
 	return 0 <= id.x && id.x < width
 		&& 0 <= id.y && id.y < height;

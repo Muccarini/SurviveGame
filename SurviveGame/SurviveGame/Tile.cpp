@@ -1,40 +1,34 @@
  #include "Tile.h"
 
-Tile::Tile(float x, float y, float gride_size_f, sf::Texture& txt, int t_type) : textures(txt)
+Tile::Tile(const float x, const float y, const float tile_size_f, const sf::Texture& txt, int t_type)
 {
 	if(t_type == 9)
 	{
-		type_tile = 9;
+		walkable = false;
 		shape.setOutlineColor(sf::Color::Transparent);
 	}
 
-	rect_shape.width = gride_size_f;
-	rect_shape.height = gride_size_f;
-	rect_shape.top = 0;
-	rect_shape.left = 0;
-
-	this->textures = txt;
-
-	this->shape.setSize(sf::Vector2f(gride_size_f, gride_size_f));
+	this->shape.setSize(sf::Vector2f(tile_size_f, tile_size_f));
 	this->shape.setPosition(x, y);
 
 	this->shape.setTexture(&txt);
 	sf::Vector2u pos_in_texture;
 	
-	int n = (txt.getSize().x / static_cast <unsigned>(gride_size_f));
-	int i=0;
+	//calculate the type of tile
+	int n = (txt.getSize().x / static_cast <unsigned>(tile_size_f));
+	int i = 0;
 	int j = t_type % n;
 
 	while(t_type > n)
 	{
-		t_type -= (txt.getSize().x / static_cast <unsigned>(gride_size_f));
+		t_type -= (txt.getSize().x / static_cast <unsigned>(tile_size_f));
 		i++;
 	}
 
 	if (i >= 1)
 		j -= 1;
 
-	pos_in_texture = sf::Vector2u(static_cast<unsigned int>(j * gride_size_f), static_cast<unsigned int>(i * gride_size_f));
+	pos_in_texture = sf::Vector2u(static_cast<unsigned int>(j * tile_size_f), static_cast<unsigned int>(i * tile_size_f));
 	this->shape.setTextureRect(sf::IntRect(pos_in_texture.x, pos_in_texture.y, 64, 64));
 }
 
@@ -46,5 +40,5 @@ Tile::~Tile()
 
 void Tile::render(std::shared_ptr<sf::RenderTarget> target)
 {
-	target->draw(shape);
+  	target->draw(shape);
 }

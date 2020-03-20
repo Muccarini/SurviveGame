@@ -2,7 +2,7 @@
 
 
 
-TileMap::TileMap(sf::Vector2i map_size)
+TileMap::TileMap(const sf::Vector2i map_size)
 {
 	this->grid_size_f = 64.f;
 	this->max_size.x = map_size.x;
@@ -57,24 +57,21 @@ TileMap::~TileMap()
 void TileMap::loadFromFile(const std::string file_name)
 {
 	std::ifstream openfile("Sources/Mappa.txt");
-		
 }
 
 
 void TileMap::render(std::shared_ptr<sf::RenderTarget> target)
 {
-
 	for (auto &x : this->map)
 	{
 		for (auto &y : x)
 		{
 			y->render(target);
-
 		}
 	}
 }
 
-std::vector<sf::FloatRect> TileMap::findWalls(int x, int y)
+std::vector<sf::FloatRect> TileMap::findWalls(const int x, const int y) const
 {
 	sf::Vector2i pos(static_cast<int>(x / grid_size_f), static_cast<int>(y / grid_size_f));
 	std::vector<sf::FloatRect> wallvect;
@@ -84,41 +81,41 @@ std::vector<sf::FloatRect> TileMap::findWalls(int x, int y)
 		if (pos.x < 20 && pos.x >= 0)
 		{
 
-			if (map[pos.y][pos.x]->type_tile == 9)
+			if (!map[pos.y][pos.x]->walkable)
 				wallvect.push_back(map[pos.y][pos.x]->shape.getGlobalBounds());
 
 			if (pos.y > 0)
 			{
-				if (map[pos.y - 1][pos.x]->type_tile == 9)
+				if (!map[pos.y - 1][pos.x]->walkable)
 					wallvect.push_back(map[pos.y - 1][pos.x]->shape.getGlobalBounds());
 				if (pos.x < max_size.x - 1)
-					if (map[pos.y - 1][pos.x + 1]->type_tile == 9)
+					if (!map[pos.y - 1][pos.x + 1]->walkable)
 						wallvect.push_back(map[pos.y - 1][pos.x + 1]->shape.getGlobalBounds());
 				if (pos.x > 0)
-					if (map[pos.y - 1][pos.x - 1]->type_tile == 9)
+					if (!map[pos.y - 1][pos.x - 1]->walkable)
 						wallvect.push_back(map[pos.y - 1][pos.x - 1]->shape.getGlobalBounds());
 			}
 			if (pos.y < max_size.y - 1)
 			{
-				if (map[pos.y + 1][pos.x]->type_tile == 9)
+				if (!map[pos.y + 1][pos.x]->walkable)
 					wallvect.push_back(map[pos.y + 1][pos.x]->shape.getGlobalBounds());
 				if (pos.x < max_size.x - 1)
-					if (map[pos.y + 1][pos.x + 1]->type_tile == 9)
+					if (!map[pos.y + 1][pos.x + 1]->walkable)
 						wallvect.push_back(map[pos.y + 1][pos.x + 1]->shape.getGlobalBounds());
 				if (pos.x > 0)
-					if (map[pos.y + 1][pos.x - 1]->type_tile == 9)
+					if (!map[pos.y + 1][pos.x - 1]->walkable)
 						wallvect.push_back(map[pos.y + 1][pos.x - 1]->shape.getGlobalBounds());
 			}
 			if (pos.x > 0)
 			{
-				if (map[pos.y][pos.x - 1]->type_tile == 9)
+				if (!map[pos.y][pos.x - 1]->walkable)
 					wallvect.push_back(map[pos.y][pos.x - 1]->shape.getGlobalBounds());
 			}
 			if (pos.x <= 20 && pos.x >=0)
 			{
 				if (pos.x < max_size.x - 1)
 				{
-					if (map[pos.y][pos.x + 1]->type_tile == 9)
+					if (!map[pos.y][pos.x + 1]->walkable)
 						wallvect.push_back(map[pos.y][pos.x + 1]->shape.getGlobalBounds());
 				}
 			}
@@ -135,7 +132,7 @@ std::vector<GridLocation> TileMap::getObstacle()
 	{
 		for (int j = 0; j < max_size.x; j++)
 		{
-			if (map[i][j]->type_tile == 9)
+			if (!map[i][j]->walkable)
 			{
 				GridLocation node;
 				node.walkable = false;

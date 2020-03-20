@@ -6,15 +6,16 @@
 class RoundManager : public Subject
 {
 public:
+	RoundManager();
+	virtual ~RoundManager();
+
 	virtual void subscribe(Observer* obs);
 	virtual void unsubscribe(Observer* obs);
 
 	virtual void notify();
 
-	RoundManager();
-	virtual ~RoundManager();
 
-	void startCountdown(sf::Time deltaTime);
+	void startCountdown(const sf::Time& delta_time);
 
 	void increaseRound();
 	void increaseKills();

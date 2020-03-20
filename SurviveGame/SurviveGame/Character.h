@@ -20,10 +20,10 @@ public:
 	void takeDamage();
 	void boostHeal();
 	
-	void  setHp(int hp);
-	void  setHpMax(int hp_max);
-	void setAmmo(int i);
-	void setRatioCd(sf::Time ratio);
+	void setHp(const int hp);
+	void setHpMax(const int hp_max);
+	void setAmmo(const int i);
+	void setRatioCd(const sf::Time& ratio);
 
 	int            getHp();
 	int            getHpMax();
@@ -50,4 +50,3 @@ protected:
 	bool reloading = false;
 	bool shoot;
 };
-

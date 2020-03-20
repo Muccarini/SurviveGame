@@ -19,7 +19,7 @@ public:
 	bool isCollide();
 
 	sf::Vector2f getOutMtv();
-	void setPreMtv(sf::Vector2f vec);
+	void setPreMtv(const sf::Vector2f vec);
 
 private:
 	bool sat_test(const sf::FloatRect &rectSp1, const sf::FloatRect &rectSp2);

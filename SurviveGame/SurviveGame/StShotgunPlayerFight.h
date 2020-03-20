@@ -10,6 +10,6 @@ public:
 	virtual ~StShotgunPlayerFight() = default;
 
 	void shot(std::vector<std::shared_ptr<Bullet>>& bullets, BulletOwner::Owner owner,
-		sf::Vector2f owner_pos, sf::Vector2f target_pos, const sf::Texture & texture)override;
+		const sf::Vector2f owner_pos, const sf::Vector2f target_pos, const sf::Texture & texture)override;
 };
 

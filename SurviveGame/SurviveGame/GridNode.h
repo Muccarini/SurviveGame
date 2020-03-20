@@ -73,11 +73,11 @@ public:
 
 	void initGrid(std::vector<GridLocation> obstacles);
 
-	std::vector< std::vector<GridLocation> > getGrid();
+	std::vector< std::vector<GridLocation> > getGrid() const;
 
-	std::vector<GridLocation> neighbors(GridLocation id) const;
+	std::vector<GridLocation> neighbors(const GridLocation& id) const;
 
-	int cost(GridLocation start, GridLocation goal);
+	int cost(const GridLocation& start, const GridLocation& goal) const;
 
 private:
 
@@ -85,9 +85,9 @@ private:
 
 	std::array<GridLocation, 4> DIRS;
 
-	const int width = 20;
-	const int height = 20;
+	const int width;
+	const int height;
 
-	bool in_bounds(GridLocation id) const;
+	bool in_bounds(const GridLocation& id) const;
 	
 };

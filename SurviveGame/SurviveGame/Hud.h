@@ -7,9 +7,9 @@ public:
 	Hud();
 	~Hud();
 
-	void updateText(int hp, sf::Vector2f obj);                                      //ENEMY
-	void updateText(int ammo, const int hp, sf::Vector2f obj);                      //PLAYER
-	void updateText (int kill_counter, float countdown, int round, sf::View view);  //GAME
+	void updateText(const int hp, const sf::Vector2f obj);													 //ENEMY
+	void updateText(const int ammo, const int hp, const sf::Vector2f obj);									 //PLAYER
+	void updateText (const int kill_counter, const float countdown, const int round, const sf::View& view);  //GAME
 
 	void renderTextsCharacter(std::shared_ptr<sf::RenderWindow> target); //CHARACTER
 	void renderTextsHud(std::shared_ptr<sf::RenderWindow> target);       //GAME

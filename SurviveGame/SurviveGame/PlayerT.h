@@ -9,26 +9,26 @@ class StrategyFight;
 class PlayerT : public Character
 {
 public:
-	explicit PlayerT(Textures::ID id, std::shared_ptr<StrategyFight> stf);
+	PlayerT(Textures::ID id, std::shared_ptr<StrategyFight> stf);
 
 	PlayerT();
 	virtual ~PlayerT();
 
-	void updateMove(sf::Time deltaTime);
-	void updateRotate(sf::Vector2f target);
-	bool updateReload(sf::Time deltaTime);
-	void updateMovSpeed(sf::Time deltaTime);
+	void updateMove(const sf::Time& delta_time);
+	void updateRotate(const sf::Vector2f target);
+	bool updateReload(const sf::Time& delta_time);
+	void updateMovSpeed(const sf::Time& delta_time);
 	void updateHud();
 
 	void boost(BoostType::Type b_type);
 
-	bool shooting(sf::Time deltaTime);
+	bool shooting(const sf::Time& delta_time);
 	void setStrategyFight(std::shared_ptr<StrategyFight> stf);
 
 	Textures::ID getId();
 	std::shared_ptr<StrategyFight> getStf();
 
-	void setTexturesSprite(const sf::Texture & texture);
+	void setTexturesSprite(const sf::Texture& texture);
 
 private:
 

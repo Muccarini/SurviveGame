@@ -19,7 +19,7 @@ AStar::~AStar()
 {
 }
 
-sf::Vector2f AStar::move(sf::Time deltatime, sf::Vector2f subject, sf::Vector2f target,
+sf::Vector2f const AStar::move(const sf::Time& deltatime, const sf::Vector2f subject, const sf::Vector2f target,
 	std::list<sf::Vector2f> &movevect, const float mov_speed)
 {
 	sf::Vector2i mv; 
@@ -32,7 +32,7 @@ sf::Vector2f AStar::move(sf::Time deltatime, sf::Vector2f subject, sf::Vector2f 
 		GridLocation start = { static_cast<int>(subject.x / 64) , static_cast<int>(subject.y / 64) };
 		GridLocation goal = { static_cast<int>(target.x / 64) , static_cast<int>(target.y / 64) };
 
-		if (grid.getGrid()[goal.x][goal.y].walkable)
+		if (grid.getGrid()[goal.y][goal.x].walkable)
 			a_star_search(this->grid, start, goal, came_from, cost_so_far, movevect);
 		else return sf::Vector2f(0, 0);
 		this->target = target;
@@ -84,7 +84,7 @@ void AStar::setMaxDist(float m_distance)
 	this->max_distance = m_distance;
 }
 
-void AStar::a_star_search(GridNode graph, GridLocation start, GridLocation goal, std::unordered_map<GridLocation, GridLocation>& came_from, std::unordered_map<GridLocation, double>& cost_so_far, std::list<sf::Vector2f>& movevect)
+void AStar::a_star_search(const GridNode& graph, GridLocation start, GridLocation goal, std::unordered_map<GridLocation, GridLocation>& came_from, std::unordered_map<GridLocation, double>& cost_so_far, std::list<sf::Vector2f>& movevect)
 {
 	PriorityQueue<GridLocation, double> frontier;
 	frontier.put(start, 0);

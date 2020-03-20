@@ -39,11 +39,11 @@ sf::Vector2f CollisionManager::CollideWithWalls(const sf::FloatRect & rectSp1, c
 		return dir;
 }
 
-sf::Vector2f CollisionManager::CollideWithEntity(const sf::FloatRect & rectSp1, const sf::FloatRect & rectSp2)
+sf::Vector2f CollisionManager::CollideWithEntity(const sf::FloatRect & rect_sp1, const sf::FloatRect & rect_sp2)
 {
-	if (rectSp1 != rectSp2)
+	if (rect_sp1 != rect_sp2)
 	{
-		if (sat_test(rectSp1, rectSp2))
+		if (sat_test(rect_sp1, rect_sp2))
 		{
 			collide = true;
 			return out_mtv;
@@ -77,7 +77,7 @@ bool CollisionManager::isCollide()
 		this->collide;
 }
 
-void CollisionManager::setPreMtv(sf::Vector2f vec)
+void CollisionManager::setPreMtv(const sf::Vector2f vec)
 {
 	this->premtv = vec;
 }
@@ -88,26 +88,26 @@ sf::Vector2f CollisionManager::getOutMtv()
 		this->out_mtv;
 }
 
-bool CollisionManager::sat_test(const sf::FloatRect & rectSp1, const sf::FloatRect & rectSp2)
+bool CollisionManager::sat_test(const sf::FloatRect & rect_sp1, const sf::FloatRect & rect_sp2)
 {
 	float proj_x, proj_y, overlap_x, overlap_y;
 
-	proj_x = std::max(rectSp1.left + rectSp1.width, rectSp2.left + rectSp2.width) - std::min(rectSp1.left, rectSp2.left);
-	if (proj_x < rectSp1.width + rectSp2.width) {
+	proj_x = std::max(rect_sp1.left + rect_sp1.width, rect_sp2.left + rect_sp2.width) - std::min(rect_sp1.left, rect_sp2.left);
+	if (proj_x < rect_sp1.width + rect_sp2.width) {
 		{
-			overlap_x = rectSp1.width + rectSp2.width - proj_x;
+			overlap_x = rect_sp1.width + rect_sp2.width - proj_x;
 		}
-		proj_y = std::max(rectSp1.top + rectSp1.height, rectSp2.top + rectSp2.height) - std::min(rectSp1.top, rectSp2.top);
-		if (proj_y < rectSp1.height + rectSp2.height) {
+		proj_y = std::max(rect_sp1.top + rect_sp1.height, rect_sp2.top + rect_sp2.height) - std::min(rect_sp1.top, rect_sp2.top);
+		if (proj_y < rect_sp1.height + rect_sp2.height) {
 			{
-				overlap_y = rectSp1.height + rectSp2.height - proj_y;
+				overlap_y = rect_sp1.height + rect_sp2.height - proj_y;
 				out_mtv.x = out_mtv.y = 0;
 
 				if (overlap_x < overlap_y) {
-					out_mtv.x = overlap_x * (rectSp1.left < rectSp2.left ? -1 : 1);
+					out_mtv.x = overlap_x * (rect_sp1.left < rect_sp2.left ? -1 : 1);
 				}
 				else {
-					out_mtv.y = overlap_y * (rectSp1.top < rectSp2.top ? -1 : 1);
+					out_mtv.y = overlap_y * (rect_sp1.top < rect_sp2.top ? -1 : 1);
 				}
 			}
 			return true;

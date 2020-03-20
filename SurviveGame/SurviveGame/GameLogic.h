@@ -27,31 +27,31 @@ public:
 
 private:
 
-	virtual void update(sf::Time deltaTime);
+	virtual void update(const sf::Time& delta_time);
 	virtual void render();
 
 	void updateState();
 
-	void updateAchievement(sf::Time deltaTim);
+	void updateAchievement(const sf::Time& delta_time);
 
-	void updatePlayer(sf::Time deltaTime);
+	void updatePlayer(const sf::Time& delta_time);
 	void updateRound();
 
-	void spawnZombies(sf::Time deltaTime);
-	void updateZombie(sf::Time deltaTime, int i);
+	void spawnZombies(const sf::Time& delta_time);
+	void updateZombie(const sf::Time& delta_time, int i);
 
-	void spawnBoss(sf::Time deltaTime);
-	void updateBoss(sf::Time deltaTime);
+	void spawnBoss(const sf::Time& delta_time);
+	void updateBoss(const sf::Time& delta_time);
 
 	void spawnPet();
-	void updatePet(sf::Time deltaTime);
+	void updatePet(const sf::Time& delta_time);
 
 	void spawnBullet(BulletOwner::Owner owner);
-	void updateBullet(sf::Time deltaTime);
+	void updateBullet(const sf::Time& delta_time);
 
 	void updateBoost();
 
-	void updateGameView(sf::Time deltaTime);
+	void updateGameView(const sf::Time& delta_time);
 	void updateHud();
 
 	void renderEnemies();

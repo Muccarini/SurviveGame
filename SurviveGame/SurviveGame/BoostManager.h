@@ -9,7 +9,7 @@ public:
 	BoostManager();
 	~BoostManager();
 
-	void setTextures(sf::Texture txt_hp, sf::Texture txt_ms);
+	void setTextures(const sf::Texture& txt_hp, const sf::Texture& txt_ms);
 	void spawn();
 	bool canSpawn();
 

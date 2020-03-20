@@ -1,7 +1,5 @@
 #include "Character.h"
 
-
-
 Character::Character()
 {
 }
@@ -28,7 +26,7 @@ void Character::boostHeal()
 		this->hp = this->hp_max;
 }
 
-void Character::setHp(int hp)
+void Character::setHp(const int hp)
 {
 	this->hp = hp;
 }
@@ -39,7 +37,7 @@ int Character::getHp()
 		this->hp;
 }
 
-void Character::setHpMax(int hp_max)
+void Character::setHpMax(const int hp_max)
 {
 	this->hp_max = hp_max;
 }
@@ -56,12 +54,12 @@ int Character::getAmmo()
 		this->ammo;
 }
 
-void Character::setAmmo(int i)
+void Character::setAmmo(const int i)
 {
 	this->ammo = i;
 }
 
-void Character::setRatioCd(sf::Time ratio)
+void Character::setRatioCd(const sf::Time& ratio)
 {
 	this->ratio_cd = ratio;
 }
@@ -75,6 +73,3 @@ bool Character::isShooting()
 {
 	return shoot;
 }
-
-
-

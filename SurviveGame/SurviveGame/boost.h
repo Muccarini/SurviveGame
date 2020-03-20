@@ -12,7 +12,7 @@ class Boost :
 	public Entity
 {
 public:
-	Boost(sf::Vector2f spawn_pos, BoostType::Type type, const sf::Texture & texture);
+	Boost(const sf::Vector2f spawn_pos, BoostType::Type type, const sf::Texture & texture);
 	Boost() {};
 	virtual ~Boost();
 
@@ -21,13 +21,13 @@ public:
 	BoostType::Type getType();
 
 private:
-	void initHp(sf::Vector2f spawn_pos, const sf::Texture & texture);
-	void initMs(sf::Vector2f spawn_pos, const sf::Texture & texture);
+	void initHp(const sf::Vector2f spawn_pos, const sf::Texture & texture);
+	void initMs(const sf::Vector2f spawn_pos, const sf::Texture & texture);
 
-	void initSpriteHp(sf::Vector2f spawn_pos, const sf::Texture & texture);
+	void initSpriteHp(const sf::Vector2f spawn_pos, const sf::Texture & texture);
 	void initHitBoxHp();
 
-	void initSpriteMs(sf::Vector2f spawn_pos, const sf::Texture & texture);
+	void initSpriteMs(const sf::Vector2f spawn_pos, const sf::Texture & texture);
 	void initHitBoxMs();
 
 	BoostType::Type b_type;

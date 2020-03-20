@@ -5,17 +5,17 @@ class Pet :
 	public Character
 {
 public:
-	explicit Pet(const sf::Texture & texture, sf::Vector2f spawn_pos);
+	Pet(const sf::Texture & texture, const sf::Vector2f spawn_pos);
 	Pet();
 	virtual ~Pet();
 
-	void updateMove(sf::Time deltaTime, sf::Vector2f parent_pos);
-	void updateRotate(sf::Vector2f target);
+	void updateMove(const sf::Time& delta_time, const sf::Vector2f parent_pos);
+	void updateRotate(const sf::Vector2f target);
 	void updateHud();
 
 private:
 	void initVar();
-	void initSprite(const sf::Texture & texture, sf::Vector2f spawn_pos);
+	void initSprite(const sf::Texture & texture, const sf::Vector2f spawn_pos);
 	void initHitbox();
 };
 
