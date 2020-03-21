@@ -207,7 +207,7 @@ void PlayerT::initVar()
 void PlayerT::initSprite()
 {
 	sprite.setScale(0.3f, 0.3f);        //SCALE
-	sprite.setPosition(600.f, 600.f); //POS
+	sprite.setPosition(640.f, 640.f); //POS
 	sprite.setOrigin(92, 120);        //ORIGIN
 }
 

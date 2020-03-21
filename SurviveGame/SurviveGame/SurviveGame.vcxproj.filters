@@ -118,13 +118,7 @@
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="BoostManager.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Subject.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Observer.cpp">
-      <Filter>Game</Filter>
+      <Filter>Resource Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -222,7 +216,7 @@
       <Filter>Personaggi\Nemici</Filter>
     </ClInclude>
     <ClInclude Include="BoostManager.h">
-      <Filter>Game</Filter>
+      <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
