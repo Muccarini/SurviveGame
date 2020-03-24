@@ -17,7 +17,7 @@ Boss::~Boss()
 {
 }
 
-void Boss::updateMove(const sf::Time& delta_time, const sf::Vector2f target, const float grid_size)
+void Boss::updateMove(const sf::Time& delta_time, sf::Vector2f target, float grid_size)
 {
 	this->sprite.move(_m.move(delta_time, getPosition(), target, move_vect, mov_speed));
 
@@ -25,7 +25,7 @@ void Boss::updateMove(const sf::Time& delta_time, const sf::Vector2f target, con
 	setGridPosition(grid_size);
 }
 
-bool Boss::shooting(const sf::Time& delta_time, const sf::Vector2f target)
+bool Boss::shooting(const sf::Time& delta_time, sf::Vector2f target)
 {
 	ratio_clock -= delta_time;
 
@@ -47,7 +47,7 @@ bool Boss::shooting(const sf::Time& delta_time, const sf::Vector2f target)
 	return shoot;
 }
 
-void Boss::updateRotate(const sf::Vector2f target)
+void Boss::updateRotate(sf::Vector2f target)
 {
 	float dX = target.x - this->sprite.getPosition().x;
 	float dY = target.y - this->sprite.getPosition().y;
@@ -78,7 +78,7 @@ void Boss::updateHud()
 	hud.updateText(hp, getPosition());
 }
 
-bool Boss::isInRange(const sf::Vector2f obj1, const sf::Vector2f obj2)
+bool Boss::isInRange(sf::Vector2f obj1, sf::Vector2f obj2)
 {
 	float dx = obj1.x - obj2.x;
 	float dy = obj1.y - obj2.y;

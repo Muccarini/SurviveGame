@@ -26,7 +26,7 @@ void Character::boostHeal()
 		this->hp = this->hp_max;
 }
 
-void Character::setHp(const int hp)
+void Character::setHp(int hp)
 {
 	this->hp = hp;
 }
@@ -37,7 +37,7 @@ int Character::getHp()
 		this->hp;
 }
 
-void Character::setHpMax(const int hp_max)
+void Character::setHpMax(int hp_max)
 {
 	this->hp_max = hp_max;
 }
@@ -54,7 +54,7 @@ int Character::getAmmo()
 		this->ammo;
 }
 
-void Character::setAmmo(const int i)
+void Character::setAmmo(int i)
 {
 	this->ammo = i;
 }

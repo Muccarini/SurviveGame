@@ -7,7 +7,7 @@
 class TileMap
 {
 public:
-	explicit TileMap(const sf::Vector2i map_size);
+	explicit TileMap(sf::Vector2i map_size);
 	virtual ~TileMap();
 
 private:
@@ -18,13 +18,13 @@ private:
     std::vector<std::vector<Tile*>> map;
 	sf::Texture tileset;
 		
-	void loadFromFile(const std::string file_name);
+	void loadFromFile(std::string file_name);
 
 public:
 
 	void render(std::shared_ptr<sf::RenderTarget> target);
 
-	std::vector<sf::FloatRect> findWalls(const int x, const int y) const;
+	std::vector<sf::FloatRect> findWalls(int x, int y);
 
 	std::vector<GridLocation> getObstacle();
 	

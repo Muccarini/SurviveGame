@@ -1,6 +1,6 @@
 #include "GridNode.h"
 
-GridNode::GridNode(const int width, const int height) : width(width), height(height)
+GridNode::GridNode(int width, int height) : width(width), height(height)
 {
 	DIRS = { GridLocation{1, 0}, GridLocation{0, -1}, GridLocation{-1, 0}, GridLocation{0, 1} };
 }

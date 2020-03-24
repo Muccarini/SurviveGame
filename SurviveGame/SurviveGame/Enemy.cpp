@@ -17,7 +17,7 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::updateMove(const sf::Time& delta_time, const sf::Vector2f target, const float grid_size)
+void Enemy::updateMove(const sf::Time& delta_time, sf::Vector2f target, float grid_size)
 {
 	this->sprite.move(_m.move(delta_time, getPosition(), target, move_vect, mov_speed));
 
@@ -25,7 +25,7 @@ void Enemy::updateMove(const sf::Time& delta_time, const sf::Vector2f target, co
 	setGridPosition(grid_size);
 }
 
-void Enemy::updateRotate(const sf::Vector2f target)
+void Enemy::updateRotate(sf::Vector2f target)
 {
 	float dX = target.x - this->sprite.getPosition().x;
 	float dY = target.y - this->sprite.getPosition().y;
@@ -63,7 +63,7 @@ void Enemy::initSprite(const GridNode& grid,const sf::Texture & texture)
 	sprite.setTextureRect(sf::IntRect(0, 0, 68, 68));
 }
 
-void Enemy::initHitBox(const float grid_size)
+void Enemy::initHitBox(float grid_size)
 {
 	this->hit_box.setSize(sf::Vector2f(60.f, 60.f));
 	this->hit_box.setOutlineColor(sf::Color::Blue);

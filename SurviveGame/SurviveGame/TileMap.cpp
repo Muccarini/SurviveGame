@@ -2,7 +2,7 @@
 
 
 
-TileMap::TileMap(const sf::Vector2i map_size)
+TileMap::TileMap(sf::Vector2i map_size)
 {
 	this->grid_size_f = 64.f;
 	this->max_size.x = map_size.x;
@@ -54,7 +54,7 @@ TileMap::~TileMap()
 {
 }
 
-void TileMap::loadFromFile(const std::string file_name)
+void TileMap::loadFromFile(std::string file_name)
 {
 	std::ifstream openfile("Sources/Mappa.txt");
 }
@@ -71,7 +71,7 @@ void TileMap::render(std::shared_ptr<sf::RenderTarget> target)
 	}
 }
 
-std::vector<sf::FloatRect> TileMap::findWalls(const int x, const int y) const
+std::vector<sf::FloatRect> TileMap::findWalls(int x, int y)
 {
 	sf::Vector2i pos(static_cast<int>(x / grid_size_f), static_cast<int>(y / grid_size_f));
 	std::vector<sf::FloatRect> wallvect;

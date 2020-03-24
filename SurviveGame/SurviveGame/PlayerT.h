@@ -15,7 +15,7 @@ public:
 	virtual ~PlayerT();
 
 	void updateMove(const sf::Time& delta_time);
-	void updateRotate(const sf::Vector2f target);
+	void updateRotate(sf::Vector2f target);
 	bool updateReload(const sf::Time& delta_time);
 	void updateMovSpeed(const sf::Time& delta_time);
 	void updateHud();

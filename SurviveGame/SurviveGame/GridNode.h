@@ -66,7 +66,7 @@ namespace std {
 class GridNode
 {
 public:
-	GridNode(const int width, const int height);
+	GridNode(int width, int height);
 	GridNode();
 
 	virtual ~GridNode() {};

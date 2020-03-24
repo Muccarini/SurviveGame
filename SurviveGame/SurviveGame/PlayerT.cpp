@@ -57,7 +57,7 @@ void PlayerT::updateMove(const sf::Time& delta_time)
 	this->sprite.move((dir.x * this->mov_speed* delta_time.asSeconds()) , dir.y * this->mov_speed* delta_time.asSeconds());
 }
 
-void PlayerT::updateRotate(const sf::Vector2f target)
+void PlayerT::updateRotate(sf::Vector2f target)
 {
 	float dX = target.x - getPosition().x;
 	float dY = target.y - getPosition().y;

@@ -8,7 +8,7 @@ Button::~Button()
 {
 }
 
-void Button::setText(const std::string path, const std::string string, sf::Color color, const float character_size, const sf::Vector2f pos)
+void Button::setText(const std::string& path, const std::string& string, sf::Color color, float character_size, sf::Vector2f pos)
 {
 	this->font.loadFromFile(path);
 	this->text.setFont(this->font);
@@ -22,7 +22,7 @@ void Button::setText(const std::string path, const std::string string, sf::Color
 	right_color   = this->text.getFillColor();
 }
 
-void Button::setBox(const sf::Vector2f size, const sf::Color outline_color, const float thickness, const sf::Color fill_color, const sf::Vector2f pos, sf::Texture* txt)
+void Button::setBox(sf::Vector2f size, sf::Color outline_color, float thickness, const sf::Color fill_color, const sf::Vector2f pos, sf::Texture* txt)
 {
 	this->box.setSize(size);
 	this->box.setOutlineColor(outline_color);

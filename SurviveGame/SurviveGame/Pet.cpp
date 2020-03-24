@@ -2,7 +2,7 @@
 
 
 
-Pet::Pet(const sf::Texture & texture, const sf::Vector2f spawn_pos)
+Pet::Pet(const sf::Texture & texture, sf::Vector2f spawn_pos)
 {
 	initVar();
 	initSprite(texture, spawn_pos);
@@ -18,7 +18,7 @@ Pet::~Pet()
 {
 }
 
-void Pet::updateMove(const sf::Time& delta_time, const sf::Vector2f parent_pos)
+void Pet::updateMove(const sf::Time& delta_time, sf::Vector2f parent_pos)
 {
 	sf::Vector2f dir = parent_pos - this->getPosition();
 
@@ -26,7 +26,7 @@ void Pet::updateMove(const sf::Time& delta_time, const sf::Vector2f parent_pos)
 	hit_box.setPosition(getPosition());
 }
 
-void Pet::updateRotate(const sf::Vector2f target)
+void Pet::updateRotate(sf::Vector2f target)
 {
 	float dX = target.x - getPosition().x;
 	float dY = target.y - getPosition().y;
@@ -50,7 +50,7 @@ void Pet::initVar()
 	hp = hp_max;
 }
 
-void Pet::initSprite(const sf::Texture & texture, const sf::Vector2f spawn_pos)
+void Pet::initSprite(const sf::Texture & texture, sf::Vector2f spawn_pos)
 {
 	sprite.setTexture(texture);     //TEXTURE
 	sprite.setScale(0.1f, 0.1f);      //SCALE

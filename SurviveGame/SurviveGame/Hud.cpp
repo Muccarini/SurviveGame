@@ -11,7 +11,7 @@ Hud::~Hud()
 {
 }
 
-void Hud::updateText(const int hp, const sf::Vector2f obj)
+void Hud::updateText(int hp, sf::Vector2f obj)
 {
 	//HP GUI
 	this->hp.setString(std::to_string(hp));
@@ -20,7 +20,7 @@ void Hud::updateText(const int hp, const sf::Vector2f obj)
 	this->hp.setPosition(obj.x - 8, obj.y + 30);
 }
 
-void Hud::updateText(const int ammo, const int hp, const sf::Vector2f obj)
+void Hud::updateText(int ammo, int hp, sf::Vector2f obj)
 {
 	//AMMO GUI
 	this->ammo.setString(std::to_string(ammo));
@@ -35,7 +35,7 @@ void Hud::updateText(const int ammo, const int hp, const sf::Vector2f obj)
 	this->hp.setPosition(obj.x + 20, obj.y + 25);
 }
 
-void Hud::updateText(const int kills, const float countdown, const int round, const sf::View& view)
+void Hud::updateText(int kills, float countdown, int round, const sf::View& view)
 {
 	//KILLCOUNTER
 	this->kills.setString(std::to_string(kills));

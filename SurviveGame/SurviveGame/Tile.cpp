@@ -1,6 +1,6 @@
  #include "Tile.h"
 
-Tile::Tile(const float x, const float y, const float tile_size_f, const sf::Texture& txt, int t_type)
+Tile::Tile(float x, float y, float tile_size_f, const sf::Texture& txt, int t_type)
 {
 	if(t_type == 9)
 	{

@@ -6,7 +6,7 @@ inline double heuristic(GridLocation a, GridLocation b)
 }
 
 
-AStar::AStar(const GridNode& grid,const float max_d) : grid(grid)
+AStar::AStar(const GridNode& grid, float max_d) : grid(grid)
 {
 	max_distance = max_d;
 }
@@ -19,8 +19,8 @@ AStar::~AStar()
 {
 }
 
-sf::Vector2f const AStar::move(const sf::Time& deltatime, const sf::Vector2f subject, const sf::Vector2f target,
-	std::list<sf::Vector2f> &movevect, const float mov_speed)
+sf::Vector2f AStar::move(const sf::Time& deltatime, sf::Vector2f subject, sf::Vector2f target,
+	std::list<sf::Vector2f> &movevect, float mov_speed)
 {
 	sf::Vector2i mv; 
 	if (max_distance == 64 && this->target != target)

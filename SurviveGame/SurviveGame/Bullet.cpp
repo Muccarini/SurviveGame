@@ -36,7 +36,7 @@ Bullet::~Bullet()
 {
 }
 
-void Bullet::calculateDir(const sf::Vector2f owner_pos, const sf::Vector2f target)
+void Bullet::calculateDir(sf::Vector2f owner_pos, sf::Vector2f target)
 {
 	float dx;
 	float dy;
@@ -81,7 +81,7 @@ BulletOwner::Owner Bullet::getOwner()
 		this->owner;
 }
 
-void Bullet::initSpritePet(const sf::Vector2f owner_pos, const sf::Texture & texture)
+void Bullet::initSpritePet(sf::Vector2f owner_pos, const sf::Texture & texture)
 {
 	sprite.setTexture(texture);
 	sprite.setPosition(owner_pos);
@@ -89,7 +89,7 @@ void Bullet::initSpritePet(const sf::Vector2f owner_pos, const sf::Texture & tex
 	this->sprite.setOrigin(-500, 0);
 }
 
-void Bullet::initSpriteBoss(const sf::Vector2f owner_pos, const sf::Texture & texture)
+void Bullet::initSpriteBoss(sf::Vector2f owner_pos, const sf::Texture & texture)
 {
 	sprite.setTexture(texture);
 	sprite.setPosition(owner_pos);
@@ -97,7 +97,7 @@ void Bullet::initSpriteBoss(const sf::Vector2f owner_pos, const sf::Texture & te
 	this->sprite.setOrigin(-3500, -562);
 }
 
-void Bullet::initSpritePlayer(const sf::Vector2f owner_pos, const sf::Texture & texture)
+void Bullet::initSpritePlayer(sf::Vector2f owner_pos, const sf::Texture & texture)
 {
 	sprite.setTexture(texture);
 	sprite.setPosition(owner_pos);

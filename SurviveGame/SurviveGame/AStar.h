@@ -13,8 +13,8 @@ public:
 
 	virtual ~AStar();
 
-	sf::Vector2f const move(const sf::Time& deltatime, const sf::Vector2f subject, const sf::Vector2f target,
-		std::list<sf::Vector2f> &movevect, const float mov_speed);
+	sf::Vector2f move(const sf::Time& deltatime, sf::Vector2f subject, sf::Vector2f target,
+		std::list<sf::Vector2f> &movevect, float mov_speed);
 
 	void setMaxDist(float m_distance);
 

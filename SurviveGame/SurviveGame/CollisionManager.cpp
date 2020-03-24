@@ -22,7 +22,7 @@ sf::Vector2f CollisionManager::CollideWithWalls(const sf::FloatRect & rectSp1, c
 		if (sat_test(rectSp1, walls[i]))
 		{
 			this->collide = true;
-			if((premtv.x == 0 && out_mtv.x == 0) || (premtv.y == 0 && out_mtv.y == 0))
+			if(out_mtv.x == 0 || out_mtv.y == 0)
 			{
 				dir += out_mtv;
 			}
@@ -77,10 +77,6 @@ bool CollisionManager::isCollide()
 		this->collide;
 }
 
-void CollisionManager::setPreMtv(const sf::Vector2f vec)
-{
-	this->premtv = vec;
-}
 
 sf::Vector2f CollisionManager::getOutMtv()
 {

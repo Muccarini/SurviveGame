@@ -9,14 +9,14 @@ public:
 	Button();
 	~Button();
 
-	void setText(const std::string path, const std::string string, const sf::Color color, const float size, const sf::Vector2f pos);
-	void setBox(const sf::Vector2f size, const sf::Color color, const float thickness, const sf::Color fill_color, const sf::Vector2f pos, sf::Texture* txt = NULL);
+	void setText(const std::string& path, const std::string& string, sf::Color color, float character_size, sf::Vector2f pos);
+	void setBox(sf::Vector2f size, sf::Color color, float thickness, sf::Color fill_color, sf::Vector2f pos, sf::Texture* txt = NULL);
 
 	sf::RectangleShape getBox();
 	void draw(std::shared_ptr<sf::RenderWindow> target);
 
-	bool isHover(const sf::Vector2f mouse_pos_view);
-	bool isActive(const sf::Vector2f mouse_pos_view);
+	bool isHover(sf::Vector2f mouse_pos_view);
+	bool isActive(sf::Vector2f mouse_pos_view);
 
 	void buttonAnimation();
 	void setStandard();

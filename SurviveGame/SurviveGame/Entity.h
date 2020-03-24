@@ -16,16 +16,16 @@ public:
 	void render(std::shared_ptr<sf::RenderWindow> target);
 
 	sf::Vector2f getPosition();
-	void         setPosition(const sf::Vector2f & pos);
+	void         setPosition(sf::Vector2f pos);
 
 	sf::RectangleShape getHitBox();
 
 	GridLocation getGridPos();
-	void         setGridPosition(const float tilesize);
+	void         setGridPosition(float tilesize);
 
-	void  setMoveSpeed(const float mov_speed);
+	void  setMoveSpeed(float mov_speed);
 	float getMovSpeed();
-	void  setMoveSpeedDef(const float mov_speed_def);
+	void  setMoveSpeedDef(float mov_speed_def);
 	float getMovSpeedDef();
 
 protected:

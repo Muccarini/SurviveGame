@@ -12,7 +12,7 @@
 class Tile
 {
 public:
-	Tile(const float x, const float y, const float tile_size_f, const sf::Texture& txt, int t_type);
+	Tile(float x, float y, float tile_size_f, const sf::Texture& txt, int t_type);
 
 	virtual ~Tile();
 

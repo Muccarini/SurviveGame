@@ -1,6 +1,6 @@
 #include "Boost.h"
 
-Boost::Boost(const sf::Vector2f spawn_pos, BoostType::Type type, const sf::Texture & texture)
+Boost::Boost(sf::Vector2f spawn_pos, BoostType::Type type, const sf::Texture & texture)
 {
 	switch (type)
 	{
@@ -20,7 +20,7 @@ Boost::~Boost()
 {
 }
 
-bool Boost::checkCollide(sf::FloatRect character)
+bool Boost::checkCollide(const sf::FloatRect& character)
 {
 	return(sat_test(character, getHitBox().getGlobalBounds(), NULL));
 }
@@ -31,19 +31,19 @@ BoostType::Type Boost::getType()
 		this->b_type;
 }
 
-void Boost::initHp(const sf::Vector2f spawn_pos, const sf::Texture & texture)
+void Boost::initHp(sf::Vector2f spawn_pos, const sf::Texture & texture)
 {
 	initSpriteHp(spawn_pos, texture);
 	initHitBoxHp();
 }
 
-void Boost::initMs(const sf::Vector2f spawn_pos, const sf::Texture & texture)
+void Boost::initMs(sf::Vector2f spawn_pos, const sf::Texture & texture)
 {
 	initSpriteMs(spawn_pos, texture);
 	initHitBoxMs();
 }
 
-void Boost::initSpriteHp(const sf::Vector2f spawn_pos, const sf::Texture & texture)
+void Boost::initSpriteHp(sf::Vector2f spawn_pos, const sf::Texture & texture)
 { 
 	sprite.setTexture(texture);	   //TEXTURE
 	sprite.setScale(0.1f, 0.1f);   //SCALE
@@ -62,7 +62,7 @@ void Boost::initHitBoxHp()
 	hit_box.setOrigin(0, 0);                         //ORIGIN
 }
 
-void Boost::initSpriteMs(const sf::Vector2f spawn_pos, const sf::Texture & texture)
+void Boost::initSpriteMs(sf::Vector2f spawn_pos, const sf::Texture & texture)
 {
 	sprite.setTexture(texture);	   //TEXTURE
 	sprite.setScale(0.05f, 0.05f); //SCALE
