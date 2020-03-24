@@ -12,9 +12,9 @@ public:
 	explicit Achievement(RoundManager * subject);
 	virtual ~Achievement();
 
-	bool isRoundOn() const;
-	bool isKillsOn() const;
-	bool isBossOn() const;
+	bool isRoundOn();
+	bool isKillsOn();
+	bool isBossOn();
 
 	void updateBadge(const sf::Time& deltaTime);
 

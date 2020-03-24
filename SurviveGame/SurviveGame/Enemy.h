@@ -11,7 +11,7 @@ public:
 	Enemy();
 	virtual ~Enemy();
 
-	void updateMove(const sf::Time& delta_time, const sf::Vector2f target, float grid_size);
+	void updateMove(const sf::Time& delta_time, sf::Vector2f target, float grid_size);
 	void updateRotate(sf::Vector2f target);
 	void updateHud();
 

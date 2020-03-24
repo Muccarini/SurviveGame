@@ -32,12 +32,12 @@ void GridNode::initGrid(std::vector<GridLocation> obstacles)
 	}
 }
 
-std::vector<std::vector<GridLocation>> GridNode::getGrid() const
+std::vector<std::vector<GridLocation>> GridNode::getGrid()
 {
 	return this->grid;
 }
 
-std::vector<GridLocation> GridNode::neighbors(const GridLocation& id) const
+std::vector<GridLocation> GridNode::neighbors(const GridLocation& id)
 {
 	std::vector<GridLocation> results;
 
@@ -54,12 +54,12 @@ std::vector<GridLocation> GridNode::neighbors(const GridLocation& id) const
 	return results;
 }
 
-int GridNode::cost(const GridLocation& start, const GridLocation& goal) const 
+int GridNode::cost(const GridLocation& start, const GridLocation& goal)
 {
 	return abs(start.x - goal.x) + abs(start.y - goal.y);
 }
 
-bool GridNode::in_bounds(const GridLocation& id) const
+bool GridNode::in_bounds(const GridLocation& id)
 {
 	return 0 <= id.x && id.x < width
 		&& 0 <= id.y && id.y < height;

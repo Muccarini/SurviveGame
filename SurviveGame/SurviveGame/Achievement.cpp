@@ -87,17 +87,17 @@ void Achievement::detach()
 	this->subject->unsubscribe(this);
 }
 
-bool Achievement::isRoundOn() const
+bool Achievement::isRoundOn()
 {
 	return this->round_on;
 }
 
-bool Achievement::isKillsOn() const
+bool Achievement::isKillsOn()
 {
 	return this->kills_on;
 }
 
-bool Achievement::isBossOn() const
+bool Achievement::isBossOn()
 {
 	return this->boss_on;
 }
