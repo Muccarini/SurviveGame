@@ -21,7 +21,7 @@ private:
 	bool isInRange(sf::Vector2f obj1, sf::Vector2f obj2);
 
 	void initVar();
-	void initSprite(const GridNode& grid,const sf::Texture& texture);
+	void initSprite(GridNode grid,const sf::Texture& texture);
 	void initHitBox();
 
 	const float max_distance = 64; //check tile

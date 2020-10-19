@@ -17,7 +17,7 @@ public:
 
 private:
 	void initVar();
-	void initSprite(const GridNode& grid,const sf::Texture & texture);
+	void initSprite(GridNode grid,const sf::Texture & texture);
 	void initHitBox(float grid_size); 
 
 	const float max_distance = 64; //check tile

@@ -46,7 +46,7 @@ void Enemy::initVar()
 	hp = 10;
 }
 
-void Enemy::initSprite(const GridNode& grid,const sf::Texture & texture)
+void Enemy::initSprite(GridNode grid,const sf::Texture & texture)
 {
 	sprite.setTexture(texture);
 	sprite.setScale(0.9f, 0.9f);

@@ -19,7 +19,7 @@ public:
 	void setMaxDist(float m_distance);
 
 private:
-	void a_star_search(const GridNode& graph, GridLocation start, GridLocation goal,
+	void a_star_search(GridNode graph, GridLocation start, GridLocation goal,
 		std::unordered_map<GridLocation, GridLocation>& came_from,
 		std::unordered_map<GridLocation, double>& cost_so_far, std::list<sf::Vector2f> &movevect);
 
